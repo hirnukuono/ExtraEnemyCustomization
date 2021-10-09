@@ -14,8 +14,8 @@ namespace EECustom.Customizations.Models
     //Original Code from Dex-EnemyGhosts
     public class SilhouetteCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyPrefabBuiltEvent
     {
-        public static readonly string PlayerPrefabPath = "ASSETS/ASSETPREFABS/CHARACTERS/CHARACTER_A.PREFAB";
-        public static readonly string PlayerGhostName = "g_set_military_01_boots_ghost";
+        public const string PlayerPrefabPath = "ASSETS/ASSETPREFABS/CHARACTERS/CHARACTER_A.PREFAB";
+        public const string PlayerGhostName = "g_set_military_01_boots_ghost";
 
         public Color DefaultColor { get; set; } = Color.red;
         public bool RequireTag { get; set; } = true;
@@ -43,7 +43,7 @@ namespace EECustom.Customizations.Models
             }
 
             
-            var comps = agent.GetComponentsInChildren<SkinnedMeshRenderer>(true);
+            var comps = agent.GetComponentsInChildren<Renderer>(true);
             foreach (var comp in comps)
             {
                 var enemyGraphic = comp.gameObject;
@@ -51,7 +51,7 @@ namespace EECustom.Customizations.Models
                 enemyGhost.layer = LayerMask.NameToLayer("Enemy");
 
                 _ = enemyGhost.AddComponent<EnemySilhouette>();
-                var newRenderer = enemyGhost.GetComponent<SkinnedMeshRenderer>();
+                var newRenderer = enemyGhost.GetComponent<Renderer>();
                 newRenderer.material = _SilhouetteMaterial;
                 newRenderer.material.SetVector("_ColorA", Color.clear);
                 newRenderer.material.SetVector("_ColorB", Color.clear);

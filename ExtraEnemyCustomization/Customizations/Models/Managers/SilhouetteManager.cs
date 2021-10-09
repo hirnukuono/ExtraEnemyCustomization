@@ -9,7 +9,6 @@ namespace EECustom.Customizations.Models.Managers
 {
     public class EnemySilhouette : MonoBehaviour
     {
-        public GameObject SilhouetteObject;
         public Material SilhouetteMaterial;
 
         private Color _LatestColorB = Color.clear;
@@ -63,7 +62,7 @@ namespace EECustom.Customizations.Models.Managers
             silhouettes = GetComponentsInChildren<EnemySilhouette>(true);
             foreach(var sil in silhouettes)
             {
-                sil.SilhouetteMaterial = sil.GetComponent<SkinnedMeshRenderer>().material;
+                sil.SilhouetteMaterial = sil.GetComponent<Renderer>().material;
             }
 
             if (_RequireTag || _ReplaceColorWithMarker)

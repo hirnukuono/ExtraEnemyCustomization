@@ -22,6 +22,8 @@ namespace EECustom.Extensions
         {
             var newObj = GameObject.Instantiate(obj);
             newObj.transform.parent = toParent;
+            newObj.transform.localPosition = Vector3.zero;
+            newObj.transform.localRotation = Quaternion.Euler(Vector3.zero);
             newObj.name = name;
             return newObj;
         }
