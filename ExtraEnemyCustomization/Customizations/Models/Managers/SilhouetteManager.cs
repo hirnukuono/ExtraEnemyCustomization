@@ -117,8 +117,6 @@ namespace EECustom.Customizations.Models.Managers
 
         public void OnMarked(EnemyAgent agent, NavMarker marker)
         {
-            Logger.Log("Marked! " + agent.name);
-
             enemyMarker = marker;
             tagUpdateDone = false;
 
