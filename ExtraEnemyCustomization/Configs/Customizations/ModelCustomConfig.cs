@@ -14,6 +14,7 @@ namespace EECustom.Configs.Customizations
         public LimbCustom[] LimbCustom { get; set; } = new LimbCustom[0];
         public ModelRefCustom[] ModelRefCustom { get; set; } = new ModelRefCustom[0];
         public MarkerCustom[] MarkerCustom { get; set; } = new MarkerCustom[0];
+        public ScannerCustom[] ScannerCustom { get; set; } = new ScannerCustom[0];
 
         public override EnemyCustomBase[] GetAllSettings()
         {
@@ -24,6 +25,7 @@ namespace EECustom.Configs.Customizations
             list.AddRange(LimbCustom);
             list.AddRange(ModelRefCustom);
             list.AddRange(MarkerCustom);
+            list.AddRange(ScannerCustom);
             return list.ToArray();
         }
     }
