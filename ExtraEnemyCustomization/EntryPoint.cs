@@ -25,6 +25,8 @@ namespace EECustom
             ClassInjector.RegisterTypeInIl2Cpp<HealthRegenManager>();
             ClassInjector.RegisterTypeInIl2Cpp<PulseManager>();
             ClassInjector.RegisterTypeInIl2Cpp<ScannerManager>();
+            ClassInjector.RegisterTypeInIl2Cpp<EnemySilhouette>();
+            ClassInjector.RegisterTypeInIl2Cpp<SilhouetteManager>();
 
             Logger.LogInstance = Log;
 
