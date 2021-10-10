@@ -24,6 +24,8 @@ namespace EECustom.Customizations.Models
         [JsonPropertyName("WakeupSize")]
         public float Internal_WakeupSize { get; set; } = 1.0f;
 
+        public float LerpingDuration { get; set; } = 0.5f;
+
         public bool UsingDetectionColor { get; set; } = false;
 
         [JsonPropertyName("DetectionColor")]
@@ -35,10 +37,24 @@ namespace EECustom.Customizations.Models
         [JsonPropertyName("HeartbeatSize")]
         public float Internal_HeartbeatSize { get; set; } = 1.0f;
 
+        public bool UsingScoutColor { get; set; } = false;
+
+        [JsonPropertyName("ScoutPatrolColor")]
+        public Color Internal_ScoutPatrolColor { get; set; } = new Color(1f, 0.1f, 0.1f);
+        [JsonPropertyName("ScoutPatrolSize")]
+        public float Internal_ScoutPatrolSize { get; set; } = 0.5f;
+        [JsonPropertyName("ScoutFeelerColor")]
+        public Color Internal_ScoutFeelerColor { get; set; } = new Color(1f, 0.1f, 0.1f);
+        [JsonPropertyName("ScoutFeelerSize")]
+        public float Internal_ScoutFeelerSize { get; set; } = 1.0f;
+
+
         public Color DefaultColor;
         public Color WakeupColor;
         public Color DetectionColor;
         public Color HeartbeatColor;
+        public Color PatrolColor;
+        public Color FeelerOutColor;
 
         public override string GetProcessName()
         {
@@ -51,12 +67,16 @@ namespace EECustom.Customizations.Models
             WakeupColor = CreateNewColor(Internal_WakeupColor, Internal_WakeupSize);
             DetectionColor = CreateNewColor(Internal_DetectionColor, Internal_DetectionSize);
             HeartbeatColor = CreateNewColor(Internal_HeartbeatColor, Internal_HeartbeatSize);
+            PatrolColor = CreateNewColor(Internal_ScoutPatrolColor, Internal_ScoutPatrolSize);
+            FeelerOutColor = CreateNewColor(Internal_ScoutFeelerColor, Internal_ScoutFeelerSize);
 
             LogVerbose("Color Initialized!");
             LogVerbose(" - Default; " + DefaultColor.ToString());
             LogVerbose(" - Wakeup; " + WakeupColor.ToString());
             LogVerbose(" - Detection; " + DetectionColor.ToString());
             LogVerbose(" - Heartbeat; " + HeartbeatColor.ToString());
+            LogVerbose(" - Patrol; " + PatrolColor.ToString());
+            LogVerbose(" - Feeler; " + FeelerOutColor.ToString());
 
             static Color CreateNewColor(Color c, float alpha)
             {
@@ -66,16 +86,21 @@ namespace EECustom.Customizations.Models
 
         public void OnSpawned(EnemyAgent agent)
         {
-            var scannerManager = agent.gameObject.AddComponent<ScannerManager>();
+            var scannerManager = agent.gameObject.GetComponent<ScannerManager>();
+            if (scannerManager == null)
+            {
+                scannerManager = agent.gameObject.AddComponent<ScannerManager>();
+            }
             scannerManager._Agent = agent;
             scannerManager._DefaultColor = DefaultColor;
             scannerManager._WakeupColor = WakeupColor;
             scannerManager._DetectionColor = DetectionColor;
             scannerManager._HeartbeatColor = HeartbeatColor;
+            scannerManager._PatrolColor = PatrolColor;
+            scannerManager._FeelerColor = FeelerOutColor;
             scannerManager._UsingDetectionColor = UsingDetectionColor;
-
-            //agent.m_scannerColor;
-            //EnemyScannerColorEvents.RegisterOnChanged(agent, OnColorChanged);
+            scannerManager._UsingScoutColor = UsingScoutColor;
+            scannerManager._InterpDuration = LerpingDuration;
         }
     }
 }
