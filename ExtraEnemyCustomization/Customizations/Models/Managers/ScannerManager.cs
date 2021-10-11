@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 
 namespace EECustom.Customizations.Models.Managers
@@ -81,6 +82,7 @@ namespace EECustom.Customizations.Models.Managers
             }
         }
 
+        [HideFromIl2Cpp]
         private void UpdateState(out EnemyState state)
         {
             switch (_Agent.AI.Mode)
@@ -146,6 +148,7 @@ namespace EECustom.Customizations.Models.Managers
             }
         }
 
+        [HideFromIl2Cpp]
         private Color GetStateColor(EnemyState state)
         {
             return state switch
