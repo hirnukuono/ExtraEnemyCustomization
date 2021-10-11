@@ -13,7 +13,7 @@ namespace EECustom
 {
     //TODO: Refactor the CustomBase to support Phase Setting
 
-    [BepInPlugin("GTFO.EECustomization", "EECustom", "0.6.0")]
+    [BepInPlugin("GTFO.EECustomization", "EECustom", "0.7.0")]
     [BepInProcess("GTFO.exe")]
     [BepInDependency(MTFOUtil.PLUGIN_GUID, BepInDependency.DependencyFlags.HardDependency)]
     [BepInDependency(MTFOPartialDataUtil.PLUGIN_GUID, BepInDependency.DependencyFlags.SoftDependency)]
