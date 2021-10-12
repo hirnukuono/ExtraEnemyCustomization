@@ -45,14 +45,12 @@ namespace EECustom.Utils
                     if (distance <= minRange)
                     {
                         newDamage = damage;
-                        Logger.Debug($"set max damage {damage}");
                     }
                     else if (distance <= maxRange)
                     {
-                        newDamage = Mathf.Lerp(damage, 0.0f, distance - minRange / maxRange - minRange);
-                        Logger.Debug("set vari damage");
+                        newDamage = Mathf.Lerp(damage, 0.0f, (distance - minRange) / (maxRange - minRange));
                     }
-                    Logger.Debug($"explosive damage: {newDamage}, Dist: {distance}, min: {minRange}, max: {maxRange}");
+                    Logger.Verbose($"Explosive damage: {newDamage} out of max: {damage}, Dist: {distance}, min: {minRange}, max: {maxRange}");
 
                     comp.ExplosionDamage(newDamage, position, Vector3.up * 1000);
                 }

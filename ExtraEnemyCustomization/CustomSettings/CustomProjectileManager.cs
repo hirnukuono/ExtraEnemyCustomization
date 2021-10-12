@@ -62,7 +62,7 @@ namespace EECustom.CustomSettings
                     explosive.MinRange = projInfo.ExplosionMinRange;
                     explosive.MaxRange = projInfo.ExplosionMaxRange;
                     explosive.NoiseMinRange = projInfo.ExplosionNoiseMinRange;
-                    explosive.NoiseMaxRange = projInfo.ExplosionNoiseMaxRange; //MAJOR: Those are reset for reason, fix it
+                    explosive.NoiseMaxRange = projInfo.ExplosionNoiseMaxRange;
                 }
             }
             else

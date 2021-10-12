@@ -1,4 +1,5 @@
-﻿using EECustom.Managers;
+﻿using EECustom.CustomSettings.Handlers;
+using EECustom.Managers;
 using HarmonyLib;
 using System;
 using UnityEngine;
@@ -37,8 +38,21 @@ namespace EECustom.CustomSettings.Inject
                 return true;
             }
 
+            
             var gameObject = GameObject.Instantiate(projectilePrefab, pos, rot, ProjectileManager.Current.m_root.transform);
             gameObject.SetActive(true);
+
+            var baseExplosive = projectilePrefab.GetComponent<ExplosiveProjectileHandler>(); //MINOR: Maybe Unhollower Bug? Fields are reset when you Instantiate them
+            if (baseExplosive != null)
+            {
+                var newExplosive = gameObject.GetComponent<ExplosiveProjectileHandler>();
+                newExplosive.Damage = baseExplosive.Damage;
+                newExplosive.MinRange = baseExplosive.MinRange;
+                newExplosive.MaxRange = baseExplosive.MaxRange;
+                newExplosive.NoiseMinRange = baseExplosive.NoiseMinRange;
+                newExplosive.NoiseMaxRange = baseExplosive.NoiseMaxRange;
+            }
+            
             __result = gameObject;
             return false;
         }

@@ -21,12 +21,7 @@ namespace EECustom.CustomSettings.Handlers
 
         }
 
-        private void Awake()
-        {
-            Logger.Debug($"Damage is {Damage}");
-        }
-
-        private void OnDisable()
+        private void OnDestroy()
         {
             ExplosionUtil.TriggerExplodion(transform.position, Damage, MinRange, MaxRange);
 
@@ -38,8 +33,6 @@ namespace EECustom.CustomSettings.Handlers
 
             if (AIG_GeomorphNodeVolume.TryGetCourseNode(newPos, out var courseNode))
             {
-                Logger.Debug("Found CourseNode, Making Noise");
-                Logger.Debug("Info: " + courseNode.m_zone.name + " Area:" + courseNode.m_area.name);
                 var noise = new NM_NoiseData()
                 {
                     noiseMaker = null,
@@ -54,11 +47,6 @@ namespace EECustom.CustomSettings.Handlers
                 };
                 NoiseManager.MakeNoise(noise);
             }
-        }
-
-        private void OnDestroy()
-        {
-            
         }
     }
 }

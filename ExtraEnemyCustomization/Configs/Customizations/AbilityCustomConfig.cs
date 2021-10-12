@@ -11,6 +11,7 @@ namespace EECustom.Configs.Customizations
         public HealthRegenCustom[] HealthRegenCustom { get; set; } = new HealthRegenCustom[0];
         public InfectionAttackCustom[] InfectionAttackCustom { get; set; } = new InfectionAttackCustom[0];
         public KnockbackAttackCustom[] KnockbackAttackCustom { get; set; } = new KnockbackAttackCustom[0];
+        public ExplosiveAttackCustom[] ExplosiveAttackCustom { get; set; } = new ExplosiveAttackCustom[0];
 
         public override EnemyCustomBase[] GetAllSettings()
         {
@@ -20,6 +21,7 @@ namespace EECustom.Configs.Customizations
             list.AddRange(HealthRegenCustom);
             list.AddRange(InfectionAttackCustom);
             list.AddRange(KnockbackAttackCustom);
+            list.AddRange(ExplosiveAttackCustom);
             return list.ToArray();
         }
     }
