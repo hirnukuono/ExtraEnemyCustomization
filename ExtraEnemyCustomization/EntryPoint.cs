@@ -4,6 +4,7 @@ using BepInEx.IL2CPP;
 using EECustom.Customizations.Abilities.Managers;
 using EECustom.Customizations.Models.Managers;
 using EECustom.Customizations.Shooters.Managers;
+using EECustom.CustomSettings.Handlers;
 using EECustom.Managers;
 using EECustom.Utils;
 using HarmonyLib;
@@ -27,6 +28,7 @@ namespace EECustom
             ClassInjector.RegisterTypeInIl2Cpp<ScannerManager>();
             ClassInjector.RegisterTypeInIl2Cpp<EnemySilhouette>();
             ClassInjector.RegisterTypeInIl2Cpp<SilhouetteManager>();
+            ClassInjector.RegisterTypeInIl2Cpp<ExplosiveProjectileHandler>();
 
             Logger.LogInstance = Log;
 
