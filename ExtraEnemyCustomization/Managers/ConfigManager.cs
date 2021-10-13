@@ -24,6 +24,21 @@ namespace EECustom.Managers
                 {
                     BasePath = Path.Combine(MTFOUtil.CustomPath, "ExtraEnemyCustomization");
 
+                    Logger.Debug("Loading Category.json...");
+                    if (TryLoadConfig(BasePath, "Category.json", out CategoryConfig categoryConfig))
+                    {
+                        Current.Categories = categoryConfig;
+                        Current.Categories.Cache();
+                    }
+
+                    Logger.Debug("Loading ScoutWave.json");
+                    if (TryLoadConfig(BasePath, "ScoutWave.json", out ScoutWaveConfig scoutWaveConfig))
+                    {
+                        CustomScoutWaveManager.AddScoutSetting(scoutWaveConfig.Expeditions);
+                        CustomScoutWaveManager.AddTargetSetting(scoutWaveConfig.TargetSettings);
+                        CustomScoutWaveManager.AddWaveSetting(scoutWaveConfig.WaveSettings);
+                    }
+
                     Logger.Debug("Loading Model.json...");
                     if (TryLoadConfig(BasePath, "Model.json", out ModelCustomConfig modelConfig))
                         Current.ModelCustom = modelConfig;
@@ -44,13 +59,6 @@ namespace EECustom.Managers
                     if (TryLoadConfig(BasePath, "Detection.json", out DetectionCustomConfig detectionConfig))
                         Current.DetectionCustom = detectionConfig;
 
-                    Logger.Debug("Loading ScoutWave.json");
-                    if (TryLoadConfig(BasePath, "ScoutWave.json", out ScoutWaveConfig scoutWaveConfig))
-                    {
-                        CustomScoutWaveManager.AddScoutSetting(scoutWaveConfig.Expeditions);
-                        CustomScoutWaveManager.AddTargetSetting(scoutWaveConfig.TargetSettings);
-                        CustomScoutWaveManager.AddWaveSetting(scoutWaveConfig.WaveSettings);
-                    }
                     Logger.Debug("Loading SpawnCost.json...");
                     if (TryLoadConfig(BasePath, "SpawnCost.json", out SpawnCostCustomConfig spawnCostConfig))
                         Current.SpawnCostCustom = spawnCostConfig;
@@ -95,6 +103,7 @@ namespace EECustom.Managers
 
         public static ConfigManager Current { get; private set; }
 
+        public CategoryConfig Categories { get; private set; } = new CategoryConfig();
         public ModelCustomConfig ModelCustom { get; private set; } = new ModelCustomConfig();
         public AbilityCustomConfig AbilityCustom { get; private set; } = new AbilityCustomConfig();
         public ProjectileCustomConfig ProjectileCustom { get; private set; } = new ProjectileCustomConfig();

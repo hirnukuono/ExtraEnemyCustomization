@@ -1,4 +1,5 @@
 ﻿using BepInEx.Logging;
+using EECustom.Managers;
 using Enemies;
 using GameData;
 using System;
@@ -67,6 +68,7 @@ namespace EECustom.Customizations
         public uint[] PersistentIDs { get; set; } = new uint[1] { 0 };
         public string NameParam { get; set; } = string.Empty;
         public bool NameIgnoreCase { get; set; } = false;
+        public string[] Categories { get; set; } = new string[0];
 
         public bool IsMatch(EnemyAgent agent)
         {
@@ -79,13 +81,15 @@ namespace EECustom.Customizations
                 TargetMode.NameEquals => enemyData?.name?.Equals(NameParam, comparisonMode) ?? false,
                 TargetMode.NameContains => enemyData?.name?.Contains(NameParam, comparisonMode) ?? false,
                 TargetMode.Everything => true,
+                TargetMode.CategoryAny => ConfigManager.Current.Categories.Any(Categories, agent.EnemyDataID),
+                TargetMode.CategoryAll => ConfigManager.Current.Categories.All(Categories, agent.EnemyDataID),
                 _ => false,
             };
         }
 
         public string ToDebugString()
         {
-            return $"TargetDebug, Mode: {Mode}, persistentIDs: [{string.Join(", ", PersistentIDs)}], nameParam: {NameParam}";
+            return $"TargetDebug, Mode: {Mode}, persistentIDs: [{string.Join(", ", PersistentIDs)}], nameParam: {NameParam}, categories: [{string.Join(", ", Categories)}]";
         }
     }
 
@@ -94,6 +98,8 @@ namespace EECustom.Customizations
         PersistentID,
         NameEquals,
         NameContains,
-        Everything
+        Everything,
+        CategoryAny,
+        CategoryAll
     }
 }
