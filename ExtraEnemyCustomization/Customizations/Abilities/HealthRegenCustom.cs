@@ -1,4 +1,4 @@
-﻿using EECustom.Customizations.Abilities.Managers;
+﻿using EECustom.Customizations.Abilities.Handlers;
 using EECustom.Utils;
 using Enemies;
 
@@ -19,7 +19,7 @@ namespace EECustom.Customizations.Abilities
             {
                 foreach (var regenData in RegenDatas)
                 {
-                    var ability = agent.gameObject.AddComponent<HealthRegenManager>();
+                    var ability = agent.gameObject.AddComponent<HealthRegenHandler>();
                     ability.DamageBase = agent.Damage;
                     ability.RegenData = regenData;
                 }

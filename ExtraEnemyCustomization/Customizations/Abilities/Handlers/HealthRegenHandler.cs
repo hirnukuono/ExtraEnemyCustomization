@@ -5,9 +5,9 @@ using SNetwork;
 using System;
 using UnityEngine;
 
-namespace EECustom.Customizations.Abilities.Managers
+namespace EECustom.Customizations.Abilities.Handlers
 {
-    public class HealthRegenManager : MonoBehaviour
+    public class HealthRegenHandler : MonoBehaviour
     {
         public Dam_EnemyDamageBase DamageBase;
 
@@ -24,7 +24,7 @@ namespace EECustom.Customizations.Abilities.Managers
 
         private Action<EnemyAgent, Agent> _OnDamageDel;
 
-        public HealthRegenManager(IntPtr ptr) : base(ptr)
+        public HealthRegenHandler(IntPtr ptr) : base(ptr)
         {
         }
 

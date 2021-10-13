@@ -8,7 +8,7 @@ using System.Text;
 using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 
-namespace EECustom.Customizations.Models.Managers
+namespace EECustom.Customizations.Models.Handlers
 {
     public enum EnemyState
     {
@@ -20,7 +20,7 @@ namespace EECustom.Customizations.Models.Managers
         ScoutDetect
     }
 
-    public class ScannerManager : MonoBehaviour
+    public class ScannerHandler : MonoBehaviour
     {
         public EnemyAgent _Agent;
         public Color _DefaultColor;
@@ -42,7 +42,7 @@ namespace EECustom.Customizations.Models.Managers
         private float InterpStartTime = 0.0f;
         
 
-        public ScannerManager(IntPtr ptr) : base(ptr)
+        public ScannerHandler(IntPtr ptr) : base(ptr)
         {
             
         }

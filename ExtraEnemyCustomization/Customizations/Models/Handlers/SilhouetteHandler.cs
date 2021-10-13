@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-namespace EECustom.Customizations.Models.Managers
+namespace EECustom.Customizations.Models.Handlers
 {
     public class EnemySilhouette : MonoBehaviour
     {
@@ -39,7 +39,7 @@ namespace EECustom.Customizations.Models.Managers
         }
     }
 
-    public class SilhouetteManager : MonoBehaviour
+    public class SilhouetteHandler : MonoBehaviour
     {
         public EnemyAgent _Agent;
         public Color _DefaultColor;
@@ -52,7 +52,7 @@ namespace EECustom.Customizations.Models.Managers
         private NavMarker enemyMarker = null;
         private EnemySilhouette[] silhouettes = null;
 
-        public SilhouetteManager(IntPtr ptr) : base(ptr)
+        public SilhouetteHandler(IntPtr ptr) : base(ptr)
         {
 
         }

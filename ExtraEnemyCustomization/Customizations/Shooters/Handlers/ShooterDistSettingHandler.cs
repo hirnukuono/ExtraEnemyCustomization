@@ -2,9 +2,9 @@
 using System.Linq;
 using UnityEngine;
 
-namespace EECustom.Customizations.Shooters.Managers
+namespace EECustom.Customizations.Shooters.Handlers
 {
-    public class ShooterDistSettingManager : MonoBehaviour
+    public class ShooterDistSettingHandler : MonoBehaviour
     {
         public EAB_ProjectileShooter DefaultValue;
         public EAB_ProjectileShooter EAB_Shooter;
@@ -13,7 +13,7 @@ namespace EECustom.Customizations.Shooters.Managers
         private FireSetting _currentSetting = null;
         private float _timerToUpdate = 0.0f;
 
-        public ShooterDistSettingManager(IntPtr ptr) : base(ptr)
+        public ShooterDistSettingHandler(IntPtr ptr) : base(ptr)
         {
         }
 

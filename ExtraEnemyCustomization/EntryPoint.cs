@@ -1,9 +1,9 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.IL2CPP;
-using EECustom.Customizations.Abilities.Managers;
-using EECustom.Customizations.Models.Managers;
-using EECustom.Customizations.Shooters.Managers;
+using EECustom.Customizations.Abilities.Handlers;
+using EECustom.Customizations.Models.Handlers;
+using EECustom.Customizations.Shooters.Handlers;
 using EECustom.CustomSettings.Handlers;
 using EECustom.Managers;
 using EECustom.Utils;
@@ -22,12 +22,12 @@ namespace EECustom
     {
         public override void Load()
         {
-            ClassInjector.RegisterTypeInIl2Cpp<ShooterDistSettingManager>();
-            ClassInjector.RegisterTypeInIl2Cpp<HealthRegenManager>();
-            ClassInjector.RegisterTypeInIl2Cpp<PulseManager>();
-            ClassInjector.RegisterTypeInIl2Cpp<ScannerManager>();
+            ClassInjector.RegisterTypeInIl2Cpp<ShooterDistSettingHandler>();
+            ClassInjector.RegisterTypeInIl2Cpp<HealthRegenHandler>();
+            ClassInjector.RegisterTypeInIl2Cpp<PulseHandler>();
+            ClassInjector.RegisterTypeInIl2Cpp<ScannerHandler>();
             ClassInjector.RegisterTypeInIl2Cpp<EnemySilhouette>();
-            ClassInjector.RegisterTypeInIl2Cpp<SilhouetteManager>();
+            ClassInjector.RegisterTypeInIl2Cpp<SilhouetteHandler>();
             ClassInjector.RegisterTypeInIl2Cpp<ExplosiveProjectileHandler>();
 
             Logger.LogInstance = Log;

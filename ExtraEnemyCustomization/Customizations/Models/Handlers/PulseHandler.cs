@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace EECustom.Customizations.Models.Managers
+namespace EECustom.Customizations.Models.Handlers
 {
-    public class PulseManager : MonoBehaviour
+    public class PulseHandler : MonoBehaviour
     {
         public PulseEffectData PulseData;
         public float StartDelay = 0.0f;
@@ -22,7 +22,7 @@ namespace EECustom.Customizations.Models.Managers
         private int _CurrentPatternIndex = 0;
         private int _PatternLength = 0;
 
-        public PulseManager(IntPtr ptr) : base(ptr)
+        public PulseHandler(IntPtr ptr) : base(ptr)
         {
             
         }

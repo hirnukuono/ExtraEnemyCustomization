@@ -1,5 +1,5 @@
 ﻿using EECustom.Customizations.Models.Inject;
-using EECustom.Customizations.Models.Managers;
+using EECustom.Customizations.Models.Handlers;
 using EECustom.Events;
 using Enemies;
 using System;
@@ -63,7 +63,7 @@ namespace EECustom.Customizations.Models
             
             foreach(var pulse in PulseEffects)
             {
-                var manager = agent.gameObject.AddComponent<PulseManager>();
+                var manager = agent.gameObject.AddComponent<PulseHandler>();
                 manager.PulseData = pulse;
                 if(pulse.RandomizeTime)
                 {

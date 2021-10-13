@@ -1,4 +1,4 @@
-﻿using EECustom.Customizations.Shooters.Managers;
+﻿using EECustom.Customizations.Shooters.Handlers;
 using EECustom.Utils;
 using Enemies;
 using System.Linq;
@@ -38,7 +38,7 @@ namespace EECustom.Customizations.Shooters
                         m_shotSpreadY = projectileSetting.m_shotSpreadY
                     };
 
-                    var ability = agent.gameObject.AddComponent<ShooterDistSettingManager>();
+                    var ability = agent.gameObject.AddComponent<ShooterDistSettingHandler>();
                     ability.DefaultValue = clone;
                     ability.EAB_Shooter = projectileSetting;
                     ability.FireSettings = FireSettings;

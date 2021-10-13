@@ -1,5 +1,5 @@
 ﻿using AssetShards;
-using EECustom.Customizations.Models.Managers;
+using EECustom.Customizations.Models.Handlers;
 using EECustom.Events;
 using EECustom.Extensions;
 using Enemies;
@@ -64,7 +64,7 @@ namespace EECustom.Customizations.Models
 
         public void OnSpawned(EnemyAgent agent)
         {
-            var silManager = agent.gameObject.AddComponent<SilhouetteManager>();
+            var silManager = agent.gameObject.AddComponent<SilhouetteHandler>();
             silManager._Agent = agent;
             silManager._DefaultColor = DefaultColor;
             silManager._RequireTag = RequireTag;

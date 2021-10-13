@@ -1,5 +1,5 @@
 ﻿using EECustom.Customizations.Models.Inject;
-using EECustom.Customizations.Models.Managers;
+using EECustom.Customizations.Models.Handlers;
 using EECustom.Events;
 using Enemies;
 using System;
@@ -86,10 +86,10 @@ namespace EECustom.Customizations.Models
 
         public void OnSpawned(EnemyAgent agent)
         {
-            var scannerManager = agent.gameObject.GetComponent<ScannerManager>();
+            var scannerManager = agent.gameObject.GetComponent<ScannerHandler>();
             if (scannerManager == null)
             {
-                scannerManager = agent.gameObject.AddComponent<ScannerManager>();
+                scannerManager = agent.gameObject.AddComponent<ScannerHandler>();
             }
             scannerManager._Agent = agent;
             scannerManager._DefaultColor = DefaultColor;
