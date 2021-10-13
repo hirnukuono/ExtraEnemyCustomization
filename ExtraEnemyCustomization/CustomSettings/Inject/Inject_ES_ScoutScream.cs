@@ -4,7 +4,7 @@ using SNetwork;
 
 namespace EECustom.CustomSettings.Inject
 {
-    [HarmonyPatch(typeof(ES_ScoutScream), "CommonUpdate")]
+    [HarmonyPatch(typeof(ES_ScoutScream), nameof(ES_ScoutScream.CommonUpdate))]
     internal class Inject_ES_ScoutScream
     {
         [HarmonyWrapSafe]
