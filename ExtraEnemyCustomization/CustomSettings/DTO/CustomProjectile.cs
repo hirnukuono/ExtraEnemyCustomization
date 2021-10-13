@@ -14,5 +14,10 @@ namespace EECustom.CustomSettings.DTO
         public ValueBase GlowRange { get; set; } = ValueBase.Unchanged;
         public ValueBase Damage { get; set; } = ValueBase.Unchanged;
         public ValueBase Infection { get; set; } = ValueBase.Unchanged;
+        public ValueBase ExplosionDamage { get; set; } = ValueBase.Zero;
+        public float ExplosionMinRange { get; set; } = 2.0f;
+        public float ExplosionMaxRange { get; set; } = 5.0f;
+        public float ExplosionNoiseMinRange { get; set; } = 5.0f;
+        public float ExplosionNoiseMaxRange { get; set; } = 10.0f;
     }
 }

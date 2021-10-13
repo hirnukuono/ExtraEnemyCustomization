@@ -1,4 +1,5 @@
 ﻿using EECustom.CustomSettings.DTO;
+using EECustom.CustomSettings.Handlers;
 using EECustom.Utils;
 using System;
 using System.Collections.Generic;
@@ -50,6 +51,18 @@ namespace EECustom.CustomSettings
                 else
                 {
                     Logger.Warning($"ProjectileBase is not a ProjectileTargeting, Ignore few settings, ProjID: {projInfo.ID}, Name: {projInfo.DebugName}");
+                }
+
+                var explosiveDamage = projInfo.ExplosionDamage.GetAbsValue(PlayerData.MaxHealth);
+                if (explosiveDamage > 0.0f)
+                {
+                    Logger.Debug($"Adding Explosive Effect!  Dmg: {explosiveDamage}");
+                    var explosive = newPrefab.gameObject.AddComponent<ExplosiveProjectileHandler>();
+                    explosive.Damage = explosiveDamage;
+                    explosive.MinRange = projInfo.ExplosionMinRange;
+                    explosive.MaxRange = projInfo.ExplosionMaxRange;
+                    explosive.NoiseMinRange = projInfo.ExplosionNoiseMinRange;
+                    explosive.NoiseMaxRange = projInfo.ExplosionNoiseMaxRange;
                 }
             }
             else
