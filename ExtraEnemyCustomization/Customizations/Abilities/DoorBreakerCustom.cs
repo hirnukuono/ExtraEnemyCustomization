@@ -7,7 +7,6 @@ using System.Text;
 
 namespace EECustom.Customizations.Abilities
 {
-    //MAJOR: Implement
     public class DoorBreakerCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
         public bool UseGlobalTimer { get; set; } = false;
