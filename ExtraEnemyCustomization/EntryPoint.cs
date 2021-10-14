@@ -29,6 +29,7 @@ namespace EECustom
             ClassInjector.RegisterTypeInIl2Cpp<EnemySilhouette>();
             ClassInjector.RegisterTypeInIl2Cpp<SilhouetteHandler>();
             ClassInjector.RegisterTypeInIl2Cpp<ExplosiveProjectileHandler>();
+            ClassInjector.RegisterTypeInIl2Cpp<BleedingHandler>();
 
             Logger.LogInstance = Log;
 
