@@ -1,4 +1,5 @@
 ﻿using Enemies;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace EECustom.Customizations.Models
@@ -7,9 +8,22 @@ namespace EECustom.Customizations.Models
     {
         public ModelRefData[] ModelRefs { get; set; } = new ModelRefData[0];
 
+        private readonly static List<(EnemyModelRefs modelRef, ModelRefCache setting)> _AffectedModelRefs = new List<(EnemyModelRefs, ModelRefCache)>();
+
         public override string GetProcessName()
         {
             return "MedelRef";
+        }
+
+        public override void OnConfigUnloaded()
+        {
+            for(int i =0;i<_AffectedModelRefs.Count;i++)
+            {
+                var modelRef = _AffectedModelRefs[i].modelRef;
+                var setting = _AffectedModelRefs[i].setting;
+                setting.CopyTo(ref modelRef);
+            }
+            _AffectedModelRefs.Clear();
         }
 
         public void OnPrefabBuilt(EnemyAgent agent)
@@ -17,6 +31,7 @@ namespace EECustom.Customizations.Models
             var modelRef = agent.ModelRef;
             var changeCache = new ModelRefCache();
             changeCache.CopyFrom(modelRef);
+            _AffectedModelRefs.Add((modelRef, changeCache));
 
             foreach (var mRef in ModelRefs)
             {

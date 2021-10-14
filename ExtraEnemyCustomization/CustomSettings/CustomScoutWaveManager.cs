@@ -181,6 +181,13 @@ namespace EECustom.CustomSettings
                 return null;
         }
 
+        public static void ClearAll()
+        {
+            _ScoutSettings.Clear();
+            _WaveSettingDict.Clear();
+            _TargetSettingDict.Clear();
+        }
+
         public static void TriggerScoutWave(EnemyAgent scoutAgent)
         {
             if (!_isDefaultSettingBlocked)

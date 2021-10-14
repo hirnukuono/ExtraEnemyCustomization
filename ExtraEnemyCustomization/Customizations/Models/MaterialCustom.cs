@@ -9,6 +9,8 @@ namespace EECustom.Customizations.Models
     {
         private readonly static Dictionary<string, Material> _matDict = new();
 
+        private readonly static List<MaterialSwapCache> _SwapCaches = new List<MaterialSwapCache>();
+
         public static void AddToCache(string matName, Material mat)
         {
             if (!_matDict.ContainsKey(matName))
@@ -20,6 +22,14 @@ namespace EECustom.Customizations.Models
         public override string GetProcessName()
         {
             return "Material";
+        }
+
+        public override void OnConfigUnloaded()
+        {
+            foreach (var cache in _SwapCaches)
+            {
+                cache.matref.m_material = cache.original;
+            }
         }
 
         public void OnPrefabBuilt(EnemyAgent agent)
@@ -41,7 +51,13 @@ namespace EECustom.Customizations.Models
                 }
 
                 LogDev($" - Trying to Replace Material, Before: {matName} After: {newMat.name}");
+                _SwapCaches.Add(new MaterialSwapCache()
+                {
+                    matref = mat,
+                    original = mat.m_material
+                });
                 mat.m_material = newMat;
+
                 LogVerbose(" - Replaced!");
             }
         }
@@ -51,5 +67,11 @@ namespace EECustom.Customizations.Models
     {
         public string From { get; set; } = "";
         public string To { get; set; } = "";
+    }
+
+    public struct MaterialSwapCache
+    {
+        public MaterialRef matref;
+        public Material original;
     }
 }

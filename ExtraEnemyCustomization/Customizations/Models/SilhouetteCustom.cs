@@ -28,6 +28,16 @@ namespace EECustom.Customizations.Models
             return "Silhouette";
         }
 
+        public override void OnConfigUnloaded()
+        {
+            foreach(var obj in _SilhouetteObjects)
+            {
+                if (obj != null)
+                    GameObject.Destroy(obj);
+            }
+            _SilhouetteObjects.Clear();
+        }
+
         public void OnPrefabBuilt(EnemyAgent agent)
         {
             if (!_materialCached)
@@ -93,6 +103,7 @@ namespace EECustom.Customizations.Models
                 var enemyGraphic = renderer.gameObject;
                 var enemyGhost = enemyGraphic.Instantiate(enemyGraphic.transform, "g_ghost");
                 enemyGhost.layer = LayerMask.NameToLayer("Enemy");
+                _SilhouetteObjects.Add(enemyGhost);
 
                 _ = enemyGhost.AddComponent<EnemySilhouette>();
                 var newRenderer = enemyGhost.GetComponent<Renderer>();
