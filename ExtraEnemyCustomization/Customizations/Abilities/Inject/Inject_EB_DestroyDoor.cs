@@ -27,9 +27,6 @@ namespace EECustom.Customizations.Abilities.Inject
                 return;
 
             var enemyAgent = __instance.m_ai.Agent.Cast<EnemyAgent>();
-            __instance.m_ai.Agent.TargetLookDir = __instance.m_ai.m_courseNavigation.m_onPortalPosition - enemyAgent.Position;
-            __instance.m_ai.Agent.TargetLookDir.Normalize();
-            var distance = enemyAgent.TargetLookDir.sqrMagnitude;
 
             var breakerProp = EnemyProperty<DoorBreakerSetting>.Get(enemyAgent);
             if (breakerProp != null)

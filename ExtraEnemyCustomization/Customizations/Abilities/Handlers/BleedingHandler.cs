@@ -22,7 +22,7 @@ namespace EECustom.Customizations.Abilities.Handlers
 
         }
 
-        private void Update()
+        internal void Update()
         {
             if (!_Bleeding)
                 return;

@@ -18,7 +18,7 @@ namespace EECustom.Customizations.Abilities
         public BleedData TentacleData { get; set; } = new BleedData();
 
         private readonly List<ushort> _EnemyList = new List<ushort>();
-        private System.Random _Random = new System.Random();
+        private readonly System.Random _Random = new System.Random();
 
         private BleedingHandler _BleedingHandler;
 
