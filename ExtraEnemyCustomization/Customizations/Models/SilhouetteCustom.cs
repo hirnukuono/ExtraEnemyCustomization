@@ -42,12 +42,60 @@ namespace EECustom.Customizations.Models
                 _MaterialCached = true;
             }
 
-            
-            var comps = agent.GetComponentsInChildren<Renderer>(true);
-            foreach (var comp in comps)
+            var renderers = agent.GetComponentsInChildren<Renderer>(true);
+            var rendererList = new List<Renderer>();
+            foreach (var renderer in renderers)
             {
-                var enemyGraphic = comp.gameObject;
-                var enemyGhost = enemyGraphic.Instantiate(comp.gameObject.transform, "g_ghost");
+                rendererList.Add(renderer);
+            }
+
+            var charMats = agent.GetComponentInChildren<CharacterMaterialHandler>().m_materialRefs;
+            foreach (var matRef in charMats)
+            {
+                if (!matRef.HasFeature(MaterialSupport.Destruction))
+                {
+                    RemoveFromRendererMatRef(matRef);
+                    continue;
+                }
+                if (!matRef.HasFeature(MaterialSupport.Destruction))
+                {
+                    RemoveFromRendererMatRef(matRef);
+                    continue;
+                }
+
+                foreach (var comp in matRef.m_renderers)
+                {
+                    if (comp.name.Equals("g_leg_l")) //MINOR: Shooter's left leg is always visible for some fucking reason
+                    {
+                        RemoveFromRenderer(comp);
+                    }
+                }
+
+                void RemoveFromRendererMatRef(MaterialRef matRef)
+                {
+                    foreach(var renderer in matRef.m_renderers)
+                    {
+                        RemoveFromRenderer(renderer);
+                    }
+                }
+
+                void RemoveFromRenderer(Renderer renderer)
+                {
+                    var index = rendererList.FindIndex(x => x.GetInstanceID() == renderer.GetInstanceID());
+                    if (index != -1)
+                    {
+                        rendererList.RemoveAt(index);
+                    }
+                }
+            }
+
+            
+            foreach(var renderer in rendererList)
+            {
+                Logger.Verbose($"Silhouette Object Found! : {renderer.name}");
+
+                var enemyGraphic = renderer.gameObject;
+                var enemyGhost = enemyGraphic.Instantiate(enemyGraphic.transform, "g_ghost");
                 enemyGhost.layer = LayerMask.NameToLayer("Enemy");
 
                 _ = enemyGhost.AddComponent<EnemySilhouette>();
@@ -57,8 +105,6 @@ namespace EECustom.Customizations.Models
                 newRenderer.material.SetVector("_ColorB", Color.clear);
                 newRenderer.lightProbeUsage = LightProbeUsage.BlendProbes;
                 newRenderer.reflectionProbeUsage = ReflectionProbeUsage.BlendProbes;
-                newRenderer.castShadows = false;
-                newRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
             }
         }
 
