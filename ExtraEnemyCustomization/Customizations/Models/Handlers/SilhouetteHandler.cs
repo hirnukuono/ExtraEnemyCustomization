@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace EECustom.Customizations.Models.Handlers
 {
@@ -59,10 +60,22 @@ namespace EECustom.Customizations.Models.Handlers
 
         internal void Start()
         {
+            
             silhouettes = GetComponentsInChildren<EnemySilhouette>(true);
-            foreach(var sil in silhouettes)
+            foreach (var sil in silhouettes)
             {
-                sil.SilhouetteMaterial = sil.GetComponent<Renderer>().material;
+                var renderer = sil.GetComponent<Renderer>();
+                sil.SilhouetteMaterial = renderer.material;
+
+                if (renderer.shadowCastingMode == ShadowCastingMode.ShadowsOnly || renderer.shadowCastingMode == ShadowCastingMode.Off)
+                {
+                    renderer.forceRenderingOff = false;
+                    renderer.shadowCastingMode = ShadowCastingMode.Off;
+
+                    var culler = _Agent.MovingCuller.Culler;
+                    culler.Renderers.Add(renderer);
+                    renderer.enabled = true;
+                }
             }
 
             if (_RequireTag || _ReplaceColorWithMarker)
