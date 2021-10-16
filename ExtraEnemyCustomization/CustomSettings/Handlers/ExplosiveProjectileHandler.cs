@@ -11,6 +11,7 @@ namespace EECustom.CustomSettings.Handlers
     public class ExplosiveProjectileHandler : MonoBehaviour
     {
         public float Damage;
+        public float EnemyMulti;
         public float MinRange;
         public float MaxRange;
         public float NoiseMinRange;
@@ -23,7 +24,7 @@ namespace EECustom.CustomSettings.Handlers
 
         private void OnDestroy()
         {
-            ExplosionUtil.TriggerExplodion(transform.position, Damage, MinRange, MaxRange);
+            ExplosionUtil.TriggerExplodion(transform.position, Damage, EnemyMulti, MinRange, MaxRange);
 
             var newPos = transform.position;
             if (!PhysicsUtil.SlamPos(ref newPos, Vector3.down, 64.0f, LayerManager.MASK_LEVELGEN, false, 0.0f, 0.0f))

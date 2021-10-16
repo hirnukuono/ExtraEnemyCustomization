@@ -138,11 +138,12 @@
 				"categories": []
 			},
 			"MeleeData": {
-				"Damage": "20%",
-				"MinRange": 5.0,
-				"MaxRange": 10.0,
-				"NoiseMinRange": 10.0,
-				"NoiseMaxRange": 15.0
+				"Damage": "20%", //BasedValue: (Based on PlayerDataBlock.health): Damage to deal with explosion (0 to disable it)
+				"EnemyDamageMulti": 1.0, //Multiplier when enemy is receiving explosion damage
+				"MinRange": 5.0, //How far it does maximum damage?
+				"MaxRange": 10.0, //How far it does damage?
+				"NoiseMinRange": 10.0, //How far it awake nearby enemies when it explodes
+				"NoiseMaxRange": 15.0 //How for it can be hear by nearby enemy when it explodes
 			},
 			"TentacleData": {
 				"Damage": "10%",
@@ -174,7 +175,7 @@
 				"DoMultDistanceZ": false //Z Velocity will be affected by distance? (longer = stronger)
 			},
 			"TentacleData": {
-				"Velocity": -1.5, //Allows Negative values to pull player instead of push it
+				"Velocity": -1.5, //Allows Negative values to drag player instead of push it
 				"VelocityZ": 9.0,
 				"DoMultDistance": true,
 				"DoMultDistanceZ": false

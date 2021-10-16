@@ -70,7 +70,7 @@ namespace EECustom.Customizations.Abilities
             var maxDamage = data.Damage.GetAbsValue(PlayerData.MaxHealth);
             if (maxDamage > 0.0f)
             {
-                ExplosionUtil.TriggerExplodion(player.Position, maxDamage, data.MinRange, data.MaxRange);
+                ExplosionUtil.TriggerExplodion(player.Position, maxDamage, data.EnemyDamageMulti, data.MinRange, data.MaxRange);
 
                 var noise = new NM_NoiseData()
                 {
@@ -92,6 +92,7 @@ namespace EECustom.Customizations.Abilities
     public class ExplosiveAttackData
     {
         public ValueBase Damage { get; set; } = ValueBase.Zero;
+        public float EnemyDamageMulti { get; set; } = 1.0f;
         public float MinRange { get; set; } = 2.0f;
         public float MaxRange { get; set; } = 5.0f;
         public float NoiseMinRange { get; set; } = 5.0f;

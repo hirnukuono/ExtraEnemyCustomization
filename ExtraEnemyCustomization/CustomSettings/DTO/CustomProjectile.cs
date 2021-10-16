@@ -15,6 +15,7 @@ namespace EECustom.CustomSettings.DTO
         public ValueBase Damage { get; set; } = ValueBase.Unchanged;
         public ValueBase Infection { get; set; } = ValueBase.Unchanged;
         public ValueBase ExplosionDamage { get; set; } = ValueBase.Zero;
+        public float ExplosionEnemyDamageMulti { get; set; } = 1.0f;
         public float ExplosionMinRange { get; set; } = 2.0f;
         public float ExplosionMaxRange { get; set; } = 5.0f;
         public float ExplosionNoiseMinRange { get; set; } = 5.0f;

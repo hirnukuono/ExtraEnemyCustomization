@@ -47,6 +47,7 @@ namespace EECustom.CustomSettings.Inject
             {
                 var newExplosive = gameObject.GetComponent<ExplosiveProjectileHandler>();
                 newExplosive.Damage = baseExplosive.Damage;
+                newExplosive.EnemyMulti = baseExplosive.EnemyMulti;
                 newExplosive.MinRange = baseExplosive.MinRange;
                 newExplosive.MaxRange = baseExplosive.MaxRange;
                 newExplosive.NoiseMinRange = baseExplosive.NoiseMinRange;

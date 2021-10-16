@@ -3,8 +3,6 @@ using AK;
 using FX_EffectSystem;
 using SNetwork;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -12,7 +10,7 @@ namespace EECustom.Utils
 {
     public static class ExplosionUtil
     {
-        public static void TriggerExplodion(Vector3 position, float damage, float minRange, float maxRange)
+        public static void TriggerExplodion(Vector3 position, float damage, float enemyMulti, float minRange, float maxRange)
         {
             CellSound.Post(EVENTS.STICKYMINEEXPLODE, position);
             //_ = LightFlash(position);
@@ -21,10 +19,14 @@ namespace EECustom.Utils
                 return;
 
             var targets = Physics.OverlapSphere(position, maxRange, LayerManager.MASK_EXPLOSION_TARGETS);
+            if (targets.Count < 1)
+                return;
+
+            DamageUtil.IncrementSearchID();
+            var searchID = DamageUtil.SearchID;
 
             foreach (var target in targets)
             {
-
                 Vector3 targetPosition = target.transform.position;
 
                 Agent agent = target.GetComponent<Agent>();
@@ -37,8 +39,14 @@ namespace EECustom.Utils
                 if (!Physics.Raycast(position, direction.normalized, out RaycastHit _, maxRange, LayerManager.MASK_EXPLOSION_BLOCKERS))
                 {
                     var comp = target.GetComponent<IDamageable>();
+
                     if (comp == null)
                         continue;
+
+                    if (comp.GetBaseDamagable().TempSearchID == searchID)
+                        continue;
+
+                    comp.GetBaseDamagable().TempSearchID = searchID;
 
                     var distance = Vector3.Distance(position, targetPosition);
                     var newDamage = 0.0f;
@@ -52,7 +60,15 @@ namespace EECustom.Utils
                     }
                     Logger.Verbose($"Explosive damage: {newDamage} out of max: {damage}, Dist: {distance}, min: {minRange}, max: {maxRange}");
 
-                    comp.ExplosionDamage(newDamage, position, Vector3.up * 1000);
+                    var enemyLimb = comp.TryCast<Dam_EnemyDamageLimb>();
+                    if (enemyLimb != null)
+                    {
+                        comp.GetBaseDamagable().ExplosionDamage(newDamage * enemyMulti, position, Vector3.up * 1000);
+                    }
+                    else
+                    {
+                        comp.ExplosionDamage(newDamage, position, Vector3.up * 1000);
+                    }
                 }
             }
         }

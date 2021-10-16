@@ -59,6 +59,7 @@ namespace EECustom.CustomSettings
                     Logger.Debug($"Adding Explosive Effect!  Dmg: {explosiveDamage}");
                     var explosive = newPrefab.gameObject.AddComponent<ExplosiveProjectileHandler>();
                     explosive.Damage = explosiveDamage;
+                    explosive.EnemyMulti = projInfo.ExplosionEnemyDamageMulti;
                     explosive.MinRange = projInfo.ExplosionMinRange;
                     explosive.MaxRange = projInfo.ExplosionMaxRange;
                     explosive.NoiseMinRange = projInfo.ExplosionNoiseMinRange;
