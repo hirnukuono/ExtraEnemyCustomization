@@ -1,0 +1,112 @@
+{
+	"Expeditions": [
+		{
+			"Targets": [
+				"A1", //Only for A1
+				"B*", //For Every B-Tier
+				"*3", //For Every 3 Levels
+				"*" //And for every level
+			],
+			"ScoutSettings": [
+				//List of Scout Settings you want to use!
+				{
+					"TargetSetting": "BullrushScouts", //From TargetSettings section
+					"WaveSetting": "Spawn Bullrushs with One BigCharger" //From WaveSettings section
+				},
+				{
+					"TargetSetting": "ShadowScouts",
+					"WaveSetting": "Spawn Random Shadows"
+				}
+			]
+		}
+	],
+	"TargetSettings": [
+		{
+			//This is same as other Target Settings!
+			"Name": "BullrushScouts",
+			"Target": {
+				"Mode": "NameContains",
+				"persistentIDs": [],
+				"nameParam": "Bullrush",
+				"nameIgnoreCase": true,
+				"categories": []
+			}
+		},
+		{
+			"Name": "ShadowScouts",
+			"Target": {
+				"Mode": "NameContains",
+				"persistentIDs": [],
+				"nameParam": "Shadow",
+				"nameIgnoreCase": true,
+				"categories": []
+			}
+		}
+	],
+	"WaveSettings": [
+		{
+			"Name": "Spawn Bullrushs with One BigCharger",
+			"Waves": [
+				[
+					{
+						//Simple Format
+						"WaveSettingID": 3,
+						"WavePopulationID": 5,
+						"Delay": 0.0
+					},
+					{
+						//And Advanced Format
+						"WaveSettingID": 3,
+						"WavePopulationID": 5,
+						"Delay": 0.0,
+						"StopWaveOnDeath": true, //Force stop when scout is dead?
+						"SpawnSetting": {
+							"SpawnType": "InNode", //How Spawning works?
+							//ClosestAlive - 2 Rooms away from Closest Player from Node.
+							//ClosestNoBetweenPlayers - Same as above, but never spawn between player
+							//InNode - In specific node
+							//InNodeZone - In specific node, but every room can be used
+							"NodeType": "Scout",
+							//Scout - Node which scout is placed
+							//FromArea - From Area with "Layer", "LocalIndex", "AreaIndex" parameter
+							//FromElevatorArea - From Elevator Area (Where the level starts)
+							"Layer": 0,
+							"LocalIndex": 0,
+							"AreaIndex": 0
+						}
+					}
+				]
+			]
+		},
+		{
+			"Name": "Spawn Random Shadows",
+			"Waves": [
+				//Group 1
+				[
+					{
+						"WaveSettingID": 15, //Enable Trickle Alarm (10% of chance)
+						"WavePopulationID": 7,
+						"Delay": 0.0
+					}
+				],
+				//Group 2
+				[
+					{
+						"WaveSettingID": 3, //Just Regular Scout Wave (90% of chance)
+						"WavePopulationID": 7,
+						"Delay": 0.0
+					},
+					{
+						"WaveSettingID": 3, //And another wave
+						"WavePopulationID": 7,
+						"Delay": 8.0
+					}
+				]
+			],
+			"WeightsOverride": [
+				1.0, //Group 1's weight = 1.0
+				9.0 //Group 2's weight = 9.0
+			]
+		}
+	]
+}

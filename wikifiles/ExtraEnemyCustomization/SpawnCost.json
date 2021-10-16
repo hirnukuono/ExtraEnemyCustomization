@@ -1,0 +1,19 @@
+{
+	"SpawnCostCustom": [
+		{
+			"Enabled": false, //You can check first item of Model.json if you have no idea with this formatting
+			"DebugName": "Bosses-10.0",
+			"Target": {
+				"Mode": "PersistentID",
+				"persistentIDs": [
+					36, //Birther
+					37, //Birther Boss
+					29 //Tank
+				],
+				"nameParam": "",
+				"categories": []
+			},
+			"SpawnCost": 10.0 //Set Target Enemy cost to this
+		}
+	]
+}

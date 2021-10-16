@@ -1,0 +1,56 @@
+What is ##BasedValue?
+
+BasedValue is the unique input field for one the have original value or max value to use it.
+BasedValue Support lots of input for single field.
+
+
+Supported Input with Examples:
+
+
+Unchanged Notifier String Format:
+"Health": "Unchanged"
+ - Set it to 'Unchanged', 'Ignore', 'Keep', 'Original' or 'KeepOriginal' will set this field to Original Value.
+ - WARNING: Using this on field that doesn't have default value will make the value to their max value (If you set "RegenAmount" to "Unchanged" they will regen as full health immediately)
+
+
+Percentage Format:
+"Health": "100%"
+"Health": "25%"
+"Damage": "25%"
+ - Set Value to Percentage format will gives you relative value from the base value (usually max value).
+ - So in "Health" example, it will gives you value of percentage of MaxHealth.
+ - While in "Damage" example, it usually based on Players MaxHealth value. So each shot damage can be converted into percentage health value which player can be found on their HUD.
+ - Reminder: -25% is "value multiply by -0.25", not "value multiply by 0.75" always keep this in your mind.
+
+
+Percentage Format(From default):
+"Damage": "50% of default" //While Default value is 2.0
+"Damage": "50%OF DEFAULT"
+ - Set Value to Percentage format with "of default" suffix will gives you relative value from current Value (WARNING: only few fields have default value)
+ - So in this case, Damage will be 50% of default value, which means it will be 1.0
+
+
+Absolute Number Format:
+"Health": "25"
+"Health": 25.0
+ - Using raw number will pretend them as Absolute Number. without any percentage Calculation.
+ - This option is usually recommended for who used to using absolute value for damage, health or infection values
+
+
+Complicated Format:
+"Health": {
+	"Value": 0.5,
+	"Mode": "Rel"
+}
+"Health": {
+	"Value": 12.5,
+	"Mode": "Abs"
+}
+"Health": {
+	"Value": 12.5,
+	"Mode": "Unchanged"
+}
+ - One of the complicated way to write this value type
+ - Value can be both from 0 to 1 percentage value in "Rel" Mode.
+ - Also can be Absolute value if it's "Abs" Mode.
+ - Or you could just set to Unchanged if you want.
