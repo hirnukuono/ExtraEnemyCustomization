@@ -15,7 +15,7 @@ namespace EECustom.Utils
         public static void TriggerExplodion(Vector3 position, float damage, float minRange, float maxRange)
         {
             CellSound.Post(EVENTS.STICKYMINEEXPLODE, position);
-            _ = LightFlash(position);
+            //_ = LightFlash(position);
 
             if (!SNet.IsMaster)
                 return;
@@ -57,6 +57,7 @@ namespace EECustom.Utils
             }
         }
 
+        [Obsolete("FX_Light has issue with level Lighting", true)]
         private static async Task LightFlash(Vector3 pos)
         {
             FX_Manager.TryAllocateFXLight(out FX_PointLight light);
