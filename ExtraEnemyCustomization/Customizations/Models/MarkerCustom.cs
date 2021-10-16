@@ -11,13 +11,14 @@ namespace EECustom.Customizations.Models
     public class MarkerCustom : EnemyCustomBase, IEnemyPrefabBuiltEvent, IEnemySpawnedEvent
     {
         public string SpriteName { get; set; } = string.Empty;
-        public Color MarkerColor { get; set; } = Color.red;
+        public Color MarkerColor { get; set; } = new Color(0.8235f, 0.1843f, 0.1176f);
         public string MarkerText { get; set; } = string.Empty;
         public bool BlinkIn { get; set; } = false;
         public bool Blink { get; set; } = false;
         public float BlinkDuration { get; set; } = 30.0f;
         public float BlinkMinDelay { get; set; } = 1.0f;
         public float BlinkMaxDelay { get; set; } = 5.0f;
+        public bool AllowMarkingOnHibernate { get; set; } = false;
 
         private Sprite _Sprite = null;
         private bool _PrespawnOnce = false;
@@ -59,6 +60,9 @@ namespace EECustom.Customizations.Models
 
         public void OnSpawned(EnemyAgent agent)
         {
+            if (AllowMarkingOnHibernate)
+                agent.ScannerData.m_soundIndex = 0; //I know... this is such a weird way to do it...
+
             EnemyMarkerEvents.RegisterOnMarked(agent, OnMarked);
         }
 
