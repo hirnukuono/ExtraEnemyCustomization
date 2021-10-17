@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using EECustom.Extensions;
+using EECustom.Utils;
 using Enemies;
 using UnityEngine;
 
@@ -22,51 +23,25 @@ namespace EECustom.Customizations.Abilities
         public eEffectVolumeContents EffectContents { get; set; } = eEffectVolumeContents.Infection;
         public eEffectVolumeModification EffectModification { get; set; } = eEffectVolumeModification.Inflict;
         public float EffectScale { get; set; } = 1f;
-        
-        private readonly List<(EAB_FogSphere, GameObject)> _ChangedList = new();
-        private readonly List<EV_Sphere> _EVSpheres = new();
+
+        private readonly List<(EAB_FogSphere fogEab, GameObject originalPrefab)> _ChangedList = new List<(EAB_FogSphere, GameObject)>();
         
         public override string GetProcessName()
         {
             return "FogSphere";
         }
 
-        public void OnSpawned(EnemyAgent agent)
-        {
-            if (EffectEnabled)
-            {
-                var EVSphere = new EV_Sphere()
-                {
-                    position = agent.Position,
-                    minRadius = RangeMin,
-                    maxRadius = RangeMax,
-                    modificationScale = EffectScale,
-                    invert = EffectModification == eEffectVolumeModification.Shield,
-                    contents = EffectContents,
-                    modification = EffectModification
-                };
-                if (!_EVSpheres.Contains(EVSphere))
-                {
-                    EffectVolumeManager.RegisterVolume(EVSphere);
-                    _EVSpheres.Add(EVSphere);
-                }
-                else
-                {
-                    EffectVolumeManager.UnregisterVolume(EVSphere);
-                }
-                
-            }
-        }
-
         public void OnPrefabBuilt(EnemyAgent agent)
         {
             var eabFog = agent.GetComponentInChildren<EAB_FogSphere>(true);
+            if (eabFog == null)
+                return;
+
             var fogPrefab = eabFog.m_fogSpherePrefab;
-            _ChangedList.Add((eabFog, fogPrefab));
 
             var newFogPrefab = fogPrefab.Instantiate(agent.gameObject.transform, "newFogPrefab");
-            var fogHandler = eabFog.m_fogSpherePrefab.GetComponent<FogSphereHandler>();
-            
+            var fogHandler = newFogPrefab.GetComponent<FogSphereHandler>();
+
             if (fogHandler != null)
             {
                 fogHandler.m_colorMin = ColorMin;
@@ -80,7 +55,30 @@ namespace EECustom.Customizations.Abilities
                 fogHandler.m_densityAmountMin = DensityAmountMin;
                 fogHandler.m_densityAmountMax = DensityAmountMax;
                 fogHandler.m_totalLength = Duration;
+
+                eabFog.m_fogSpherePrefab = newFogPrefab;
+                _ChangedList.Add((eabFog, fogPrefab));
             }
         }
+
+        public void OnSpawned(EnemyAgent agent)
+        {
+            if (EffectEnabled)
+            {
+                var effectSetting = EnemyProperty<SphereEffectSetting>.RegisterOrGet(agent);
+                effectSetting.HandlerCount = 0;
+                effectSetting.EffectContents = EffectContents;
+                effectSetting.EffectModification = EffectModification;
+                effectSetting.EffectScale = EffectScale;
+            }
+        }
+    }
+
+    public class SphereEffectSetting
+    {
+        public int HandlerCount = 0;
+        public eEffectVolumeContents EffectContents = eEffectVolumeContents.Infection;
+        public eEffectVolumeModification EffectModification = eEffectVolumeModification.Inflict;
+        public float EffectScale = 1.0f;
     }
 }
