@@ -10,7 +10,7 @@
     <UnhollowedLibsFolder>$(GameFolder)/BepInEx/unhollowed</UnhollowedLibsFolder>
     <TargetFramework>netstandard2.1</TargetFramework>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <Version>0.8.0</Version>
+    <Version>0.8.1</Version>
     <RootNamespace>EECustom</RootNamespace>
   </PropertyGroup>
 

@@ -5,7 +5,7 @@
 	"FogSphereCustom": [
 		{
 			"Enabled": false, //You can check first item of Model.json if you have no idea with this formatting
-			"DebugName": "BirtherFog_Gradual",
+			"DebugName": "BirtherFog_InfectionWave",
 			"Target": {
 				"Mode": "PersistentID",
 				"persistentIDs": [
@@ -15,27 +15,21 @@
 				"nameIgnoreCase": true,
 				"categories": []
 			},
-			"ColorMin": {
-				"r": 0.0,
-				"g": 0.0,
-				"b": 0.0,
-				"a": 1.0
-			},
-			"ColorMax": {
-				"r": 0.0,
-				"g": 0.0,
-				"b": 0.0,
-				"a": 1.0
-			},
+			"ColorMin": "#A9F5F2",
+			"ColorMax": "#A9F5F2",
 			"IntensityMin": 1.0,
 			"IntensityMax": 20.0,
-			"RangeMin": 5.0, //How far it spread in initial spawn?
-			"RangeMax": 120.0, //How far it should be spread?
-			"DensityMin": 0.0,
-			"DensityMax": 5.0,
+			"RangeMin": 10.0, //How far it spread in initial spawn?
+			"RangeMax": 150.0, //How far it should be spread?
+			"DensityMin": 10.0,
+			"DensityMax": 150.0,
 			"DensityAmountMin": 0.0,
-			"DensityAmountMax": 5.0,
-			"Duration": 30.0
+			"DensityAmountMax": 4.0,
+			"Duration": 3.0,
+			"EffectEnabled": true, //Do this fog changes infection status?
+			"EffectContents": "Infection", //All, Health, Infection
+			"EffectModification": "Inflict", //Inflict, Shield
+			"EffectScale": 0.1 //Scale for effect
 		}
 	],
 	"BirthingCustom": [
