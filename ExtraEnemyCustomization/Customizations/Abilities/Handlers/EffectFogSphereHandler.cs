@@ -24,7 +24,7 @@ namespace EECustom.Customizations.Abilities.Handlers
                 var range = Mathf.Sqrt(1.0f / sphere.m_data.invRangeSqr);
                 EVSphere.minRadius = range * 0.8f;
                 EVSphere.maxRadius = range;
-                _updateTimer = Clock.Time + 0.25f;
+                _updateTimer = Clock.Time + 0.1f;
 
                 //Logger.Log($"invSqr: {sphere.m_data.invRangeSqr} Range : {range} Density: {sphere.m_data.density}");
             }
