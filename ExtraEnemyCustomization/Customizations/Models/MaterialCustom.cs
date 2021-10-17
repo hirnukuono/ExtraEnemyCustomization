@@ -1,4 +1,5 @@
-﻿using Enemies;
+﻿using EECustom.Utils;
+using Enemies;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -26,10 +27,10 @@ namespace EECustom.Customizations.Models
 
         public override void OnConfigUnloaded()
         {
-            foreach (var cache in _SwapCaches)
+            _SwapCaches.ForEachFromBackAndClear((cache) =>
             {
                 cache.matref.m_material = cache.original;
-            }
+            });
         }
 
         public void OnPrefabBuilt(EnemyAgent agent)

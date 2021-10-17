@@ -30,6 +30,9 @@ namespace EECustom.Customizations.Models
 
         public override void OnConfigUnloaded()
         {
+            if (_SilhouetteObjects.Count < 1)
+                return;
+
             foreach(var obj in _SilhouetteObjects)
             {
                 if (obj != null)

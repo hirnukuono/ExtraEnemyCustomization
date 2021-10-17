@@ -29,6 +29,14 @@ namespace EECustom.Customizations.Abilities
             return "FogSphere";
         }
 
+        public override void OnConfigUnloaded()
+        {
+            _ChangedList.ForEachFromBackAndClear((changed) =>
+            {
+                changed.fogEab.m_fogSpherePrefab = changed.originalPrefab;
+            });
+        }
+
         public void OnPrefabBuilt(EnemyAgent agent)
         {
             var eabFog = agent.GetComponentInChildren<EAB_FogSphere>(true);

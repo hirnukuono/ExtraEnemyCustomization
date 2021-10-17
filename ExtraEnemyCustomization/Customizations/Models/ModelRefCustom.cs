@@ -1,4 +1,5 @@
-﻿using Enemies;
+﻿using EECustom.Utils;
+using Enemies;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace EECustom.Customizations.Models
     {
         public ModelRefData[] ModelRefs { get; set; } = new ModelRefData[0];
 
-        private readonly static List<(EnemyModelRefs modelRef, ModelRefCache setting)> _AffectedModelRefs = new List<(EnemyModelRefs, ModelRefCache)>();
+        private static readonly List<(EnemyModelRefs modelRef, ModelRefCache setting)> _AffectedModelRefs = new List<(EnemyModelRefs, ModelRefCache)>();
 
         public override string GetProcessName()
         {
@@ -17,13 +18,12 @@ namespace EECustom.Customizations.Models
 
         public override void OnConfigUnloaded()
         {
-            for(int i =0;i<_AffectedModelRefs.Count;i++)
+            _AffectedModelRefs.ForEachFromBackAndClear((affected) =>
             {
-                var modelRef = _AffectedModelRefs[i].modelRef;
-                var setting = _AffectedModelRefs[i].setting;
+                var modelRef = affected.modelRef;
+                var setting = affected.setting;
                 setting.CopyTo(ref modelRef);
-            }
-            _AffectedModelRefs.Clear();
+            });
         }
 
         public void OnPrefabBuilt(EnemyAgent agent)
