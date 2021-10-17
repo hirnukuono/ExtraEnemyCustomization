@@ -9,7 +9,7 @@ namespace EECustom.Customizations.Models
     {
         public ModelRefData[] ModelRefs { get; set; } = new ModelRefData[0];
 
-        private static readonly List<(EnemyModelRefs modelRef, ModelRefCache setting)> _AffectedModelRefs = new List<(EnemyModelRefs, ModelRefCache)>();
+        private static readonly Stack<(EnemyModelRefs modelRef, ModelRefCache setting)> _Changes = new Stack<(EnemyModelRefs, ModelRefCache)>();
 
         public override string GetProcessName()
         {
@@ -18,12 +18,13 @@ namespace EECustom.Customizations.Models
 
         public override void OnConfigUnloaded()
         {
-            _AffectedModelRefs.ForEachFromBackAndClear((affected) =>
+            while (_Changes.Count > 0)
             {
-                var modelRef = affected.modelRef;
-                var setting = affected.setting;
+                var changed = _Changes.Pop();
+                var modelRef = changed.modelRef;
+                var setting = changed.setting;
                 setting.CopyTo(ref modelRef);
-            });
+            }
         }
 
         public void OnPrefabBuilt(EnemyAgent agent)
@@ -31,7 +32,7 @@ namespace EECustom.Customizations.Models
             var modelRef = agent.ModelRef;
             var changeCache = new ModelRefCache();
             changeCache.CopyFrom(modelRef);
-            _AffectedModelRefs.Add((modelRef, changeCache));
+            _Changes.Push((modelRef, changeCache));
 
             foreach (var mRef in ModelRefs)
             {

@@ -31,10 +31,11 @@ namespace EECustom.Customizations.Abilities
 
         public override void OnConfigUnloaded()
         {
-            _ChangedList.ForEachFromBackAndClear((changed) =>
+            while (_Changes.Count > 0)
             {
+                var changed = _Changes.Pop();
                 changed.fogEab.m_fogSpherePrefab = changed.originalPrefab;
-            });
+            }
         }
 
         public void OnPrefabBuilt(EnemyAgent agent)
