@@ -37,6 +37,12 @@ namespace EECustom.Managers
             LoadConfigs();
             Current.GenerateBuffer();
 
+            //Rebuild Projectile
+            foreach (var proj in Current.ProjectileCustom.ProjectileDefinitions)
+            {
+                CustomProjectileManager.GenerateProjectile(proj);
+            }
+
             foreach (var block in GameDataBlockBase<EnemyDataBlock>.GetAllBlocks())
             {
                 
@@ -50,7 +56,6 @@ namespace EECustom.Managers
 
                 Current.FirePrefabBuiltEvent(agent);
             }
-            
         }
 
         private static void ClearConfigs()
@@ -65,6 +70,9 @@ namespace EECustom.Managers
             Current.TentacleCustom = new TentacleCustomConfig();
             Current.DetectionCustom = new DetectionCustomConfig();
             Current.SpawnCostCustom = new SpawnCostCustomConfig();
+
+            CustomProjectileManager.DestroyAllProjectile();
+            CustomScoutWaveManager.ClearAll();
         }
 
         private static void LoadConfigs()

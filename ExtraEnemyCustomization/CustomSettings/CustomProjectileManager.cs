@@ -76,6 +76,16 @@ namespace EECustom.CustomSettings
             Logger.Debug($"Added Projectile!: {projInfo.ID} ({projInfo.DebugName})");
         }
 
+        public static void DestroyAllProjectile()
+        {
+            foreach (var prefabs in _ProjectilePrefabs.Values)
+            {
+                GameObject.Destroy(prefabs);
+            }
+
+            _ProjectilePrefabs.Clear();
+        }
+
         public static GameObject GetProjectile(byte id)
         {
             if (_projectilePrefabs.TryGetValue(id, out var prefab))
