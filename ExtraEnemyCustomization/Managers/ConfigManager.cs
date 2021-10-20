@@ -33,6 +33,7 @@ namespace EECustom.Managers
                 config.OnConfigUnloaded();
             }
 
+            ClearConfigs();
             LoadConfigs();
             Current.GenerateBuffer();
 
@@ -50,6 +51,20 @@ namespace EECustom.Managers
                 Current.FirePrefabBuiltEvent(agent);
             }
             
+        }
+
+        private static void ClearConfigs()
+        {
+            if (Current == null)
+                return;
+
+            Current.Categories = new CategoryConfig();
+            Current.ModelCustom = new ModelCustomConfig();
+            Current.AbilityCustom = new AbilityCustomConfig();
+            Current.ProjectileCustom = new ProjectileCustomConfig();
+            Current.TentacleCustom = new TentacleCustomConfig();
+            Current.DetectionCustom = new DetectionCustomConfig();
+            Current.SpawnCostCustom = new SpawnCostCustomConfig();
         }
 
         private static void LoadConfigs()
