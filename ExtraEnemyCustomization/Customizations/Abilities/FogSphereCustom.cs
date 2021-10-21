@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using EECustom.Customizations.Shared;
 using EECustom.Extensions;
 using EECustom.Utils;
 using Enemies;
@@ -19,10 +20,7 @@ namespace EECustom.Customizations.Abilities
         public float DensityAmountMin { get; set; } = 0.0f;
         public float DensityAmountMax { get; set; } = 5.0f;
         public float Duration { get; set; } = 30.0f;
-        public bool EffectEnabled { get; set; } = false;
-        public eEffectVolumeContents EffectContents { get; set; } = eEffectVolumeContents.Infection;
-        public eEffectVolumeModification EffectModification { get; set; } = eEffectVolumeModification.Inflict;
-        public float EffectScale { get; set; } = 1f;
+        public EffectVolumeSetting EffectVolume { get; set; } = new EffectVolumeSetting();
 
         private readonly List<(EAB_FogSphere fogEab, GameObject originalPrefab)> _ChangedList = new List<(EAB_FogSphere, GameObject)>();
         
@@ -63,13 +61,11 @@ namespace EECustom.Customizations.Abilities
 
         public void OnSpawned(EnemyAgent agent)
         {
-            if (EffectEnabled)
+            if (EffectVolume.Enabled)
             {
                 var effectSetting = EnemyProperty<SphereEffectSetting>.RegisterOrGet(agent);
                 effectSetting.HandlerCount = 0;
-                effectSetting.EffectContents = EffectContents;
-                effectSetting.EffectModification = EffectModification;
-                effectSetting.EffectScale = EffectScale;
+                effectSetting.Setting = EffectVolume;
             }
         }
     }
@@ -77,8 +73,6 @@ namespace EECustom.Customizations.Abilities
     public class SphereEffectSetting
     {
         public int HandlerCount = 0;
-        public eEffectVolumeContents EffectContents = eEffectVolumeContents.Infection;
-        public eEffectVolumeModification EffectModification = eEffectVolumeModification.Inflict;
-        public float EffectScale = 1.0f;
+        public EffectVolumeSetting Setting;
     }
 }

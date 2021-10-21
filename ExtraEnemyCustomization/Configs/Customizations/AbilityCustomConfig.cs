@@ -16,6 +16,7 @@ namespace EECustom.Configs.Customizations
         public ExplosiveAttackCustom[] ExplosiveAttackCustom { get; set; } = new ExplosiveAttackCustom[0];
         public BleedAttackCustom[] BleedAttackCustom { get; set; } = new BleedAttackCustom[0];
         public DoorBreakerCustom[] DoorBreakerCustom { get; set; } = new DoorBreakerCustom[0];
+        public ScoutScreamingCustom[] ScoutScreamCustom { get; set; } = new ScoutScreamingCustom[0];
 
         public override EnemyCustomBase[] GetAllSettings()
         {

@@ -40,6 +40,7 @@ namespace EECustom
             ClassInjector.RegisterTypeInIl2Cpp<ExplosiveProjectileHandler>();
             ClassInjector.RegisterTypeInIl2Cpp<BleedingHandler>();
             ClassInjector.RegisterTypeInIl2Cpp<EffectFogSphereHandler>();
+            ClassInjector.RegisterTypeInIl2Cpp<ScoutEffectFogSphereHandler>();
 
             Logger.LogInstance = Log;
 
