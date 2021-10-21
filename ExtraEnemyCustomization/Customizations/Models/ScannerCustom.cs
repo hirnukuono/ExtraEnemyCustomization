@@ -1,5 +1,4 @@
-﻿using EECustom.Customizations.Models.Inject;
-using EECustom.Customizations.Models.Handlers;
+﻿using EECustom.Customizations.Models.Handlers;
 using EECustom.Events;
 using Enemies;
 using System;

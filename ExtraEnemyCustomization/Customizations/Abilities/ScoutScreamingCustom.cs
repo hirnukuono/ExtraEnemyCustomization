@@ -30,6 +30,8 @@ namespace EECustom.Customizations.Abilities
 
             var handler = agent.gameObject.AddComponent<ScoutFogSphereHandler>();
             handler.ScoutScream = agent.Locomotion.ScoutScream;
+            handler.FogColor = FogColor;
+            handler.FogIntensity = FogIntensity;
 
             if (EffectVolume.Enabled)
             {
