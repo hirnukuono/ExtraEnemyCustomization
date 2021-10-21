@@ -27,11 +27,13 @@ namespace EECustom.Customizations.Abilities
         {
             EnemyGlowEvents.RegisterOnGlow(agent, OnGlow);
 
+
+            var handler = agent.gameObject.AddComponent<ScoutFogSphereHandler>();
+            handler.ScoutScream = agent.Locomotion.ScoutScream;
+
             if (EffectVolume.Enabled)
             {
-                var handler = agent.gameObject.AddComponent<ScoutEffectFogSphereHandler>();
                 handler.EVSphere = EffectVolume.CreateSphere(agent.transform.position, 0.0f, 0.0f);
-                handler.ScoutScream = agent.Locomotion.ScoutScream;
                 EffectVolumeManager.RegisterVolume(handler.EVSphere);
             }
         }

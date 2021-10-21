@@ -6,20 +6,32 @@ using UnityEngine;
 
 namespace EECustom.Customizations.Abilities.Handlers
 {
-    public class ScoutEffectFogSphereHandler : MonoBehaviour
+    public class ScoutFogSphereHandler : MonoBehaviour
     {
+        public Color FogColor;
+        public float FogIntensity;
         public ES_ScoutScream ScoutScream;
-        public EV_Sphere EVSphere;
+        public EV_Sphere EVSphere = null;
 
         private float _updateTimer = 0.0f;
+        private bool _isColorSet = false;
 
-        public ScoutEffectFogSphereHandler(IntPtr ptr) : base(ptr)
+        public ScoutFogSphereHandler(IntPtr ptr) : base(ptr)
         {
         }
 
         private void Update()
         {
-            if (ScoutScream.m_fogSphereAdd != null && _updateTimer < Clock.Time)
+            if (ScoutScream.m_fogSphereAdd == null)
+                return;
+
+            if (!_isColorSet)
+            {
+                ScoutScream.m_fogSphereAdd.SetRadiance(FogColor, FogIntensity);
+                _isColorSet = true;
+            }
+
+            if (EVSphere != null && _updateTimer < Clock.Time)
             {
                 if (ScoutScream.m_fogSphereAdd.IsAllocated)
                 {
@@ -40,7 +52,8 @@ namespace EECustom.Customizations.Abilities.Handlers
 
         private void OnDestroy()
         {
-            EffectVolumeManager.UnregisterVolume(EVSphere);
+            if (EVSphere != null)
+                EffectVolumeManager.UnregisterVolume(EVSphere);
         }
     }
 }
