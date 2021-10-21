@@ -12,6 +12,15 @@ using UnhollowerRuntimeLib;
 
 namespace EECustom
 {
+    //TODO: - Tentacle Hibernation : Possible
+    //TODO: - Scaling bone : Maybe Possible
+    //TODO: - Alerts Logic Behaviour : Maybe Possible, Can't guarantee for every option though
+    //TODO: - Scout Scream Color : Possible, Either Fog Color and EnemyGlow
+    //TODO: - Scout Scream Infection : Possible
+    //TODO: - Waveless Scout : Already Possible with ScoutWave.json
+    //TODO: - Scout Scream Damage : Possible? Maybe?
+    //TODO: - Enemy Scream Infection/Damage : Ugh....What?
+    //TODO: - Patrolling Hibernation : Too many works to do with this one, this is one of the long term goal
     //TODO: Refactor the CustomBase to support Phase Setting
 
     [BepInPlugin("GTFO.EECustomization", "EECustom", "0.8.1")]
