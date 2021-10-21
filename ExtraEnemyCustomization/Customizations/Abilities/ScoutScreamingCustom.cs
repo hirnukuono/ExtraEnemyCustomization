@@ -32,6 +32,7 @@ namespace EECustom.Customizations.Abilities
                 var handler = agent.gameObject.AddComponent<ScoutEffectFogSphereHandler>();
                 handler.EVSphere = EffectVolume.CreateSphere(agent.transform.position, 0.0f, 0.0f);
                 handler.ScoutScream = agent.Locomotion.ScoutScream;
+                EffectVolumeManager.RegisterVolume(handler.EVSphere);
             }
         }
 
