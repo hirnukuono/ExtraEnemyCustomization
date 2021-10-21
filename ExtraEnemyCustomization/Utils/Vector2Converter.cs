@@ -56,6 +56,8 @@ namespace EECustom.Utils
 
         private bool TryParseVector2(string input, out Vector2 vector)
         {
+            input = input.Trim().Trim('(', ')');
+
             if (!input.Contains(",", StringComparison.Ordinal))
             {
                 vector = Vector2.zero;
