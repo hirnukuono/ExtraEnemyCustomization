@@ -1,5 +1,4 @@
-﻿using EECustom.Customizations.Models.Inject;
-using EECustom.Customizations.Models.Handlers;
+﻿using EECustom.Customizations.Models.Handlers;
 using EECustom.Events;
 using Enemies;
 using System;
@@ -73,7 +72,7 @@ namespace EECustom.Customizations.Models
                 }
             }
 
-            GlowEvents.RegisterOnGlow(agent, OnGlow);
+            EnemyGlowEvents.RegisterOnGlow(agent, OnGlow);
 
             //And this is static LMAO
             //ES_HibernateWakeUp.m_propagatedWakeupColor = PropagateWakeupColor

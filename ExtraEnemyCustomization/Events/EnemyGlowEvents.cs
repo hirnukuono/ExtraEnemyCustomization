@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-namespace EECustom.Customizations.Models.Inject
+namespace EECustom.Events
 {
-    public class GlowEvents
+    public class EnemyGlowEvents
     {
         private static Dictionary<ushort, Func<EnemyAgent, Color, Vector4, Color>> OnGlow = new Dictionary<ushort, Func<EnemyAgent, Color, Vector4, Color>>();
 
