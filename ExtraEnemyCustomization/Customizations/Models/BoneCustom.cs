@@ -8,7 +8,7 @@ namespace EECustom.Customizations.Models
 {
     public class BoneCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
-        public BoneTransform[] Transforms { get; set; } = new BoneTransform[0];
+        public BoneTransform[] Bones { get; set; } = new BoneTransform[0];
 
         public override string GetProcessName()
         {
@@ -17,7 +17,7 @@ namespace EECustom.Customizations.Models
 
         public void OnSpawned(EnemyAgent agent)
         {
-            foreach (var boneTransform in Transforms)
+            foreach (var boneTransform in Bones)
             {
                 TryApplyBoneTransform(agent, boneTransform);
             }
