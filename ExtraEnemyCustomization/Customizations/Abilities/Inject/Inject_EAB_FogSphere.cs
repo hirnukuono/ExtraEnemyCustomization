@@ -34,16 +34,7 @@ namespace EECustom.Customizations.Abilities.Inject
 
             var effectHandler = handler.gameObject.AddComponent<EffectFogSphereHandler>();
             effectHandler.Handler = handler;
-            effectHandler.EVSphere = new EV_Sphere()
-            {
-                position = handler.transform.position,
-                minRadius = 0.0f,
-                maxRadius = 0.0f,
-                modificationScale = effectSetting.EffectScale,
-                invert = true,
-                contents = effectSetting.EffectContents,
-                modification = effectSetting.EffectModification
-            };
+            effectHandler.EVSphere = effectSetting.Setting.CreateSphere(handler.transform.position, 0.0f, 0.0f);
             EffectVolumeManager.RegisterVolume(effectHandler.EVSphere);
         }
     }
