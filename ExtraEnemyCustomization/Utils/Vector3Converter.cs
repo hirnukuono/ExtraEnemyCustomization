@@ -61,40 +61,19 @@ namespace EECustom.Utils
 
         private bool TryParseVector3(string input, out Vector3 vector)
         {
-            input = input.Trim().Trim('(', ')');
-
-            if (!input.Contains(",", StringComparison.Ordinal))
+            if (!RegexUtil.TryParseVectorString(input, out var array))
             {
                 vector = Vector3.zero;
                 return false;
             }
 
-            var split = input.Split(",");
-            if (split.Length != 3)
+            if (array.Length < 3)
             {
                 vector = Vector3.zero;
                 return false;
             }
 
-            if (!float.TryParse(split[0].Trim(), out var x))
-            {
-                vector = Vector3.zero;
-                return false;
-            }
-
-            if (!float.TryParse(split[1].Trim(), out var y))
-            {
-                vector = Vector3.zero;
-                return false;
-            }
-
-            if (!float.TryParse(split[2].Trim(), out var z))
-            {
-                vector = Vector3.zero;
-                return false;
-            }
-
-            vector = new Vector3(x, y, z);
+            vector = new Vector3(array[0], array[1], array[2]);
             return true;
         }
 

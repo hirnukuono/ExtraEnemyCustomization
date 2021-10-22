@@ -7,7 +7,6 @@ using UnityEngine;
 
 namespace EECustom.Utils
 {
-    //MINOR: Implement this
     public class Vector2Converter : JsonConverter<Vector2>
     {
         public override Vector2 Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -56,34 +55,19 @@ namespace EECustom.Utils
 
         private bool TryParseVector2(string input, out Vector2 vector)
         {
-            input = input.Trim().Trim('(', ')');
-
-            if (!input.Contains(",", StringComparison.Ordinal))
+            if (!RegexUtil.TryParseVectorString(input, out var array))
             {
                 vector = Vector2.zero;
                 return false;
             }
 
-            var split = input.Split(",");
-            if (split.Length != 2)
+            if (array.Length < 2)
             {
                 vector = Vector2.zero;
                 return false;
             }
 
-            if (!float.TryParse(split[0].Trim(), out var x))
-            {
-                vector = Vector2.zero;
-                return false;
-            }
-
-            if (!float.TryParse(split[1].Trim(), out var y))
-            {
-                vector = Vector2.zero;
-                return false;
-            }
-
-            vector = new Vector2(x, y);
+            vector = new Vector2(array[0], array[1]);
             return true;
         }
 
