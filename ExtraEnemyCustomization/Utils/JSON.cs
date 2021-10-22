@@ -17,6 +17,8 @@ namespace EECustom.Utils
             _Setting.Converters.Add(new ValueBaseConverter());
             _Setting.Converters.Add(new ColorConverter());
             _Setting.Converters.Add(new JsonStringEnumConverter());
+            _Setting.Converters.Add(new Vector2Converter());
+            _Setting.Converters.Add(new Vector3Converter());
 
             if (MTFOPartialDataUtil.IsLoaded && MTFOPartialDataUtil.Initialized)
             {

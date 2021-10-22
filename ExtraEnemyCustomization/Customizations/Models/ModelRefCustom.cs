@@ -76,7 +76,7 @@ namespace EECustom.Customizations.Models
                 newObj.transform.localRotation = baseTransform.localRotation;
 
                 var newAngle = newObj.transform.localRotation.eulerAngles + mRef.RotateOffset;
-                newObj.transform.localRotation.SetEulerRotation(newAngle);
+                newObj.transform.localRotation.SetEulerAngles(newAngle);
 
                 switch (mRef.Type)
                 {
