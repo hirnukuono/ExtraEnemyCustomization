@@ -2,10 +2,6 @@
 using BepInEx.Configuration;
 using BepInEx.IL2CPP;
 using EECustom.Attributes;
-using EECustom.Customizations.Abilities.Handlers;
-using EECustom.Customizations.Models.Handlers;
-using EECustom.Customizations.Shooters.Handlers;
-using EECustom.CustomSettings.Handlers;
 using EECustom.Managers;
 using EECustom.Utils;
 using HarmonyLib;
