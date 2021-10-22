@@ -1,4 +1,5 @@
-﻿using Player;
+﻿using EECustom.Attributes;
+using Player;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,6 +8,7 @@ using UnityEngine;
 
 namespace EECustom.Customizations.Abilities.Handlers
 {
+    [InjectToIl2Cpp]
     public class BleedingHandler : MonoBehaviour
     {
         public PlayerAgent Agent;

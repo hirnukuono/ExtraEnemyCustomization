@@ -1,4 +1,5 @@
-﻿using EECustom.Events;
+﻿using EECustom.Attributes;
+using EECustom.Events;
 using Enemies;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using UnityEngine.Rendering;
 
 namespace EECustom.Customizations.Models.Handlers
 {
+    [InjectToIl2Cpp]
     public class EnemySilhouette : MonoBehaviour
     {
         public Material SilhouetteMaterial;
@@ -40,6 +42,7 @@ namespace EECustom.Customizations.Models.Handlers
         }
     }
 
+    [InjectToIl2Cpp]
     public class SilhouetteHandler : MonoBehaviour
     {
         public EnemyAgent _Agent;
