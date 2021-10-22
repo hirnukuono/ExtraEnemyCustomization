@@ -1,10 +1,12 @@
-﻿using System;
+﻿using EECustom.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
 namespace EECustom.Customizations.Abilities.Handlers
 {
+    [InjectToIl2Cpp]
     public class EffectFogSphereHandler : MonoBehaviour
     {
         public FogSphereHandler Handler;

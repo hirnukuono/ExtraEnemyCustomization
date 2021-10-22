@@ -1,4 +1,5 @@
 ﻿using AIGraph;
+using EECustom.Attributes;
 using EECustom.Utils;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using UnityEngine;
 
 namespace EECustom.CustomSettings.Handlers
 {
+    [InjectToIl2Cpp]
     public class ExplosiveProjectileHandler : MonoBehaviour
     {
         public float Damage;

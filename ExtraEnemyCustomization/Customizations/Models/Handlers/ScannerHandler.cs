@@ -1,4 +1,5 @@
 ﻿using Agents;
+using EECustom.Attributes;
 using EECustom.Utils;
 using Enemies;
 using System;
@@ -20,6 +21,7 @@ namespace EECustom.Customizations.Models.Handlers
         ScoutDetect
     }
 
+    [InjectToIl2Cpp]
     public class ScannerHandler : MonoBehaviour
     {
         public EnemyAgent _Agent;

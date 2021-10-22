@@ -1,9 +1,11 @@
-﻿using System;
+﻿using EECustom.Attributes;
+using System;
 using System.Linq;
 using UnityEngine;
 
 namespace EECustom.Customizations.Shooters.Handlers
 {
+    [InjectToIl2Cpp]
     public class ShooterDistSettingHandler : MonoBehaviour
     {
         public EAB_ProjectileShooter DefaultValue;

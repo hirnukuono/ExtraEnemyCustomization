@@ -1,4 +1,5 @@
 ﻿using Agents;
+using EECustom.Attributes;
 using EECustom.Utils;
 using Enemies;
 using System;
@@ -9,6 +10,7 @@ using UnityEngine;
 
 namespace EECustom.Customizations.Models.Handlers
 {
+    [InjectToIl2Cpp]
     public class PulseHandler : MonoBehaviour
     {
         public PulseEffectData PulseData;

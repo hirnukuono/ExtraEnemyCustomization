@@ -1,13 +1,11 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.IL2CPP;
-using EECustom.Customizations.Abilities.Handlers;
-using EECustom.Customizations.Models.Handlers;
-using EECustom.Customizations.Shooters.Handlers;
-using EECustom.CustomSettings.Handlers;
+using EECustom.Attributes;
 using EECustom.Managers;
 using EECustom.Utils;
 using HarmonyLib;
+using System.Linq;
 using UnhollowerRuntimeLib;
 
 namespace EECustom
@@ -31,16 +29,7 @@ namespace EECustom
     {
         public override void Load()
         {
-            ClassInjector.RegisterTypeInIl2Cpp<ShooterDistSettingHandler>();
-            ClassInjector.RegisterTypeInIl2Cpp<HealthRegenHandler>();
-            ClassInjector.RegisterTypeInIl2Cpp<PulseHandler>();
-            ClassInjector.RegisterTypeInIl2Cpp<ScannerHandler>();
-            ClassInjector.RegisterTypeInIl2Cpp<EnemySilhouette>();
-            ClassInjector.RegisterTypeInIl2Cpp<SilhouetteHandler>();
-            ClassInjector.RegisterTypeInIl2Cpp<ExplosiveProjectileHandler>();
-            ClassInjector.RegisterTypeInIl2Cpp<BleedingHandler>();
-            ClassInjector.RegisterTypeInIl2Cpp<EffectFogSphereHandler>();
-            ClassInjector.RegisterTypeInIl2Cpp<ScoutFogSphereHandler>();
+            InjectAllIl2CppType();
 
             Logger.LogInstance = Log;
 
@@ -55,6 +44,22 @@ namespace EECustom
 
             ConfigManager.Initialize();
             SpriteManager.Initialize();
+        }
+
+        private void InjectAllIl2CppType()
+        {
+            Log.LogDebug($"Injecting IL2CPP Types");
+            var types = GetType().Assembly.GetTypes().Where(type => type != null && type.GetCustomAttributes(typeof(InjectToIl2CppAttribute), false).FirstOrDefault() != null);
+
+            Log.LogDebug($" - Count: {types.Count()}");
+            foreach(var type in types)
+            {
+                //Log.LogDebug($" - {type.Name}"); Class Injector already shows their type names
+                if (ClassInjector.IsTypeRegisteredInIl2Cpp(type))
+                    continue;
+
+                ClassInjector.RegisterTypeInIl2Cpp(type);
+            }
         }
     }
 }
