@@ -35,7 +35,7 @@ namespace EECustom.Customizations.Models
             }
             catch(Exception e)
             {
-                LogError($"Bone Transform [{boneTransform.Bone}] were not set! : {e}");
+                LogError($"Bone Transform owner: [{agent.name}] bone: [{boneTransform.Bone}] were not set! : {e}");
             }
         }
     }
