@@ -73,47 +73,25 @@ namespace EECustom.Utils
 
         private bool TryParseColor(string input, out Color color)
         {
-            input = input.Trim().Trim('(',')');
-
-            if (!input.Contains(",", StringComparison.Ordinal))
+            if (!RegexUtil.TryParseVectorString(input, out var array))
             {
-                color = Color.clear;
+                color = Color.white;
                 return false;
             }
 
-            var split = input.Split(",");
-            if (split.Length != 3 && split.Length != 4)
+            if (array.Length < 3)
             {
-                color = Color.clear;
+                color = Color.white;
                 return false;
             }
 
-            if (!float.TryParse(split[0].Trim(), out var r))
+            float alpha = 1.0f;
+            if (array.Length > 3)
             {
-                color = Color.clear;
-                return false;
+                alpha = array[3];
             }
 
-            if (!float.TryParse(split[1].Trim(), out var g))
-            {
-                color = Color.clear;
-                return false;
-            }
-
-            if (!float.TryParse(split[2].Trim(), out var b))
-            {
-                color = Color.clear;
-                return false;
-            }
-
-            var a = 1.0f;
-            if (split.Length == 4 && !float.TryParse(split[3].Trim(), out a))
-            {
-                color = Color.clear;
-                return false;
-            }
-
-            color = new Color(r, g, b, a);
+            color = new Color(array[0], array[1], array[2], alpha);
             return true;
         }
 
