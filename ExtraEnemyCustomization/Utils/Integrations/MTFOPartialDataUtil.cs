@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.Json.Serialization;
 
-namespace EECustom.Utils
+namespace EECustom.Utils.Integrations
 {
     public static class MTFOPartialDataUtil
     {

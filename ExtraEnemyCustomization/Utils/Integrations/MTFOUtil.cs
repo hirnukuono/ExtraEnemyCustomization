@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-namespace EECustom.Utils
+namespace EECustom.Utils.Integrations
 {
     public static class MTFOUtil
     {

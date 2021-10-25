@@ -5,7 +5,7 @@ namespace EECustom.Utils
 {
     public static class RegexUtil
     {
-        public static readonly Regex VectorRegex = new Regex("[0-9.]+");
+        public static readonly Regex VectorRegex = new Regex("-?[0-9.]+");
 
         public static bool TryParseVectorString(string input, out float[] vectorArray)
         {

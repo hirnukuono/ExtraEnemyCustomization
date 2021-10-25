@@ -3,7 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using UnityEngine;
 
-namespace EECustom.Utils
+namespace EECustom.Utils.JsonConverters
 {
     public class ColorConverter : JsonConverter<Color>
     {

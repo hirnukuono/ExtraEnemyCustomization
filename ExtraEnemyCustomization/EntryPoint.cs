@@ -4,6 +4,7 @@ using BepInEx.IL2CPP;
 using EECustom.Attributes;
 using EECustom.Managers;
 using EECustom.Utils;
+using EECustom.Utils.Integrations;
 using HarmonyLib;
 using System.Linq;
 using UnhollowerRuntimeLib;

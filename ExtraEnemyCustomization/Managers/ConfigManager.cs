@@ -3,6 +3,7 @@ using EECustom.Configs.Customizations;
 using EECustom.Customizations;
 using EECustom.CustomSettings;
 using EECustom.Utils;
+using EECustom.Utils.Integrations;
 using Enemies;
 using System;
 using System.Collections.Generic;
