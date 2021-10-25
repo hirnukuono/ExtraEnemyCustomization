@@ -107,12 +107,12 @@ namespace EECustom.Customizations.Models
         public void OnSpawned(EnemyAgent agent)
         {
             var silManager = agent.gameObject.AddComponent<SilhouetteHandler>();
-            silManager._Agent = agent;
-            silManager._DefaultColor = DefaultColor;
-            silManager._RequireTag = RequireTag;
-            silManager._ReplaceColorWithMarker = ReplaceColorWithMarker;
-            silManager._KeepOnDead = KeepOnDead;
-            silManager._DeadEffectDelay = DeadEffectDelay;
+            silManager.OwnerAgent = agent;
+            silManager.DefaultColor = DefaultColor;
+            silManager.RequireTag = RequireTag;
+            silManager.ReplaceColorWithMarker = ReplaceColorWithMarker;
+            silManager.KeepOnDead = KeepOnDead;
+            silManager.DeadEffectDelay = DeadEffectDelay;
         }
     }
 }

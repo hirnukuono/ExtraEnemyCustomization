@@ -93,16 +93,16 @@ namespace EECustom.Customizations.Models
             {
                 scannerManager = agent.gameObject.AddComponent<ScannerHandler>();
             }
-            scannerManager._Agent = agent;
-            scannerManager._DefaultColor = DefaultColor;
-            scannerManager._WakeupColor = WakeupColor;
-            scannerManager._DetectionColor = DetectionColor;
-            scannerManager._HeartbeatColor = HeartbeatColor;
-            scannerManager._PatrolColor = PatrolColor;
-            scannerManager._FeelerColor = FeelerOutColor;
-            scannerManager._UsingDetectionColor = UsingDetectionColor;
-            scannerManager._UsingScoutColor = UsingScoutColor;
-            scannerManager._InterpDuration = LerpingDuration;
+            scannerManager.OwnerAgent = agent;
+            scannerManager.DefaultColor = DefaultColor;
+            scannerManager.WakeupColor = WakeupColor;
+            scannerManager.DetectionColor = DetectionColor;
+            scannerManager.HeartbeatColor = HeartbeatColor;
+            scannerManager.PatrolColor = PatrolColor;
+            scannerManager.FeelerColor = FeelerOutColor;
+            scannerManager.UsingDetectionColor = UsingDetectionColor;
+            scannerManager.UsingScoutColor = UsingScoutColor;
+            scannerManager.InterpDuration = LerpingDuration;
         }
     }
 }

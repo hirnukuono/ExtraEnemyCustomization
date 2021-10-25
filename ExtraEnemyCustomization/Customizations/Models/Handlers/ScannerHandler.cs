@@ -20,24 +20,24 @@ namespace EECustom.Customizations.Models.Handlers
     [InjectToIl2Cpp]
     public class ScannerHandler : MonoBehaviour
     {
-        public EnemyAgent _Agent;
-        public Color _DefaultColor;
-        public Color _WakeupColor;
-        public Color _DetectionColor;
-        public Color _HeartbeatColor;
-        public Color _PatrolColor;
-        public Color _FeelerColor;
+        public EnemyAgent OwnerAgent;
+        public Color DefaultColor;
+        public Color WakeupColor;
+        public Color DetectionColor;
+        public Color HeartbeatColor;
+        public Color PatrolColor;
+        public Color FeelerColor;
 
-        public bool _UsingDetectionColor = false;
-        public bool _UsingScoutColor = false;
+        public bool UsingDetectionColor = false;
+        public bool UsingScoutColor = false;
 
-        public float _InterpDuration = 0.5f;
+        public float InterpDuration = 0.5f;
 
-        private EnemyState LastState = EnemyState.Hibernate;
-        private EnemyState CurrentState = EnemyState.Hibernate;
-        private bool InterpDone = true;
-        private float InterpTimer = 0.0f;
-        private float InterpStartTime = 0.0f;
+        private EnemyState _lastState = EnemyState.Hibernate;
+        private EnemyState _currentState = EnemyState.Hibernate;
+        private bool _interpDone = true;
+        private float _interpTimer = 0.0f;
+        private float _interpStartTime = 0.0f;
 
         public ScannerHandler(IntPtr ptr) : base(ptr)
         {
@@ -51,47 +51,47 @@ namespace EECustom.Customizations.Models.Handlers
         {
             UpdateState(out var state);
 
-            if (CurrentState != state)
+            if (_currentState != state)
             {
-                LastState = CurrentState;
-                CurrentState = state;
-                InterpDone = false;
-                InterpTimer = Clock.Time + _InterpDuration;
-                InterpStartTime = Clock.Time;
+                _lastState = _currentState;
+                _currentState = state;
+                _interpDone = false;
+                _interpTimer = Clock.Time + InterpDuration;
+                _interpStartTime = Clock.Time;
             }
 
-            if (!InterpDone)
+            if (!_interpDone)
             {
-                if (Clock.Time >= InterpTimer)
+                if (Clock.Time >= _interpTimer)
                 {
-                    _Agent.ScannerColor = GetStateColor(CurrentState);
-                    InterpDone = true;
+                    OwnerAgent.ScannerColor = GetStateColor(_currentState);
+                    _interpDone = true;
                     return;
                 }
 
-                var progress = Mathf.InverseLerp(InterpStartTime, InterpTimer, Clock.Time);
-                var color1 = GetStateColor(LastState);
-                var color2 = GetStateColor(CurrentState);
+                var progress = Mathf.InverseLerp(_interpStartTime, _interpTimer, Clock.Time);
+                var color1 = GetStateColor(_lastState);
+                var color2 = GetStateColor(_currentState);
                 var newColor = Color.Lerp(color1, color2, progress);
-                _Agent.ScannerColor = newColor;
+                OwnerAgent.ScannerColor = newColor;
             }
         }
 
         [HideFromIl2Cpp]
         private void UpdateState(out EnemyState state)
         {
-            switch (_Agent.AI.Mode)
+            switch (OwnerAgent.AI.Mode)
             {
                 case AgentMode.Hibernate:
-                    if (!_UsingDetectionColor)
+                    if (!UsingDetectionColor)
                     {
                         state = EnemyState.Hibernate;
                         return;
                     }
 
-                    if (_Agent.IsHibernationDetecting)
+                    if (OwnerAgent.IsHibernationDetecting)
                     {
-                        if (_Agent.Locomotion.Hibernate.m_heartbeatActive)
+                        if (OwnerAgent.Locomotion.Hibernate.m_heartbeatActive)
                         {
                             state = EnemyState.Heartbeat;
                             return;
@@ -113,13 +113,13 @@ namespace EECustom.Customizations.Models.Handlers
                     return;
 
                 case AgentMode.Scout:
-                    if (!_UsingScoutColor)
+                    if (!UsingScoutColor)
                     {
                         state = EnemyState.Wakeup;
                         return;
                     }
 
-                    var detection = _Agent.Locomotion.ScoutDetection.m_antennaDetection;
+                    var detection = OwnerAgent.Locomotion.ScoutDetection.m_antennaDetection;
                     if (detection == null)
                     {
                         state = EnemyState.Scout;
@@ -148,13 +148,13 @@ namespace EECustom.Customizations.Models.Handlers
         {
             return state switch
             {
-                EnemyState.Hibernate => _DefaultColor,
-                EnemyState.Detect => _DetectionColor,
-                EnemyState.Heartbeat => _HeartbeatColor,
-                EnemyState.Wakeup => _WakeupColor,
-                EnemyState.Scout => _PatrolColor,
-                EnemyState.ScoutDetect => _FeelerColor,
-                _ => _DefaultColor
+                EnemyState.Hibernate => DefaultColor,
+                EnemyState.Detect => DetectionColor,
+                EnemyState.Heartbeat => HeartbeatColor,
+                EnemyState.Wakeup => WakeupColor,
+                EnemyState.Scout => PatrolColor,
+                EnemyState.ScoutDetect => FeelerColor,
+                _ => DefaultColor
             };
         }
     }

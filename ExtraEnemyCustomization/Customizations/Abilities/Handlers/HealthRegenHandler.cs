@@ -15,14 +15,14 @@ namespace EECustom.Customizations.Abilities.Handlers
 
         public HealthRegenData RegenData;
 
-        private float _RegenInitialTimer = 0.0f;
-        private float _RegenIntervalTimer = 0.0f;
-        private bool _IsRegening = false;
-        private bool _IsInitialTimerDone = false;
-        private bool _AlwaysRegen = false;
-        private bool _IsDecay = false;
-        private float _RegenCapAbsValue = 0.0f;
-        private float _RegenAmountAbsValue = 0.0f;
+        private float _regenInitialTimer = 0.0f;
+        private float _regenIntervalTimer = 0.0f;
+        private bool _isRegening = false;
+        private bool _isInitialTimerDone = false;
+        private bool _alwaysRegen = false;
+        private bool _isDecay = false;
+        private float _regenCapAbsValue = 0.0f;
+        private float _regenAmountAbsValue = 0.0f;
 
         private Action<EnemyAgent, Agent> _OnDamageDel;
 
@@ -32,10 +32,10 @@ namespace EECustom.Customizations.Abilities.Handlers
 
         internal void Start()
         {
-            _IsRegening = false;
-            _AlwaysRegen = !RegenData.CanDamageInterruptRegen;
+            _isRegening = false;
+            _alwaysRegen = !RegenData.CanDamageInterruptRegen;
 
-            if (!_AlwaysRegen)
+            if (!_alwaysRegen)
             {
                 //DamageBase.add_CallOnTakeDamage(new Action<float>(OnTakeDamage)); This doesn't work for some reason rofl
                 _OnDamageDel = new Action<EnemyAgent, Agent>((EnemyAgent a1, Agent a2) =>
@@ -53,13 +53,13 @@ namespace EECustom.Customizations.Abilities.Handlers
                 }));
             }
 
-            _RegenCapAbsValue = RegenData.RegenCap.GetAbsValue(DamageBase.HealthMax);
-            _RegenAmountAbsValue = RegenData.RegenAmount.GetAbsValue(DamageBase.HealthMax);
+            _regenCapAbsValue = RegenData.RegenCap.GetAbsValue(DamageBase.HealthMax);
+            _regenAmountAbsValue = RegenData.RegenAmount.GetAbsValue(DamageBase.HealthMax);
 
-            if (_RegenAmountAbsValue <= 0.0f)
-                _IsDecay = true;
+            if (_regenAmountAbsValue <= 0.0f)
+                _isDecay = true;
 
-            if (_AlwaysRegen || _IsDecay)
+            if (_alwaysRegen || _isDecay)
             {
                 OnTakeDamage();
             }
@@ -70,36 +70,36 @@ namespace EECustom.Customizations.Abilities.Handlers
             if (!SNet.IsMaster)
                 return;
 
-            if (!_IsRegening)
+            if (!_isRegening)
                 return;
 
-            if (!_IsInitialTimerDone && _RegenInitialTimer <= Clock.Time)
+            if (!_isInitialTimerDone && _regenInitialTimer <= Clock.Time)
             {
-                _IsInitialTimerDone = true;
+                _isInitialTimerDone = true;
             }
-            else if (_IsInitialTimerDone && _RegenIntervalTimer <= Clock.Time)
+            else if (_isInitialTimerDone && _regenIntervalTimer <= Clock.Time)
             {
-                if (!_IsDecay && DamageBase.Health >= _RegenCapAbsValue)
+                if (!_isDecay && DamageBase.Health >= _regenCapAbsValue)
                     return;
 
-                if (_IsDecay && DamageBase.Health <= _RegenCapAbsValue)
+                if (_isDecay && DamageBase.Health <= _regenCapAbsValue)
                     return;
 
-                var newHealth = DamageBase.Health + _RegenAmountAbsValue;
-                if (!_IsDecay && newHealth >= _RegenCapAbsValue)
+                var newHealth = DamageBase.Health + _regenAmountAbsValue;
+                if (!_isDecay && newHealth >= _regenCapAbsValue)
                 {
-                    newHealth = _RegenCapAbsValue;
-                    if (!_AlwaysRegen)
+                    newHealth = _regenCapAbsValue;
+                    if (!_alwaysRegen)
                     {
-                        _IsRegening = false;
+                        _isRegening = false;
                     }
                 }
-                else if (_IsDecay && newHealth <= _RegenCapAbsValue)
+                else if (_isDecay && newHealth <= _regenCapAbsValue)
                 {
-                    newHealth = _RegenCapAbsValue;
-                    if (!_AlwaysRegen)
+                    newHealth = _regenCapAbsValue;
+                    if (!_alwaysRegen)
                     {
-                        _IsRegening = false;
+                        _isRegening = false;
                     }
                 }
 
@@ -110,15 +110,15 @@ namespace EECustom.Customizations.Abilities.Handlers
                     DamageBase.MeleeDamage(DamageBase.HealthMax, null, base.transform.position, Vector3.up, 0);
                 }
 
-                _RegenIntervalTimer = Clock.Time + RegenData.RegenInterval;
+                _regenIntervalTimer = Clock.Time + RegenData.RegenInterval;
             }
         }
 
         private void OnTakeDamage()
         {
-            _RegenInitialTimer = Clock.Time + RegenData.DelayUntilRegenStart;
-            _IsRegening = true;
-            _IsInitialTimerDone = false;
+            _regenInitialTimer = Clock.Time + RegenData.DelayUntilRegenStart;
+            _isRegening = true;
+            _isInitialTimerDone = false;
         }
     }
 }

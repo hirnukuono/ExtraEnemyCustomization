@@ -2,6 +2,7 @@
 using EECustom.Attributes;
 using EECustom.Utils;
 using System;
+using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 
 namespace EECustom.CustomSettings.Handlers
@@ -46,6 +47,17 @@ namespace EECustom.CustomSettings.Handlers
                 };
                 NoiseManager.MakeNoise(noise);
             }
+        }
+
+        [HideFromIl2Cpp]
+        public void CopyValueFrom(ExplosiveProjectileHandler handler)
+        {
+            Damage = handler.Damage;
+            EnemyMulti = handler.EnemyMulti;
+            MinRange = handler.MinRange;
+            MaxRange = handler.MaxRange;
+            NoiseMinRange = handler.NoiseMinRange;
+            NoiseMaxRange = handler.NoiseMaxRange;
         }
     }
 }
