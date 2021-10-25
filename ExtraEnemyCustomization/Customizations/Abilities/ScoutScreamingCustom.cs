@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace EECustom.Customizations.Abilities
 {
-    public class ScoutScreamingCustom : EnemyCustomBase, IEnemySpawnedEvent
+    public class ScoutScreamingCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyGlowEvent
     {
         private readonly static Color DefaultChargeupColor = ES_ScoutScream.s_screamChargeupColor;
 
@@ -22,8 +22,6 @@ namespace EECustom.Customizations.Abilities
 
         public void OnSpawned(EnemyAgent agent)
         {
-            EnemyGlowEvents.RegisterOnGlow(agent, OnGlow);
-
             var handler = agent.gameObject.AddComponent<ScoutFogSphereHandler>();
             handler.ScoutScream = agent.Locomotion.ScoutScream;
             handler.FogColor = FogColor;
@@ -36,14 +34,15 @@ namespace EECustom.Customizations.Abilities
             }
         }
 
-        public Color OnGlow(EnemyAgent agent, Color color, Vector4 location)
+        public bool OnGlow(EnemyAgent agent, ref GlowInfo glowInfo)
         {
-            if (color == DefaultChargeupColor)
+            if (glowInfo.Color == DefaultChargeupColor)
             {
-                return ChargeupColor;
+                glowInfo = glowInfo.ChangeColor(ChargeupColor);
+                return true;
             }
 
-            return color;
+            return false;
         }
     }
 }
