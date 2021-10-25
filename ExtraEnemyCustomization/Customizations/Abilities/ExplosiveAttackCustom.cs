@@ -21,8 +21,8 @@ namespace EECustom.Customizations.Abilities
 
         public override void OnConfigLoaded()
         {
-            PlayerDamageEvents.OnMeleeDamage += OnMelee;
-            PlayerDamageEvents.OnTentacleDamage += OnTentacle;
+            LocalPlayerDamageEvents.OnMeleeDamage += OnMelee;
+            LocalPlayerDamageEvents.OnTentacleDamage += OnTentacle;
         }
 
         public void OnSpawned(EnemyAgent agent)

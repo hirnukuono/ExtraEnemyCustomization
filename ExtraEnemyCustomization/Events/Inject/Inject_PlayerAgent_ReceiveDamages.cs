@@ -13,8 +13,8 @@ namespace EECustom.Events.Inject
             if (data.source.TryGet(out var inflictor))
             {
                 var damage = data.damage.Get(__instance.HealthMax);
-                PlayerDamageEvents.OnDamage?.Invoke(__instance.Owner, inflictor, damage);
-                PlayerDamageEvents.OnMeleeDamage?.Invoke(__instance.Owner, inflictor, damage);
+                LocalPlayerDamageEvents.OnDamage?.Invoke(__instance.Owner, inflictor, damage);
+                LocalPlayerDamageEvents.OnMeleeDamage?.Invoke(__instance.Owner, inflictor, damage);
             }
         }
 
@@ -26,8 +26,8 @@ namespace EECustom.Events.Inject
             if (data.source.TryGet(out var inflictor))
             {
                 var damage = data.damage.Get(__instance.HealthMax);
-                PlayerDamageEvents.OnDamage?.Invoke(__instance.Owner, inflictor, damage);
-                PlayerDamageEvents.OnTentacleDamage?.Invoke(__instance.Owner, inflictor, damage);
+                LocalPlayerDamageEvents.OnDamage?.Invoke(__instance.Owner, inflictor, damage);
+                LocalPlayerDamageEvents.OnTentacleDamage?.Invoke(__instance.Owner, inflictor, damage);
             }
         }
     }

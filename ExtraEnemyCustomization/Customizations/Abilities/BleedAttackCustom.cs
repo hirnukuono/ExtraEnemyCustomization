@@ -27,8 +27,8 @@ namespace EECustom.Customizations.Abilities
 
         public override void OnConfigLoaded()
         {
-            PlayerDamageEvents.OnMeleeDamage += OnMelee;
-            PlayerDamageEvents.OnTentacleDamage += OnTentacle;
+            LocalPlayerDamageEvents.OnMeleeDamage += OnMelee;
+            LocalPlayerDamageEvents.OnTentacleDamage += OnTentacle;
             LevelEvents.OnBuildStart += OnBuildStart;
             LevelEvents.OnLevelCleanup += OnLevelCleanup;
 
