@@ -1,11 +1,7 @@
 ﻿using Agents;
 using EECustom.Attributes;
-using EECustom.Utils;
 using Enemies;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace EECustom.Customizations.Models.Handlers
@@ -26,7 +22,6 @@ namespace EECustom.Customizations.Models.Handlers
 
         public PulseHandler(IntPtr ptr) : base(ptr)
         {
-            
         }
 
         internal void Start()
@@ -61,7 +56,6 @@ namespace EECustom.Customizations.Models.Handlers
                 return;
             }
 
-            
             var interval = Math.Max(0.0f, PulseData.Duration);
             _UpdateTimerDelay = interval / _PatternLength;
             _Timer = Clock.Time + StartDelay;

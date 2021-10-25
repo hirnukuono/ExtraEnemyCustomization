@@ -3,8 +3,6 @@ using Enemies;
 using HarmonyLib;
 using LevelGeneration;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EECustom.Customizations.Abilities.Inject
 {
@@ -72,7 +70,7 @@ namespace EECustom.Customizations.Abilities.Inject
 
         private static float RandomRange(float min, float max)
         {
-            return ((float)_Random.NextDouble() * max-min) + min;
+            return ((float)_Random.NextDouble() * max - min) + min;
         }
     }
 }

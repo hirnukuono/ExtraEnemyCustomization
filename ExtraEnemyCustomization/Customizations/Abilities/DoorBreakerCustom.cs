@@ -1,9 +1,6 @@
 ﻿using EECustom.Customizations.Abilities.Inject;
 using EECustom.Utils;
 using Enemies;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EECustom.Customizations.Abilities
 {
@@ -15,7 +12,6 @@ namespace EECustom.Customizations.Abilities
         public float MaxDelay { get; set; } = 0.75f;
 
         internal float GlobalTimer = 0.0f;
-        
 
         public override string GetProcessName()
         {

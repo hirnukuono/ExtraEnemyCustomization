@@ -2,7 +2,6 @@
 using Enemies;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace EECustom.Utils
 {
@@ -15,7 +14,7 @@ namespace EECustom.Utils
             LevelEvents.OnLevelCleanup += OnLevelCleanup;
         }
 
-        static void OnLevelCleanup()
+        private static void OnLevelCleanup()
         {
             _Properties.Clear();
         }
@@ -42,7 +41,8 @@ namespace EECustom.Utils
             _Properties.Add(id, newProp);
 
             var called = false;
-            agent.add_OnDeadCallback(new Action(()=> {
+            agent.add_OnDeadCallback(new Action(() =>
+            {
                 if (!called)
                 {
                     _Properties.Remove(id);
@@ -54,6 +54,7 @@ namespace EECustom.Utils
         }
 
         public static T Get(EnemyAgent agent) => Get(agent.GlobalID);
+
         public static T Get(ushort id)
         {
             if (_Properties.ContainsKey(id))

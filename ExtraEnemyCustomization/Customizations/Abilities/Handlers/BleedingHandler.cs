@@ -1,8 +1,6 @@
 ﻿using EECustom.Attributes;
 using Player;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 
@@ -21,7 +19,6 @@ namespace EECustom.Customizations.Abilities.Handlers
 
         public BleedingHandler(IntPtr ptr) : base(ptr)
         {
-
         }
 
         internal void Update()

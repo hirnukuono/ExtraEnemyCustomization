@@ -15,7 +15,7 @@ namespace EECustom.Managers
         {
             if (string.IsNullOrEmpty(ConfigManager.BasePath))
                 return;
-                
+
             BaseSpritePath = Path.Combine(ConfigManager.BasePath, "icons");
             if (!Directory.Exists(BaseSpritePath))
                 return;

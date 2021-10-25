@@ -3,7 +3,6 @@ using EECustom.Events;
 using Enemies;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json.Serialization;
 using UnityEngine;
 
@@ -16,7 +15,7 @@ namespace EECustom.Customizations.Models
         private readonly static System.Random _Random = new System.Random();
 
         public Color DefaultColor { get; set; } = Color.black;
-        
+
         public Color DetectionColor { get; set; } = new Vector4(9f, 3.9f, 3f, 1f);
         public Color HeartbeatColor { get; set; } = new Vector4(9f, 3.9f, 3f, 1f);
         public Color SelfWakeupColor { get; set; } = new Vector4(3f, 0.2f, 0.2f, 0.5f) * 3f;
@@ -26,7 +25,6 @@ namespace EECustom.Customizations.Models
         public Color ShooterFireColor { get; set; } = new Vector4(1f, 0.5f, 0.45f, 1f) * 2.15f;
 
         public PulseEffectData[] PulseEffects { get; set; } = new PulseEffectData[0];
-        
 
         public override string GetProcessName()
         {
@@ -35,11 +33,11 @@ namespace EECustom.Customizations.Models
 
         public override void OnConfigLoaded()
         {
-            for(int i = 0; i < PulseEffects.Length; i++)
+            for (int i = 0; i < PulseEffects.Length; i++)
             {
                 var pulse = PulseEffects[i];
                 LogDev($"PatternFound!: {pulse.GlowRawPattern}");
-                
+
                 pulse.CachePattern();
                 foreach (var pat in pulse.PatternData)
                 {
@@ -59,12 +57,12 @@ namespace EECustom.Customizations.Models
             agent.Locomotion.TankMultiTargetAttack.m_attackGlowColor = TentacleAttackColor;
             agent.Locomotion.HibernateWakeup.m_selfWakeupColor = SelfWakeupColor;
             agent.Locomotion.Hibernate.m_heartbeatColorVec = HeartbeatColor;
-            
-            foreach(var pulse in PulseEffects)
+
+            foreach (var pulse in PulseEffects)
             {
                 var manager = agent.gameObject.AddComponent<PulseHandler>();
                 manager.PulseData = pulse;
-                if(pulse.RandomizeTime)
+                if (pulse.RandomizeTime)
                 {
                     var interval = Math.Max(0.0f, pulse.Duration);
                     var rand = (float)_Random.NextDouble() * interval;
@@ -98,8 +96,10 @@ namespace EECustom.Customizations.Models
     {
         public PulseEffectTarget Target { get; set; }
         public float Duration { get; set; }
+
         [JsonPropertyName("GlowPattern")]
         public string GlowRawPattern { get; set; }
+
         public Color GlowColor { get; set; }
         public bool RandomizeTime { get; set; }
         public bool KeepOnDead { get; set; }
@@ -125,7 +125,7 @@ namespace EECustom.Customizations.Models
             List<PatternDataCache> cacheList = new List<PatternDataCache>();
             PatternDataCache currentCache = default;
 
-            foreach(var c in GlowRawPattern)
+            foreach (var c in GlowRawPattern)
             {
                 var progressionValue = c switch
                 {

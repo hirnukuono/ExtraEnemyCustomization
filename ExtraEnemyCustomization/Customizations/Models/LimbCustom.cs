@@ -1,7 +1,6 @@
 ﻿using EECustom.Utils;
 using Enemies;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace EECustom.Customizations.Models

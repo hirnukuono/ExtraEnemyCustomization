@@ -2,9 +2,6 @@
 using EECustom.Attributes;
 using EECustom.Utils;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 
 namespace EECustom.CustomSettings.Handlers
@@ -21,7 +18,6 @@ namespace EECustom.CustomSettings.Handlers
 
         public ExplosiveProjectileHandler(IntPtr ptr) : base(ptr)
         {
-
         }
 
         private void OnDestroy()

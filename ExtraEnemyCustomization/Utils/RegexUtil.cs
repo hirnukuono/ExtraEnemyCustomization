@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace EECustom.Utils
 {
     public static class RegexUtil
     {
-        public static readonly Regex VectorRegex = new Regex("[0-9.]+"); 
+        public static readonly Regex VectorRegex = new Regex("[0-9.]+");
 
         public static bool TryParseVectorString(string input, out float[] vectorArray)
         {
@@ -20,7 +18,7 @@ namespace EECustom.Utils
 
                 vectorArray = new float[count];
 
-                for (int i = 0; i<count; i++)
+                for (int i = 0; i < count; i++)
                 {
                     var match = matches[i];
                     vectorArray[i] = float.Parse(match.Value);

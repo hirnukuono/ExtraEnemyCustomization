@@ -1,11 +1,8 @@
 ﻿using AssetShards;
 using EECustom.Customizations.Models.Handlers;
-using EECustom.Events;
 using EECustom.Extensions;
 using Enemies;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -73,7 +70,7 @@ namespace EECustom.Customizations.Models
 
                 void RemoveFromRendererMatRef(MaterialRef matRef)
                 {
-                    foreach(var renderer in matRef.m_renderers)
+                    foreach (var renderer in matRef.m_renderers)
                     {
                         RemoveFromRenderer(renderer);
                     }
@@ -89,8 +86,7 @@ namespace EECustom.Customizations.Models
                 }
             }
 
-            
-            foreach(var renderer in rendererList)
+            foreach (var renderer in rendererList)
             {
                 Logger.Verbose($"Silhouette Object Found! : {renderer.name}");
 

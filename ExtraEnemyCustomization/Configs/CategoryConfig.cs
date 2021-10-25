@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace EECustom.Configs
 {
@@ -25,7 +24,7 @@ namespace EECustom.Configs
                 }
 
                 CategoryCache.Add(category.ToUpper(), new CategoryDefinition()
-                {  
+                {
                     Name = category
                 });
                 Logger.Debug($"Category Defined! '{category}'");
@@ -44,7 +43,7 @@ namespace EECustom.Configs
 
                     definition.AddEnemyID(categoryPair.PersistentID);
                 }
-                
+
                 Logger.Verbose($"Assign Categories to ID: '{categoryPair.PersistentID}', Categories: [{string.Join(", ", categoryPair.Categories)}]");
             }
 
@@ -72,7 +71,7 @@ namespace EECustom.Configs
 
         public bool Any(string[] categories, uint enemyID)
         {
-            foreach(var category in categories)
+            foreach (var category in categories)
             {
                 if (!CategoryCache.TryGetValue(category.ToUpper(), out var categoryDef))
                 {
@@ -117,6 +116,7 @@ namespace EECustom.Configs
         public uint PersistentID { get; set; }
         public string[] Categories { get; set; } = new string[0];
     }
+
     public class CategoryWithIds
     {
         public string Category { get; set; }
@@ -140,7 +140,7 @@ namespace EECustom.Configs
             if (!_PersistentIDs.Contains(id))
             {
                 _PersistentIDs.Add(id);
-            } 
+            }
         }
 
         public void CacheID()

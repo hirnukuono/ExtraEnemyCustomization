@@ -1,11 +1,7 @@
 ﻿using Agents;
 using EECustom.Attributes;
-using EECustom.Utils;
 using Enemies;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 
@@ -42,16 +38,13 @@ namespace EECustom.Customizations.Models.Handlers
         private bool InterpDone = true;
         private float InterpTimer = 0.0f;
         private float InterpStartTime = 0.0f;
-        
 
         public ScannerHandler(IntPtr ptr) : base(ptr)
         {
-            
         }
 
         internal void Start()
         {
-
         }
 
         internal void Update()

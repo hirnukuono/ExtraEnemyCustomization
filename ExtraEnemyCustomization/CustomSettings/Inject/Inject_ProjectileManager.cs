@@ -38,7 +38,6 @@ namespace EECustom.CustomSettings.Inject
                 return true;
             }
 
-            
             var gameObject = GameObject.Instantiate(projectilePrefab, pos, rot, ProjectileManager.Current.m_root.transform);
             gameObject.SetActive(true);
 
@@ -53,7 +52,7 @@ namespace EECustom.CustomSettings.Inject
                 newExplosive.NoiseMinRange = baseExplosive.NoiseMinRange;
                 newExplosive.NoiseMaxRange = baseExplosive.NoiseMaxRange;
             }
-            
+
             __result = gameObject;
             return false;
         }

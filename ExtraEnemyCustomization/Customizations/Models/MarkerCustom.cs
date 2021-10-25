@@ -3,7 +3,6 @@ using EECustom.Extensions;
 using EECustom.Managers;
 using Enemies;
 using System;
-using System.Text.Json.Serialization;
 using UnityEngine;
 
 namespace EECustom.Customizations.Models

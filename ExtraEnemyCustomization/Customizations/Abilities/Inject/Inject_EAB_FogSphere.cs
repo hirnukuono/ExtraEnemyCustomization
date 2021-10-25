@@ -1,9 +1,6 @@
 ﻿using EECustom.Customizations.Abilities.Handlers;
 using EECustom.Utils;
 using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EECustom.Customizations.Abilities.Inject
 {

@@ -12,7 +12,6 @@ namespace EECustom
 {
     //TODO: - Tentacle Hibernation : Possible
     //TODO: - Alerts Logic Behaviour : Maybe Possible, Can't guarantee for every option though
-    //TODO: - Waveless Scout : Already Possible with ScoutWave.json
     //TODO: - Scout Scream Damage : Possible? Maybe?
     //TODO: - Enemy Scream Infection/Damage : Ugh....What?
     //TODO: - Patrolling Hibernation : Too many works to do with this one, this is one of the long term goal
@@ -49,7 +48,7 @@ namespace EECustom
             var types = GetType().Assembly.GetTypes().Where(type => type != null && type.GetCustomAttributes(typeof(InjectToIl2CppAttribute), false).FirstOrDefault() != null);
 
             Log.LogDebug($" - Count: {types.Count()}");
-            foreach(var type in types)
+            foreach (var type in types)
             {
                 //Log.LogDebug($" - {type.Name}"); Class Injector already shows their type names
                 if (ClassInjector.IsTypeRegisteredInIl2Cpp(type))

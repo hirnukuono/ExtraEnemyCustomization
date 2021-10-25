@@ -2,8 +2,6 @@
 using EECustom.Events;
 using Enemies;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -18,13 +16,13 @@ namespace EECustom.Customizations.Models.Handlers
 
         public EnemySilhouette(IntPtr ptr) : base(ptr)
         {
-
         }
 
         public void EnableSilhouette()
         {
             SetColorB(_LatestColorB);
         }
+
         public void DisableSilhouette()
         {
             SetColorB(Color.clear);
@@ -58,12 +56,10 @@ namespace EECustom.Customizations.Models.Handlers
 
         public SilhouetteHandler(IntPtr ptr) : base(ptr)
         {
-
         }
 
         internal void Start()
         {
-            
             silhouettes = GetComponentsInChildren<EnemySilhouette>(true);
             foreach (var sil in silhouettes)
             {
@@ -85,7 +81,7 @@ namespace EECustom.Customizations.Models.Handlers
             {
                 EnemyMarkerEvents.RegisterOnMarked(_Agent, OnMarked);
             }
-            
+
             if (!_RequireTag)
             {
                 SetColorB(_DefaultColor);

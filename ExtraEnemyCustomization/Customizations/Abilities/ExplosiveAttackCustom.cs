@@ -1,16 +1,9 @@
 ﻿using Agents;
-using AK;
 using EECustom.Events;
 using EECustom.Utils;
 using Enemies;
-using FX_EffectSystem;
 using Player;
-using SNetwork;
-using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
 
 namespace EECustom.Customizations.Abilities
 {

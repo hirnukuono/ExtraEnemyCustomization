@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using EECustom.Customizations.Shared;
+﻿using EECustom.Customizations.Shared;
 using EECustom.Extensions;
 using EECustom.Utils;
 using Enemies;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace EECustom.Customizations.Abilities
@@ -23,7 +23,7 @@ namespace EECustom.Customizations.Abilities
         public EffectVolumeSetting EffectVolume { get; set; } = new EffectVolumeSetting();
 
         private readonly List<(EAB_FogSphere fogEab, GameObject originalPrefab)> _ChangedList = new List<(EAB_FogSphere, GameObject)>();
-        
+
         public override string GetProcessName()
         {
             return "FogSphere";

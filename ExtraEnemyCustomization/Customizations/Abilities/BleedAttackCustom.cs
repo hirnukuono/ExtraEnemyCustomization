@@ -6,9 +6,7 @@ using EECustom.Utils;
 using Enemies;
 using Gear;
 using Player;
-using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace EECustom.Customizations.Abilities
 {
@@ -95,7 +93,7 @@ namespace EECustom.Customizations.Abilities
         public void OnBuildStart()
         {
             var localPlayer = PlayerManager.GetLocalPlayerAgent();
-            
+
             _BleedingHandler = localPlayer.gameObject.GetComponent<BleedingHandler>();
             if (_BleedingHandler == null)
             {

@@ -2,9 +2,6 @@
 using EECustom.Customizations.Shared;
 using EECustom.Events;
 using Enemies;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
 namespace EECustom.Customizations.Abilities
@@ -26,7 +23,6 @@ namespace EECustom.Customizations.Abilities
         public void OnSpawned(EnemyAgent agent)
         {
             EnemyGlowEvents.RegisterOnGlow(agent, OnGlow);
-
 
             var handler = agent.gameObject.AddComponent<ScoutFogSphereHandler>();
             handler.ScoutScream = agent.Locomotion.ScoutScream;
