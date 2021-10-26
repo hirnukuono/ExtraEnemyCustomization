@@ -1,6 +1,7 @@
 ﻿using AIGraph;
 using EECustom.CustomSettings.DTO;
 using EECustom.Events;
+using EECustom.Extensions;
 using Enemies;
 using GameData;
 using LevelGeneration;
@@ -232,7 +233,7 @@ namespace EECustom.CustomSettings
                 if (stopOnDeathWaves.Count <= 0)
                     return;
 
-                scoutAgent.add_OnDeadCallback(new Action(() =>
+                scoutAgent.AddOnDeadOnce(() =>
                 {
                     foreach (var waveid in stopOnDeathWaves)
                     {
@@ -241,7 +242,7 @@ namespace EECustom.CustomSettings
                             e.StopEvent();
                         }
                     }
-                }));
+                });
             }
             else
             {

@@ -1,6 +1,7 @@
 ﻿using Agents;
 using EECustom.Attributes;
 using EECustom.Events;
+using EECustom.Extensions;
 using Enemies;
 using SNetwork;
 using System;
@@ -47,10 +48,10 @@ namespace EECustom.Customizations.Abilities.Handlers
                 });
 
                 EnemyDamageEvents.OnDamage += _OnDamageDel;
-                DamageBase.Owner.add_OnDeadCallback(new Action(() =>
+                DamageBase.Owner.AddOnDeadOnce(() =>
                 {
                     EnemyDamageEvents.OnDamage -= _OnDamageDel;
-                }));
+                });
             }
 
             _regenCapAbsValue = RegenData.RegenCap.GetAbsValue(DamageBase.HealthMax);

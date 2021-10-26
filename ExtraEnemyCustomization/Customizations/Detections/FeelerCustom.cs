@@ -1,4 +1,5 @@
 ﻿using EECustom.Events;
+using EECustom.Extensions;
 using EECustom.Utils;
 using Enemies;
 using System;
@@ -43,11 +44,11 @@ namespace EECustom.Customizations.Detections
 
             ScoutAntennaSpawnEvent.OnDetectionSpawn += onDetectionSpawn;
             ScoutAntennaSpawnEvent.OnAntennaSpawn += onAntennaSpawn;
-            agent.add_OnDeadCallback(new Action(() =>
+            agent.AddOnDeadOnce(() =>
             {
                 ScoutAntennaSpawnEvent.OnDetectionSpawn -= onDetectionSpawn;
                 ScoutAntennaSpawnEvent.OnAntennaSpawn -= onAntennaSpawn;
-            }));
+            });
         }
 
         private void OnDetectionSpawn(EnemyAgent agent, ScoutAntennaDetection detection)
