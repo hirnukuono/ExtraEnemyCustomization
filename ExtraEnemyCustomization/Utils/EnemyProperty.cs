@@ -1,4 +1,5 @@
 ﻿using EECustom.Events;
+using EECustom.Extensions;
 using Enemies;
 using System;
 using System.Collections.Generic;
@@ -40,15 +41,10 @@ namespace EECustom.Utils
             var newProp = new T();
             _Properties.Add(id, newProp);
 
-            var called = false;
-            agent.add_OnDeadCallback(new Action(() =>
+            agent.AddOnDeadOnce(() =>
             {
-                if (!called)
-                {
-                    _Properties.Remove(id);
-                    called = true;
-                }
-            }));
+                _Properties.Remove(id);
+            });
 
             return newProp;
         }

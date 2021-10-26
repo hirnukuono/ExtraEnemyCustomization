@@ -14,6 +14,7 @@ namespace EECustom.Inject
             {
                 return;
             }
+            ConfigManager.Current.RegisterTargetLookup(__instance);
             ConfigManager.Current.FireSpawnedEvent(__instance);
         }
     }

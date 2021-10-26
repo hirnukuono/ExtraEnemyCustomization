@@ -1,4 +1,5 @@
-﻿using Enemies;
+﻿using EECustom.Extensions;
+using Enemies;
 using System;
 using UnityEngine;
 
@@ -19,10 +20,10 @@ namespace EECustom.Events
                 }
             });
             OnChanged += onChangedWrapper;
-            agent.add_OnDeadCallback(new Action(() =>
+            agent.AddOnDeadOnce(() =>
             {
                 OnChanged -= onChangedWrapper;
-            }));
+            });
         }
     }
 }

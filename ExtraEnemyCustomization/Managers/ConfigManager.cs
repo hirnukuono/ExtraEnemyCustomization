@@ -132,5 +132,13 @@ namespace EECustom.Managers
 
             GenerateEventBuffer();
         }
+
+        internal void RegisterTargetLookup(EnemyAgent agent)
+        {
+            foreach (var custom in _CustomizationBuffer)
+            {
+                custom.RegisterTargetLookup(agent);
+            }
+        }
     }
 }

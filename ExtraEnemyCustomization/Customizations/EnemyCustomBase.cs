@@ -1,8 +1,10 @@
 ﻿using BepInEx.Logging;
+using EECustom.Extensions;
 using EECustom.Managers;
 using Enemies;
 using GameData;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace EECustom.Customizations
@@ -13,11 +15,35 @@ namespace EECustom.Customizations
         public bool Enabled { get; set; } = true;
         public TargetSetting Target { get; set; } = new TargetSetting();
 
+        private readonly Dictionary<ushort, bool> _IsTargetLookup = new Dictionary<ushort, bool>();
+
         public virtual void OnConfigLoaded()
         {
         }
 
         public abstract string GetProcessName();
+
+        internal void RegisterTargetLookup(EnemyAgent enemyAgent)
+        {
+            var id = enemyAgent.GlobalID;
+            if (!_IsTargetLookup.ContainsKey(id))
+            {
+                _IsTargetLookup.Add(id, Target.IsMatch(enemyAgent));
+
+                enemyAgent.AddOnDeadOnce(() =>
+                {
+                    _IsTargetLookup.Remove(id);
+                });
+            }
+        }
+
+        public bool IsTarget(EnemyAgent enemyAgent)
+        {
+            if (_IsTargetLookup.TryGetValue(enemyAgent.GlobalID, out var isTarget))
+                return isTarget;
+
+            return false;
+        }
 
         public void LogVerbose(string str)
         {

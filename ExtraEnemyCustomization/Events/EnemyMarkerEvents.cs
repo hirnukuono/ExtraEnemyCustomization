@@ -1,4 +1,5 @@
-﻿using Enemies;
+﻿using EECustom.Extensions;
+using Enemies;
 using System;
 
 namespace EECustom.Events
@@ -18,10 +19,10 @@ namespace EECustom.Events
                 }
             });
             OnMarked += onMarkedWrapper;
-            agent.add_OnDeadCallback(new Action(() =>
+            agent.AddOnDeadOnce(() =>
             {
                 OnMarked -= onMarkedWrapper;
-            }));
+            });
         }
     }
 }

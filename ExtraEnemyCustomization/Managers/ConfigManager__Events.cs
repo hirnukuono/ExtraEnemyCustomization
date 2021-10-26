@@ -51,7 +51,7 @@ namespace EECustom.Managers
                 if (!custom.Enabled)
                     continue;
 
-                if (custom.Target.IsMatch(agent))
+                if (custom.IsTarget(agent))
                 {
                     custom.LogDev($"Apply PrefabBuilt Event: {agent.name}");
                     ((IEnemyPrefabBuiltEvent)custom).OnPrefabBuilt(agent);
@@ -69,7 +69,7 @@ namespace EECustom.Managers
                 if (!custom.Enabled)
                     continue;
 
-                if (custom.Target.IsMatch(agent))
+                if (custom.IsTarget(agent))
                 {
                     custom.LogDev($"Apply Spawned Event: {agent.name}");
                     ((IEnemySpawnedEvent)custom).OnSpawned(agent);
@@ -87,7 +87,7 @@ namespace EECustom.Managers
                 if (!custom.Enabled)
                     continue;
 
-                if (custom.Target.IsMatch(agent))
+                if (custom.IsTarget(agent))
                 {
                     custom.LogDev($"Apply Despawned Event: {agent.name}");
                     ((IEnemyDespawnedEvent)custom).OnDespawned(agent);
@@ -107,7 +107,7 @@ namespace EECustom.Managers
                 if (!custom.Enabled)
                     continue;
 
-                if (custom.Target.IsMatch(agent))
+                if (custom.IsTarget(agent))
                 {
                     var newGlowInfo = new GlowInfo(glowInfo.Color, glowInfo.Position);
                     if (((IEnemyGlowEvent)custom).OnGlow(agent, ref newGlowInfo))
