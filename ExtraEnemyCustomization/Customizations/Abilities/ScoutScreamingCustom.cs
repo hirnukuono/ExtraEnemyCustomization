@@ -9,8 +9,10 @@ namespace EECustom.Customizations.Abilities
     public class ScoutScreamingCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyGlowEvent
     {
         private readonly static Color DefaultChargeupColor = ES_ScoutScream.s_screamChargeupColor;
+        private readonly static Color DefaultScreamColor = ES_ScoutScream.s_screamPopColor;
 
         public Color ChargeupColor { get; set; } = new Color(0f, 1f, 0.8f, 1f) * 2f;
+        public Color ScreamColor { get; set; } = new Color(0f, 1f, 0.8f, 1f) * 20f;
         public Color FogColor { get; set; } = new Color(0f, 1f, 0.8f, 1f) * 20f;
         public float FogIntensity { get; set; } = 1.0f;
         public EffectVolumeSetting EffectVolume { get; set; } = new EffectVolumeSetting();
@@ -39,6 +41,11 @@ namespace EECustom.Customizations.Abilities
             if (glowInfo.Color == DefaultChargeupColor)
             {
                 glowInfo = glowInfo.ChangeColor(ChargeupColor);
+                return true;
+            }
+            else if (glowInfo.Color == DefaultScreamColor)
+            {
+                glowInfo = glowInfo.ChangeColor(ScreamColor);
                 return true;
             }
 
