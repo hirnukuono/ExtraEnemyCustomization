@@ -30,7 +30,7 @@ namespace EECustom.Customizations
             var id = enemyAgent.GlobalID;
             if (!_IsTargetLookup.ContainsKey(id))
             {
-                _IsTargetLookup.Add(id, Target.IsMatch(enemyAgent));
+                _IsTargetLookup.Add(id, Target.IsMatch(enemyAgent.EnemyDataID));
 
                 enemyAgent.AddOnDeadOnce(() =>
                 {
@@ -98,19 +98,27 @@ namespace EECustom.Customizations
         public bool NameIgnoreCase { get; set; } = false;
         public string[] Categories { get; set; } = new string[0];
 
-        public bool IsMatch(EnemyAgent agent)
+        public bool IsMatch(uint enemyID)
         {
-            var enemyData = GameDataBlockBase<EnemyDataBlock>.GetBlock(agent.EnemyDataID);
+            var enemyBlock = GameDataBlockBase<EnemyDataBlock>.GetBlock(enemyID);
+            return IsMatch(enemyBlock);
+        }
+
+        public bool IsMatch(EnemyDataBlock enemyBlock)
+        {
+            if (enemyBlock == null)
+                return false;
+
             var comparisonMode = NameIgnoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
 
             return Mode switch
             {
-                TargetMode.PersistentID => PersistentIDs.Contains(agent.EnemyDataID),
-                TargetMode.NameEquals => enemyData?.name?.Equals(NameParam, comparisonMode) ?? false,
-                TargetMode.NameContains => enemyData?.name?.Contains(NameParam, comparisonMode) ?? false,
+                TargetMode.PersistentID => PersistentIDs.Contains(enemyBlock.persistentID),
+                TargetMode.NameEquals => enemyBlock.name?.Equals(NameParam, comparisonMode) ?? false,
+                TargetMode.NameContains => enemyBlock.name?.Contains(NameParam, comparisonMode) ?? false,
                 TargetMode.Everything => true,
-                TargetMode.CategoryAny => ConfigManager.Current.Categories.Any(Categories, agent.EnemyDataID),
-                TargetMode.CategoryAll => ConfigManager.Current.Categories.All(Categories, agent.EnemyDataID),
+                TargetMode.CategoryAny => ConfigManager.Current.Categories.Any(Categories, enemyBlock.persistentID),
+                TargetMode.CategoryAll => ConfigManager.Current.Categories.All(Categories, enemyBlock.persistentID),
                 _ => false,
             };
         }

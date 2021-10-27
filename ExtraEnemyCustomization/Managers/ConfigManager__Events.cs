@@ -1,5 +1,6 @@
 ﻿using EECustom.Customizations;
 using Enemies;
+using GameData;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,42 +9,109 @@ namespace EECustom.Managers
 {
     public partial class ConfigManager
     {
-        private IEnemyPrefabBuiltEvent[] _EnemyPrefabBuiltEvents = new IEnemyPrefabBuiltEvent[0];
-        private IEnemySpawnedEvent[] _EnemySpawnedEvents = new IEnemySpawnedEvent[0];
-        private IEnemyDespawnedEvent[] _EnemyDespawnedEvents = new IEnemyDespawnedEvent[0];
-        private IEnemyGlowEvent[] _EnemyGlowEvents = new IEnemyGlowEvent[0];
+        public class EventHolder<T> where T : class, IEnemyEvent
+        {
+            public string EventName { get; set; } = string.Empty;
+            public T[] Events
+            {
+                get
+                {
+                    if (_hasDirty)
+                    {
+                        _events = _eventList.ToArray();
+                        _hasDirty = false;
+                    }
+
+                    return _events;
+                }
+            }
+
+            private List<T> _eventList = new List<T>();
+            private T[] _events = new T[0];
+            private bool _hasDirty = false;
+
+            public EventHolder(string eventName)
+            {
+                EventName = eventName;
+            }
+
+            public void TryAdd(EnemyCustomBase custom)
+            {
+                if (custom is T e)
+                {
+                    _eventList.Add(e);
+                    _hasDirty = true;
+                } 
+            }
+
+            public void Clear()
+            {
+                _eventList.Clear();
+                _hasDirty = true;
+            }
+
+
+            internal void FireEventPreSpawn(EnemyAgent agent, Action<T> doAction)
+            {
+                var handlers = Events;
+                var enemyBlock = GameDataBlockBase<EnemyDataBlock>.GetBlock(agent.EnemyDataID);
+
+                for (int i = 0; i < handlers.Length; i++)
+                {
+                    var custom = handlers[i].Base;
+
+                    if (!custom.Enabled)
+                        continue;
+
+                    if (custom.Target.IsMatch(enemyBlock))
+                    {
+                        custom.LogDev($"Apply {EventName} Event: {agent.name}");
+                        doAction?.Invoke(custom as T);
+                        custom.LogVerbose($"Finished!");
+                    }
+                }
+            }
+
+            internal void FireEvent(EnemyAgent agent, Action<T> doAction)
+            {
+                var handlers = Events;
+
+                for (int i = 0; i < handlers.Length; i++)
+                {
+                    var custom = handlers[i].Base;
+
+                    if (!custom.Enabled)
+                        continue;
+
+                    if (custom.IsTarget(agent))
+                    {
+                        custom.LogDev($"Apply {EventName} Event: {agent.name}");
+                        doAction?.Invoke(custom as T);
+                        custom.LogVerbose($"Finished!");
+                    }
+                }
+            }
+        }
+
+        private readonly EventHolder<IEnemyPrefabBuiltEvent> _EnemyPrefabBuiltHolder = new("PrefabBuilt");
+        private readonly EventHolder<IEnemySpawnedEvent> _EnemySpawnedHolder = new("Spawned");
+        private readonly EventHolder<IEnemyDespawnedEvent> _EnemyDespawnedHolder = new("Despawned");
+        private readonly EventHolder<IEnemyGlowEvent> _EnemyGlowHolder = new("Glow");
 
         private void GenerateEventBuffer()
         {
-            var prefabBuilt = new List<IEnemyPrefabBuiltEvent>();
-            var spawned = new List<IEnemySpawnedEvent>();
-            var despawned = new List<IEnemyDespawnedEvent>();
-            var glow = new List<IEnemyGlowEvent>();
-
             foreach (var custom in _CustomizationBuffer)
             {
-                if (custom is IEnemyPrefabBuiltEvent e1)
-                    prefabBuilt.Add(e1);
-
-                if (custom is IEnemySpawnedEvent e2)
-                    spawned.Add(e2);
-
-                if (custom is IEnemyDespawnedEvent e3)
-                    despawned.Add(e3);
-
-                if (custom is IEnemyGlowEvent e4)
-                    glow.Add(e4);
+                _EnemyPrefabBuiltHolder.TryAdd(custom);
+                _EnemySpawnedHolder.TryAdd(custom);
+                _EnemyDespawnedHolder.TryAdd(custom);
+                _EnemyGlowHolder.TryAdd(custom);
             }
-
-            _EnemyPrefabBuiltEvents = prefabBuilt.ToArray();
-            _EnemySpawnedEvents = spawned.ToArray();
-            _EnemyDespawnedEvents = despawned.ToArray();
-            _EnemyGlowEvents = glow.ToArray();
         }
 
         internal void FirePrefabBuiltEvent(EnemyAgent agent)
         {
-            FireEventPreSpawn(_EnemyPrefabBuiltEvents, agent, "PrefabBuilt", (e) =>
+            _EnemyPrefabBuiltHolder.FireEventPreSpawn(agent, (e) =>
             {
                 e.OnPrefabBuilt(agent);
             });
@@ -51,7 +119,7 @@ namespace EECustom.Managers
 
         internal void FireSpawnedEvent(EnemyAgent agent)
         {
-            FireEvent(_EnemySpawnedEvents, agent, "Spawned", (e) =>
+            _EnemySpawnedHolder.FireEvent(agent, (e) =>
             {
                 e.OnSpawned(agent);
             });
@@ -59,7 +127,7 @@ namespace EECustom.Managers
 
         internal void FireDespawnedEvent(EnemyAgent agent)
         {
-            FireEvent(_EnemyDespawnedEvents, agent, "Despawned", (e) =>
+            _EnemyDespawnedHolder.FireEvent(agent, (e) =>
             {
                 e.OnDespawned(agent);
             });
@@ -68,62 +136,23 @@ namespace EECustom.Managers
         internal bool FireGlowEvent(EnemyAgent agent, ref GlowInfo glowInfo)
         {
             bool altered = false;
+            var newGlowInfo = new GlowInfo(glowInfo.Color, glowInfo.Position);
 
-            for (int i = 0; i < _EnemyGlowEvents.Length; i++)
+            _EnemyGlowHolder.FireEvent(agent, (e) =>
             {
-                var custom = _EnemyGlowEvents[i].Base;
-
-                if (!custom.Enabled)
-                    continue;
-
-                if (custom.IsTarget(agent))
+                var copyedGlowInfo = new GlowInfo(newGlowInfo.Color, newGlowInfo.Position);
+                if (e.OnGlow(agent, ref copyedGlowInfo))
                 {
-                    var newGlowInfo = new GlowInfo(glowInfo.Color, glowInfo.Position);
-                    if (((IEnemyGlowEvent)custom).OnGlow(agent, ref newGlowInfo))
-                    {
-                        glowInfo = newGlowInfo;
-                        altered = true;
-                    }
+                    altered = true;
                 }
+            });
+
+            if (altered)
+            {
+                glowInfo = newGlowInfo;
             }
 
             return altered;
-        }
-
-        private void FireEventPreSpawn<T>(T[] handlers, EnemyAgent agent, string eventName, Action<T> doAction) where T : class, IEnemyEvent
-        {
-            for (int i = 0; i < handlers.Length; i++)
-            {
-                var custom = handlers[i].Base;
-
-                if (!custom.Enabled)
-                    continue;
-
-                if (custom.Target.IsMatch(agent))
-                {
-                    custom.LogDev($"Apply {eventName} Event: {agent.name}");
-                    doAction?.Invoke(custom as T);
-                    custom.LogVerbose($"Finished!");
-                }
-            }
-        }
-
-        private void FireEvent<T>(T[] handlers, EnemyAgent agent, string eventName, Action<T> doAction) where T : class, IEnemyEvent
-        {
-            for (int i = 0; i < handlers.Length; i++)
-            {
-                var custom = handlers[i].Base;
-
-                if (!custom.Enabled)
-                    continue;
-
-                if (custom.IsTarget(agent))
-                {
-                    custom.LogDev($"Apply {eventName} Event: {agent.name}");
-                    doAction?.Invoke(custom as T);
-                    custom.LogVerbose($"Finished!");
-                }
-            }
         }
     }
 }

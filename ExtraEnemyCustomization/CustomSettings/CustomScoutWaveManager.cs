@@ -193,7 +193,7 @@ namespace EECustom.CustomSettings
                 var targetSetting = scoutSetting.TargetSetting;
                 var waveSetting = scoutSetting.WaveSetting;
 
-                if (!targetSetting.Target.IsMatch(scoutAgent))
+                if (!targetSetting.Target.IsMatch(scoutAgent.EnemyDataID))
                     continue;
 
                 if (waveSetting.Waves.GetLength(0) <= 0)
