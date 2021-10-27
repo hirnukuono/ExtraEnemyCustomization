@@ -51,7 +51,7 @@ namespace EECustom.Managers
                 if (!custom.Enabled)
                     continue;
 
-                if (custom.IsTarget(agent))
+                if (custom.Target.IsMatch(agent))
                 {
                     custom.LogDev($"Apply PrefabBuilt Event: {agent.name}");
                     ((IEnemyPrefabBuiltEvent)custom).OnPrefabBuilt(agent);
