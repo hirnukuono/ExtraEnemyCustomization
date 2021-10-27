@@ -9,6 +9,7 @@
     <BIELibsFolder>$(GameFolder)/BepInEx/core</BIELibsFolder>
     <UnhollowedLibsFolder>$(GameFolder)/BepInEx/unhollowed</UnhollowedLibsFolder>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>Latest</LangVersion>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <Version>0.8.1</Version>
     <RootNamespace>EECustom</RootNamespace>
