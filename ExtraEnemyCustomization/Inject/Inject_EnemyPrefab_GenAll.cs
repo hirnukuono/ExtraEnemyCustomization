@@ -11,7 +11,7 @@ namespace EECustom.Inject
     internal static class Inject_EnemyPrefab_GenAll
     {
         [HarmonyWrapSafe]
-        private static void Prefix()
+        public static void Prefix()
         {
             Logger.Debug("== List of Material that can be used for Materials Parameters ==");
 

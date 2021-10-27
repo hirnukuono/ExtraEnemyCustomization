@@ -8,7 +8,7 @@ namespace EECustom.CustomSettings.Inject
     internal class Inject_ES_ScoutScream
     {
         [HarmonyWrapSafe]
-        private static void Postfix(ES_ScoutScream __instance)
+        public static void Postfix(ES_ScoutScream __instance)
         {
             if (__instance.m_state == ES_ScoutScream.ScoutScreamState.Done)
             {

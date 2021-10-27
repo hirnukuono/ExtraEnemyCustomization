@@ -10,7 +10,7 @@ namespace EECustom.Events.Inject
         [HarmonyPostfix]
         [HarmonyWrapSafe]
         [HarmonyPatch(nameof(PlayerAgent.GiveHealth))]
-        private static void Post_Health(PlayerAgent __instance)
+        public static void Post_Health(PlayerAgent __instance)
         {
             ResourcePackEvents.OnReceiveMedi?.Invoke(__instance.Cast<iResourcePackReceiver>());
         }
@@ -18,7 +18,7 @@ namespace EECustom.Events.Inject
         [HarmonyPostfix]
         [HarmonyWrapSafe]
         [HarmonyPatch(nameof(PlayerAgent.GiveAmmoRel))]
-        private static void Post_Ammo(float ammoStandardRel, float ammoSpecialRel, float ammoClassRel, PlayerAgent __instance)
+        public static void Post_Ammo(float ammoStandardRel, float ammoSpecialRel, float ammoClassRel, PlayerAgent __instance)
         {
             if (ammoStandardRel > 0.0f || ammoSpecialRel > 0.0f)
                 ResourcePackEvents.OnReceiveAmmo?.Invoke(__instance.Cast<iResourcePackReceiver>());
@@ -29,7 +29,7 @@ namespace EECustom.Events.Inject
         [HarmonyPostfix]
         [HarmonyWrapSafe]
         [HarmonyPatch(nameof(PlayerAgent.GiveDisinfection))]
-        private static void Post_Disinect(PlayerAgent __instance)
+        public static void Post_Disinect(PlayerAgent __instance)
         {
             ResourcePackEvents.OnReceiveDisinfect?.Invoke(__instance.Cast<iResourcePackReceiver>());
         }

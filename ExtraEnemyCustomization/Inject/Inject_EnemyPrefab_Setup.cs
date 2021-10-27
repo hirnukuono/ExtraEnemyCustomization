@@ -9,7 +9,7 @@ namespace EECustom.Inject
     internal static class Inject_EnemyPrefab_Setup
     {
         [HarmonyWrapSafe]
-        private static void Postfix(GameObject __result)
+        public static void Postfix(GameObject __result)
         {
             var agent = __result.GetComponent<EnemyAgent>();
             if (agent is null)

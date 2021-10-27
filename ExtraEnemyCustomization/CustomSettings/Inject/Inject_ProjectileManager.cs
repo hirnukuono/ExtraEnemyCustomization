@@ -12,7 +12,7 @@ namespace EECustom.CustomSettings.Inject
         [HarmonyPostfix]
         [HarmonyWrapSafe]
         [HarmonyPatch(nameof(ProjectileManager.LoadAssets))]
-        private static void Post_LoadAsset()
+        public static void Post_LoadAsset()
         {
             foreach (var proj in ConfigManager.Current.ProjectileCustom.ProjectileDefinitions)
             {
@@ -23,7 +23,7 @@ namespace EECustom.CustomSettings.Inject
         [HarmonyPrefix]
         [HarmonyWrapSafe]
         [HarmonyPatch(nameof(ProjectileManager.SpawnProjectileType))]
-        private static bool Pre_SpawnProjectile(ref GameObject __result, ref ProjectileType type, Vector3 pos, Quaternion rot)
+        public static bool Pre_SpawnProjectile(ref GameObject __result, ref ProjectileType type, Vector3 pos, Quaternion rot)
         {
             if (Enum.IsDefined(typeof(ProjectileType), (byte)type))
             {

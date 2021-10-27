@@ -8,7 +8,7 @@ namespace EECustom.Inject
     internal static class Inject_EnemyAgent_DeSpawn
     {
         [HarmonyWrapSafe]
-        private static void Prefix(EnemyAgent __instance)
+        public static void Prefix(EnemyAgent __instance)
         {
             ConfigManager.Current.FireDespawnedEvent(__instance);
         }

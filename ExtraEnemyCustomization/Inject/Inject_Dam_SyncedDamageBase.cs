@@ -10,24 +10,24 @@ namespace EECustom.Inject
         [HarmonyPatch(nameof(Dam_SyncedDamageBase.TentacleAttackDamage))]
         [HarmonyPrefix]
         [HarmonyWrapSafe]
-        private static bool Pre_TentacleDamage(float dam, Dam_SyncedDamageBase __instance) => DoHealer(dam, __instance);
+        public static bool Pre_TentacleDamage(float dam, Dam_SyncedDamageBase __instance) => DoHealer(dam, __instance);
 
         [HarmonyPatch(nameof(Dam_SyncedDamageBase.MeleeDamage))]
         [HarmonyPrefix]
         [HarmonyWrapSafe]
-        private static bool Pre_PunchDamage(float dam, Dam_SyncedDamageBase __instance) => DoHealer(dam, __instance);
+        public static bool Pre_PunchDamage(float dam, Dam_SyncedDamageBase __instance) => DoHealer(dam, __instance);
 
         [HarmonyPatch(nameof(Dam_SyncedDamageBase.ExplosionDamage))]
         [HarmonyPrefix]
         [HarmonyWrapSafe]
-        private static bool Pre_ExplosionDamage(float dam, Dam_SyncedDamageBase __instance) => DoHealer(dam, __instance);
+        public static bool Pre_ExplosionDamage(float dam, Dam_SyncedDamageBase __instance) => DoHealer(dam, __instance);
 
         [HarmonyPatch(nameof(Dam_SyncedDamageBase.ShooterProjectileDamage))]
         [HarmonyPrefix]
         [HarmonyWrapSafe]
-        private static bool Pre_ShooterProjectileDamage(float dam, Dam_SyncedDamageBase __instance) => DoHealer(dam, __instance);
+        public static bool Pre_ShooterProjectileDamage(float dam, Dam_SyncedDamageBase __instance) => DoHealer(dam, __instance);
 
-        private static bool DoHealer(float dam, Dam_SyncedDamageBase damBase)
+        public static bool DoHealer(float dam, Dam_SyncedDamageBase damBase)
         {
             if (dam >= 0.0f)
                 return true; //Run Original Code
