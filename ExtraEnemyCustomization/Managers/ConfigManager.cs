@@ -104,15 +104,15 @@ namespace EECustom.Managers
 
         public static ConfigManager Current { get; private set; }
 
-        public CategoryConfig Categories { get; private set; } = new CategoryConfig();
-        public ModelCustomConfig ModelCustom { get; private set; } = new ModelCustomConfig();
-        public AbilityCustomConfig AbilityCustom { get; private set; } = new AbilityCustomConfig();
-        public ProjectileCustomConfig ProjectileCustom { get; private set; } = new ProjectileCustomConfig();
-        public TentacleCustomConfig TentacleCustom { get; private set; } = new TentacleCustomConfig();
-        public DetectionCustomConfig DetectionCustom { get; private set; } = new DetectionCustomConfig();
-        public SpawnCostCustomConfig SpawnCostCustom { get; private set; } = new SpawnCostCustomConfig();
+        public CategoryConfig Categories { get; private set; } = new();
+        public ModelCustomConfig ModelCustom { get; private set; } = new();
+        public AbilityCustomConfig AbilityCustom { get; private set; } = new();
+        public ProjectileCustomConfig ProjectileCustom { get; private set; } = new();
+        public TentacleCustomConfig TentacleCustom { get; private set; } = new();
+        public DetectionCustomConfig DetectionCustom { get; private set; } = new();
+        public SpawnCostCustomConfig SpawnCostCustom { get; private set; } = new();
 
-        private readonly List<EnemyCustomBase> _CustomizationBuffer = new List<EnemyCustomBase>();
+        private readonly List<EnemyCustomBase> _CustomizationBuffer = new();
 
         private void GenerateBuffer()
         {

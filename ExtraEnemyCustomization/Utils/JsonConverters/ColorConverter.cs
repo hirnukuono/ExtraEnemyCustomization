@@ -16,14 +16,13 @@ namespace EECustom.Utils.JsonConverters
 
         public override Color Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            
             var color = new Color();
             float multiplier = 1.0f;
 
             switch (reader.TokenType)
             {
                 case JsonTokenType.StartObject:
-                    
+
                     while (reader.Read())
                     {
                         if (reader.TokenType == JsonTokenType.EndObject)
@@ -63,9 +62,9 @@ namespace EECustom.Utils.JsonConverters
                 case JsonTokenType.String:
                     var strValue = reader.GetString().Trim();
                     var strValues = strValue.Split("*");
-                    string formatString = string.Empty;
+                    string formatString;
 
-                    switch(strValues.Length)
+                    switch (strValues.Length)
                     {
                         case 1:
                             multiplier = 1.0f;

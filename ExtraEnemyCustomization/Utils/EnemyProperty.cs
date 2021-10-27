@@ -1,14 +1,13 @@
 ﻿using EECustom.Events;
 using EECustom.Extensions;
 using Enemies;
-using System;
 using System.Collections.Generic;
 
 namespace EECustom.Utils
 {
     public static class EnemyProperty<T> where T : class, new()
     {
-        private readonly static Dictionary<ushort, T> _Properties = new Dictionary<ushort, T>();
+        private readonly static Dictionary<ushort, T> _Properties = new();
 
         static EnemyProperty()
         {

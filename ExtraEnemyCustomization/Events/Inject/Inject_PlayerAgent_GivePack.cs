@@ -10,7 +10,7 @@ namespace EECustom.Events.Inject
         [HarmonyPostfix]
         [HarmonyWrapSafe]
         [HarmonyPatch(nameof(PlayerAgent.GiveHealth))]
-        private static void Post_Health(float amountRel, PlayerAgent __instance)
+        private static void Post_Health(PlayerAgent __instance)
         {
             ResourcePackEvents.OnReceiveMedi?.Invoke(__instance.Cast<iResourcePackReceiver>());
         }
@@ -29,7 +29,7 @@ namespace EECustom.Events.Inject
         [HarmonyPostfix]
         [HarmonyWrapSafe]
         [HarmonyPatch(nameof(PlayerAgent.GiveDisinfection))]
-        private static void Post_Disinect(float amountRel, PlayerAgent __instance)
+        private static void Post_Disinect(PlayerAgent __instance)
         {
             ResourcePackEvents.OnReceiveDisinfect?.Invoke(__instance.Cast<iResourcePackReceiver>());
         }

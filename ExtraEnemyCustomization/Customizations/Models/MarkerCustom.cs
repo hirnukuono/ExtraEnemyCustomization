@@ -21,8 +21,8 @@ namespace EECustom.Customizations.Models
 
         private Sprite _Sprite = null;
         private bool _PrespawnOnce = false;
-        private bool _HasText = false;
-        private bool _TextRequiresAutoUpdate = false;
+        //private bool _HasText = false;
+        //private bool _TextRequiresAutoUpdate = false;
 
         public override string GetProcessName()
         {
@@ -35,12 +35,14 @@ namespace EECustom.Customizations.Models
             if (string.IsNullOrEmpty(MarkerText))
                 return;
 
+            /*
             _HasText = true;
 
             if (MarkerText.ContainsAnyIgnoreCase("[HP_MAX]", "[HP]", "[HP_PERCENT]", "[HP_PERCENT_INT]"))
             {
                 _TextRequiresAutoUpdate = true;
             }
+            */
         }
 
         public void OnPrefabBuilt(EnemyAgent agent)

@@ -6,7 +6,7 @@ using UnityEngine;
 namespace EECustom.Customizations.Abilities.Handlers
 {
     [InjectToIl2Cpp]
-    public class ScoutFogSphereHandler : MonoBehaviour
+    internal class ScoutFogSphereHandler : MonoBehaviour
     {
         public Color FogColor;
         public float FogIntensity;
@@ -20,7 +20,7 @@ namespace EECustom.Customizations.Abilities.Handlers
         {
         }
 
-        private void Update()
+        public void Update()
         {
             if (ScoutScream.m_fogSphereAdd == null)
                 return;
@@ -50,7 +50,7 @@ namespace EECustom.Customizations.Abilities.Handlers
             }
         }
 
-        private void OnDestroy()
+        public void OnDestroy()
         {
             if (EVSphere != null)
                 EffectVolumeManager.UnregisterVolume(EVSphere);

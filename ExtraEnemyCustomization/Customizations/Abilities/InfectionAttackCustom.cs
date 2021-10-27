@@ -9,10 +9,10 @@ namespace EECustom.Customizations.Abilities
 {
     public class InfectionAttackCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyDespawnedEvent
     {
-        public InfectionAttackData MeleeData { get; set; } = new InfectionAttackData();
-        public InfectionAttackData TentacleData { get; set; } = new InfectionAttackData();
+        public InfectionAttackData MeleeData { get; set; } = new();
+        public InfectionAttackData TentacleData { get; set; } = new();
 
-        private readonly List<ushort> _EnemyList = new List<ushort>();
+        private readonly List<ushort> _EnemyList = new();
 
         public override string GetProcessName()
         {

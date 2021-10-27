@@ -9,10 +9,10 @@ namespace EECustom.Customizations.Abilities
 {
     public class ExplosiveAttackCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyDespawnedEvent
     {
-        public ExplosiveAttackData MeleeData { get; set; } = new ExplosiveAttackData();
-        public ExplosiveAttackData TentacleData { get; set; } = new ExplosiveAttackData();
+        public ExplosiveAttackData MeleeData { get; set; } = new();
+        public ExplosiveAttackData TentacleData { get; set; } = new();
 
-        private readonly List<ushort> _EnemyList = new List<ushort>();
+        private readonly List<ushort> _EnemyList = new();
 
         public override string GetProcessName()
         {
@@ -58,7 +58,7 @@ namespace EECustom.Customizations.Abilities
             }
         }
 
-        private void DoExplode(ExplosiveAttackData data, PlayerAgent player, Agent inflictor)
+        private void DoExplode(ExplosiveAttackData data, PlayerAgent player, Agent _)
         {
             var maxDamage = data.Damage.GetAbsValue(PlayerData.MaxHealth);
             if (maxDamage > 0.0f)

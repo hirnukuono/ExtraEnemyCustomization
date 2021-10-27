@@ -9,10 +9,10 @@ namespace EECustom.Customizations.Abilities
 {
     public class KnockbackAttackCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyDespawnedEvent
     {
-        public KnockbackData MeleeData { get; set; } = new KnockbackData();
-        public KnockbackData TentacleData { get; set; } = new KnockbackData();
+        public KnockbackData MeleeData { get; set; } = new();
+        public KnockbackData TentacleData { get; set; } = new();
 
-        private readonly List<ushort> _EnemyList = new List<ushort>();
+        private readonly List<ushort> _EnemyList = new();
 
         public override string GetProcessName()
         {

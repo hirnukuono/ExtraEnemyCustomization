@@ -13,11 +13,11 @@ namespace EECustom.CustomSettings
 {
     public static class CustomScoutWaveManager
     {
-        private static readonly System.Random _Random = new System.Random();
-        private static readonly List<ExpeditionScoutSetting> _ScoutSettings = new List<ExpeditionScoutSetting>();
-        private static readonly List<ScoutSettingCache> _ActiveScoutSettings = new List<ScoutSettingCache>();
-        private static readonly Dictionary<string, ScoutTargetSetting> _TargetSettingDict = new Dictionary<string, ScoutTargetSetting>();
-        private static readonly Dictionary<string, ScoutWaveSetting> _WaveSettingDict = new Dictionary<string, ScoutWaveSetting>();
+        private static readonly Random _Random = new();
+        private static readonly List<ExpeditionScoutSetting> _ScoutSettings = new();
+        private static readonly List<ScoutSettingCache> _ActiveScoutSettings = new();
+        private static readonly Dictionary<string, ScoutTargetSetting> _TargetSettingDict = new();
+        private static readonly Dictionary<string, ScoutWaveSetting> _WaveSettingDict = new();
 
         private static string _PreviousExpKey = string.Empty;
         private static ExpeditionData _PreviousExpData = null;
@@ -187,7 +187,7 @@ namespace EECustom.CustomSettings
                 return;
 
             bool triggeredAny = false;
-            List<ushort> stopOnDeathWaves = new List<ushort>();
+            List<ushort> stopOnDeathWaves = new();
             foreach (var scoutSetting in _ActiveScoutSettings)
             {
                 var targetSetting = scoutSetting.TargetSetting;

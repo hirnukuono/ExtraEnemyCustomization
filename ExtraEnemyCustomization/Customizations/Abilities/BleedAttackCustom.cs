@@ -12,11 +12,11 @@ namespace EECustom.Customizations.Abilities
 {
     public class BleedAttackCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyDespawnedEvent
     {
-        public BleedData MeleeData { get; set; } = new BleedData();
-        public BleedData TentacleData { get; set; } = new BleedData();
+        public BleedData MeleeData { get; set; } = new();
+        public BleedData TentacleData { get; set; } = new();
 
-        private readonly List<ushort> _EnemyList = new List<ushort>();
-        private readonly System.Random _Random = new System.Random();
+        private readonly List<ushort> _EnemyList = new();
+        private readonly System.Random _Random = new();
 
         private BleedingHandler _BleedingHandler;
 

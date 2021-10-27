@@ -25,7 +25,7 @@ namespace EECustom.Customizations.Abilities.Inject
             if (effectSetting.HandlerCount == __instance.m_activeFogSpheres.Count)
                 return;
 
-            var handler = __instance.m_activeFogSpheres[__instance.m_activeFogSpheres.Count - 1];
+            var handler = __instance.m_activeFogSpheres[^1];
             if (handler.gameObject.GetComponent<EffectFogSphereHandler>() != null)
                 return;
 

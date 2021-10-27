@@ -3,7 +3,6 @@ using Enemies;
 using GameData;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace EECustom.Managers
 {
@@ -12,6 +11,8 @@ namespace EECustom.Managers
         public class EventHolder<T> where T : class, IEnemyEvent
         {
             public string EventName { get; set; } = string.Empty;
+            public bool IgnoreLogs { get; set; } = false;
+
             public T[] Events
             {
                 get
@@ -26,13 +27,14 @@ namespace EECustom.Managers
                 }
             }
 
-            private List<T> _eventList = new List<T>();
+            private readonly List<T> _eventList = new();
             private T[] _events = new T[0];
             private bool _hasDirty = false;
 
-            public EventHolder(string eventName)
+            public EventHolder(string eventName, bool ignoreLogs = false)
             {
                 EventName = eventName;
+                IgnoreLogs = ignoreLogs;
             }
 
             public void TryAdd(EnemyCustomBase custom)
@@ -41,7 +43,7 @@ namespace EECustom.Managers
                 {
                     _eventList.Add(e);
                     _hasDirty = true;
-                } 
+                }
             }
 
             public void Clear()
@@ -49,7 +51,6 @@ namespace EECustom.Managers
                 _eventList.Clear();
                 _hasDirty = true;
             }
-
 
             internal void FireEventPreSpawn(EnemyAgent agent, Action<T> doAction)
             {
@@ -65,9 +66,9 @@ namespace EECustom.Managers
 
                     if (custom.Target.IsMatch(enemyBlock))
                     {
-                        custom.LogDev($"Apply {EventName} Event: {agent.name}");
+                        if (!IgnoreLogs) custom.LogDev($"Apply {EventName} Event: {agent.name}");
                         doAction?.Invoke(custom as T);
-                        custom.LogVerbose($"Finished!");
+                        if (!IgnoreLogs) custom.LogVerbose($"Finished!");
                     }
                 }
             }
@@ -85,9 +86,9 @@ namespace EECustom.Managers
 
                     if (custom.IsTarget(agent))
                     {
-                        custom.LogDev($"Apply {EventName} Event: {agent.name}");
+                        if (!IgnoreLogs) custom.LogDev($"Apply {EventName} Event: {agent.name}");
                         doAction?.Invoke(custom as T);
-                        custom.LogVerbose($"Finished!");
+                        if (!IgnoreLogs) custom.LogVerbose($"Finished!");
                     }
                 }
             }
@@ -96,7 +97,7 @@ namespace EECustom.Managers
         private readonly EventHolder<IEnemyPrefabBuiltEvent> _EnemyPrefabBuiltHolder = new("PrefabBuilt");
         private readonly EventHolder<IEnemySpawnedEvent> _EnemySpawnedHolder = new("Spawned");
         private readonly EventHolder<IEnemyDespawnedEvent> _EnemyDespawnedHolder = new("Despawned");
-        private readonly EventHolder<IEnemyGlowEvent> _EnemyGlowHolder = new("Glow");
+        private readonly EventHolder<IEnemyGlowEvent> _EnemyGlowHolder = new("Glow", true);
 
         private void GenerateEventBuffer()
         {
@@ -143,6 +144,7 @@ namespace EECustom.Managers
                 var copyedGlowInfo = new GlowInfo(newGlowInfo.Color, newGlowInfo.Position);
                 if (e.OnGlow(agent, ref copyedGlowInfo))
                 {
+                    newGlowInfo = copyedGlowInfo;
                     altered = true;
                 }
             });

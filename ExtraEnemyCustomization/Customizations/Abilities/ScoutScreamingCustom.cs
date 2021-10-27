@@ -1,6 +1,5 @@
 ﻿using EECustom.Customizations.Abilities.Handlers;
 using EECustom.Customizations.Shared;
-using EECustom.Events;
 using Enemies;
 using UnityEngine;
 

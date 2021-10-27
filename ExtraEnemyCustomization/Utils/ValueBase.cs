@@ -4,8 +4,8 @@ namespace EECustom.Utils
 {
     public struct ValueBase
     {
-        public readonly static ValueBase Unchanged = new ValueBase(1.0f, ValueMode.Rel, true);
-        public readonly static ValueBase Zero = new ValueBase(0.0f, ValueMode.Abs, false);
+        public readonly static ValueBase Unchanged = new(1.0f, ValueMode.Rel, true);
+        public readonly static ValueBase Zero = new(0.0f, ValueMode.Abs, false);
 
         public float Value;
         public ValueMode Mode;

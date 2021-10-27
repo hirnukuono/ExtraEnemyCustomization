@@ -5,7 +5,7 @@ using UnityEngine;
 namespace EECustom.Customizations.Abilities.Handlers
 {
     [InjectToIl2Cpp]
-    public class EffectFogSphereHandler : MonoBehaviour
+    internal class EffectFogSphereHandler : MonoBehaviour
     {
         public FogSphereHandler Handler;
         public EV_Sphere EVSphere;
@@ -16,7 +16,7 @@ namespace EECustom.Customizations.Abilities.Handlers
         {
         }
 
-        private void Update()
+        public void Update()
         {
             if (Handler.m_sphere != null && _updateTimer < Clock.Time)
             {
@@ -35,7 +35,7 @@ namespace EECustom.Customizations.Abilities.Handlers
             }
         }
 
-        private void OnDestroy()
+        public void OnDestroy()
         {
             EffectVolumeManager.UnregisterVolume(EVSphere);
         }

@@ -74,7 +74,7 @@ namespace EECustom.Utils
         }
 
         [Obsolete("FX_Light has issue with level Lighting", true)]
-        private static async Task LightFlash(Vector3 pos)
+        public static async Task LightFlash(Vector3 pos)
         {
             FX_Manager.TryAllocateFXLight(out FX_PointLight light);
             light.SetColor(new Color(1, 0.2f, 0, 1));

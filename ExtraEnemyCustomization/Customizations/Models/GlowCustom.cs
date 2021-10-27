@@ -1,5 +1,4 @@
 ﻿using EECustom.Customizations.Models.Handlers;
-using EECustom.Events;
 using Enemies;
 using System;
 using System.Collections.Generic;
@@ -11,13 +10,12 @@ namespace EECustom.Customizations.Models
     public class GlowCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyGlowEvent
     {
         private readonly static Color DefaultPropaWakeColor = ES_HibernateWakeUp.m_propagatedWakeupColor;
-        private readonly static Vector4 DefaultPropaWakeLocation = ES_HibernateWakeUp.m_propagatedWakeupLocation;
-        private readonly static System.Random _Random = new System.Random();
+        private readonly static System.Random _Random = new();
 
         public Color DefaultColor { get; set; } = Color.black;
 
-        public Color DetectionColor { get; set; } = new Vector4(9f, 3.9f, 3f, 1f);
-        public Color HeartbeatColor { get; set; } = new Vector4(9f, 3.9f, 3f, 1f);
+        public Color DetectionColor { get; set; } = new(9f, 3.9f, 3f, 1f);
+        public Color HeartbeatColor { get; set; } = new(9f, 3.9f, 3f, 1f);
         public Color SelfWakeupColor { get; set; } = new Vector4(3f, 0.2f, 0.2f, 0.5f) * 3f;
         public Color PropagateWakeupColor { get; set; } = new Vector4(3f, 0.2f, 0.2f, 0.5f) * 3f;
 
@@ -122,7 +120,7 @@ namespace EECustom.Customizations.Models
 
         public PatternDataCache[] CachePattern()
         {
-            List<PatternDataCache> cacheList = new List<PatternDataCache>();
+            List<PatternDataCache> cacheList = new();
             PatternDataCache currentCache = default;
 
             foreach (var c in GlowRawPattern)

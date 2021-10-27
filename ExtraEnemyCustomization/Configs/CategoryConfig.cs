@@ -10,7 +10,7 @@ namespace EECustom.Configs
         public IdWithCategories[] CategoryPair { get; set; } = new IdWithCategories[0];
         public CategoryWithIds[] IdPair { get; set; } = new CategoryWithIds[0];
 
-        private Dictionary<string, CategoryDefinition> CategoryCache = new Dictionary<string, CategoryDefinition>();
+        private readonly Dictionary<string, CategoryDefinition> CategoryCache = new();
 
         internal void Cache()
         {
@@ -128,7 +128,7 @@ namespace EECustom.Configs
         public string Name { get; set; }
         public uint[] PersistentIDs { get; private set; } = new uint[0];
 
-        public readonly List<uint> _PersistentIDs = new List<uint>();
+        public readonly List<uint> _PersistentIDs = new();
 
         public void AddEnemyIDRange(uint[] ids)
         {

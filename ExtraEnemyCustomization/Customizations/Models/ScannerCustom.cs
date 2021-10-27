@@ -7,16 +7,16 @@ namespace EECustom.Customizations.Models
 {
     public class ScannerCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
-        public static readonly Color DefaultDetectionColor = new Color(1f, 0.1f, 0.1f, 1f);
+        public static readonly Color DefaultDetectionColor = new(1f, 0.1f, 0.1f, 1f);
 
         [JsonPropertyName("DefaultColor")]
-        public Color Internal_DefaultColor { get; set; } = new Color(0.7f, 0.7f, 0.7f);
+        public Color Internal_DefaultColor { get; set; } = new(0.7f, 0.7f, 0.7f);
 
         [JsonPropertyName("DefaultSize")]
         public float Internal_DefaultSize { get; set; } = 1.0f;
 
         [JsonPropertyName("WakeupColor")]
-        public Color Internal_WakeupColor { get; set; } = new Color(1f, 0.1f, 0.1f);
+        public Color Internal_WakeupColor { get; set; } = new(1f, 0.1f, 0.1f);
 
         [JsonPropertyName("WakeupSize")]
         public float Internal_WakeupSize { get; set; } = 1.0f;
@@ -26,13 +26,13 @@ namespace EECustom.Customizations.Models
         public bool UsingDetectionColor { get; set; } = false;
 
         [JsonPropertyName("DetectionColor")]
-        public Color Internal_DetectionColor { get; set; } = new Color(0.9882f, 0.4078f, 0.0f);
+        public Color Internal_DetectionColor { get; set; } = new(0.9882f, 0.4078f, 0.0f);
 
         [JsonPropertyName("DetectionSize")]
         public float Internal_DetectionSize { get; set; } = 1.0f;
 
         [JsonPropertyName("HeartbeatColor")]
-        public Color Internal_HeartbeatColor { get; set; } = new Color(1.0f, 0.8431f, 0.8431f);
+        public Color Internal_HeartbeatColor { get; set; } = new(1.0f, 0.8431f, 0.8431f);
 
         [JsonPropertyName("HeartbeatSize")]
         public float Internal_HeartbeatSize { get; set; } = 1.0f;
@@ -40,13 +40,13 @@ namespace EECustom.Customizations.Models
         public bool UsingScoutColor { get; set; } = false;
 
         [JsonPropertyName("ScoutPatrolColor")]
-        public Color Internal_ScoutPatrolColor { get; set; } = new Color(1f, 0.1f, 0.1f);
+        public Color Internal_ScoutPatrolColor { get; set; } = new(1f, 0.1f, 0.1f);
 
         [JsonPropertyName("ScoutPatrolSize")]
         public float Internal_ScoutPatrolSize { get; set; } = 0.5f;
 
         [JsonPropertyName("ScoutFeelerColor")]
-        public Color Internal_ScoutFeelerColor { get; set; } = new Color(1f, 0.1f, 0.1f);
+        public Color Internal_ScoutFeelerColor { get; set; } = new(1f, 0.1f, 0.1f);
 
         [JsonPropertyName("ScoutFeelerSize")]
         public float Internal_ScoutFeelerSize { get; set; } = 1.0f;

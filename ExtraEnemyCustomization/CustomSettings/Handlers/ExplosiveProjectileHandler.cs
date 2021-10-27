@@ -8,7 +8,7 @@ using UnityEngine;
 namespace EECustom.CustomSettings.Handlers
 {
     [InjectToIl2Cpp]
-    public class ExplosiveProjectileHandler : MonoBehaviour
+    internal class ExplosiveProjectileHandler : MonoBehaviour
     {
         public float Damage;
         public float EnemyMulti;
@@ -21,7 +21,7 @@ namespace EECustom.CustomSettings.Handlers
         {
         }
 
-        private void OnDestroy()
+        public void OnDestroy()
         {
             ExplosionUtil.TriggerExplodion(transform.position, Damage, EnemyMulti, MinRange, MaxRange);
 
