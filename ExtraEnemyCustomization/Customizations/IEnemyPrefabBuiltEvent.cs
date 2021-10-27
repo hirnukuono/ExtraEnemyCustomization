@@ -2,7 +2,7 @@
 
 namespace EECustom.Customizations
 {
-    public interface IEnemyPrefabBuiltEvent
+    public interface IEnemyPrefabBuiltEvent : IEnemyEvent
     {
         void OnPrefabBuilt(EnemyAgent agent);
     }

@@ -8,32 +8,31 @@ namespace EECustom.Managers
 {
     public partial class ConfigManager
     {
-        private EnemyCustomBase[] _EnemyPrefabBuiltEvents = new EnemyCustomBase[0];
-        private EnemyCustomBase[] _EnemySpawnedEvents = new EnemyCustomBase[0];
-        private EnemyCustomBase[] _EnemyDespawnedEvents = new EnemyCustomBase[0];
-        private EnemyCustomBase[] _EnemyGlowEvents = new EnemyCustomBase[0];
+        private IEnemyPrefabBuiltEvent[] _EnemyPrefabBuiltEvents = new IEnemyPrefabBuiltEvent[0];
+        private IEnemySpawnedEvent[] _EnemySpawnedEvents = new IEnemySpawnedEvent[0];
+        private IEnemyDespawnedEvent[] _EnemyDespawnedEvents = new IEnemyDespawnedEvent[0];
+        private IEnemyGlowEvent[] _EnemyGlowEvents = new IEnemyGlowEvent[0];
 
         private void GenerateEventBuffer()
         {
-            List<EnemyCustomBase>
-                prefabBuilt = new List<EnemyCustomBase>(),
-                spawned = new List<EnemyCustomBase>(),
-                despawned = new List<EnemyCustomBase>(),
-                glow = new List<EnemyCustomBase>();
+            var prefabBuilt = new List<IEnemyPrefabBuiltEvent>();
+            var spawned = new List<IEnemySpawnedEvent>();
+            var despawned = new List<IEnemyDespawnedEvent>();
+            var glow = new List<IEnemyGlowEvent>();
 
             foreach (var custom in _CustomizationBuffer)
             {
-                if (custom is IEnemyPrefabBuiltEvent)
-                    prefabBuilt.Add(custom);
+                if (custom is IEnemyPrefabBuiltEvent e1)
+                    prefabBuilt.Add(e1);
 
-                if (custom is IEnemySpawnedEvent)
-                    spawned.Add(custom);
+                if (custom is IEnemySpawnedEvent e2)
+                    spawned.Add(e2);
 
-                if (custom is IEnemyDespawnedEvent)
-                    despawned.Add(custom);
+                if (custom is IEnemyDespawnedEvent e3)
+                    despawned.Add(e3);
 
-                if (custom is IEnemyGlowEvent)
-                    glow.Add(custom);
+                if (custom is IEnemyGlowEvent e4)
+                    glow.Add(e4);
             }
 
             _EnemyPrefabBuiltEvents = prefabBuilt.ToArray();
@@ -44,7 +43,7 @@ namespace EECustom.Managers
 
         internal void FirePrefabBuiltEvent(EnemyAgent agent)
         {
-            FireEventPreSpawn<IEnemyPrefabBuiltEvent>(_EnemyPrefabBuiltEvents, agent, "PrefabBuilt", (e) =>
+            FireEventPreSpawn(_EnemyPrefabBuiltEvents, agent, "PrefabBuilt", (e) =>
             {
                 e.OnPrefabBuilt(agent);
             });
@@ -52,7 +51,7 @@ namespace EECustom.Managers
 
         internal void FireSpawnedEvent(EnemyAgent agent)
         {
-            FireEvent<IEnemySpawnedEvent>(_EnemySpawnedEvents, agent, "Spawned", (e) =>
+            FireEvent(_EnemySpawnedEvents, agent, "Spawned", (e) =>
             {
                 e.OnSpawned(agent);
             });
@@ -60,7 +59,7 @@ namespace EECustom.Managers
 
         internal void FireDespawnedEvent(EnemyAgent agent)
         {
-            FireEvent<IEnemyDespawnedEvent>(_EnemyDespawnedEvents, agent, "Despawned", (e) =>
+            FireEvent(_EnemyDespawnedEvents, agent, "Despawned", (e) =>
             {
                 e.OnDespawned(agent);
             });
@@ -72,7 +71,7 @@ namespace EECustom.Managers
 
             for (int i = 0; i < _EnemyGlowEvents.Length; i++)
             {
-                var custom = _EnemyGlowEvents[i];
+                var custom = _EnemyGlowEvents[i].Base;
 
                 if (!custom.Enabled)
                     continue;
@@ -91,11 +90,11 @@ namespace EECustom.Managers
             return altered;
         }
 
-        private void FireEventPreSpawn<T>(EnemyCustomBase[] handlers, EnemyAgent agent, string eventName, Action<T> doAction) where T : class
+        private void FireEventPreSpawn<T>(T[] handlers, EnemyAgent agent, string eventName, Action<T> doAction) where T : class, IEnemyEvent
         {
             for (int i = 0; i < handlers.Length; i++)
             {
-                var custom = handlers[i];
+                var custom = handlers[i].Base;
 
                 if (!custom.Enabled)
                     continue;
@@ -109,11 +108,11 @@ namespace EECustom.Managers
             }
         }
 
-        private void FireEvent<T>(EnemyCustomBase[] handlers, EnemyAgent agent, string eventName, Action<T> doAction) where T : class
+        private void FireEvent<T>(T[] handlers, EnemyAgent agent, string eventName, Action<T> doAction) where T : class, IEnemyEvent
         {
             for (int i = 0; i < handlers.Length; i++)
             {
-                var custom = handlers[i];
+                var custom = handlers[i].Base;
 
                 if (!custom.Enabled)
                     continue;

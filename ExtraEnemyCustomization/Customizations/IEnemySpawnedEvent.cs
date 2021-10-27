@@ -2,7 +2,7 @@
 
 namespace EECustom.Customizations
 {
-    public interface IEnemySpawnedEvent
+    public interface IEnemySpawnedEvent : IEnemyEvent
     {
         void OnSpawned(EnemyAgent agent);
     }

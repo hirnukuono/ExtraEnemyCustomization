@@ -21,6 +21,8 @@ namespace EECustom.Customizations
         {
         }
 
+        public EnemyCustomBase Base => this;
+
         public abstract string GetProcessName();
 
         internal void RegisterTargetLookup(EnemyAgent enemyAgent)

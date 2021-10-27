@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace EECustom.Customizations
 {
-    public interface IEnemyGlowEvent
+    public interface IEnemyGlowEvent : IEnemyEvent
     {
         bool OnGlow(EnemyAgent agent, ref GlowInfo glowInfo);
     }
