@@ -44,56 +44,26 @@ namespace EECustom.Managers
 
         internal void FirePrefabBuiltEvent(EnemyAgent agent)
         {
-            for (int i = 0; i < _EnemyPrefabBuiltEvents.Length; i++)
+            FireEventPreSpawn<IEnemyPrefabBuiltEvent>(_EnemyPrefabBuiltEvents, agent, "PrefabBuilt", (e) =>
             {
-                var custom = _EnemyPrefabBuiltEvents[i];
-
-                if (!custom.Enabled)
-                    continue;
-
-                if (custom.Target.IsMatch(agent))
-                {
-                    custom.LogDev($"Apply PrefabBuilt Event: {agent.name}");
-                    ((IEnemyPrefabBuiltEvent)custom).OnPrefabBuilt(agent);
-                    custom.LogVerbose($"Finished!");
-                }
-            }
+                e.OnPrefabBuilt(agent);
+            });
         }
 
         internal void FireSpawnedEvent(EnemyAgent agent)
         {
-            for (int i = 0; i < _EnemySpawnedEvents.Length; i++)
+            FireEvent<IEnemySpawnedEvent>(_EnemySpawnedEvents, agent, "Spawned", (e) =>
             {
-                var custom = _EnemySpawnedEvents[i];
-
-                if (!custom.Enabled)
-                    continue;
-
-                if (custom.IsTarget(agent))
-                {
-                    custom.LogDev($"Apply Spawned Event: {agent.name}");
-                    ((IEnemySpawnedEvent)custom).OnSpawned(agent);
-                    custom.LogVerbose($"Finished!");
-                }
-            }
+                e.OnSpawned(agent);
+            });
         }
 
         internal void FireDespawnedEvent(EnemyAgent agent)
         {
-            for (int i = 0; i < _EnemyDespawnedEvents.Length; i++)
+            FireEvent<IEnemyDespawnedEvent>(_EnemyDespawnedEvents, agent, "Despawned", (e) =>
             {
-                var custom = _EnemyDespawnedEvents[i];
-
-                if (!custom.Enabled)
-                    continue;
-
-                if (custom.IsTarget(agent))
-                {
-                    custom.LogDev($"Apply Despawned Event: {agent.name}");
-                    ((IEnemyDespawnedEvent)custom).OnDespawned(agent);
-                    custom.LogVerbose($"Finished!");
-                }
-            }
+                e.OnDespawned(agent);
+            });
         }
 
         internal bool FireGlowEvent(EnemyAgent agent, ref GlowInfo glowInfo)
@@ -119,6 +89,42 @@ namespace EECustom.Managers
             }
 
             return altered;
+        }
+
+        private void FireEventPreSpawn<T>(EnemyCustomBase[] handlers, EnemyAgent agent, string eventName, Action<T> doAction) where T : class
+        {
+            for (int i = 0; i < handlers.Length; i++)
+            {
+                var custom = handlers[i];
+
+                if (!custom.Enabled)
+                    continue;
+
+                if (custom.Target.IsMatch(agent))
+                {
+                    custom.LogDev($"Apply {eventName} Event: {agent.name}");
+                    doAction?.Invoke(custom as T);
+                    custom.LogVerbose($"Finished!");
+                }
+            }
+        }
+
+        private void FireEvent<T>(EnemyCustomBase[] handlers, EnemyAgent agent, string eventName, Action<T> doAction) where T : class
+        {
+            for (int i = 0; i < handlers.Length; i++)
+            {
+                var custom = handlers[i];
+
+                if (!custom.Enabled)
+                    continue;
+
+                if (custom.IsTarget(agent))
+                {
+                    custom.LogDev($"Apply {eventName} Event: {agent.name}");
+                    doAction?.Invoke(custom as T);
+                    custom.LogVerbose($"Finished!");
+                }
+            }
         }
     }
 }
