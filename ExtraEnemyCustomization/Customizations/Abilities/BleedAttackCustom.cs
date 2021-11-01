@@ -10,12 +10,11 @@ using System.Collections.Generic;
 
 namespace EECustom.Customizations.Abilities
 {
-    public class BleedAttackCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyDespawnedEvent
+    public class BleedAttackCustom : EnemyCustomBase
     {
         public BleedData MeleeData { get; set; } = new();
         public BleedData TentacleData { get; set; } = new();
 
-        private readonly List<ushort> _EnemyList = new();
         private readonly System.Random _Random = new();
 
         private BleedingHandler _BleedingHandler;
@@ -36,26 +35,9 @@ namespace EECustom.Customizations.Abilities
                 ResourcePackEvents.OnReceiveMedi += RecieveMedi;
         }
 
-        public void OnSpawned(EnemyAgent agent)
-        {
-            var id = agent.GlobalID;
-            if (id == ushort.MaxValue)
-                return;
-
-            if (!_EnemyList.Contains(id))
-            {
-                _EnemyList.Add(id);
-            }
-        }
-
-        public void OnDespawned(EnemyAgent agent)
-        {
-            _EnemyList.Remove(agent.GlobalID);
-        }
-
         public void OnMelee(PlayerAgent player, Agent inflictor, float damage)
         {
-            if (_EnemyList.Contains(inflictor.GlobalID))
+            if (IsTarget(inflictor.GlobalID))
             {
                 var enemyAgent = inflictor.TryCast<EnemyAgent>();
                 if (enemyAgent != null)
@@ -65,7 +47,7 @@ namespace EECustom.Customizations.Abilities
 
         public void OnTentacle(PlayerAgent player, Agent inflictor, float damage)
         {
-            if (_EnemyList.Contains(inflictor.GlobalID))
+            if (IsTarget(inflictor.GlobalID))
             {
                 var enemyAgent = inflictor.TryCast<EnemyAgent>();
                 if (enemyAgent != null)

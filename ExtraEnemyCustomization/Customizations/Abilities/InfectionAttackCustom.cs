@@ -7,12 +7,10 @@ using System.Collections.Generic;
 
 namespace EECustom.Customizations.Abilities
 {
-    public class InfectionAttackCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyDespawnedEvent
+    public class InfectionAttackCustom : EnemyCustomBase
     {
         public InfectionAttackData MeleeData { get; set; } = new();
         public InfectionAttackData TentacleData { get; set; } = new();
-
-        private readonly List<ushort> _EnemyList = new();
 
         public override string GetProcessName()
         {
@@ -25,26 +23,9 @@ namespace EECustom.Customizations.Abilities
             LocalPlayerDamageEvents.OnTentacleDamage += OnTentacle;
         }
 
-        public void OnSpawned(EnemyAgent agent)
-        {
-            var id = agent.GlobalID;
-            if (id == ushort.MaxValue)
-                return;
-
-            if (!_EnemyList.Contains(id))
-            {
-                _EnemyList.Add(id);
-            }
-        }
-
-        public void OnDespawned(EnemyAgent agent)
-        {
-            _EnemyList.Remove(agent.GlobalID);
-        }
-
         public void OnMelee(PlayerAgent player, Agent inflictor, float damage)
         {
-            if (_EnemyList.Contains(inflictor.GlobalID))
+            if (IsTarget(inflictor.GlobalID))
             {
                 ApplyInfection(MeleeData, player, inflictor);
             }
@@ -52,7 +33,7 @@ namespace EECustom.Customizations.Abilities
 
         public void OnTentacle(PlayerAgent player, Agent inflictor, float damage)
         {
-            if (_EnemyList.Contains(inflictor.GlobalID))
+            if (IsTarget(inflictor.GlobalID))
             {
                 ApplyInfection(TentacleData, player, inflictor);
             }

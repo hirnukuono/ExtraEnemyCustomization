@@ -39,9 +39,11 @@ namespace EECustom.Customizations
             }
         }
 
-        public bool IsTarget(EnemyAgent enemyAgent)
+        public bool IsTarget(EnemyAgent enemyAgent) => IsTarget(enemyAgent.GlobalID);
+
+        public bool IsTarget(ushort id)
         {
-            if (_isTargetLookup.TryGetValue(enemyAgent.GlobalID, out var isTarget))
+            if (_isTargetLookup.TryGetValue(id, out var isTarget))
                 return isTarget;
 
             return false;

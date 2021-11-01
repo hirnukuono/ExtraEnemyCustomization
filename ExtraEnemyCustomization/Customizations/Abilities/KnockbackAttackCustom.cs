@@ -7,12 +7,10 @@ using UnityEngine;
 
 namespace EECustom.Customizations.Abilities
 {
-    public class KnockbackAttackCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyDespawnedEvent
+    public class KnockbackAttackCustom : EnemyCustomBase
     {
         public KnockbackData MeleeData { get; set; } = new();
         public KnockbackData TentacleData { get; set; } = new();
-
-        private readonly List<ushort> _enemyList = new();
 
         public override string GetProcessName()
         {
@@ -25,26 +23,9 @@ namespace EECustom.Customizations.Abilities
             LocalPlayerDamageEvents.OnTentacleDamage += OnTentacle;
         }
 
-        public void OnSpawned(EnemyAgent agent)
-        {
-            var id = agent.GlobalID;
-            if (id == ushort.MaxValue)
-                return;
-
-            if (!_enemyList.Contains(id))
-            {
-                _enemyList.Add(id);
-            }
-        }
-
-        public void OnDespawned(EnemyAgent agent)
-        {
-            _enemyList.Remove(agent.GlobalID);
-        }
-
         public void OnMelee(PlayerAgent player, Agent inflictor, float damage)
         {
-            if (_enemyList.Contains(inflictor.GlobalID))
+            if (IsTarget(inflictor.GlobalID))
             {
                 var enemyAgent = inflictor.TryCast<EnemyAgent>();
                 if (enemyAgent != null)
@@ -54,7 +35,7 @@ namespace EECustom.Customizations.Abilities
 
         public void OnTentacle(PlayerAgent player, Agent inflictor, float damage)
         {
-            if (_enemyList.Contains(inflictor.GlobalID))
+            if (IsTarget(inflictor.GlobalID))
             {
                 var enemyAgent = inflictor.TryCast<EnemyAgent>();
                 if (enemyAgent != null)
