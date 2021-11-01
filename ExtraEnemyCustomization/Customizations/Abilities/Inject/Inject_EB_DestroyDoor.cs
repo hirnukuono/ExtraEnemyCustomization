@@ -29,10 +29,10 @@ namespace EECustom.Customizations.Abilities.Inject
             var breakerProp = EnemyProperty<DoorBreakerSetting>.Get(enemyAgent);
             if (breakerProp != null)
             {
-                if (breakerProp.UseGlobalTimer && breakerProp.Config.GlobalTimer < Clock.Time)
+                if (breakerProp.UseGlobalTimer && breakerProp.Config._globalTimer < Clock.Time)
                 {
                     if (DoDamageDoor(__instance, breakerProp.Damage))
-                        breakerProp.Config.GlobalTimer = Clock.Time + RandomRange(breakerProp.MinDelay, breakerProp.MaxDelay);
+                        breakerProp.Config._globalTimer = Clock.Time + RandomRange(breakerProp.MinDelay, breakerProp.MaxDelay);
                 }
                 else if (!breakerProp.UseGlobalTimer && breakerProp.Timer < Clock.Time)
                 {

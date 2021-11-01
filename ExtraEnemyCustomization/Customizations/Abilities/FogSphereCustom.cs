@@ -22,7 +22,7 @@ namespace EECustom.Customizations.Abilities
         public float Duration { get; set; } = 30.0f;
         public EffectVolumeSetting EffectVolume { get; set; } = new();
 
-        private readonly List<(EAB_FogSphere fogEab, GameObject originalPrefab)> _ChangedList = new();
+        private readonly List<(EAB_FogSphere fogEab, GameObject originalPrefab)> _changedList = new();
 
         public override string GetProcessName()
         {
@@ -55,7 +55,7 @@ namespace EECustom.Customizations.Abilities
                 fogHandler.m_totalLength = Duration;
 
                 eabFog.m_fogSpherePrefab = newFogPrefab;
-                _ChangedList.Add((eabFog, fogPrefab));
+                _changedList.Add((eabFog, fogPrefab));
             }
         }
 

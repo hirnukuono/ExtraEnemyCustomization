@@ -11,7 +11,7 @@ namespace EECustom.Customizations.Abilities
         public float MinDelay { get; set; } = 0.5f;
         public float MaxDelay { get; set; } = 0.75f;
 
-        internal float GlobalTimer = 0.0f;
+        internal float _globalTimer = 0.0f;
 
         public override string GetProcessName()
         {

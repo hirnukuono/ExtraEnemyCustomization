@@ -14,9 +14,9 @@ namespace EECustom.Customizations.Abilities
         public BleedData MeleeData { get; set; } = new();
         public BleedData TentacleData { get; set; } = new();
 
-        private readonly System.Random _Random = new();
+        private readonly System.Random _random = new();
 
-        private BleedingHandler _BleedingHandler;
+        private BleedingHandler _bleedingHandler;
 
         public override string GetProcessName()
         {
@@ -56,9 +56,9 @@ namespace EECustom.Customizations.Abilities
 
         private void DoBleed(BleedData data)
         {
-            if (data.ChanceToBleed > _Random.NextDouble())
+            if (data.ChanceToBleed > _random.NextDouble())
             {
-                _BleedingHandler.DoBleed(data.Damage.GetAbsValue(PlayerData.MaxHealth), data.BleedInterval, data.BleedDuration);
+                _bleedingHandler.DoBleed(data.Damage.GetAbsValue(PlayerData.MaxHealth), data.BleedInterval, data.BleedDuration);
             }
         }
 
@@ -67,7 +67,7 @@ namespace EECustom.Customizations.Abilities
             var player = receiver.TryCast<PlayerAgent>();
             if (player != null && player.IsLocallyOwned)
             {
-                _BleedingHandler.StopBleed();
+                _bleedingHandler.StopBleed();
             }
         }
 
@@ -75,17 +75,17 @@ namespace EECustom.Customizations.Abilities
         {
             var localPlayer = PlayerManager.GetLocalPlayerAgent();
 
-            _BleedingHandler = localPlayer.gameObject.GetComponent<BleedingHandler>();
-            if (_BleedingHandler == null)
+            _bleedingHandler = localPlayer.gameObject.GetComponent<BleedingHandler>();
+            if (_bleedingHandler == null)
             {
-                _BleedingHandler = localPlayer.gameObject.AddComponent<BleedingHandler>();
+                _bleedingHandler = localPlayer.gameObject.AddComponent<BleedingHandler>();
             }
-            _BleedingHandler.Agent = localPlayer;
+            _bleedingHandler.Agent = localPlayer;
         }
 
         public void OnLevelCleanup()
         {
-            _BleedingHandler.StopBleed();
+            _bleedingHandler.StopBleed();
         }
     }
 
