@@ -5,13 +5,13 @@ namespace EECustom.Utils
 {
     public static class RegexUtil
     {
-        public static readonly Regex VectorRegex = new("-?[0-9.]+");
+        private static readonly Regex _vectorRegex = new("-?[0-9.]+");
 
         public static bool TryParseVectorString(string input, out float[] vectorArray)
         {
             try
             {
-                var matches = VectorRegex.Matches(input);
+                var matches = _vectorRegex.Matches(input);
                 var count = matches.Count;
                 if (count < 1)
                     throw new Exception();
