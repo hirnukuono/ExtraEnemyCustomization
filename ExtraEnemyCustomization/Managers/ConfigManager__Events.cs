@@ -97,7 +97,7 @@ namespace EECustom.Managers
         private readonly EventHolder<IEnemyPrefabBuiltEvent> _enemyPrefabBuiltHolder = new("PrefabBuilt");
         private readonly EventHolder<IEnemySpawnedEvent> _enemySpawnedHolder = new("Spawned");
         private readonly EventHolder<IEnemyDespawnedEvent> _enemyDespawnedHolder = new("Despawned");
-        private readonly EventHolder<IEnemyGlowEvent> _enemyGlowHolder = new("Glow", true);
+        private readonly EventHolder<IEnemyGlowEvent> _enemyGlowHolder = new("Glow", ignoreLogs: true);
 
         private void GenerateEventBuffer()
         {
