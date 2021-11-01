@@ -7,7 +7,7 @@ namespace EECustom.Customizations.Models
 {
     public class MaterialCustom : EnemyCustomBase, IEnemyPrefabBuiltEvent
     {
-        private readonly static Dictionary<string, Material> _MatDict = new();
+        private readonly static Dictionary<string, Material> _matDict = new();
 
         public static void AddToCache(string matName, Material mat)
         {

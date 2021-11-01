@@ -12,7 +12,7 @@ namespace EECustom.Customizations.Abilities
         public KnockbackData MeleeData { get; set; } = new();
         public KnockbackData TentacleData { get; set; } = new();
 
-        private readonly List<ushort> _EnemyList = new();
+        private readonly List<ushort> _enemyList = new();
 
         public override string GetProcessName()
         {

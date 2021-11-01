@@ -13,14 +13,14 @@ namespace EECustom.CustomSettings
 {
     public static class CustomScoutWaveManager
     {
-        private static readonly Random _Random = new();
-        private static readonly List<ExpeditionScoutSetting> _ScoutSettings = new();
-        private static readonly List<ScoutSettingCache> _ActiveScoutSettings = new();
-        private static readonly Dictionary<string, ScoutTargetSetting> _TargetSettingDict = new();
-        private static readonly Dictionary<string, ScoutWaveSetting> _WaveSettingDict = new();
+        private static readonly Random _random = new();
+        private static readonly List<ExpeditionScoutSetting> _scoutSettings = new();
+        private static readonly List<ScoutSettingCache> _activeScoutSettings = new();
+        private static readonly Dictionary<string, ScoutTargetSetting> _targetSettingDict = new();
+        private static readonly Dictionary<string, ScoutWaveSetting> _waveSettingDict = new();
 
-        private static string _PreviousExpKey = string.Empty;
-        private static ExpeditionData _PreviousExpData = null;
+        private static string _previousExpKey = string.Empty;
+        private static ExpeditionData _previousExpData = null;
         private static uint _DefaultWaveSettingID;
         private static uint _DefaultWavePopulationID;
         private static eRundownTier _CurrentExpeditionTier;

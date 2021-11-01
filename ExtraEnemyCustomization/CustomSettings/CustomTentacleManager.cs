@@ -6,7 +6,7 @@ namespace EECustom.CustomSettings
 {
     public static class CustomTentacleManager
     {
-        private static readonly Dictionary<int, GPUC_Setup> _TentacleSetups = new();
+        private static readonly Dictionary<int, GPUC_Setup> _tentacleSetups = new();
 
         public static void GenerateTentacle(CustomTentacle tentInfo)
         {

@@ -9,7 +9,7 @@ namespace EECustom.CustomSettings
 {
     public static class CustomProjectileManager
     {
-        private static readonly Dictionary<byte, GameObject> _ProjectilePrefabs = new();
+        private static readonly Dictionary<byte, GameObject> _projectilePrefabs = new();
 
         public static void GenerateProjectile(CustomProjectile projInfo)
         {

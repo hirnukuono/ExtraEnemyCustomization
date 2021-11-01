@@ -8,8 +8,8 @@ namespace EECustom.Managers
     {
         public static string BaseSpritePath { get; private set; }
 
-        private static readonly Dictionary<string, Texture2D> _TextureCache = new();
-        private static readonly Dictionary<string, Sprite> _SpriteCache = new();
+        private static readonly Dictionary<string, Texture2D> _textureCache = new();
+        private static readonly Dictionary<string, Sprite> _spriteCache = new();
 
         public static void Initialize()
         {

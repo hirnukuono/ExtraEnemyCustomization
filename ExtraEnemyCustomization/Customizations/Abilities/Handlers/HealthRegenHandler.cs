@@ -25,7 +25,7 @@ namespace EECustom.Customizations.Abilities.Handlers
         private float _regenCapAbsValue = 0.0f;
         private float _regenAmountAbsValue = 0.0f;
 
-        private Action<EnemyAgent, Agent> _OnDamageDel;
+        private Action<EnemyAgent, Agent> _onDamageDel;
 
         public HealthRegenHandler(IntPtr ptr) : base(ptr)
         {

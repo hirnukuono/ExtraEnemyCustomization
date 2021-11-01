@@ -15,7 +15,7 @@ namespace EECustom.Customizations
         public bool Enabled { get; set; } = true;
         public TargetSetting Target { get; set; } = new TargetSetting();
 
-        private readonly Dictionary<ushort, bool> _IsTargetLookup = new();
+        private readonly Dictionary<ushort, bool> _isTargetLookup = new();
 
         public virtual void OnConfigLoaded()
         {
