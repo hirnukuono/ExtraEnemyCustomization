@@ -9,12 +9,12 @@ namespace EECustom.Customizations.Abilities.Inject
     [HarmonyPatch(typeof(EB_InCombat_MoveToNextNode_DestroyDoor), nameof(EB_InCombat_MoveToNextNode_DestroyDoor.UpdateBehaviour))]
     internal class Inject_EB_DestroyDoor
     {
-        internal static bool ShouldOverride = false;
-        internal static float GlobalTimer = 0.0f;
+        public static bool ShouldOverride = false;
+        public static float GlobalTimer = 0.0f;
 
-        private const float MinTime = 0.5f;
-        private const float MaxTime = 1.0f;
-        private const float Range = MaxTime - MinTime;
+        public const float MinTime = 0.5f;
+        public const float MaxTime = 1.0f;
+        public const float Range = MaxTime - MinTime;
 
         private static readonly Random _random = new();
 

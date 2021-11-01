@@ -7,8 +7,8 @@ namespace EECustom.Customizations.Abilities
 {
     public class ScoutScreamingCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyGlowEvent
     {
-        private readonly static Color DefaultChargeupColor = ES_ScoutScream.s_screamChargeupColor;
-        private readonly static Color DefaultScreamColor = ES_ScoutScream.s_screamPopColor;
+        public readonly static Color DefaultChargeupColor = ES_ScoutScream.s_screamChargeupColor;
+        public readonly static Color DefaultScreamColor = ES_ScoutScream.s_screamPopColor;
 
         public Color ChargeupColor { get; set; } = new Color(0f, 1f, 0.8f, 1f) * 2f;
         public Color ScreamColor { get; set; } = new Color(0f, 1f, 0.8f, 1f) * 20f;

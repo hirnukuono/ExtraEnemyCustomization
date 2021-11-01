@@ -2,7 +2,6 @@
 using EECustom.Events;
 using Enemies;
 using Player;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace EECustom.Customizations.Abilities

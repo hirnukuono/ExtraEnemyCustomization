@@ -6,7 +6,6 @@ using EECustom.Utils;
 using Enemies;
 using Gear;
 using Player;
-using System.Collections.Generic;
 
 namespace EECustom.Customizations.Abilities
 {

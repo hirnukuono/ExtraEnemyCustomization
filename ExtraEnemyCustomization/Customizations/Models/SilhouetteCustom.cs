@@ -20,8 +20,8 @@ namespace EECustom.Customizations.Models
         public bool KeepOnDead { get; set; } = false;
         public float DeadEffectDelay { get; set; } = 0.75f;
 
-        private static bool _MaterialCached = false;
-        private static Material _SilhouetteMaterial;
+        private static bool _materialCached = false;
+        private static Material _silhouetteMaterial;
 
         public override string GetProcessName()
         {
@@ -30,13 +30,13 @@ namespace EECustom.Customizations.Models
 
         public void OnPrefabBuilt(EnemyAgent agent)
         {
-            if (!_MaterialCached)
+            if (!_materialCached)
             {
                 var playerPrefab = AssetShardManager.s_loadedAssetsLookup[PlayerPrefabPath.ToUpper()].Cast<GameObject>();
                 var playerGhost = playerPrefab.FindChild(PlayerGhostName);
                 var playerGhostRenderer = playerGhost.GetComponent<SkinnedMeshRenderer>();
-                _SilhouetteMaterial = playerGhostRenderer.material;
-                _MaterialCached = true;
+                _silhouetteMaterial = playerGhostRenderer.material;
+                _materialCached = true;
             }
 
             var renderers = agent.GetComponentsInChildren<Renderer>(true);
@@ -96,7 +96,7 @@ namespace EECustom.Customizations.Models
 
                 _ = enemyGhost.AddComponent<EnemySilhouette>();
                 var newRenderer = enemyGhost.GetComponent<Renderer>();
-                newRenderer.material = _SilhouetteMaterial;
+                newRenderer.material = _silhouetteMaterial;
                 newRenderer.material.SetVector("_ColorA", Color.clear);
                 newRenderer.material.SetVector("_ColorB", Color.clear);
                 newRenderer.lightProbeUsage = LightProbeUsage.BlendProbes;
