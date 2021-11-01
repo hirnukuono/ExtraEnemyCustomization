@@ -112,18 +112,18 @@ namespace EECustom.Managers
         public DetectionCustomConfig DetectionCustom { get; private set; } = new();
         public SpawnCostCustomConfig SpawnCostCustom { get; private set; } = new();
 
-        private readonly List<EnemyCustomBase> _CustomizationBuffer = new();
+        private readonly List<EnemyCustomBase> _customizationBuffer = new();
 
         private void GenerateBuffer()
         {
-            _CustomizationBuffer.Clear();
-            _CustomizationBuffer.AddRange(ModelCustom.GetAllSettings());
-            _CustomizationBuffer.AddRange(AbilityCustom.GetAllSettings());
-            _CustomizationBuffer.AddRange(ProjectileCustom.GetAllSettings());
-            _CustomizationBuffer.AddRange(TentacleCustom.GetAllSettings());
-            _CustomizationBuffer.AddRange(DetectionCustom.GetAllSettings());
-            _CustomizationBuffer.AddRange(SpawnCostCustom.GetAllSettings());
-            foreach (var custom in _CustomizationBuffer)
+            _customizationBuffer.Clear();
+            _customizationBuffer.AddRange(ModelCustom.GetAllSettings());
+            _customizationBuffer.AddRange(AbilityCustom.GetAllSettings());
+            _customizationBuffer.AddRange(ProjectileCustom.GetAllSettings());
+            _customizationBuffer.AddRange(TentacleCustom.GetAllSettings());
+            _customizationBuffer.AddRange(DetectionCustom.GetAllSettings());
+            _customizationBuffer.AddRange(SpawnCostCustom.GetAllSettings());
+            foreach (var custom in _customizationBuffer)
             {
                 custom.OnConfigLoaded();
                 custom.LogDev("Initialized:");
@@ -135,7 +135,7 @@ namespace EECustom.Managers
 
         internal void RegisterTargetLookup(EnemyAgent agent)
         {
-            foreach (var custom in _CustomizationBuffer)
+            foreach (var custom in _customizationBuffer)
             {
                 custom.RegisterTargetLookup(agent);
             }

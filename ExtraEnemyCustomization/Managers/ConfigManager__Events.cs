@@ -101,7 +101,7 @@ namespace EECustom.Managers
 
         private void GenerateEventBuffer()
         {
-            foreach (var custom in _CustomizationBuffer)
+            foreach (var custom in _customizationBuffer)
             {
                 _enemyPrefabBuiltHolder.TryAdd(custom);
                 _enemySpawnedHolder.TryAdd(custom);
