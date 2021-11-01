@@ -103,16 +103,16 @@ namespace EECustom.Managers
         {
             foreach (var custom in _CustomizationBuffer)
             {
-                _EnemyPrefabBuiltHolder.TryAdd(custom);
-                _EnemySpawnedHolder.TryAdd(custom);
-                _EnemyDespawnedHolder.TryAdd(custom);
-                _EnemyGlowHolder.TryAdd(custom);
+                _enemyPrefabBuiltHolder.TryAdd(custom);
+                _enemySpawnedHolder.TryAdd(custom);
+                _enemyDespawnedHolder.TryAdd(custom);
+                _enemyGlowHolder.TryAdd(custom);
             }
         }
 
         internal void FirePrefabBuiltEvent(EnemyAgent agent)
         {
-            _EnemyPrefabBuiltHolder.FireEventPreSpawn(agent, (e) =>
+            _enemyPrefabBuiltHolder.FireEventPreSpawn(agent, (e) =>
             {
                 e.OnPrefabBuilt(agent);
             });
@@ -120,7 +120,7 @@ namespace EECustom.Managers
 
         internal void FireSpawnedEvent(EnemyAgent agent)
         {
-            _EnemySpawnedHolder.FireEvent(agent, (e) =>
+            _enemySpawnedHolder.FireEvent(agent, (e) =>
             {
                 e.OnSpawned(agent);
             });
@@ -128,7 +128,7 @@ namespace EECustom.Managers
 
         internal void FireDespawnedEvent(EnemyAgent agent)
         {
-            _EnemyDespawnedHolder.FireEvent(agent, (e) =>
+            _enemyDespawnedHolder.FireEvent(agent, (e) =>
             {
                 e.OnDespawned(agent);
             });
@@ -139,7 +139,7 @@ namespace EECustom.Managers
             bool altered = false;
             var newGlowInfo = new GlowInfo(glowInfo.Color, glowInfo.Position);
 
-            _EnemyGlowHolder.FireEvent(agent, (e) =>
+            _enemyGlowHolder.FireEvent(agent, (e) =>
             {
                 var copyedGlowInfo = new GlowInfo(newGlowInfo.Color, newGlowInfo.Position);
                 if (e.OnGlow(agent, ref copyedGlowInfo))

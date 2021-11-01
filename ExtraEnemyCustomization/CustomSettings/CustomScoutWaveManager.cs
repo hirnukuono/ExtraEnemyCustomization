@@ -42,11 +42,11 @@ namespace EECustom.CustomSettings
                 return;
             }
 
-            if (rawKey.Equals(_PreviousExpKey))
+            if (rawKey.Equals(_previousExpKey))
             {
                 return;
             }
-            _PreviousExpKey = rawKey;
+            _previousExpKey = rawKey;
 
             var split = rawKey.Split("_");
             if (split.Length != 4)
@@ -75,21 +75,21 @@ namespace EECustom.CustomSettings
             _IsDefaultSettingBlocked = false;
 
             //Revert Previous Expedition Data
-            if (_PreviousExpData != null)
+            if (_previousExpData != null)
             {
-                _PreviousExpData.ScoutWaveSettings = _DefaultWaveSettingID;
-                _PreviousExpData.ScoutWavePopulation = _DefaultWavePopulationID;
+                _previousExpData.ScoutWaveSettings = _DefaultWaveSettingID;
+                _previousExpData.ScoutWavePopulation = _DefaultWavePopulationID;
             }
 
-            _PreviousExpData = inTierData.Expedition;
-            _DefaultWaveSettingID = _PreviousExpData.ScoutWaveSettings;
-            _DefaultWavePopulationID = _PreviousExpData.ScoutWavePopulation;
+            _previousExpData = inTierData.Expedition;
+            _DefaultWaveSettingID = _previousExpData.ScoutWaveSettings;
+            _DefaultWavePopulationID = _previousExpData.ScoutWavePopulation;
 
             _CurrentExpeditionTier = tier;
             _CurrentExpeditionIndex = expIndex;
 
-            _ActiveScoutSettings.Clear();
-            foreach (var setting in _ScoutSettings)
+            _activeScoutSettings.Clear();
+            foreach (var setting in _scoutSettings)
             {
                 if (!setting.IsMatch(_CurrentExpeditionTier, _CurrentExpeditionIndex))
                     continue;
@@ -110,14 +110,14 @@ namespace EECustom.CustomSettings
                         TargetSetting = targetSetting,
                         WaveSetting = waveSetting
                     };
-                    _ActiveScoutSettings.Add(settingCache);
+                    _activeScoutSettings.Add(settingCache);
                 }
             }
 
-            if (_ActiveScoutSettings.Count > 0)
+            if (_activeScoutSettings.Count > 0)
             {
-                _PreviousExpData.ScoutWaveSettings = 0u;
-                _PreviousExpData.ScoutWavePopulation = 0u;
+                _previousExpData.ScoutWaveSettings = 0u;
+                _previousExpData.ScoutWavePopulation = 0u;
                 _IsDefaultSettingBlocked = true;
             }
         }
@@ -130,7 +130,7 @@ namespace EECustom.CustomSettings
 
         public static void AddScoutSetting(ExpeditionScoutSetting scoutSetting)
         {
-            _ScoutSettings.Add(scoutSetting);
+            _scoutSettings.Add(scoutSetting);
         }
 
         public static void AddWaveSetting(params ScoutWaveSetting[] waveSettings)
@@ -142,17 +142,17 @@ namespace EECustom.CustomSettings
         public static void AddWaveSetting(ScoutWaveSetting waveSetting)
         {
             var key = waveSetting.Name.ToLower();
-            if (!_WaveSettingDict.ContainsKey(key))
+            if (!_waveSettingDict.ContainsKey(key))
             {
-                _WaveSettingDict.Add(key, waveSetting);
+                _waveSettingDict.Add(key, waveSetting);
             }
         }
 
         public static ScoutWaveSetting GetWaveSetting(string name)
         {
             var key = name.ToLower();
-            if (_WaveSettingDict.ContainsKey(key))
-                return _WaveSettingDict[key];
+            if (_waveSettingDict.ContainsKey(key))
+                return _waveSettingDict[key];
             else
                 return null;
         }
@@ -166,17 +166,17 @@ namespace EECustom.CustomSettings
         public static void AddTargetSetting(ScoutTargetSetting targetSetting)
         {
             var key = targetSetting.Name.ToLower();
-            if (!_TargetSettingDict.ContainsKey(key))
+            if (!_targetSettingDict.ContainsKey(key))
             {
-                _TargetSettingDict.Add(key, targetSetting);
+                _targetSettingDict.Add(key, targetSetting);
             }
         }
 
         public static ScoutTargetSetting GetTargetSetting(string name)
         {
             var key = name.ToLower();
-            if (_TargetSettingDict.ContainsKey(key))
-                return _TargetSettingDict[key];
+            if (_targetSettingDict.ContainsKey(key))
+                return _targetSettingDict[key];
             else
                 return null;
         }
@@ -188,7 +188,7 @@ namespace EECustom.CustomSettings
 
             bool triggeredAny = false;
             List<ushort> stopOnDeathWaves = new();
-            foreach (var scoutSetting in _ActiveScoutSettings)
+            foreach (var scoutSetting in _activeScoutSettings)
             {
                 var targetSetting = scoutSetting.TargetSetting;
                 var waveSetting = scoutSetting.WaveSetting;
@@ -264,7 +264,7 @@ namespace EECustom.CustomSettings
             var weightsTotal = weightValues.Sum();
             if (weightsTotal <= 0.0f)
             {
-                return _Random.Next(0, weights.Length);
+                return _random.Next(0, weights.Length);
             }
 
             var accumulatedWeight = 0.0f;
@@ -280,7 +280,7 @@ namespace EECustom.CustomSettings
                 weightValues[i] = accumulatedWeight;
             }
 
-            var randValue = (float)_Random.NextDouble() * weightsTotal;
+            var randValue = (float)_random.NextDouble() * weightsTotal;
             for (int i = 0; i < weightValues.Length; i++)
             {
                 if (weightValues[i] >= randValue)

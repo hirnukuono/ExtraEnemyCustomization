@@ -28,20 +28,20 @@ namespace EECustom.Customizations
         internal void RegisterTargetLookup(EnemyAgent enemyAgent)
         {
             var id = enemyAgent.GlobalID;
-            if (!_IsTargetLookup.ContainsKey(id))
+            if (!_isTargetLookup.ContainsKey(id))
             {
-                _IsTargetLookup.Add(id, Target.IsMatch(enemyAgent.EnemyDataID));
+                _isTargetLookup.Add(id, Target.IsMatch(enemyAgent.EnemyDataID));
 
                 enemyAgent.AddOnDeadOnce(() =>
                 {
-                    _IsTargetLookup.Remove(id);
+                    _isTargetLookup.Remove(id);
                 });
             }
         }
 
         public bool IsTarget(EnemyAgent enemyAgent)
         {
-            if (_IsTargetLookup.TryGetValue(enemyAgent.GlobalID, out var isTarget))
+            if (_isTargetLookup.TryGetValue(enemyAgent.GlobalID, out var isTarget))
                 return isTarget;
 
             return false;

@@ -31,20 +31,20 @@ namespace EECustom.Customizations.Abilities
             if (id == ushort.MaxValue)
                 return;
 
-            if (!_EnemyList.Contains(id))
+            if (!_enemyList.Contains(id))
             {
-                _EnemyList.Add(id);
+                _enemyList.Add(id);
             }
         }
 
         public void OnDespawned(EnemyAgent agent)
         {
-            _EnemyList.Remove(agent.GlobalID);
+            _enemyList.Remove(agent.GlobalID);
         }
 
         public void OnMelee(PlayerAgent player, Agent inflictor, float damage)
         {
-            if (_EnemyList.Contains(inflictor.GlobalID))
+            if (_enemyList.Contains(inflictor.GlobalID))
             {
                 var enemyAgent = inflictor.TryCast<EnemyAgent>();
                 if (enemyAgent != null)
@@ -54,7 +54,7 @@ namespace EECustom.Customizations.Abilities
 
         public void OnTentacle(PlayerAgent player, Agent inflictor, float damage)
         {
-            if (_EnemyList.Contains(inflictor.GlobalID))
+            if (_enemyList.Contains(inflictor.GlobalID))
             {
                 var enemyAgent = inflictor.TryCast<EnemyAgent>();
                 if (enemyAgent != null)

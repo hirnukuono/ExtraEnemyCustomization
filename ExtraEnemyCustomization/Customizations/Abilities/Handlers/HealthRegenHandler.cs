@@ -39,7 +39,7 @@ namespace EECustom.Customizations.Abilities.Handlers
             if (!_alwaysRegen)
             {
                 //DamageBase.add_CallOnTakeDamage(new Action<float>(OnTakeDamage)); This doesn't work for some reason rofl
-                _OnDamageDel = new Action<EnemyAgent, Agent>((EnemyAgent a1, Agent a2) =>
+                _onDamageDel = new Action<EnemyAgent, Agent>((EnemyAgent a1, Agent a2) =>
                 {
                     if (a1.GlobalID == DamageBase.Owner.GlobalID)
                     {
@@ -47,10 +47,10 @@ namespace EECustom.Customizations.Abilities.Handlers
                     }
                 });
 
-                EnemyDamageEvents.OnDamage += _OnDamageDel;
+                EnemyDamageEvents.OnDamage += _onDamageDel;
                 DamageBase.Owner.AddOnDeadOnce(() =>
                 {
-                    EnemyDamageEvents.OnDamage -= _OnDamageDel;
+                    EnemyDamageEvents.OnDamage -= _onDamageDel;
                 });
             }
 

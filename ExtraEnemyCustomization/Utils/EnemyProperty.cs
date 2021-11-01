@@ -16,7 +16,7 @@ namespace EECustom.Utils
 
         private static void OnLevelCleanup()
         {
-            _Properties.Clear();
+            _properties.Clear();
         }
 
         public static T RegisterOrGet(EnemyAgent agent)
@@ -34,15 +34,15 @@ namespace EECustom.Utils
         {
             var id = agent.GlobalID;
 
-            if (_Properties.ContainsKey(id))
+            if (_properties.ContainsKey(id))
                 return null;
 
             var newProp = new T();
-            _Properties.Add(id, newProp);
+            _properties.Add(id, newProp);
 
             agent.AddOnDeadOnce(() =>
             {
-                _Properties.Remove(id);
+                _properties.Remove(id);
             });
 
             return newProp;
@@ -52,8 +52,8 @@ namespace EECustom.Utils
 
         public static T Get(ushort id)
         {
-            if (_Properties.ContainsKey(id))
-                return _Properties[id];
+            if (_properties.ContainsKey(id))
+                return _properties[id];
             else
                 return null;
         }

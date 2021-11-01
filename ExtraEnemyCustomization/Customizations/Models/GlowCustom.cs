@@ -63,7 +63,7 @@ namespace EECustom.Customizations.Models
                 if (pulse.RandomizeTime)
                 {
                     var interval = Math.Max(0.0f, pulse.Duration);
-                    var rand = (float)_Random.NextDouble() * interval;
+                    var rand = (float)_random.NextDouble() * interval;
                     manager.StartDelay = rand;
                 }
             }

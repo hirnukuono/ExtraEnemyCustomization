@@ -46,7 +46,7 @@ namespace EECustom.Customizations.Abilities.Inject
                     return;
 
                 if (DoDamageDoor(__instance, 1.0f))
-                    GlobalTimer = Clock.Time + ((float)_Random.NextDouble() * Range) + MinTime;
+                    GlobalTimer = Clock.Time + ((float)_random.NextDouble() * Range) + MinTime;
             }
         }
 
@@ -70,7 +70,7 @@ namespace EECustom.Customizations.Abilities.Inject
 
         private static float RandomRange(float min, float max)
         {
-            return ((float)_Random.NextDouble() * max - min) + min;
+            return ((float)_random.NextDouble() * max - min) + min;
         }
     }
 }
