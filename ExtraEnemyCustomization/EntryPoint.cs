@@ -23,6 +23,8 @@ namespace EECustom
     [BepInDependency(MTFOPartialDataUtil.PLUGIN_GUID, BepInDependency.DependencyFlags.SoftDependency)]
     public class EntryPoint : BasePlugin
     {
+        public static Harmony HarmonyInstance { get; private set; }
+
         public override void Load()
         {
             InjectAllIl2CppType();
@@ -35,11 +37,18 @@ namespace EECustom
             Logger.UsingDevMessage = useDevMsg.Value;
             Logger.UsingVerbose = useVerbose.Value;
 
-            var harmony = new Harmony("EECustomization.Harmony");
-            harmony.PatchAll();
+            HarmonyInstance = new Harmony("EECustomization.Harmony");
+            HarmonyInstance.PatchAll();
 
             SpriteManager.Initialize();
             ConfigManager.Initialize();
+        }
+
+        public override bool Unload()
+        {
+            HarmonyInstance.UnpatchAll();
+            ConfigManager.UnloadConfig(doClear: true);
+            return base.Unload();
         }
 
         private void InjectAllIl2CppType()

@@ -38,16 +38,11 @@ namespace EECustom.Managers
             }
         }
 
-        public static void ReloadConfig()
+        internal static void ReloadConfig()
         {
             Logger.Log("HOT RELOADING CONFIG!");
 
-            foreach (var config in Current._customizationBuffer)
-            {
-                config.OnConfigUnloaded();
-            }
-
-            ClearConfigs();
+            UnloadConfig(doClear: true);
             LoadConfigs();
             Current.GenerateBuffer();
 
@@ -72,7 +67,20 @@ namespace EECustom.Managers
             }
         }
 
-        private static void ClearConfigs()
+        internal static void UnloadConfig(bool doClear)
+        {
+            foreach (var config in Current._customizationBuffer)
+            {
+                config.OnConfigUnloaded();
+            }
+
+            if (doClear)
+            {
+                ClearConfigs();
+            } 
+        }
+
+        internal static void ClearConfigs()
         {
             if (Current == null)
                 return;
