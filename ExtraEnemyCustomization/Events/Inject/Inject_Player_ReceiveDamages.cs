@@ -3,7 +3,7 @@
 namespace EECustom.Events.Inject
 {
     [HarmonyPatch(typeof(Dam_PlayerDamageLocal))]
-    internal class Inject_PlayerAgent_ReceiveDamages
+    internal class Inject_Player_ReceiveDamages
     {
         [HarmonyPostfix]
         [HarmonyWrapSafe]

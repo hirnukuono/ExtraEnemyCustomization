@@ -46,7 +46,6 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
             mbEventHandler.OnUpdate += Update_Del;
             EnemyAbilitiesEvents.TakeDamage += TakeDamage_Del;
             EnemyAbilitiesEvents.Dead += Dead_Del;
-            EnemyAbilitiesEvents.HeadDestroyed += HeadDestroyed_Del;
             EnemyAbilitiesEvents.Hitreact += Hitreact_Del;
 
             DoSetup();
@@ -56,7 +55,6 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         {
             EnemyAbilitiesEvents.TakeDamage -= TakeDamage_Del;
             EnemyAbilitiesEvents.Dead -= Dead_Del;
-            EnemyAbilitiesEvents.HeadDestroyed -= HeadDestroyed_Del;
             EnemyAbilitiesEvents.Hitreact -= Hitreact_Del;
         }
 
@@ -83,16 +81,16 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
                 EnemyAbilitiesEvents.TakeDamage -= TakeDamage_Del;
                 EnemyAbilitiesEvents.Dead -= Dead_Del;
-                EnemyAbilitiesEvents.HeadDestroyed -= HeadDestroyed_Del;
                 EnemyAbilitiesEvents.Hitreact -= Hitreact_Del;
+                EnemyLimbEvents.Destroyed -= LimbDestroyed_Del;
             }
         }
 
-        private void HeadDestroyed_Del(Enemies.EnemyAbilities abilities)
+        private void LimbDestroyed_Del(Dam_EnemyDamageLimb limb)
         {
-            if (abilities.m_agent.GlobalID == Agent.GlobalID)
+            if (limb.GetBaseAgent().GlobalID == Agent.GlobalID)
             {
-                DoHeadDestroyed();
+                DoLimbDestroyed(limb);
             }
         }
 
@@ -196,12 +194,12 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
             OnHitreact();
         }
 
-        private void DoHeadDestroyed()
+        private void DoLimbDestroyed(Dam_EnemyDamageLimb limb)
         {
             if (IsHostOnlyBehaviour && !SNet.IsMaster)
                 return;
 
-            OnHeadDestroyed();
+            OnLimbDestroyed(limb);
         }
 
         #endregion
@@ -253,7 +251,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
         }
 
-        protected virtual void OnHeadDestroyed()
+        protected virtual void OnLimbDestroyed(Dam_EnemyDamageLimb limb)
         {
 
         }

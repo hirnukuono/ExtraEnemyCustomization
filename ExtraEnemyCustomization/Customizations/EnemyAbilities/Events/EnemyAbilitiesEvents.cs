@@ -12,7 +12,6 @@ namespace EECustom.Customizations.EnemyAbilities.Events
     {
         public static event AbilitiesDamageHanalder TakeDamage;
         public static event GenericAbilitiesHandler Dead;
-        public static event GenericAbilitiesHandler HeadDestroyed;
         public static event GenericAbilitiesHandler Hitreact;
 
         internal static void OnTakeDamage(Enemies.EnemyAbilities enemyAbilities, float damage)
@@ -23,11 +22,6 @@ namespace EECustom.Customizations.EnemyAbilities.Events
         internal static void OnDead(Enemies.EnemyAbilities enemyAbilities)
         {
             Dead?.Invoke(enemyAbilities);
-        }
-
-        internal static void OnHeadDestroyed(Enemies.EnemyAbilities enemyAbilities)
-        {
-            HeadDestroyed?.Invoke(enemyAbilities);
         }
 
         internal static void OnHitreact(Enemies.EnemyAbilities enemyAbilities)
