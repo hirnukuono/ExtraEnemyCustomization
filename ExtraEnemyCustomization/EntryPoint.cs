@@ -5,6 +5,8 @@ using EECustom.Attributes;
 using EECustom.Managers;
 using EECustom.Utils.Integrations;
 using HarmonyLib;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnhollowerRuntimeLib;
 
@@ -46,6 +48,8 @@ namespace EECustom
 
         public override bool Unload()
         {
+            UninjectAllIl2CppType();
+
             HarmonyInstance.UnpatchAll();
             ConfigManager.UnloadConfig(doClear: true);
             return base.Unload();
@@ -54,7 +58,7 @@ namespace EECustom
         private void InjectAllIl2CppType()
         {
             Log.LogDebug($"Injecting IL2CPP Types");
-            var types = GetType().Assembly.GetTypes().Where(type => type != null && type.GetCustomAttributes(typeof(InjectToIl2CppAttribute), false).FirstOrDefault() != null);
+            var types = GetAllHandlers();
 
             Log.LogDebug($" - Count: {types.Count()}");
             foreach (var type in types)
@@ -65,6 +69,26 @@ namespace EECustom
 
                 ClassInjector.RegisterTypeInIl2Cpp(type);
             }
+        }
+
+        private void UninjectAllIl2CppType()
+        {
+            Log.LogDebug($"Uninjecting IL2CPP Types");
+            var types = GetAllHandlers();
+
+            Log.LogDebug($" - Count: {types.Count()}");
+            foreach (var type in types)
+            {
+                if (!ClassInjector.IsTypeRegisteredInIl2Cpp(type))
+                    continue;
+
+                //ClassInjector.UnregisterTypeInIl2Cpp(type);
+            }
+        }
+
+        private IEnumerable<Type> GetAllHandlers()
+        {
+            return GetType().Assembly.GetTypes().Where(type => type != null && type.GetCustomAttributes(typeof(InjectToIl2CppAttribute), false).FirstOrDefault() != null);
         }
     }
 }
