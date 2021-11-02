@@ -100,9 +100,9 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
             base.OnDead();
         }
 
-        protected override void OnLimbDestroyed()
+        protected override void OnLimbDestroyed(Dam_EnemyDamageLimb limb)
         {
-            base.OnLimbDestroyed();
+            base.OnLimbDestroyed(limb);
         }
 
         protected override void OnHitreact()
