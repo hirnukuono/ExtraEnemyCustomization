@@ -2,15 +2,13 @@
 using EECustom.Attributes;
 using EECustom.Utils;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 
 namespace EECustom.CustomSettings.Handlers
 {
     [InjectToIl2Cpp]
-    public class ExplosiveProjectileHandler : MonoBehaviour
+    internal class ExplosiveProjectileHandler : MonoBehaviour
     {
         public float Damage;
         public float EnemyMulti;
@@ -21,10 +19,9 @@ namespace EECustom.CustomSettings.Handlers
 
         public ExplosiveProjectileHandler(IntPtr ptr) : base(ptr)
         {
-
         }
 
-        private void OnDestroy()
+        public void OnDestroy()
         {
             ExplosionUtil.TriggerExplodion(transform.position, Damage, EnemyMulti, MinRange, MaxRange);
 
@@ -50,6 +47,17 @@ namespace EECustom.CustomSettings.Handlers
                 };
                 NoiseManager.MakeNoise(noise);
             }
+        }
+
+        [HideFromIl2Cpp]
+        public void CopyValueFrom(ExplosiveProjectileHandler handler)
+        {
+            Damage = handler.Damage;
+            EnemyMulti = handler.EnemyMulti;
+            MinRange = handler.MinRange;
+            MaxRange = handler.MaxRange;
+            NoiseMinRange = handler.NoiseMinRange;
+            NoiseMaxRange = handler.NoiseMaxRange;
         }
     }
 }

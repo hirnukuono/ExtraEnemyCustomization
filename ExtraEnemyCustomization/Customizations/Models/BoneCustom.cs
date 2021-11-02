@@ -1,7 +1,5 @@
 ﻿using Enemies;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
 namespace EECustom.Customizations.Models
@@ -31,9 +29,9 @@ namespace EECustom.Customizations.Models
                 transform.localPosition += boneTransform.Offset;
                 transform.localScale = boneTransform.Scale;
                 transform.localRotation.SetEulerAngles(transform.localEulerAngles + boneTransform.RotationOffset);
-                LogVerbose($"Applied Bone Setting: {transform.name}, offset: {boneTransform.Offset.ToString()}, scale: {boneTransform.Scale.ToString()} rotationOffset: {boneTransform.RotationOffset.ToString()}");
+                LogVerbose($"Applied Bone Setting: {transform.name}, offset: {boneTransform.Offset}, scale: {boneTransform.Scale} rotationOffset: {boneTransform.RotationOffset}");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 LogError($"Bone Transform owner: [{agent.name}] bone: [{boneTransform.Bone}] were not set! : {e}");
             }

@@ -7,12 +7,12 @@ namespace EECustom.Customizations.Models
 {
     public class MaterialCustom : EnemyCustomBase, IEnemyPrefabBuiltEvent
     {
-        private readonly static Dictionary<string, Material> _MatDict = new Dictionary<string, Material>();
+        private readonly static Dictionary<string, Material> _matDict = new();
 
         public static void AddToCache(string matName, Material mat)
         {
-            if (!_MatDict.ContainsKey(matName))
-                _MatDict.Add(matName, mat);
+            if (!_matDict.ContainsKey(matName))
+                _matDict.Add(matName, mat);
         }
 
         public MaterialSwapSet[] MaterialSets { get; set; } = new MaterialSwapSet[0];
@@ -34,7 +34,7 @@ namespace EECustom.Customizations.Models
                 if (swapSet == null)
                     continue;
 
-                if (!_MatDict.TryGetValue(swapSet.To, out var newMat))
+                if (!_matDict.TryGetValue(swapSet.To, out var newMat))
                 {
                     Logger.Error($"MATERIAL IS NOT CACHED!: {swapSet.To}");
                     continue;

@@ -1,17 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using UnityEngine;
 
-namespace EECustom.Utils
+namespace EECustom.Utils.JsonConverters
 {
-    public class Vector2Converter : JsonConverter<Vector2>
+    public class Vector3Converter : JsonConverter<Vector3>
     {
-        public override Vector2 Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override bool HandleNull => false;
+
+        public override Vector3 Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            var vector = new Vector2();
+            var vector = new Vector3();
 
             switch (reader.TokenType)
             {
@@ -36,42 +36,46 @@ namespace EECustom.Utils
                             case "y":
                                 vector.y = reader.GetSingle();
                                 break;
+
+                            case "z":
+                                vector.z = reader.GetSingle();
+                                break;
                         }
                     }
                     throw new JsonException("Expected EndObject token");
 
                 case JsonTokenType.String:
                     var strValue = reader.GetString().Trim();
-                    if (TryParseVector2(strValue, out vector))
+                    if (TryParseVector3(strValue, out vector))
                     {
                         return vector;
                     }
-                    throw new JsonException($"Vector2 format is not right: {strValue}");
+                    throw new JsonException($"Vector3 format is not right: {strValue}");
 
                 default:
-                    throw new JsonException($"Vector2Json type: {reader.TokenType} is not implemented!");
+                    throw new JsonException($"Vector3Json type: {reader.TokenType} is not implemented!");
             }
         }
 
-        private bool TryParseVector2(string input, out Vector2 vector)
+        private bool TryParseVector3(string input, out Vector3 vector)
         {
             if (!RegexUtil.TryParseVectorString(input, out var array))
             {
-                vector = Vector2.zero;
+                vector = Vector3.zero;
                 return false;
             }
 
-            if (array.Length < 2)
+            if (array.Length < 3)
             {
-                vector = Vector2.zero;
+                vector = Vector3.zero;
                 return false;
             }
 
-            vector = new Vector2(array[0], array[1]);
+            vector = new Vector3(array[0], array[1], array[2]);
             return true;
         }
 
-        public override void Write(Utf8JsonWriter writer, Vector2 value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, Vector3 value, JsonSerializerOptions options)
         {
             throw new NotImplementedException();
         }

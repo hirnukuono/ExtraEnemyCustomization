@@ -1,9 +1,6 @@
 ﻿using EECustom.Managers;
 using Enemies;
 using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EECustom.Inject
 {
@@ -11,7 +8,7 @@ namespace EECustom.Inject
     internal static class Inject_EnemyAgent_DeSpawn
     {
         [HarmonyWrapSafe]
-        static void Prefix(EnemyAgent __instance)
+        public static void Prefix(EnemyAgent __instance)
         {
             ConfigManager.Current.FireDespawnedEvent(__instance);
         }

@@ -7,7 +7,7 @@ namespace EECustom.Events.Inject
     internal class Inject_ScoutAntenna
     {
         [HarmonyWrapSafe]
-        private static void Postfix(ScoutAntennaDetection detection, ScoutAntenna __instance)
+        public static void Postfix(ScoutAntennaDetection detection, ScoutAntenna __instance)
         {
             ScoutAntennaSpawnEvent.OnAntennaSpawn?.Invoke(detection.m_owner, detection, __instance);
         }

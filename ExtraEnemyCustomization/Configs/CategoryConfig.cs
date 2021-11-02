@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace EECustom.Configs
 {
@@ -11,21 +10,21 @@ namespace EECustom.Configs
         public IdWithCategories[] CategoryPair { get; set; } = new IdWithCategories[0];
         public CategoryWithIds[] IdPair { get; set; } = new CategoryWithIds[0];
 
-        private Dictionary<string, CategoryDefinition> CategoryCache = new Dictionary<string, CategoryDefinition>();
+        private readonly Dictionary<string, CategoryDefinition> _categoryCache = new();
 
         internal void Cache()
         {
             //Assign Category
             foreach (var category in Categories)
             {
-                if (CategoryCache.ContainsKey(category.ToUpper()))
+                if (_categoryCache.ContainsKey(category.ToUpper()))
                 {
                     Logger.Error($"Overlapping Category Found, Category Name: {category}");
                     continue;
                 }
 
-                CategoryCache.Add(category.ToUpper(), new CategoryDefinition()
-                {  
+                _categoryCache.Add(category.ToUpper(), new CategoryDefinition()
+                {
                     Name = category
                 });
                 Logger.Debug($"Category Defined! '{category}'");
@@ -36,7 +35,7 @@ namespace EECustom.Configs
             {
                 foreach (var category in categoryPair.Categories)
                 {
-                    if (!CategoryCache.TryGetValue(category.ToUpper(), out var definition))
+                    if (!_categoryCache.TryGetValue(category.ToUpper(), out var definition))
                     {
                         Logger.Error($"Unable to find Category: {category}");
                         continue;
@@ -44,14 +43,14 @@ namespace EECustom.Configs
 
                     definition.AddEnemyID(categoryPair.PersistentID);
                 }
-                
+
                 Logger.Verbose($"Assign Categories to ID: '{categoryPair.PersistentID}', Categories: [{string.Join(", ", categoryPair.Categories)}]");
             }
 
             //Category-Ids Pair
             foreach (var idPair in IdPair)
             {
-                if (!CategoryCache.TryGetValue(idPair.Category.ToUpper(), out var definition))
+                if (!_categoryCache.TryGetValue(idPair.Category.ToUpper(), out var definition))
                 {
                     Logger.Error($"Unable to find Category: {idPair.Category}");
                     continue;
@@ -62,7 +61,7 @@ namespace EECustom.Configs
             }
 
             //Final Cache
-            foreach (var categoryCache in CategoryCache.Values)
+            foreach (var categoryCache in _categoryCache.Values)
             {
                 categoryCache.CacheID();
 
@@ -72,9 +71,9 @@ namespace EECustom.Configs
 
         public bool Any(string[] categories, uint enemyID)
         {
-            foreach(var category in categories)
+            foreach (var category in categories)
             {
-                if (!CategoryCache.TryGetValue(category.ToUpper(), out var categoryDef))
+                if (!_categoryCache.TryGetValue(category.ToUpper(), out var categoryDef))
                 {
                     Logger.Warning($"Unable to find Category with name: {category}");
                     continue;
@@ -94,7 +93,7 @@ namespace EECustom.Configs
             var result = true;
             foreach (var category in categories)
             {
-                if (!CategoryCache.TryGetValue(category.ToUpper(), out var categoryDef))
+                if (!_categoryCache.TryGetValue(category.ToUpper(), out var categoryDef))
                 {
                     Logger.Warning($"Unable to find Category with name: {category}");
                     result = false;
@@ -117,6 +116,7 @@ namespace EECustom.Configs
         public uint PersistentID { get; set; }
         public string[] Categories { get; set; } = new string[0];
     }
+
     public class CategoryWithIds
     {
         public string Category { get; set; }
@@ -128,7 +128,7 @@ namespace EECustom.Configs
         public string Name { get; set; }
         public uint[] PersistentIDs { get; private set; } = new uint[0];
 
-        public readonly List<uint> _PersistentIDs = new List<uint>();
+        public readonly List<uint> _PersistentIDs = new();
 
         public void AddEnemyIDRange(uint[] ids)
         {
@@ -140,7 +140,7 @@ namespace EECustom.Configs
             if (!_PersistentIDs.Contains(id))
             {
                 _PersistentIDs.Add(id);
-            } 
+            }
         }
 
         public void CacheID()

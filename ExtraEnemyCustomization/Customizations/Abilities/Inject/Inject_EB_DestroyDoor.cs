@@ -3,25 +3,23 @@ using Enemies;
 using HarmonyLib;
 using LevelGeneration;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EECustom.Customizations.Abilities.Inject
 {
     [HarmonyPatch(typeof(EB_InCombat_MoveToNextNode_DestroyDoor), nameof(EB_InCombat_MoveToNextNode_DestroyDoor.UpdateBehaviour))]
     internal class Inject_EB_DestroyDoor
     {
-        internal static bool ShouldOverride = false;
-        internal static float GlobalTimer = 0.0f;
+        public static bool ShouldOverride = false;
+        public static float GlobalTimer = 0.0f;
 
-        private const float MinTime = 0.5f;
-        private const float MaxTime = 1.0f;
-        private const float Range = MaxTime - MinTime;
+        public const float MinTime = 0.5f;
+        public const float MaxTime = 1.0f;
+        public const float Range = MaxTime - MinTime;
 
-        private static readonly Random _Random = new Random();
+        private static readonly Random _random = new();
 
         [HarmonyWrapSafe]
-        private static void Postfix(EB_InCombat_MoveToNextNode_DestroyDoor __instance)
+        public static void Postfix(EB_InCombat_MoveToNextNode_DestroyDoor __instance)
         {
             if (!ShouldOverride)
                 return;
@@ -31,10 +29,10 @@ namespace EECustom.Customizations.Abilities.Inject
             var breakerProp = EnemyProperty<DoorBreakerSetting>.Get(enemyAgent);
             if (breakerProp != null)
             {
-                if (breakerProp.UseGlobalTimer && breakerProp.Config.GlobalTimer < Clock.Time)
+                if (breakerProp.UseGlobalTimer && breakerProp.Config._globalTimer < Clock.Time)
                 {
                     if (DoDamageDoor(__instance, breakerProp.Damage))
-                        breakerProp.Config.GlobalTimer = Clock.Time + RandomRange(breakerProp.MinDelay, breakerProp.MaxDelay);
+                        breakerProp.Config._globalTimer = Clock.Time + RandomRange(breakerProp.MinDelay, breakerProp.MaxDelay);
                 }
                 else if (!breakerProp.UseGlobalTimer && breakerProp.Timer < Clock.Time)
                 {
@@ -48,7 +46,7 @@ namespace EECustom.Customizations.Abilities.Inject
                     return;
 
                 if (DoDamageDoor(__instance, 1.0f))
-                    GlobalTimer = Clock.Time + ((float)_Random.NextDouble() * Range) + MinTime;
+                    GlobalTimer = Clock.Time + ((float)_random.NextDouble() * Range) + MinTime;
             }
         }
 
@@ -72,7 +70,7 @@ namespace EECustom.Customizations.Abilities.Inject
 
         private static float RandomRange(float min, float max)
         {
-            return ((float)_Random.NextDouble() * max-min) + min;
+            return ((float)_random.NextDouble() * max - min) + min;
         }
     }
 }

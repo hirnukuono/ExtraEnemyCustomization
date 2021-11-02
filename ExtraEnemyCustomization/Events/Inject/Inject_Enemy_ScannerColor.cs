@@ -1,8 +1,5 @@
 ﻿using Enemies;
 using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
 namespace EECustom.Events.Inject
@@ -12,7 +9,7 @@ namespace EECustom.Events.Inject
     internal class Inject_Enemy_ScannerColor
     {
         [HarmonyWrapSafe]
-        private static void Postfix(EnemyAgent __instance, Color value)
+        public static void Postfix(EnemyAgent __instance, Color value)
         {
             EnemyScannerColorEvents.OnChanged?.Invoke(__instance, value);
         }

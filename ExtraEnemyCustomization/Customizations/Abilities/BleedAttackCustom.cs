@@ -6,21 +6,17 @@ using EECustom.Utils;
 using Enemies;
 using Gear;
 using Player;
-using System;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace EECustom.Customizations.Abilities
 {
-    public class BleedAttackCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyDespawnedEvent
+    public class BleedAttackCustom : EnemyCustomBase
     {
-        public BleedData MeleeData { get; set; } = new BleedData();
-        public BleedData TentacleData { get; set; } = new BleedData();
+        public BleedData MeleeData { get; set; } = new();
+        public BleedData TentacleData { get; set; } = new();
 
-        private readonly List<ushort> _EnemyList = new List<ushort>();
-        private readonly System.Random _Random = new System.Random();
+        private readonly System.Random _random = new();
 
-        private BleedingHandler _BleedingHandler;
+        private BleedingHandler _bleedingHandler;
 
         public override string GetProcessName()
         {
@@ -29,8 +25,8 @@ namespace EECustom.Customizations.Abilities
 
         public override void OnConfigLoaded()
         {
-            PlayerDamageEvents.OnMeleeDamage += OnMelee;
-            PlayerDamageEvents.OnTentacleDamage += OnTentacle;
+            LocalPlayerDamageEvents.OnMeleeDamage += OnMelee;
+            LocalPlayerDamageEvents.OnTentacleDamage += OnTentacle;
             LevelEvents.OnBuildStart += OnBuildStart;
             LevelEvents.OnLevelCleanup += OnLevelCleanup;
 
@@ -38,26 +34,9 @@ namespace EECustom.Customizations.Abilities
                 ResourcePackEvents.OnReceiveMedi += RecieveMedi;
         }
 
-        public void OnSpawned(EnemyAgent agent)
-        {
-            var id = agent.GlobalID;
-            if (id == ushort.MaxValue)
-                return;
-
-            if (!_EnemyList.Contains(id))
-            {
-                _EnemyList.Add(id);
-            }
-        }
-
-        public void OnDespawned(EnemyAgent agent)
-        {
-            _EnemyList.Remove(agent.GlobalID);
-        }
-
         public void OnMelee(PlayerAgent player, Agent inflictor, float damage)
         {
-            if (_EnemyList.Contains(inflictor.GlobalID))
+            if (IsTarget(inflictor.GlobalID))
             {
                 var enemyAgent = inflictor.TryCast<EnemyAgent>();
                 if (enemyAgent != null)
@@ -67,7 +46,7 @@ namespace EECustom.Customizations.Abilities
 
         public void OnTentacle(PlayerAgent player, Agent inflictor, float damage)
         {
-            if (_EnemyList.Contains(inflictor.GlobalID))
+            if (IsTarget(inflictor.GlobalID))
             {
                 var enemyAgent = inflictor.TryCast<EnemyAgent>();
                 if (enemyAgent != null)
@@ -77,9 +56,9 @@ namespace EECustom.Customizations.Abilities
 
         private void DoBleed(BleedData data)
         {
-            if (data.ChanceToBleed > _Random.NextDouble())
+            if (data.ChanceToBleed > _random.NextDouble())
             {
-                _BleedingHandler.DoBleed(data.Damage.GetAbsValue(PlayerData.MaxHealth), data.BleedInterval, data.BleedDuration);
+                _bleedingHandler.DoBleed(data.Damage.GetAbsValue(PlayerData.MaxHealth), data.BleedInterval, data.BleedDuration);
             }
         }
 
@@ -88,25 +67,25 @@ namespace EECustom.Customizations.Abilities
             var player = receiver.TryCast<PlayerAgent>();
             if (player != null && player.IsLocallyOwned)
             {
-                _BleedingHandler.StopBleed();
+                _bleedingHandler.StopBleed();
             }
         }
 
         public void OnBuildStart()
         {
             var localPlayer = PlayerManager.GetLocalPlayerAgent();
-            
-            _BleedingHandler = localPlayer.gameObject.GetComponent<BleedingHandler>();
-            if (_BleedingHandler == null)
+
+            _bleedingHandler = localPlayer.gameObject.GetComponent<BleedingHandler>();
+            if (_bleedingHandler == null)
             {
-                _BleedingHandler = localPlayer.gameObject.AddComponent<BleedingHandler>();
+                _bleedingHandler = localPlayer.gameObject.AddComponent<BleedingHandler>();
             }
-            _BleedingHandler.Agent = localPlayer;
+            _bleedingHandler.Agent = localPlayer;
         }
 
         public void OnLevelCleanup()
         {
-            _BleedingHandler.StopBleed();
+            _bleedingHandler.StopBleed();
         }
     }
 

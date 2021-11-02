@@ -10,7 +10,7 @@ namespace EECustom.Events.Inject
         [HarmonyPostfix]
         [HarmonyWrapSafe]
         [HarmonyPatch(nameof(Dam_EnemyDamageBase.ReceiveBulletDamage))]
-        private static void Post_BulletDamage(pBulletDamageData data, Dam_EnemyDamageBase __instance)
+        public static void Post_BulletDamage(pBulletDamageData data, Dam_EnemyDamageBase __instance)
         {
             data.source.TryGet(out var agent);
             EnemyDamageEvents.OnDamage?.Invoke(__instance.Owner, agent);
@@ -19,7 +19,7 @@ namespace EECustom.Events.Inject
         [HarmonyPostfix]
         [HarmonyWrapSafe]
         [HarmonyPatch(nameof(Dam_EnemyDamageBase.ReceiveMeleeDamage))]
-        private static void Post_MeleeDamage(pFullDamageData data, Dam_EnemyDamageBase __instance)
+        public static void Post_MeleeDamage(pFullDamageData data, Dam_EnemyDamageBase __instance)
         {
             data.source.TryGet(out var agent);
             EnemyDamageEvents.OnDamage?.Invoke(__instance.Owner, agent);
@@ -28,7 +28,7 @@ namespace EECustom.Events.Inject
         [HarmonyPostfix]
         [HarmonyWrapSafe]
         [HarmonyPatch(nameof(Dam_EnemyDamageBase.ReceiveExplosionDamage))]
-        private static void Post_ExplosionDamage(pFullDamageData data, Dam_EnemyDamageBase __instance)
+        public static void Post_ExplosionDamage(pFullDamageData data, Dam_EnemyDamageBase __instance)
         {
             data.source.TryGet(out var agent);
             EnemyDamageEvents.OnDamage?.Invoke(__instance.Owner, agent);

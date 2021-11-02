@@ -1,11 +1,7 @@
 ﻿using Agents;
 using EECustom.Attributes;
-using EECustom.Utils;
 using Enemies;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace EECustom.Customizations.Models.Handlers
@@ -16,17 +12,16 @@ namespace EECustom.Customizations.Models.Handlers
         public PulseEffectData PulseData;
         public float StartDelay = 0.0f;
 
-        private AgentMode _TargetAgentMode;
-        private EnemyAgent _Agent;
-        private float _Timer = 0.0f;
-        private float _UpdateTimerDelay = 0.0f;
-        private Color _DefaultColor;
-        private int _CurrentPatternIndex = 0;
-        private int _PatternLength = 0;
+        private AgentMode _targetAgentMode;
+        private EnemyAgent _ownerAgent;
+        private float _timer = 0.0f;
+        private float _updateTimerDelay = 0.0f;
+        private Color _defaultColor;
+        private int _currentPatternIndex = 0;
+        private int _patternLength = 0;
 
         public PulseHandler(IntPtr ptr) : base(ptr)
         {
-            
         }
 
         internal void Start()
@@ -37,16 +32,16 @@ namespace EECustom.Customizations.Models.Handlers
                 return;
             }
 
-            _PatternLength = PulseData.PatternData.Length;
-            if (_PatternLength <= 1)
+            _patternLength = PulseData.PatternData.Length;
+            if (_patternLength <= 1)
             {
                 enabled = false;
                 return;
             }
 
-            _Agent = GetComponentInParent<EnemyAgent>();
-            _DefaultColor = _Agent.MaterialHandler.m_defaultGlowColor;
-            _TargetAgentMode = PulseData.Target switch
+            _ownerAgent = GetComponentInParent<EnemyAgent>();
+            _defaultColor = _ownerAgent.MaterialHandler.m_defaultGlowColor;
+            _targetAgentMode = PulseData.Target switch
             {
                 PulseEffectTarget.Hibernate => AgentMode.Hibernate,
                 PulseEffectTarget.Combat => AgentMode.Agressive,
@@ -55,40 +50,39 @@ namespace EECustom.Customizations.Models.Handlers
                 _ => AgentMode.Hibernate
             };
 
-            if (_TargetAgentMode == AgentMode.Off)
+            if (_targetAgentMode == AgentMode.Off)
             {
                 enabled = false;
                 return;
             }
 
-            
             var interval = Math.Max(0.0f, PulseData.Duration);
-            _UpdateTimerDelay = interval / _PatternLength;
-            _Timer = Clock.Time + StartDelay;
+            _updateTimerDelay = interval / _patternLength;
+            _timer = Clock.Time + StartDelay;
         }
 
         internal void Update()
         {
-            if (_Timer > Clock.Time)
+            if (_timer > Clock.Time)
                 return;
 
-            if (_Agent.AI.Mode != _TargetAgentMode)
+            if (_ownerAgent.AI.Mode != _targetAgentMode)
                 return;
 
-            if (!_Agent.Alive && !PulseData.KeepOnDead)
+            if (!_ownerAgent.Alive && !PulseData.KeepOnDead)
                 return;
 
             if (!PulseData.AlwaysPulse)
             {
-                switch (_TargetAgentMode)
+                switch (_targetAgentMode)
                 {
                     case AgentMode.Hibernate:
-                        if (_Agent.IsHibernationDetecting)
+                        if (_ownerAgent.IsHibernationDetecting)
                             return;
                         break;
 
                     case AgentMode.Agressive:
-                        switch (_Agent.Locomotion.CurrentStateEnum)
+                        switch (_ownerAgent.Locomotion.CurrentStateEnum)
                         {
                             case ES_StateEnum.ShooterAttack:
                             case ES_StateEnum.StrikerAttack:
@@ -99,7 +93,7 @@ namespace EECustom.Customizations.Models.Handlers
                         break;
 
                     case AgentMode.Scout:
-                        var detection = _Agent.Locomotion.ScoutDetection.m_antennaDetection;
+                        var detection = _ownerAgent.Locomotion.ScoutDetection.m_antennaDetection;
                         if (detection == null)
                             break;
 
@@ -109,20 +103,20 @@ namespace EECustom.Customizations.Models.Handlers
                 }
             }
 
-            if (_CurrentPatternIndex >= _PatternLength)
+            if (_currentPatternIndex >= _patternLength)
             {
-                _CurrentPatternIndex = 0;
+                _currentPatternIndex = 0;
             }
 
-            var patternData = PulseData.PatternData[_CurrentPatternIndex++];
-            var duration = patternData.StepDuration * _UpdateTimerDelay;
+            var patternData = PulseData.PatternData[_currentPatternIndex++];
+            var duration = patternData.StepDuration * _updateTimerDelay;
 
             if (patternData.Progression >= 0.0f)
             {
-                var newColor = Color.Lerp(_DefaultColor, PulseData.GlowColor, patternData.Progression);
-                _Agent.Appearance.InterpolateGlow(newColor, duration);
+                var newColor = Color.Lerp(_defaultColor, PulseData.GlowColor, patternData.Progression);
+                _ownerAgent.Appearance.InterpolateGlow(newColor, duration);
             }
-            _Timer = Clock.Time + duration;
+            _timer = Clock.Time + duration;
         }
     }
 }

@@ -1,8 +1,6 @@
 ﻿using EECustom.Attributes;
 using Player;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 
@@ -13,35 +11,34 @@ namespace EECustom.Customizations.Abilities.Handlers
     {
         public PlayerAgent Agent;
 
-        private float _Damage;
-        private float _Interval;
-        private float _BleedingTimer;
-        private float _BleedingIntervalTimer;
-        private bool _Bleeding = false;
+        private float _damage;
+        private float _interval;
+        private float _bleedingTimer;
+        private float _bleedingIntervalTimer;
+        private bool _bleeding = false;
 
         public BleedingHandler(IntPtr ptr) : base(ptr)
         {
-
         }
 
         internal void Update()
         {
-            if (!_Bleeding)
+            if (!_bleeding)
                 return;
 
             if (!Agent.Alive)
                 return;
 
-            if (_BleedingTimer <= Clock.Time)
+            if (_bleedingTimer <= Clock.Time)
             {
-                _Bleeding = false;
+                _bleeding = false;
                 return;
             }
 
-            if (_BleedingIntervalTimer <= Clock.Time)
+            if (_bleedingIntervalTimer <= Clock.Time)
             {
-                Agent.Damage.FireDamage(_Damage, Agent);
-                _BleedingIntervalTimer = Clock.Time + _Interval;
+                Agent.Damage.FireDamage(_damage, Agent);
+                _bleedingIntervalTimer = Clock.Time + _interval;
             }
         }
 
@@ -51,16 +48,16 @@ namespace EECustom.Customizations.Abilities.Handlers
             if (!Agent.Alive)
                 return;
 
-            _Damage = damage;
-            _Interval = interval;
-            _BleedingTimer = Clock.Time + duration;
-            _Bleeding = true;
+            _damage = damage;
+            _interval = interval;
+            _bleedingTimer = Clock.Time + duration;
+            _bleeding = true;
         }
 
         [HideFromIl2Cpp]
         public void StopBleed()
         {
-            _Bleeding = false;
+            _bleeding = false;
         }
     }
 }

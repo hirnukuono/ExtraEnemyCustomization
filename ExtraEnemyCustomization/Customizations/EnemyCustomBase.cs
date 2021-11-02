@@ -1,8 +1,10 @@
 ﻿using BepInEx.Logging;
+using EECustom.Extensions;
 using EECustom.Managers;
 using Enemies;
 using GameData;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace EECustom.Customizations
@@ -13,11 +15,39 @@ namespace EECustom.Customizations
         public bool Enabled { get; set; } = true;
         public TargetSetting Target { get; set; } = new TargetSetting();
 
+        private readonly Dictionary<ushort, bool> _isTargetLookup = new();
+
         public virtual void OnConfigLoaded()
         {
         }
 
+        public EnemyCustomBase Base => this;
+
         public abstract string GetProcessName();
+
+        internal void RegisterTargetLookup(EnemyAgent enemyAgent)
+        {
+            var id = enemyAgent.GlobalID;
+            if (!_isTargetLookup.ContainsKey(id))
+            {
+                _isTargetLookup.Add(id, Target.IsMatch(enemyAgent.EnemyDataID));
+
+                enemyAgent.AddOnDeadOnce(() =>
+                {
+                    _isTargetLookup.Remove(id);
+                });
+            }
+        }
+
+        public bool IsTarget(EnemyAgent enemyAgent) => IsTarget(enemyAgent.GlobalID);
+
+        public bool IsTarget(ushort id)
+        {
+            if (_isTargetLookup.TryGetValue(id, out var isTarget))
+                return isTarget;
+
+            return false;
+        }
 
         public void LogVerbose(string str)
         {
@@ -70,19 +100,27 @@ namespace EECustom.Customizations
         public bool NameIgnoreCase { get; set; } = false;
         public string[] Categories { get; set; } = new string[0];
 
-        public bool IsMatch(EnemyAgent agent)
+        public bool IsMatch(uint enemyID)
         {
-            var enemyData = GameDataBlockBase<EnemyDataBlock>.GetBlock(agent.EnemyDataID);
+            var enemyBlock = GameDataBlockBase<EnemyDataBlock>.GetBlock(enemyID);
+            return IsMatch(enemyBlock);
+        }
+
+        public bool IsMatch(EnemyDataBlock enemyBlock)
+        {
+            if (enemyBlock == null)
+                return false;
+
             var comparisonMode = NameIgnoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
 
             return Mode switch
             {
-                TargetMode.PersistentID => PersistentIDs.Contains(agent.EnemyDataID),
-                TargetMode.NameEquals => enemyData?.name?.Equals(NameParam, comparisonMode) ?? false,
-                TargetMode.NameContains => enemyData?.name?.Contains(NameParam, comparisonMode) ?? false,
+                TargetMode.PersistentID => PersistentIDs.Contains(enemyBlock.persistentID),
+                TargetMode.NameEquals => enemyBlock.name?.Equals(NameParam, comparisonMode) ?? false,
+                TargetMode.NameContains => enemyBlock.name?.Contains(NameParam, comparisonMode) ?? false,
                 TargetMode.Everything => true,
-                TargetMode.CategoryAny => ConfigManager.Current.Categories.Any(Categories, agent.EnemyDataID),
-                TargetMode.CategoryAll => ConfigManager.Current.Categories.All(Categories, agent.EnemyDataID),
+                TargetMode.CategoryAny => ConfigManager.Current.Categories.Any(Categories, enemyBlock.persistentID),
+                TargetMode.CategoryAll => ConfigManager.Current.Categories.All(Categories, enemyBlock.persistentID),
                 _ => false,
             };
         }

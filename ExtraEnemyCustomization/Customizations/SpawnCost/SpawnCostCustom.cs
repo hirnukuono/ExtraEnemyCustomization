@@ -1,14 +1,12 @@
 ﻿using Agents;
 using Enemies;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EECustom.Customizations.SpawnCost
 {
     public class SpawnCostCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
         public float SpawnCost { get; set; } = 0.0f;
+
         public override string GetProcessName()
         {
             return "SpawnCost";

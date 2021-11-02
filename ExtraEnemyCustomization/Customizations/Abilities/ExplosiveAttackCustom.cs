@@ -1,25 +1,14 @@
 ﻿using Agents;
-using AK;
 using EECustom.Events;
 using EECustom.Utils;
-using Enemies;
-using FX_EffectSystem;
 using Player;
-using SNetwork;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
 
 namespace EECustom.Customizations.Abilities
 {
-    public class ExplosiveAttackCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyDespawnedEvent
+    public class ExplosiveAttackCustom : EnemyCustomBase
     {
-        public ExplosiveAttackData MeleeData { get; set; } = new ExplosiveAttackData();
-        public ExplosiveAttackData TentacleData { get; set; } = new ExplosiveAttackData();
-
-        private readonly List<ushort> _EnemyList = new List<ushort>();
+        public ExplosiveAttackData MeleeData { get; set; } = new();
+        public ExplosiveAttackData TentacleData { get; set; } = new();
 
         public override string GetProcessName()
         {
@@ -28,30 +17,13 @@ namespace EECustom.Customizations.Abilities
 
         public override void OnConfigLoaded()
         {
-            PlayerDamageEvents.OnMeleeDamage += OnMelee;
-            PlayerDamageEvents.OnTentacleDamage += OnTentacle;
-        }
-
-        public void OnSpawned(EnemyAgent agent)
-        {
-            var id = agent.GlobalID;
-            if (id == ushort.MaxValue)
-                return;
-
-            if (!_EnemyList.Contains(id))
-            {
-                _EnemyList.Add(id);
-            }
-        }
-
-        public void OnDespawned(EnemyAgent agent)
-        {
-            _EnemyList.Remove(agent.GlobalID);
+            LocalPlayerDamageEvents.OnMeleeDamage += OnMelee;
+            LocalPlayerDamageEvents.OnTentacleDamage += OnTentacle;
         }
 
         public void OnMelee(PlayerAgent player, Agent inflictor, float damage)
         {
-            if (_EnemyList.Contains(inflictor.GlobalID))
+            if (IsTarget(inflictor.GlobalID))
             {
                 DoExplode(MeleeData, player, inflictor);
             }
@@ -59,13 +31,13 @@ namespace EECustom.Customizations.Abilities
 
         public void OnTentacle(PlayerAgent player, Agent inflictor, float damage)
         {
-            if (_EnemyList.Contains(inflictor.GlobalID))
+            if (IsTarget(inflictor.GlobalID))
             {
                 DoExplode(TentacleData, player, inflictor);
             }
         }
 
-        private void DoExplode(ExplosiveAttackData data, PlayerAgent player, Agent inflictor)
+        private void DoExplode(ExplosiveAttackData data, PlayerAgent player, Agent _)
         {
             var maxDamage = data.Damage.GetAbsValue(PlayerData.MaxHealth);
             if (maxDamage > 0.0f)

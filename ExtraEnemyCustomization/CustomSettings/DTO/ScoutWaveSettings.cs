@@ -93,7 +93,7 @@ namespace EECustom.CustomSettings.DTO
         public float Delay { get; set; } = 0.0f;
         public bool StopWaveOnDeath { get; set; } = false;
 
-        public SpawnNodeSetting SpawnSetting = new SpawnNodeSetting()
+        public SpawnNodeSetting SpawnSetting = new()
         {
             SpawnType = WaveSpawnType.ClosestAlive,
             NodeType = SpawnNodeType.Scout

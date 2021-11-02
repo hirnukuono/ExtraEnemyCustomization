@@ -3,7 +3,7 @@ using BepInEx.Configuration;
 using BepInEx.IL2CPP;
 using EECustom.Attributes;
 using EECustom.Managers;
-using EECustom.Utils;
+using EECustom.Utils.Integrations;
 using HarmonyLib;
 using System.Linq;
 using UnhollowerRuntimeLib;
@@ -11,11 +11,7 @@ using UnhollowerRuntimeLib;
 namespace EECustom
 {
     //TODO: - Tentacle Hibernation : Possible
-    //TODO: - Scaling bone : Maybe Possible
     //TODO: - Alerts Logic Behaviour : Maybe Possible, Can't guarantee for every option though
-    //TODO: - Scout Scream Color : Possible, Either Fog Color and EnemyGlow
-    //TODO: - Scout Scream Infection : Possible
-    //TODO: - Waveless Scout : Already Possible with ScoutWave.json
     //TODO: - Scout Scream Damage : Possible? Maybe?
     //TODO: - Enemy Scream Infection/Damage : Ugh....What?
     //TODO: - Patrolling Hibernation : Too many works to do with this one, this is one of the long term goal
@@ -52,7 +48,7 @@ namespace EECustom
             var types = GetType().Assembly.GetTypes().Where(type => type != null && type.GetCustomAttributes(typeof(InjectToIl2CppAttribute), false).FirstOrDefault() != null);
 
             Log.LogDebug($" - Count: {types.Count()}");
-            foreach(var type in types)
+            foreach (var type in types)
             {
                 //Log.LogDebug($" - {type.Name}"); Class Injector already shows their type names
                 if (ClassInjector.IsTypeRegisteredInIl2Cpp(type))

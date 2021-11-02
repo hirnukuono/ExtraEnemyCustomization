@@ -1,23 +1,22 @@
 ﻿using EECustom.Events;
+using EECustom.Extensions;
 using Enemies;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace EECustom.Utils
 {
     public static class EnemyProperty<T> where T : class, new()
     {
-        private readonly static Dictionary<ushort, T> _Properties = new Dictionary<ushort, T>();
+        private readonly static Dictionary<ushort, T> _properties = new();
 
         static EnemyProperty()
         {
             LevelEvents.OnLevelCleanup += OnLevelCleanup;
         }
 
-        static void OnLevelCleanup()
+        private static void OnLevelCleanup()
         {
-            _Properties.Clear();
+            _properties.Clear();
         }
 
         public static T RegisterOrGet(EnemyAgent agent)
@@ -35,29 +34,26 @@ namespace EECustom.Utils
         {
             var id = agent.GlobalID;
 
-            if (_Properties.ContainsKey(id))
+            if (_properties.ContainsKey(id))
                 return null;
 
             var newProp = new T();
-            _Properties.Add(id, newProp);
+            _properties.Add(id, newProp);
 
-            var called = false;
-            agent.add_OnDeadCallback(new Action(()=> {
-                if (!called)
-                {
-                    _Properties.Remove(id);
-                    called = true;
-                }
-            }));
+            agent.AddOnDeadOnce(() =>
+            {
+                _properties.Remove(id);
+            });
 
             return newProp;
         }
 
         public static T Get(EnemyAgent agent) => Get(agent.GlobalID);
+
         public static T Get(ushort id)
         {
-            if (_Properties.ContainsKey(id))
-                return _Properties[id];
+            if (_properties.ContainsKey(id))
+                return _properties[id];
             else
                 return null;
         }

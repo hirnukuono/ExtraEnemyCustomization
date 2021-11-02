@@ -1,4 +1,5 @@
 ﻿using EECustom.Events;
+using EECustom.Extensions;
 using EECustom.Utils;
 using Enemies;
 using System;
@@ -43,14 +44,14 @@ namespace EECustom.Customizations.Detections
 
             ScoutAntennaSpawnEvent.OnDetectionSpawn += onDetectionSpawn;
             ScoutAntennaSpawnEvent.OnAntennaSpawn += onAntennaSpawn;
-            agent.add_OnDeadCallback(new Action(() =>
+            agent.AddOnDeadOnce(() =>
             {
                 ScoutAntennaSpawnEvent.OnDetectionSpawn -= onDetectionSpawn;
                 ScoutAntennaSpawnEvent.OnAntennaSpawn -= onAntennaSpawn;
-            }));
+            });
         }
 
-        private void OnDetectionSpawn(EnemyAgent agent, ScoutAntennaDetection detection)
+        private void OnDetectionSpawn(EnemyAgent _, ScoutAntennaDetection detection)
         {
             detection.m_tendrilCount = TendrilCount.GetAbsValue(detection.m_tendrilCount);
             detection.m_dirAngOffset = TendrilAngleOffset;
@@ -60,7 +61,7 @@ namespace EECustom.Customizations.Detections
             detection.m_timerWaitOut = TendrilOutTimer.GetAbsValue(detection.m_timerWaitOut);
         }
 
-        private void OnAntennaSpawn(EnemyAgent agent, ScoutAntennaDetection detection, ScoutAntenna ant)
+        private void OnAntennaSpawn(EnemyAgent _, ScoutAntennaDetection _1, ScoutAntenna ant)
         {
             ant.m_colorDefault = NormalColor;
             ant.m_colorDetection = DetectColor;

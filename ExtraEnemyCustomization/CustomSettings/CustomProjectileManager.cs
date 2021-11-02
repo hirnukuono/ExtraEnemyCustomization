@@ -9,7 +9,7 @@ namespace EECustom.CustomSettings
 {
     public static class CustomProjectileManager
     {
-        private static readonly Dictionary<byte, GameObject> _ProjectilePrefabs = new Dictionary<byte, GameObject>();
+        private static readonly Dictionary<byte, GameObject> _projectilePrefabs = new();
 
         public static void GenerateProjectile(CustomProjectile projInfo)
         {
@@ -19,7 +19,7 @@ namespace EECustom.CustomSettings
                 return;
             }
 
-            if (_ProjectilePrefabs.ContainsKey(projInfo.ID))
+            if (_projectilePrefabs.ContainsKey(projInfo.ID))
             {
                 Logger.Error($"ProjectileID Conflict!, ProjID: {projInfo.ID}");
                 return;
@@ -72,13 +72,13 @@ namespace EECustom.CustomSettings
             }
             newPrefab.SetActive(false);
             newPrefab.name = "GeneratedProjectilePrefab_" + projInfo.ID;
-            _ProjectilePrefabs.Add(projInfo.ID, newPrefab);
+            _projectilePrefabs.Add(projInfo.ID, newPrefab);
             Logger.Debug($"Added Projectile!: {projInfo.ID} ({projInfo.DebugName})");
         }
 
         public static GameObject GetProjectile(byte id)
         {
-            if (_ProjectilePrefabs.TryGetValue(id, out var prefab))
+            if (_projectilePrefabs.TryGetValue(id, out var prefab))
             {
                 return prefab;
             }

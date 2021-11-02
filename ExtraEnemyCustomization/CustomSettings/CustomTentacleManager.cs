@@ -6,7 +6,7 @@ namespace EECustom.CustomSettings
 {
     public static class CustomTentacleManager
     {
-        private static readonly Dictionary<int, GPUC_Setup> _TentacleSetups = new Dictionary<int, GPUC_Setup>();
+        private static readonly Dictionary<int, GPUC_Setup> _tentacleSetups = new();
 
         public static void GenerateTentacle(CustomTentacle tentInfo)
         {
@@ -35,7 +35,7 @@ namespace EECustom.CustomSettings
                 return;
             }
 
-            if (_TentacleSetups.ContainsKey(tentInfo.ID))
+            if (_tentacleSetups.ContainsKey(tentInfo.ID))
             {
                 return;
             }
@@ -56,7 +56,7 @@ namespace EECustom.CustomSettings
             setup.m_shape = GetSetup(tentInfo.Shape).m_shape;
             setup.Setup();
 
-            _TentacleSetups.Add(tentInfo.ID, setup);
+            _tentacleSetups.Add(tentInfo.ID, setup);
 
             Logger.Debug($"Added Tentacle!: {tentInfo.ID} ({tentInfo.DebugName})");
         }
@@ -73,7 +73,7 @@ namespace EECustom.CustomSettings
 
         public static GPUC_Setup GetTentacle(int id)
         {
-            if (_TentacleSetups.TryGetValue(id, out var setup))
+            if (_tentacleSetups.TryGetValue(id, out var setup))
             {
                 return setup;
             }

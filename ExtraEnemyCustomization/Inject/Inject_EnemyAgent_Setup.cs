@@ -8,12 +8,13 @@ namespace EECustom.Inject
     internal static class Inject_EnemyAgent_Setup
     {
         [HarmonyWrapSafe]
-        private static void Postfix(EnemyAgent __instance)
+        public static void Postfix(EnemyAgent __instance)
         {
             if (__instance.name.EndsWith(")")) //No Replicator Number = Fake call
             {
                 return;
             }
+            ConfigManager.Current.RegisterTargetLookup(__instance);
             ConfigManager.Current.FireSpawnedEvent(__instance);
         }
     }

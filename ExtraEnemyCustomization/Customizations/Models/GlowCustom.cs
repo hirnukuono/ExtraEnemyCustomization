@@ -1,24 +1,22 @@
 ﻿using EECustom.Customizations.Models.Handlers;
-using EECustom.Events;
 using Enemies;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json.Serialization;
 using UnityEngine;
 
 namespace EECustom.Customizations.Models
 {
-    public class GlowCustom : EnemyCustomBase, IEnemySpawnedEvent
+    public class GlowCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyGlowEvent
     {
-        private readonly static Color DefaultPropaWakeColor = ES_HibernateWakeUp.m_propagatedWakeupColor;
-        private readonly static Vector4 DefaultPropaWakeLocation = ES_HibernateWakeUp.m_propagatedWakeupLocation;
-        private readonly static System.Random _Random = new System.Random();
+        public readonly static Color DefaultPropaWakeColor = ES_HibernateWakeUp.m_propagatedWakeupColor;
+
+        private readonly static System.Random _random = new();
 
         public Color DefaultColor { get; set; } = Color.black;
-        
-        public Color DetectionColor { get; set; } = new Vector4(9f, 3.9f, 3f, 1f);
-        public Color HeartbeatColor { get; set; } = new Vector4(9f, 3.9f, 3f, 1f);
+
+        public Color DetectionColor { get; set; } = new(9f, 3.9f, 3f, 1f);
+        public Color HeartbeatColor { get; set; } = new(9f, 3.9f, 3f, 1f);
         public Color SelfWakeupColor { get; set; } = new Vector4(3f, 0.2f, 0.2f, 0.5f) * 3f;
         public Color PropagateWakeupColor { get; set; } = new Vector4(3f, 0.2f, 0.2f, 0.5f) * 3f;
 
@@ -26,7 +24,6 @@ namespace EECustom.Customizations.Models
         public Color ShooterFireColor { get; set; } = new Vector4(1f, 0.5f, 0.45f, 1f) * 2.15f;
 
         public PulseEffectData[] PulseEffects { get; set; } = new PulseEffectData[0];
-        
 
         public override string GetProcessName()
         {
@@ -35,11 +32,11 @@ namespace EECustom.Customizations.Models
 
         public override void OnConfigLoaded()
         {
-            for(int i = 0; i < PulseEffects.Length; i++)
+            for (int i = 0; i < PulseEffects.Length; i++)
             {
                 var pulse = PulseEffects[i];
                 LogDev($"PatternFound!: {pulse.GlowRawPattern}");
-                
+
                 pulse.CachePattern();
                 foreach (var pat in pulse.PatternData)
                 {
@@ -59,38 +56,38 @@ namespace EECustom.Customizations.Models
             agent.Locomotion.TankMultiTargetAttack.m_attackGlowColor = TentacleAttackColor;
             agent.Locomotion.HibernateWakeup.m_selfWakeupColor = SelfWakeupColor;
             agent.Locomotion.Hibernate.m_heartbeatColorVec = HeartbeatColor;
-            
-            foreach(var pulse in PulseEffects)
+
+            foreach (var pulse in PulseEffects)
             {
                 var manager = agent.gameObject.AddComponent<PulseHandler>();
                 manager.PulseData = pulse;
-                if(pulse.RandomizeTime)
+                if (pulse.RandomizeTime)
                 {
                     var interval = Math.Max(0.0f, pulse.Duration);
-                    var rand = (float)_Random.NextDouble() * interval;
+                    var rand = (float)_random.NextDouble() * interval;
                     manager.StartDelay = rand;
                 }
             }
-
-            EnemyGlowEvents.RegisterOnGlow(agent, OnGlow);
 
             //And this is static LMAO
             //ES_HibernateWakeUp.m_propagatedWakeupColor = PropagateWakeupColor
             //ES_Hibernate.s_closestDistanceDetectionColorVec = HibernateColor
         }
 
-        public Color OnGlow(EnemyAgent agent, Color color, Vector4 location)
+        public bool OnGlow(EnemyAgent agent, ref GlowInfo glowInfo)
         {
-            if (color == DefaultPropaWakeColor)
+            if (glowInfo.Color == DefaultPropaWakeColor)
             {
-                return PropagateWakeupColor;
+                glowInfo = glowInfo.ChangeColor(PropagateWakeupColor);
+                return true;
             }
-            else if (color == (Color)agent.Locomotion.Hibernate.m_detectingColorVec)
+            else if (glowInfo.Color == (Color)agent.Locomotion.Hibernate.m_detectingColorVec)
             {
-                return new Color(DetectionColor.r, DetectionColor.g, DetectionColor.b, color.a);
+                glowInfo = new GlowInfo(new Color(DetectionColor.r, DetectionColor.g, DetectionColor.b, glowInfo.Color.a), glowInfo.Position);
+                return true;
             }
 
-            return color;
+            return false;
         }
     }
 
@@ -98,8 +95,10 @@ namespace EECustom.Customizations.Models
     {
         public PulseEffectTarget Target { get; set; }
         public float Duration { get; set; }
+
         [JsonPropertyName("GlowPattern")]
         public string GlowRawPattern { get; set; }
+
         public Color GlowColor { get; set; }
         public bool RandomizeTime { get; set; }
         public bool KeepOnDead { get; set; }
@@ -122,10 +121,10 @@ namespace EECustom.Customizations.Models
 
         public PatternDataCache[] CachePattern()
         {
-            List<PatternDataCache> cacheList = new List<PatternDataCache>();
+            List<PatternDataCache> cacheList = new();
             PatternDataCache currentCache = default;
 
-            foreach(var c in GlowRawPattern)
+            foreach (var c in GlowRawPattern)
             {
                 var progressionValue = c switch
                 {

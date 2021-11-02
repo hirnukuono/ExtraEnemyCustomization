@@ -3,7 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using UnityEngine;
 
-namespace EECustom.Utils
+namespace EECustom.Utils.JsonConverters
 {
     public class ColorConverter : JsonConverter<Color>
     {
@@ -17,14 +17,16 @@ namespace EECustom.Utils
         public override Color Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             var color = new Color();
+            float multiplier = 1.0f;
 
             switch (reader.TokenType)
             {
                 case JsonTokenType.StartObject:
+
                     while (reader.Read())
                     {
                         if (reader.TokenType == JsonTokenType.EndObject)
-                            return color;
+                            return color * multiplier;
 
                         if (reader.TokenType != JsonTokenType.PropertyName)
                             throw new JsonException("Expected PropertyName token");
@@ -49,20 +51,43 @@ namespace EECustom.Utils
                             case "a":
                                 color.a = reader.GetSingle();
                                 break;
+
+                            case "multiplier":
+                                multiplier = reader.GetSingle();
+                                break;
                         }
                     }
                     throw new JsonException("Expected EndObject token");
 
                 case JsonTokenType.String:
                     var strValue = reader.GetString().Trim();
-                    if (ColorUtility.TryParseHtmlString(strValue, out color))
+                    var strValues = strValue.Split("*");
+                    string formatString;
+
+                    switch (strValues.Length)
                     {
-                        return color;
+                        case 1:
+                            multiplier = 1.0f;
+                            formatString = strValues[0].Trim();
+                            break;
+
+                        case 2:
+                            if (!float.TryParse(strValues[1].Trim(), out multiplier))
+                                throw new JsonException($"Color multiplier is not valid number! (*): {strValue}");
+                            formatString = strValues[0].Trim();
+                            break;
+
+                        default:
+                            throw new JsonException($"Color format has more than two Mutiplier (*): {strValue}");
+                    }
+                    if (ColorUtility.TryParseHtmlString(formatString, out color))
+                    {
+                        return color * multiplier;
                     }
 
                     if (TryParseColor(strValue, out color))
                     {
-                        return color;
+                        return color * multiplier;
                     }
                     throw new JsonException($"Color format is not right: {strValue}");
 

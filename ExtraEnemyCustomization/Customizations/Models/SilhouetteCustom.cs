@@ -1,11 +1,8 @@
 ﻿using AssetShards;
 using EECustom.Customizations.Models.Handlers;
-using EECustom.Events;
 using EECustom.Extensions;
 using Enemies;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -23,8 +20,8 @@ namespace EECustom.Customizations.Models
         public bool KeepOnDead { get; set; } = false;
         public float DeadEffectDelay { get; set; } = 0.75f;
 
-        private static bool _MaterialCached = false;
-        private static Material _SilhouetteMaterial;
+        private static bool _materialCached = false;
+        private static Material _silhouetteMaterial;
 
         public override string GetProcessName()
         {
@@ -33,13 +30,13 @@ namespace EECustom.Customizations.Models
 
         public void OnPrefabBuilt(EnemyAgent agent)
         {
-            if (!_MaterialCached)
+            if (!_materialCached)
             {
                 var playerPrefab = AssetShardManager.s_loadedAssetsLookup[PlayerPrefabPath.ToUpper()].Cast<GameObject>();
                 var playerGhost = playerPrefab.FindChild(PlayerGhostName);
                 var playerGhostRenderer = playerGhost.GetComponent<SkinnedMeshRenderer>();
-                _SilhouetteMaterial = playerGhostRenderer.material;
-                _MaterialCached = true;
+                _silhouetteMaterial = playerGhostRenderer.material;
+                _materialCached = true;
             }
 
             var renderers = agent.GetComponentsInChildren<Renderer>(true);
@@ -73,7 +70,7 @@ namespace EECustom.Customizations.Models
 
                 void RemoveFromRendererMatRef(MaterialRef matRef)
                 {
-                    foreach(var renderer in matRef.m_renderers)
+                    foreach (var renderer in matRef.m_renderers)
                     {
                         RemoveFromRenderer(renderer);
                     }
@@ -89,8 +86,7 @@ namespace EECustom.Customizations.Models
                 }
             }
 
-            
-            foreach(var renderer in rendererList)
+            foreach (var renderer in rendererList)
             {
                 Logger.Verbose($"Silhouette Object Found! : {renderer.name}");
 
@@ -100,7 +96,7 @@ namespace EECustom.Customizations.Models
 
                 _ = enemyGhost.AddComponent<EnemySilhouette>();
                 var newRenderer = enemyGhost.GetComponent<Renderer>();
-                newRenderer.material = _SilhouetteMaterial;
+                newRenderer.material = _silhouetteMaterial;
                 newRenderer.material.SetVector("_ColorA", Color.clear);
                 newRenderer.material.SetVector("_ColorB", Color.clear);
                 newRenderer.lightProbeUsage = LightProbeUsage.BlendProbes;
@@ -111,12 +107,12 @@ namespace EECustom.Customizations.Models
         public void OnSpawned(EnemyAgent agent)
         {
             var silManager = agent.gameObject.AddComponent<SilhouetteHandler>();
-            silManager._Agent = agent;
-            silManager._DefaultColor = DefaultColor;
-            silManager._RequireTag = RequireTag;
-            silManager._ReplaceColorWithMarker = ReplaceColorWithMarker;
-            silManager._KeepOnDead = KeepOnDead;
-            silManager._DeadEffectDelay = DeadEffectDelay;
+            silManager.OwnerAgent = agent;
+            silManager.DefaultColor = DefaultColor;
+            silManager.RequireTag = RequireTag;
+            silManager.ReplaceColorWithMarker = ReplaceColorWithMarker;
+            silManager.KeepOnDead = KeepOnDead;
+            silManager.DeadEffectDelay = DeadEffectDelay;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AIGraph;
 using EECustom.CustomSettings.DTO;
 using EECustom.Events;
+using EECustom.Extensions;
 using Enemies;
 using GameData;
 using LevelGeneration;
@@ -12,19 +13,19 @@ namespace EECustom.CustomSettings
 {
     public static class CustomScoutWaveManager
     {
-        private static readonly System.Random _Random = new System.Random();
-        private static readonly List<ExpeditionScoutSetting> _ScoutSettings = new List<ExpeditionScoutSetting>();
-        private static readonly List<ScoutSettingCache> _ActiveScoutSettings = new List<ScoutSettingCache>();
-        private static readonly Dictionary<string, ScoutTargetSetting> _TargetSettingDict = new Dictionary<string, ScoutTargetSetting>();
-        private static readonly Dictionary<string, ScoutWaveSetting> _WaveSettingDict = new Dictionary<string, ScoutWaveSetting>();
+        private static readonly Random _random = new();
+        private static readonly List<ExpeditionScoutSetting> _scoutSettings = new();
+        private static readonly List<ScoutSettingCache> _activeScoutSettings = new();
+        private static readonly Dictionary<string, ScoutTargetSetting> _targetSettingDict = new();
+        private static readonly Dictionary<string, ScoutWaveSetting> _waveSettingDict = new();
 
-        private static string _PreviousExpKey = string.Empty;
-        private static ExpeditionData _PreviousExpData = null;
-        private static uint _DefaultWaveSettingID;
-        private static uint _DefaultWavePopulationID;
-        private static eRundownTier _CurrentExpeditionTier;
-        private static int _CurrentExpeditionIndex;
-        private static bool _IsDefaultSettingBlocked = false;
+        private static string _previousExpKey = string.Empty;
+        private static ExpeditionData _previousExpData = null;
+        private static uint _defaultWaveSettingID;
+        private static uint _defaultWavePopulationID;
+        private static eRundownTier _currentExpeditionTier;
+        private static int _currentExpeditionIndex;
+        private static bool _isDefaultSettingBlocked = false;
 
         static CustomScoutWaveManager()
         {
@@ -41,11 +42,11 @@ namespace EECustom.CustomSettings
                 return;
             }
 
-            if (rawKey.Equals(_PreviousExpKey))
+            if (rawKey.Equals(_previousExpKey))
             {
                 return;
             }
-            _PreviousExpKey = rawKey;
+            _previousExpKey = rawKey;
 
             var split = rawKey.Split("_");
             if (split.Length != 4)
@@ -71,26 +72,26 @@ namespace EECustom.CustomSettings
 
         public static void ExpeditionUpdate(eRundownTier tier, int expIndex, ExpeditionInTierData inTierData)
         {
-            _IsDefaultSettingBlocked = false;
+            _isDefaultSettingBlocked = false;
 
             //Revert Previous Expedition Data
-            if (_PreviousExpData != null)
+            if (_previousExpData != null)
             {
-                _PreviousExpData.ScoutWaveSettings = _DefaultWaveSettingID;
-                _PreviousExpData.ScoutWavePopulation = _DefaultWavePopulationID;
+                _previousExpData.ScoutWaveSettings = _defaultWaveSettingID;
+                _previousExpData.ScoutWavePopulation = _defaultWavePopulationID;
             }
 
-            _PreviousExpData = inTierData.Expedition;
-            _DefaultWaveSettingID = _PreviousExpData.ScoutWaveSettings;
-            _DefaultWavePopulationID = _PreviousExpData.ScoutWavePopulation;
+            _previousExpData = inTierData.Expedition;
+            _defaultWaveSettingID = _previousExpData.ScoutWaveSettings;
+            _defaultWavePopulationID = _previousExpData.ScoutWavePopulation;
 
-            _CurrentExpeditionTier = tier;
-            _CurrentExpeditionIndex = expIndex;
+            _currentExpeditionTier = tier;
+            _currentExpeditionIndex = expIndex;
 
-            _ActiveScoutSettings.Clear();
-            foreach (var setting in _ScoutSettings)
+            _activeScoutSettings.Clear();
+            foreach (var setting in _scoutSettings)
             {
-                if (!setting.IsMatch(_CurrentExpeditionTier, _CurrentExpeditionIndex))
+                if (!setting.IsMatch(_currentExpeditionTier, _currentExpeditionIndex))
                     continue;
 
                 foreach (var scoutSetting in setting.ScoutSettings)
@@ -109,15 +110,15 @@ namespace EECustom.CustomSettings
                         TargetSetting = targetSetting,
                         WaveSetting = waveSetting
                     };
-                    _ActiveScoutSettings.Add(settingCache);
+                    _activeScoutSettings.Add(settingCache);
                 }
             }
 
-            if (_ActiveScoutSettings.Count > 0)
+            if (_activeScoutSettings.Count > 0)
             {
-                _PreviousExpData.ScoutWaveSettings = 0u;
-                _PreviousExpData.ScoutWavePopulation = 0u;
-                _IsDefaultSettingBlocked = true;
+                _previousExpData.ScoutWaveSettings = 0u;
+                _previousExpData.ScoutWavePopulation = 0u;
+                _isDefaultSettingBlocked = true;
             }
         }
 
@@ -129,7 +130,7 @@ namespace EECustom.CustomSettings
 
         public static void AddScoutSetting(ExpeditionScoutSetting scoutSetting)
         {
-            _ScoutSettings.Add(scoutSetting);
+            _scoutSettings.Add(scoutSetting);
         }
 
         public static void AddWaveSetting(params ScoutWaveSetting[] waveSettings)
@@ -141,17 +142,17 @@ namespace EECustom.CustomSettings
         public static void AddWaveSetting(ScoutWaveSetting waveSetting)
         {
             var key = waveSetting.Name.ToLower();
-            if (!_WaveSettingDict.ContainsKey(key))
+            if (!_waveSettingDict.ContainsKey(key))
             {
-                _WaveSettingDict.Add(key, waveSetting);
+                _waveSettingDict.Add(key, waveSetting);
             }
         }
 
         public static ScoutWaveSetting GetWaveSetting(string name)
         {
             var key = name.ToLower();
-            if (_WaveSettingDict.ContainsKey(key))
-                return _WaveSettingDict[key];
+            if (_waveSettingDict.ContainsKey(key))
+                return _waveSettingDict[key];
             else
                 return null;
         }
@@ -165,34 +166,34 @@ namespace EECustom.CustomSettings
         public static void AddTargetSetting(ScoutTargetSetting targetSetting)
         {
             var key = targetSetting.Name.ToLower();
-            if (!_TargetSettingDict.ContainsKey(key))
+            if (!_targetSettingDict.ContainsKey(key))
             {
-                _TargetSettingDict.Add(key, targetSetting);
+                _targetSettingDict.Add(key, targetSetting);
             }
         }
 
         public static ScoutTargetSetting GetTargetSetting(string name)
         {
             var key = name.ToLower();
-            if (_TargetSettingDict.ContainsKey(key))
-                return _TargetSettingDict[key];
+            if (_targetSettingDict.ContainsKey(key))
+                return _targetSettingDict[key];
             else
                 return null;
         }
 
         public static void TriggerScoutWave(EnemyAgent scoutAgent)
         {
-            if (!_IsDefaultSettingBlocked)
+            if (!_isDefaultSettingBlocked)
                 return;
 
             bool triggeredAny = false;
-            List<ushort> stopOnDeathWaves = new List<ushort>();
-            foreach (var scoutSetting in _ActiveScoutSettings)
+            List<ushort> stopOnDeathWaves = new();
+            foreach (var scoutSetting in _activeScoutSettings)
             {
                 var targetSetting = scoutSetting.TargetSetting;
                 var waveSetting = scoutSetting.WaveSetting;
 
-                if (!targetSetting.Target.IsMatch(scoutAgent))
+                if (!targetSetting.Target.IsMatch(scoutAgent.EnemyDataID))
                     continue;
 
                 if (waveSetting.Waves.GetLength(0) <= 0)
@@ -232,7 +233,7 @@ namespace EECustom.CustomSettings
                 if (stopOnDeathWaves.Count <= 0)
                     return;
 
-                scoutAgent.add_OnDeadCallback(new Action(() =>
+                scoutAgent.AddOnDeadOnce(() =>
                 {
                     foreach (var waveid in stopOnDeathWaves)
                     {
@@ -241,7 +242,7 @@ namespace EECustom.CustomSettings
                             e.StopEvent();
                         }
                     }
-                }));
+                });
             }
             else
             {
@@ -263,7 +264,7 @@ namespace EECustom.CustomSettings
             var weightsTotal = weightValues.Sum();
             if (weightsTotal <= 0.0f)
             {
-                return _Random.Next(0, weights.Length);
+                return _random.Next(0, weights.Length);
             }
 
             var accumulatedWeight = 0.0f;
@@ -279,7 +280,7 @@ namespace EECustom.CustomSettings
                 weightValues[i] = accumulatedWeight;
             }
 
-            var randValue = (float)_Random.NextDouble() * weightsTotal;
+            var randValue = (float)_random.NextDouble() * weightsTotal;
             for (int i = 0; i < weightValues.Length; i++)
             {
                 if (weightValues[i] >= randValue)
@@ -348,8 +349,8 @@ namespace EECustom.CustomSettings
             Logger.Debug("Can't found good setting for scout, Spawning Default");
             Mastermind.Current.TriggerSurvivalWave(
                     refNode: sourceNode,
-                    settingsID: _DefaultWaveSettingID,
-                    populationDataID: _DefaultWavePopulationID,
+                    settingsID: _defaultWaveSettingID,
+                    populationDataID: _defaultWavePopulationID,
                     eventID: out _,
                     spawnType: SurvivalWaveSpawnType.InRelationToClosestAlivePlayer,
                     spawnDelay: 0.0f,

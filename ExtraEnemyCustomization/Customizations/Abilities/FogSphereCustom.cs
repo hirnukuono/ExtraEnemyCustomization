@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using EECustom.Customizations.Shared;
+﻿using EECustom.Customizations.Shared;
 using EECustom.Extensions;
 using EECustom.Utils;
 using Enemies;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace EECustom.Customizations.Abilities
@@ -20,10 +20,10 @@ namespace EECustom.Customizations.Abilities
         public float DensityAmountMin { get; set; } = 0.0f;
         public float DensityAmountMax { get; set; } = 5.0f;
         public float Duration { get; set; } = 30.0f;
-        public EffectVolumeSetting EffectVolume { get; set; } = new EffectVolumeSetting();
+        public EffectVolumeSetting EffectVolume { get; set; } = new();
 
-        private readonly List<(EAB_FogSphere fogEab, GameObject originalPrefab)> _ChangedList = new List<(EAB_FogSphere, GameObject)>();
-        
+        private readonly List<(EAB_FogSphere fogEab, GameObject originalPrefab)> _changedList = new();
+
         public override string GetProcessName()
         {
             return "FogSphere";
@@ -55,7 +55,7 @@ namespace EECustom.Customizations.Abilities
                 fogHandler.m_totalLength = Duration;
 
                 eabFog.m_fogSpherePrefab = newFogPrefab;
-                _ChangedList.Add((eabFog, fogPrefab));
+                _changedList.Add((eabFog, fogPrefab));
             }
         }
 

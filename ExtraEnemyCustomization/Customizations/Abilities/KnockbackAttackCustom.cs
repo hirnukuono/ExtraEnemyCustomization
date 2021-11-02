@@ -1,20 +1,15 @@
 ﻿using Agents;
 using EECustom.Events;
-using EECustom.Utils;
 using Enemies;
 using Player;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace EECustom.Customizations.Abilities
 {
-    public class KnockbackAttackCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyDespawnedEvent
+    public class KnockbackAttackCustom : EnemyCustomBase
     {
-        public KnockbackData MeleeData { get; set; } = new KnockbackData();
-        public KnockbackData TentacleData { get; set; } = new KnockbackData();
-
-        private readonly List<ushort> _EnemyList = new List<ushort>();
+        public KnockbackData MeleeData { get; set; } = new();
+        public KnockbackData TentacleData { get; set; } = new();
 
         public override string GetProcessName()
         {
@@ -23,30 +18,13 @@ namespace EECustom.Customizations.Abilities
 
         public override void OnConfigLoaded()
         {
-            PlayerDamageEvents.OnMeleeDamage += OnMelee;
-            PlayerDamageEvents.OnTentacleDamage += OnTentacle;
-        }
-
-        public void OnSpawned(EnemyAgent agent)
-        {
-            var id = agent.GlobalID;
-            if (id == ushort.MaxValue)
-                return;
-
-            if (!_EnemyList.Contains(id))
-            {
-                _EnemyList.Add(id);
-            }
-        }
-
-        public void OnDespawned(EnemyAgent agent)
-        {
-            _EnemyList.Remove(agent.GlobalID);
+            LocalPlayerDamageEvents.OnMeleeDamage += OnMelee;
+            LocalPlayerDamageEvents.OnTentacleDamage += OnTentacle;
         }
 
         public void OnMelee(PlayerAgent player, Agent inflictor, float damage)
         {
-            if (_EnemyList.Contains(inflictor.GlobalID))
+            if (IsTarget(inflictor.GlobalID))
             {
                 var enemyAgent = inflictor.TryCast<EnemyAgent>();
                 if (enemyAgent != null)
@@ -56,7 +34,7 @@ namespace EECustom.Customizations.Abilities
 
         public void OnTentacle(PlayerAgent player, Agent inflictor, float damage)
         {
-            if (_EnemyList.Contains(inflictor.GlobalID))
+            if (IsTarget(inflictor.GlobalID))
             {
                 var enemyAgent = inflictor.TryCast<EnemyAgent>();
                 if (enemyAgent != null)

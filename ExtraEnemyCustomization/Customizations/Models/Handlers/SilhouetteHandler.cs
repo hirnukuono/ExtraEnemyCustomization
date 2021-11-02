@@ -2,8 +2,6 @@
 using EECustom.Events;
 using Enemies;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -14,17 +12,17 @@ namespace EECustom.Customizations.Models.Handlers
     {
         public Material SilhouetteMaterial;
 
-        private Color _LatestColorB = Color.clear;
+        private Color _latestColorB = Color.clear;
 
         public EnemySilhouette(IntPtr ptr) : base(ptr)
         {
-
         }
 
         public void EnableSilhouette()
         {
-            SetColorB(_LatestColorB);
+            SetColorB(_latestColorB);
         }
+
         public void DisableSilhouette()
         {
             SetColorB(Color.clear);
@@ -38,34 +36,32 @@ namespace EECustom.Customizations.Models.Handlers
         public void SetColorB(Color color)
         {
             SilhouetteMaterial.SetVector("_ColorB", color);
-            _LatestColorB = color;
+            _latestColorB = color;
         }
     }
 
     [InjectToIl2Cpp]
     public class SilhouetteHandler : MonoBehaviour
     {
-        public EnemyAgent _Agent;
-        public Color _DefaultColor;
-        public bool _RequireTag;
-        public bool _ReplaceColorWithMarker;
-        public bool _KeepOnDead;
-        public float _DeadEffectDelay;
+        public EnemyAgent OwnerAgent;
+        public Color DefaultColor;
+        public bool RequireTag;
+        public bool ReplaceColorWithMarker;
+        public bool KeepOnDead;
+        public float DeadEffectDelay;
 
-        private bool tagUpdateDone = true;
-        private NavMarker enemyMarker = null;
-        private EnemySilhouette[] silhouettes = null;
+        private bool _tagUpdateDone = true;
+        private NavMarker _enemyMarker = null;
+        private EnemySilhouette[] _silhouettes = null;
 
         public SilhouetteHandler(IntPtr ptr) : base(ptr)
         {
-
         }
 
         internal void Start()
         {
-            
-            silhouettes = GetComponentsInChildren<EnemySilhouette>(true);
-            foreach (var sil in silhouettes)
+            _silhouettes = GetComponentsInChildren<EnemySilhouette>(true);
+            foreach (var sil in _silhouettes)
             {
                 var renderer = sil.GetComponent<Renderer>();
                 sil.SilhouetteMaterial = renderer.material;
@@ -75,57 +71,57 @@ namespace EECustom.Customizations.Models.Handlers
                     renderer.forceRenderingOff = false;
                     renderer.shadowCastingMode = ShadowCastingMode.Off;
 
-                    var culler = _Agent.MovingCuller.Culler;
+                    var culler = OwnerAgent.MovingCuller.Culler;
                     culler.Renderers.Add(renderer);
                     renderer.enabled = true;
                 }
             }
 
-            if (_RequireTag || _ReplaceColorWithMarker)
+            if (RequireTag || ReplaceColorWithMarker)
             {
-                EnemyMarkerEvents.RegisterOnMarked(_Agent, OnMarked);
+                EnemyMarkerEvents.RegisterOnMarked(OwnerAgent, OnMarked);
             }
-            
-            if (!_RequireTag)
+
+            if (!RequireTag)
             {
-                SetColorB(_DefaultColor);
+                SetColorB(DefaultColor);
                 Show();
             }
         }
 
         internal void Update()
         {
-            if (!_Agent.Alive)
+            if (!OwnerAgent.Alive)
             {
-                if (!_KeepOnDead)
+                if (!KeepOnDead)
                 {
-                    KillSilhouette(_DeadEffectDelay);
+                    KillSilhouette(DeadEffectDelay);
                     enabled = false;
                 }
             }
 
-            if (!tagUpdateDone)
+            if (!_tagUpdateDone)
             {
-                if (!_Agent.IsTagged)
+                if (!OwnerAgent.IsTagged)
                 {
-                    if (_RequireTag)
+                    if (RequireTag)
                     {
                         Hide();
                     }
 
-                    tagUpdateDone = true;
+                    _tagUpdateDone = true;
                 }
 
-                var alpha = enemyMarker?.m_enemySubObj?.m_sprites?[0]?.color.a ?? 0.0f;
-                var tagColor = enemyMarker?.m_enemySubObj?.m_sprites?[0]?.color ?? _DefaultColor;
-                if (_RequireTag)
+                var alpha = _enemyMarker?.m_enemySubObj?.m_sprites?[0]?.color.a ?? 0.0f;
+                var tagColor = _enemyMarker?.m_enemySubObj?.m_sprites?[0]?.color ?? DefaultColor;
+                if (RequireTag)
                 {
-                    var newColor = _ReplaceColorWithMarker ? tagColor.AlphaMultiplied(alpha) : _DefaultColor.AlphaMultiplied(alpha);
+                    var newColor = ReplaceColorWithMarker ? tagColor.AlphaMultiplied(alpha) : DefaultColor.AlphaMultiplied(alpha);
                     SetColorB(newColor);
                 }
                 else
                 {
-                    var newColor = Color.Lerp(_DefaultColor, tagColor, alpha);
+                    var newColor = Color.Lerp(DefaultColor, tagColor, alpha);
                     SetColorB(newColor);
                 }
             }
@@ -133,10 +129,10 @@ namespace EECustom.Customizations.Models.Handlers
 
         public void OnMarked(EnemyAgent agent, NavMarker marker)
         {
-            enemyMarker = marker;
-            tagUpdateDone = false;
+            _enemyMarker = marker;
+            _tagUpdateDone = false;
 
-            if (_RequireTag)
+            if (RequireTag)
             {
                 Show();
             }
@@ -144,41 +140,41 @@ namespace EECustom.Customizations.Models.Handlers
 
         public void KillSilhouette(float delay)
         {
-            for (int i = 0; i < silhouettes.Length; i++)
+            for (int i = 0; i < _silhouettes.Length; i++)
             {
-                CoroutineManager.BlinkOut(silhouettes[i].gameObject, delay);
+                CoroutineManager.BlinkOut(_silhouettes[i].gameObject, delay);
             }
         }
 
         public void Show()
         {
-            for (int i = 0; i < silhouettes.Length; i++)
+            for (int i = 0; i < _silhouettes.Length; i++)
             {
-                silhouettes[i].EnableSilhouette();
+                _silhouettes[i].EnableSilhouette();
             }
         }
 
         public void Hide()
         {
-            for (int i = 0; i < silhouettes.Length; i++)
+            for (int i = 0; i < _silhouettes.Length; i++)
             {
-                silhouettes[i].DisableSilhouette();
+                _silhouettes[i].DisableSilhouette();
             }
         }
 
         public void SetColorA(Color color)
         {
-            for (int i = 0; i < silhouettes.Length; i++)
+            for (int i = 0; i < _silhouettes.Length; i++)
             {
-                silhouettes[i].SetColorA(color);
+                _silhouettes[i].SetColorA(color);
             }
         }
 
         public void SetColorB(Color color)
         {
-            for (int i = 0; i < silhouettes.Length; i++)
+            for (int i = 0; i < _silhouettes.Length; i++)
             {
-                silhouettes[i].SetColorB(color);
+                _silhouettes[i].SetColorB(color);
             }
         }
     }

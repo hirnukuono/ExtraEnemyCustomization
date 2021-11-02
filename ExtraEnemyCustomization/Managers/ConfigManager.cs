@@ -3,6 +3,7 @@ using EECustom.Configs.Customizations;
 using EECustom.Customizations;
 using EECustom.CustomSettings;
 using EECustom.Utils;
+using EECustom.Utils.Integrations;
 using Enemies;
 using System;
 using System.Collections.Generic;
@@ -10,11 +11,11 @@ using System.IO;
 
 namespace EECustom.Managers
 {
-    public class ConfigManager
+    public partial class ConfigManager
     {
         public static string BasePath { get; private set; }
 
-        public static void Initialize()
+        internal static void Initialize()
         {
             Current = new ConfigManager();
 
@@ -76,7 +77,7 @@ namespace EECustom.Managers
             Current.GenerateBuffer();
         }
 
-        public static bool TryLoadConfig<T>(string basePath, string fileName, out T config)
+        internal static bool TryLoadConfig<T>(string basePath, string fileName, out T config)
         {
             var path = Path.Combine(basePath, fileName);
             if (File.Exists(path))
@@ -103,78 +104,40 @@ namespace EECustom.Managers
 
         public static ConfigManager Current { get; private set; }
 
-        public CategoryConfig Categories { get; private set; } = new CategoryConfig();
-        public ModelCustomConfig ModelCustom { get; private set; } = new ModelCustomConfig();
-        public AbilityCustomConfig AbilityCustom { get; private set; } = new AbilityCustomConfig();
-        public ProjectileCustomConfig ProjectileCustom { get; private set; } = new ProjectileCustomConfig();
-        public TentacleCustomConfig TentacleCustom { get; private set; } = new TentacleCustomConfig();
-        public DetectionCustomConfig DetectionCustom { get; private set; } = new DetectionCustomConfig();
-        public SpawnCostCustomConfig SpawnCostCustom { get; private set; } = new SpawnCostCustomConfig();
+        public CategoryConfig Categories { get; private set; } = new();
+        public ModelCustomConfig ModelCustom { get; private set; } = new();
+        public AbilityCustomConfig AbilityCustom { get; private set; } = new();
+        public ProjectileCustomConfig ProjectileCustom { get; private set; } = new();
+        public TentacleCustomConfig TentacleCustom { get; private set; } = new();
+        public DetectionCustomConfig DetectionCustom { get; private set; } = new();
+        public SpawnCostCustomConfig SpawnCostCustom { get; private set; } = new();
 
-        private readonly List<EnemyCustomBase> _CustomizationBuffer = new List<EnemyCustomBase>();
+        private readonly List<EnemyCustomBase> _customizationBuffer = new();
 
         private void GenerateBuffer()
         {
-            _CustomizationBuffer.Clear();
-            _CustomizationBuffer.AddRange(ModelCustom.GetAllSettings());
-            _CustomizationBuffer.AddRange(AbilityCustom.GetAllSettings());
-            _CustomizationBuffer.AddRange(ProjectileCustom.GetAllSettings());
-            _CustomizationBuffer.AddRange(TentacleCustom.GetAllSettings());
-            _CustomizationBuffer.AddRange(DetectionCustom.GetAllSettings());
-            _CustomizationBuffer.AddRange(SpawnCostCustom.GetAllSettings());
-            foreach (var custom in _CustomizationBuffer)
+            _customizationBuffer.Clear();
+            _customizationBuffer.AddRange(ModelCustom.GetAllSettings());
+            _customizationBuffer.AddRange(AbilityCustom.GetAllSettings());
+            _customizationBuffer.AddRange(ProjectileCustom.GetAllSettings());
+            _customizationBuffer.AddRange(TentacleCustom.GetAllSettings());
+            _customizationBuffer.AddRange(DetectionCustom.GetAllSettings());
+            _customizationBuffer.AddRange(SpawnCostCustom.GetAllSettings());
+            foreach (var custom in _customizationBuffer)
             {
                 custom.OnConfigLoaded();
                 custom.LogDev("Initialized:");
                 custom.LogVerbose(custom.Target.ToDebugString());
             }
+
+            GenerateEventBuffer();
         }
 
-        public void FirePrefabBuiltEvent(EnemyAgent agent)
+        internal void RegisterTargetLookup(EnemyAgent agent)
         {
-            foreach (var custom in _CustomizationBuffer)
+            foreach (var custom in _customizationBuffer)
             {
-                if (!custom.Enabled)
-                    continue;
-
-                if (custom is IEnemyPrefabBuiltEvent builtEvent && custom.Target.IsMatch(agent))
-                {
-                    custom.LogDev($"Apply PrefabBuilt Event: {agent.name}");
-                    builtEvent.OnPrefabBuilt(agent);
-                    custom.LogVerbose($"Finished!");
-                }
-            }
-        }
-
-        public void FireSpawnedEvent(EnemyAgent agent)
-        {
-            foreach (var custom in _CustomizationBuffer)
-            {
-                if (!custom.Enabled)
-                    continue;
-
-                if (custom is IEnemySpawnedEvent spawnedEvent && custom.Target.IsMatch(agent))
-                {
-                    custom.LogDev($"Apply Spawned Event: {agent.name}");
-                    spawnedEvent.OnSpawned(agent);
-                    custom.LogVerbose($"Finished!");
-                }
-            }
-        }
-
-        public void FireDespawnedEvent(EnemyAgent agent)
-        {
-            foreach (var custom in _CustomizationBuffer)
-            {
-                if (!custom.Enabled)
-                    continue;
-
-                if (custom is IEnemyDespawnedEvent despawnedEvent && custom.Target.IsMatch(agent))
-                {
-                    custom.LogDev($"Apply Despawned Event: {agent.name}");
-                    despawnedEvent.OnDespawned(agent);
-                    custom.LogVerbose($"Finished!");
-                }
+                custom.RegisterTargetLookup(agent);
             }
         }
     }

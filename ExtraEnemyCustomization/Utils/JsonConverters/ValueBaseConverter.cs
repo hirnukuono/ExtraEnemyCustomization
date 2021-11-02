@@ -3,7 +3,7 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace EECustom.Utils
+namespace EECustom.Utils.JsonConverters
 {
     public class ValueBaseConverter : JsonConverter<ValueBase>
     {
