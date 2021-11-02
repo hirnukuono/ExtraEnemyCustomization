@@ -25,8 +25,6 @@ namespace EECustom.Customizations.Abilities.Handlers
         private float _regenCapAbsValue = 0.0f;
         private float _regenAmountAbsValue = 0.0f;
 
-        private Action<EnemyAgent, Agent> _onDamageDel;
-
         public HealthRegenHandler(IntPtr ptr) : base(ptr)
         {
         }
@@ -38,19 +36,10 @@ namespace EECustom.Customizations.Abilities.Handlers
 
             if (!_alwaysRegen)
             {
-                //DamageBase.add_CallOnTakeDamage(new Action<float>(OnTakeDamage)); This doesn't work for some reason rofl
-                _onDamageDel = new Action<EnemyAgent, Agent>((EnemyAgent a1, Agent a2) =>
-                {
-                    if (a1.GlobalID == DamageBase.Owner.GlobalID)
-                    {
-                        OnTakeDamage();
-                    }
-                });
-
-                EnemyDamageEvents.OnDamage += _onDamageDel;
+                EnemyDamageEvents.Damage += OnTakeDamage;
                 DamageBase.Owner.AddOnDeadOnce(() =>
                 {
-                    EnemyDamageEvents.OnDamage -= _onDamageDel;
+                    EnemyDamageEvents.Damage -= OnTakeDamage;
                 });
             }
 
@@ -62,7 +51,7 @@ namespace EECustom.Customizations.Abilities.Handlers
 
             if (_alwaysRegen || _isDecay)
             {
-                OnTakeDamage();
+                OnTakeDamage(DamageBase.Owner, null, 0.0f);
             }
         }
 
@@ -115,8 +104,11 @@ namespace EECustom.Customizations.Abilities.Handlers
             }
         }
 
-        private void OnTakeDamage()
+        private void OnTakeDamage(EnemyAgent enemy, Agent inflictor, float damage)
         {
+            if (enemy.GlobalID != DamageBase.Owner.GlobalID)
+                return;
+
             _regenInitialTimer = Clock.Time + RegenData.DelayUntilRegenStart;
             _isRegening = true;
             _isInitialTimerDone = false;

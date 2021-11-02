@@ -25,13 +25,22 @@ namespace EECustom.Customizations.Abilities
 
         public override void OnConfigLoaded()
         {
-            LocalPlayerDamageEvents.OnMeleeDamage += OnMelee;
-            LocalPlayerDamageEvents.OnTentacleDamage += OnTentacle;
-            LevelEvents.OnBuildStart += OnBuildStart;
-            LevelEvents.OnLevelCleanup += OnLevelCleanup;
+            LocalPlayerDamageEvents.MeleeDamage += OnMelee;
+            LocalPlayerDamageEvents.TentacleDamage += OnTentacle;
+            LevelEvents.BuildStart += OnBuildStart;
+            LevelEvents.LevelCleanup += OnLevelCleanup;
 
             if (ConfigManager.Current.AbilityCustom.CanMediStopBleeding)
-                ResourcePackEvents.OnReceiveMedi += RecieveMedi;
+                ResourcePackEvents.ReceiveMedi += RecieveMedi;
+        }
+
+        public override void OnConfigUnloaded()
+        {
+            LocalPlayerDamageEvents.MeleeDamage -= OnMelee;
+            LocalPlayerDamageEvents.TentacleDamage -= OnTentacle;
+
+            if (ConfigManager.Current.AbilityCustom.CanMediStopBleeding)
+                ResourcePackEvents.ReceiveMedi -= RecieveMedi;
         }
 
         public void OnMelee(PlayerAgent player, Agent inflictor, float damage)
@@ -62,7 +71,7 @@ namespace EECustom.Customizations.Abilities
             }
         }
 
-        public void RecieveMedi(iResourcePackReceiver receiver)
+        public void RecieveMedi(iResourcePackReceiver receiver, float _)
         {
             var player = receiver.TryCast<PlayerAgent>();
             if (player != null && player.IsLocallyOwned)

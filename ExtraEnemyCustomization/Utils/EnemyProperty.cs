@@ -11,7 +11,7 @@ namespace EECustom.Utils
 
         static EnemyProperty()
         {
-            LevelEvents.OnLevelCleanup += OnLevelCleanup;
+            LevelEvents.LevelCleanup += OnLevelCleanup;
         }
 
         private static void OnLevelCleanup()

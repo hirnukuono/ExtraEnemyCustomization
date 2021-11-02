@@ -45,6 +45,11 @@ namespace EECustom.Customizations
             }
         }
 
+        internal void ClearTargetLookup()
+        {
+            _isTargetLookup.Clear();
+        }
+
         public bool IsTarget(EnemyAgent enemyAgent) => IsTarget(enemyAgent.GlobalID);
 
         public bool IsTarget(ushort id)

@@ -53,6 +53,7 @@ namespace EECustom.Customizations.Models.Handlers
         private bool _tagUpdateDone = true;
         private NavMarker _enemyMarker = null;
         private EnemySilhouette[] _silhouettes = null;
+        private bool _eventRegistered = false;
 
         public SilhouetteHandler(IntPtr ptr) : base(ptr)
         {
@@ -79,7 +80,8 @@ namespace EECustom.Customizations.Models.Handlers
 
             if (RequireTag || ReplaceColorWithMarker)
             {
-                EnemyMarkerEvents.RegisterOnMarked(OwnerAgent, OnMarked);
+                EnemyMarkerEvents.Marked += OnMarked;
+                _eventRegistered = true;
             }
 
             if (!RequireTag)
@@ -87,6 +89,12 @@ namespace EECustom.Customizations.Models.Handlers
                 SetColorB(DefaultColor);
                 Show();
             }
+        }
+
+        internal void OnDestroy()
+        {
+            if (_eventRegistered)
+                EnemyMarkerEvents.Marked -= OnMarked;
         }
 
         internal void Update()
@@ -129,6 +137,9 @@ namespace EECustom.Customizations.Models.Handlers
 
         public void OnMarked(EnemyAgent agent, NavMarker marker)
         {
+            if (agent.GlobalID != OwnerAgent.GlobalID)
+                return;
+
             _enemyMarker = marker;
             _tagUpdateDone = false;
 

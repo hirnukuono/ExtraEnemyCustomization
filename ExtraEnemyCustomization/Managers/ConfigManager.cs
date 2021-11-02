@@ -2,6 +2,7 @@
 using EECustom.Configs.Customizations;
 using EECustom.Customizations;
 using EECustom.CustomSettings;
+using EECustom.Events;
 using EECustom.Utils;
 using EECustom.Utils.Integrations;
 using Enemies;
@@ -18,10 +19,23 @@ namespace EECustom.Managers
 
         internal static void Initialize()
         {
+            LevelEvents.LevelCleanup += ClearTargetLookup;
+
             Current = new ConfigManager();
 
             LoadConfigs();
             Current.GenerateBuffer();
+        }
+
+        private static void ClearTargetLookup()
+        {
+            if (Current == null)
+                return;
+
+            foreach (var custom in Current._customizationBuffer)
+            {
+                custom.ClearTargetLookup();
+            }
         }
 
         public static void ReloadConfig()

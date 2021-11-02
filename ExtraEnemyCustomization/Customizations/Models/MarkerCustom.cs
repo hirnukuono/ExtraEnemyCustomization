@@ -53,18 +53,26 @@ namespace EECustom.Customizations.Models
                 if (!SpriteManager.TryGetSpriteCache(SpriteName, 64.0f, out _sprite))
                     _sprite = SpriteManager.GenerateSprite(SpriteName);
             }
+
+            EnemyMarkerEvents.Marked += OnMarked;
+        }
+
+        public override void OnConfigUnloaded()
+        {
+            EnemyMarkerEvents.Marked -= OnMarked;
         }
 
         public void OnSpawned(EnemyAgent agent)
         {
             if (AllowMarkingOnHibernate)
                 agent.ScannerData.m_soundIndex = 0; //I know... this is such a weird way to do it...
-
-            EnemyMarkerEvents.RegisterOnMarked(agent, OnMarked);
         }
 
         private void OnMarked(EnemyAgent agent, NavMarker marker)
         {
+            if (!IsTarget(agent))
+                return;
+
             marker.m_enemySubObj.SetColor(MarkerColor);
             //marker.SetTitle("wew");
             //marker.SetVisualStates(NavMarkerOption.Enemy | NavMarkerOption.Title, NavMarkerOption.Enemy | NavMarkerOption.Title, NavMarkerOption.Empty, NavMarkerOption.Empty);

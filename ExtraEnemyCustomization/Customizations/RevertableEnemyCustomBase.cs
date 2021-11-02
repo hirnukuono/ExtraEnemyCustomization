@@ -19,6 +19,13 @@ namespace EECustom.Customizations
                 var action = _revertDelegates.Pop();
                 action?.Invoke();
             }
+
+            OnConfigUnloadedPost();
+        }
+
+        public virtual void OnConfigUnloadedPost()
+        {
+
         }
     }
 }

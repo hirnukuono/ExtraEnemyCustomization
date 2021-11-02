@@ -11,7 +11,7 @@ namespace EECustom.Events.Inject
         {
             if (spawnData.owner.TryGet(out var owner))
             {
-                ScoutAntennaSpawnEvent.OnDetectionSpawn?.Invoke(owner, __instance);
+                ScoutAntennaSpawnEvent.OnDetectionSpawn(owner, __instance);
             }
         }
     }

@@ -11,7 +11,7 @@ namespace EECustom.Events.Inject
         [HarmonyPatch(nameof(Builder.Build))]
         public static void Pre_BuildStart()
         {
-            LevelEvents.OnBuildStart?.Invoke();
+            LevelEvents.OnBuildStart();
         }
 
         [HarmonyPostfix]
@@ -19,7 +19,7 @@ namespace EECustom.Events.Inject
         [HarmonyPatch(nameof(Builder.OnFactoryDone))]
         public static void Post_BuildDone()
         {
-            LevelEvents.OnBuildDone?.Invoke();
+            LevelEvents.OnBuildDone();
         }
 
         [HarmonyPostfix]
@@ -27,7 +27,7 @@ namespace EECustom.Events.Inject
         [HarmonyPatch(nameof(Builder.OnLevelCleanup))]
         public static void Post_LevelCleanup()
         {
-            LevelEvents.OnLevelCleanup?.Invoke();
+            LevelEvents.OnLevelCleanup();
         }
     }
 }

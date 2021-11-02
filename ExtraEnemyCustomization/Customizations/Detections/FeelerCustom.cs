@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace EECustom.Customizations.Detections
 {
-    public class FeelerCustom : EnemyCustomBase, IEnemySpawnedEvent
+    public class FeelerCustom : EnemyCustomBase
     {
         public ValueBase TendrilCount { get; set; } = ValueBase.Unchanged;
         public float TendrilAngleOffset { get; set; } = 0.0f;
@@ -28,31 +28,23 @@ namespace EECustom.Customizations.Detections
             return "Feeler";
         }
 
-        public void OnSpawned(EnemyAgent agent)
+        public override void OnConfigLoaded()
         {
-            var onDetectionSpawn = new Action<EnemyAgent, ScoutAntennaDetection>((EnemyAgent eventAgent, ScoutAntennaDetection detection) =>
-            {
-                if (eventAgent.GlobalID == agent.GlobalID)
-                    OnDetectionSpawn(eventAgent, detection);
-            });
-
-            var onAntennaSpawn = new Action<EnemyAgent, ScoutAntennaDetection, ScoutAntenna>((EnemyAgent eventAgent, ScoutAntennaDetection detection, ScoutAntenna ant) =>
-            {
-                if (eventAgent.GlobalID == agent.GlobalID)
-                    OnAntennaSpawn(eventAgent, detection, ant);
-            });
-
-            ScoutAntennaSpawnEvent.OnDetectionSpawn += onDetectionSpawn;
-            ScoutAntennaSpawnEvent.OnAntennaSpawn += onAntennaSpawn;
-            agent.AddOnDeadOnce(() =>
-            {
-                ScoutAntennaSpawnEvent.OnDetectionSpawn -= onDetectionSpawn;
-                ScoutAntennaSpawnEvent.OnAntennaSpawn -= onAntennaSpawn;
-            });
+            ScoutAntennaSpawnEvent.DetectionSpawn += OnDetectionSpawn;
+            ScoutAntennaSpawnEvent.AntennaSpawn += OnAntennaSpawn;
         }
 
-        private void OnDetectionSpawn(EnemyAgent _, ScoutAntennaDetection detection)
+        public override void OnConfigUnloaded()
         {
+            ScoutAntennaSpawnEvent.DetectionSpawn -= OnDetectionSpawn;
+            ScoutAntennaSpawnEvent.AntennaSpawn -= OnAntennaSpawn;
+        }
+
+        private void OnDetectionSpawn(EnemyAgent agent, ScoutAntennaDetection detection)
+        {
+            if (!IsTarget(agent))
+                return;
+
             detection.m_tendrilCount = TendrilCount.GetAbsValue(detection.m_tendrilCount);
             detection.m_dirAngOffset = TendrilAngleOffset;
             detection.m_dirAngStep = TendrilStepAngle.GetAbsValue(detection.m_dirAngStep);
@@ -61,8 +53,11 @@ namespace EECustom.Customizations.Detections
             detection.m_timerWaitOut = TendrilOutTimer.GetAbsValue(detection.m_timerWaitOut);
         }
 
-        private void OnAntennaSpawn(EnemyAgent _, ScoutAntennaDetection _1, ScoutAntenna ant)
+        private void OnAntennaSpawn(EnemyAgent agent, ScoutAntennaDetection _, ScoutAntenna ant)
         {
+            if (!IsTarget(agent))
+                return;
+
             ant.m_colorDefault = NormalColor;
             ant.m_colorDetection = DetectColor;
             ant.m_moveInTime = RetractTime.GetAbsValue(ant.m_moveInTime);

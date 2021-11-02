@@ -9,7 +9,7 @@ namespace EECustom.Events.Inject
         [HarmonyWrapSafe]
         public static void Postfix(ScoutAntennaDetection detection, ScoutAntenna __instance)
         {
-            ScoutAntennaSpawnEvent.OnAntennaSpawn?.Invoke(detection.m_owner, detection, __instance);
+            ScoutAntennaSpawnEvent.OnAntennaSpawn(detection.m_owner, detection, __instance);
         }
     }
 }

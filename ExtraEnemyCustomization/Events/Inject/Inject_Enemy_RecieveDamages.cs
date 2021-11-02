@@ -13,7 +13,10 @@ namespace EECustom.Events.Inject
         public static void Post_BulletDamage(pBulletDamageData data, Dam_EnemyDamageBase __instance)
         {
             data.source.TryGet(out var agent);
-            EnemyDamageEvents.OnDamage?.Invoke(__instance.Owner, agent);
+            var damage = data.damage.Get(__instance.HealthMax);
+            
+            EnemyDamageEvents.OnDamage(__instance.Owner, agent, damage);
+            EnemyDamageEvents.OnBulletDamage(__instance.Owner, agent, damage);
         }
 
         [HarmonyPostfix]
@@ -22,7 +25,10 @@ namespace EECustom.Events.Inject
         public static void Post_MeleeDamage(pFullDamageData data, Dam_EnemyDamageBase __instance)
         {
             data.source.TryGet(out var agent);
-            EnemyDamageEvents.OnDamage?.Invoke(__instance.Owner, agent);
+            var damage = data.damage.Get(__instance.HealthMax);
+
+            EnemyDamageEvents.OnDamage(__instance.Owner, agent, damage);
+            EnemyDamageEvents.OnMeleeDamage(__instance.Owner, agent, damage);
         }
 
         [HarmonyPostfix]
@@ -31,7 +37,10 @@ namespace EECustom.Events.Inject
         public static void Post_ExplosionDamage(pFullDamageData data, Dam_EnemyDamageBase __instance)
         {
             data.source.TryGet(out var agent);
-            EnemyDamageEvents.OnDamage?.Invoke(__instance.Owner, agent);
+            var damage = data.damage.Get(__instance.HealthMax);
+
+            EnemyDamageEvents.OnDamage(__instance.Owner, agent, damage);
+            EnemyDamageEvents.OnExplosionDamage(__instance.Owner, agent, damage);
         }
     }
 }

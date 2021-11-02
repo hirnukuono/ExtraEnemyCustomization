@@ -29,8 +29,8 @@ namespace EECustom.CustomSettings
 
         static CustomScoutWaveManager()
         {
-            LevelEvents.OnBuildStart += OnLevelStateUpdate;
-            LevelEvents.OnLevelCleanup += OnLevelStateUpdate;
+            LevelEvents.BuildStart += OnLevelStateUpdate;
+            LevelEvents.LevelCleanup += OnLevelStateUpdate;
         }
 
         private static void OnLevelStateUpdate()

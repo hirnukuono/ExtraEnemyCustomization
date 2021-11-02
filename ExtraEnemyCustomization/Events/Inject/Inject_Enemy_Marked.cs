@@ -9,7 +9,7 @@ namespace EECustom.Events.Inject
         [HarmonyWrapSafe]
         public static void Postfix(EnemyAgent __instance)
         {
-            EnemyMarkerEvents.OnMarked?.Invoke(__instance, __instance.m_tagMarker);
+            EnemyMarkerEvents.OnMarked(__instance, __instance.m_tagMarker);
         }
     }
 }
