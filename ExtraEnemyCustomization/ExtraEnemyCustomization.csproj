@@ -20,6 +20,7 @@
     <Reference Include="$(BIELibsFolder)/0Harmony.dll" Private="false" />
     <Reference Include="$(BIELibsFolder)/UnhollowerBaseLib.dll" Private="false" />
     <Reference Include="$(BIELibsFolder)/UnhollowerRuntimeLib.dll" Private="false" />
+    <Reference Include="$(BIELibsFolder)/SemanticVersioning.dll" Private="false" />
     <Reference Include="$(UnhollowedLibsFolder)/*.dll" Private="false" />
     <Reference Remove="$(UnhollowedLibsFolder)/Newtonsoft.Json.dll" />
     <Reference Remove="$(UnhollowedLibsFolder)/netstandard.dll" />
