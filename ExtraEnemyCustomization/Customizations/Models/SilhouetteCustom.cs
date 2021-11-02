@@ -9,7 +9,7 @@ using UnityEngine.Rendering;
 namespace EECustom.Customizations.Models
 {
     //Original Code from Dex-EnemyGhosts
-    public class SilhouetteCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyPrefabBuiltEvent
+    public class SilhouetteCustom : RevertableEnemyCustomBase, IEnemySpawnedEvent, IEnemyPrefabBuiltEvent
     {
         public const string PlayerPrefabPath = "ASSETS/ASSETPREFABS/CHARACTERS/CHARACTER_A.PREFAB";
         public const string PlayerGhostName = "g_set_military_01_boots_ghost";
@@ -26,19 +26,6 @@ namespace EECustom.Customizations.Models
         public override string GetProcessName()
         {
             return "Silhouette";
-        }
-
-        public override void OnConfigUnloaded()
-        {
-            if (_SilhouetteObjects.Count < 1)
-                return;
-
-            foreach(var obj in _SilhouetteObjects)
-            {
-                if (obj != null)
-                    GameObject.Destroy(obj);
-            }
-            _SilhouetteObjects.Clear();
         }
 
         public void OnPrefabBuilt(EnemyAgent agent)
@@ -106,7 +93,10 @@ namespace EECustom.Customizations.Models
                 var enemyGraphic = renderer.gameObject;
                 var enemyGhost = enemyGraphic.Instantiate(enemyGraphic.transform, "g_ghost");
                 enemyGhost.layer = LayerMask.NameToLayer("Enemy");
-                _SilhouetteObjects.Add(enemyGhost);
+                PushRevertJob(() =>
+                {
+                    GameObject.Destroy(enemyGhost);
+                });
 
                 _ = enemyGhost.AddComponent<EnemySilhouette>();
                 var newRenderer = enemyGhost.GetComponent<Renderer>();

@@ -2,12 +2,11 @@
 using EECustom.Extensions;
 using EECustom.Utils;
 using Enemies;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace EECustom.Customizations.Abilities
 {
-    public class FogSphereCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyPrefabBuiltEvent
+    public class FogSphereCustom : RevertableEnemyCustomBase, IEnemySpawnedEvent, IEnemyPrefabBuiltEvent
     {
         public Color ColorMin { get; set; } = Color.white;
         public Color ColorMax { get; set; } = Color.clear;
@@ -22,20 +21,9 @@ namespace EECustom.Customizations.Abilities
         public float Duration { get; set; } = 30.0f;
         public EffectVolumeSetting EffectVolume { get; set; } = new();
 
-        private readonly List<(EAB_FogSphere fogEab, GameObject originalPrefab)> _changedList = new();
-
         public override string GetProcessName()
         {
             return "FogSphere";
-        }
-
-        public override void OnConfigUnloaded()
-        {
-            while (_Changes.Count > 0)
-            {
-                var changed = _Changes.Pop();
-                changed.fogEab.m_fogSpherePrefab = changed.originalPrefab;
-            }
         }
 
         public void OnPrefabBuilt(EnemyAgent agent)
@@ -64,7 +52,11 @@ namespace EECustom.Customizations.Abilities
                 fogHandler.m_totalLength = Duration;
 
                 eabFog.m_fogSpherePrefab = newFogPrefab;
-                _changedList.Add((eabFog, fogPrefab));
+
+                PushRevertJob(() =>
+                {
+                    eabFog.m_fogSpherePrefab = fogPrefab;
+                });
             }
         }
 

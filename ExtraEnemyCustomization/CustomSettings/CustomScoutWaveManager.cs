@@ -183,9 +183,9 @@ namespace EECustom.CustomSettings
 
         public static void ClearAll()
         {
-            _ScoutSettings.Clear();
-            _WaveSettingDict.Clear();
-            _TargetSettingDict.Clear();
+            _scoutSettings.Clear();
+            _waveSettingDict.Clear();
+            _targetSettingDict.Clear();
         }
 
         public static void TriggerScoutWave(EnemyAgent scoutAgent)

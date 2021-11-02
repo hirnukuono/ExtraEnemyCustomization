@@ -19,7 +19,7 @@ namespace EECustom.Customizations.Models
         public bool AllowMarkingOnHibernate { get; set; } = false;
 
         private Sprite _sprite = null;
-        private bool _prespawnOnce = false;
+        private bool _loadedOnce = false;
         //private bool _HasText = false;
         //private bool _TextRequiresAutoUpdate = false;
 
@@ -42,13 +42,10 @@ namespace EECustom.Customizations.Models
                 _TextRequiresAutoUpdate = true;
             }
             */
-        }
 
-        public void OnPrefabBuilt(EnemyAgent agent)
-        {
-            if (!_prespawnOnce)
+            if (!_loadedOnce)
             {
-                _prespawnOnce = true;
+                _loadedOnce = true;
 
                 if (string.IsNullOrEmpty(SpriteName))
                     return;

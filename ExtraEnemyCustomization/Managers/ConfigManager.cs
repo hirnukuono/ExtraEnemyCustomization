@@ -28,7 +28,7 @@ namespace EECustom.Managers
         {
             Logger.Log("HOT RELOADING CONFIG!");
 
-            foreach(var config in Current._CustomizationBuffer)
+            foreach (var config in Current._customizationBuffer)
             {
                 config.OnConfigUnloaded();
             }
@@ -45,7 +45,7 @@ namespace EECustom.Managers
 
             foreach (var block in GameDataBlockBase<EnemyDataBlock>.GetAllBlocks())
             {
-                
+
                 var prefab = EnemyPrefabManager.GetEnemyPrefab(block.persistentID);
                 if (prefab == null)
                     continue;

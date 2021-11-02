@@ -1,30 +1,15 @@
-﻿using EECustom.Utils;
-using Enemies;
-using System.Collections.Generic;
+﻿using Enemies;
 using UnityEngine;
 
 namespace EECustom.Customizations.Models
 {
-    public class ModelRefCustom : EnemyCustomBase, IEnemyPrefabBuiltEvent
+    public class ModelRefCustom : RevertableEnemyCustomBase, IEnemyPrefabBuiltEvent
     {
         public ModelRefData[] ModelRefs { get; set; } = new ModelRefData[0];
-
-        private static readonly Stack<(EnemyModelRefs modelRef, ModelRefCache setting)> _Changes = new Stack<(EnemyModelRefs, ModelRefCache)>();
 
         public override string GetProcessName()
         {
             return "MedelRef";
-        }
-
-        public override void OnConfigUnloaded()
-        {
-            while (_Changes.Count > 0)
-            {
-                var changed = _Changes.Pop();
-                var modelRef = changed.modelRef;
-                var setting = changed.setting;
-                setting.CopyTo(ref modelRef);
-            }
         }
 
         public void OnPrefabBuilt(EnemyAgent agent)
@@ -32,7 +17,12 @@ namespace EECustom.Customizations.Models
             var modelRef = agent.ModelRef;
             var changeCache = new ModelRefCache();
             changeCache.CopyFrom(modelRef);
-            _Changes.Push((modelRef, changeCache));
+
+            var originalCache = changeCache;
+            PushRevertJob(() =>
+            {
+                originalCache.CopyTo(ref modelRef);
+            });
 
             foreach (var mRef in ModelRefs)
             {

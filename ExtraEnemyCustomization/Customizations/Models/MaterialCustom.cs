@@ -1,16 +1,13 @@
-﻿using EECustom.Utils;
-using Enemies;
+﻿using Enemies;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 namespace EECustom.Customizations.Models
 {
-    public class MaterialCustom : EnemyCustomBase, IEnemyPrefabBuiltEvent
+    public class MaterialCustom : RevertableEnemyCustomBase, IEnemyPrefabBuiltEvent
     {
         private readonly static Dictionary<string, Material> _matDict = new();
-
-        private readonly static List<MaterialSwapCache> _SwapCaches = new List<MaterialSwapCache>();
 
         public static void AddToCache(string matName, Material mat)
         {
@@ -23,14 +20,6 @@ namespace EECustom.Customizations.Models
         public override string GetProcessName()
         {
             return "Material";
-        }
-
-        public override void OnConfigUnloaded()
-        {
-            _SwapCaches.ForEachFromBackAndClear((cache) =>
-            {
-                cache.matref.m_material = cache.original;
-            });
         }
 
         public void OnPrefabBuilt(EnemyAgent agent)
@@ -52,12 +41,12 @@ namespace EECustom.Customizations.Models
                 }
 
                 LogDev($" - Trying to Replace Material, Before: {matName} After: {newMat.name}");
-                _SwapCaches.Add(new MaterialSwapCache()
+
+                var originalMat = mat.m_material;
+                PushRevertJob(() =>
                 {
-                    matref = mat,
-                    original = mat.m_material
+                    mat.m_material = originalMat;
                 });
-                mat.m_material = newMat;
 
                 LogVerbose(" - Replaced!");
             }

@@ -78,12 +78,12 @@ namespace EECustom.CustomSettings
 
         public static void DestroyAllProjectile()
         {
-            foreach (var prefabs in _ProjectilePrefabs.Values)
+            foreach (var prefabs in _projectilePrefabs.Values)
             {
                 GameObject.Destroy(prefabs);
             }
 
-            _ProjectilePrefabs.Clear();
+            _projectilePrefabs.Clear();
         }
 
         public static GameObject GetProjectile(byte id)
