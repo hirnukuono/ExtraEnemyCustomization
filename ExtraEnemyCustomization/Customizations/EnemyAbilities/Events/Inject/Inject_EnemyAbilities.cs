@@ -1,0 +1,44 @@
+﻿using Enemies;
+using HarmonyLib;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace EECustom.Customizations.EnemyAbilities.Events.Inject
+{
+    [HarmonyPatch(typeof(Enemies.EnemyAbilities))]
+    internal class Inject_EnemyAbilities
+    {
+        [HarmonyPostfix]
+        [HarmonyWrapSafe]
+        [HarmonyPatch(nameof(Enemies.EnemyAbilities.OnTakeDamage))]
+        private static void Post_OnTakeDamage(float damage, Enemies.EnemyAbilities __instance)
+        {
+            EnemyAbilitiesEvents.OnTakeDamage(__instance, damage);
+        }
+
+        [HarmonyPostfix]
+        [HarmonyWrapSafe]
+        [HarmonyPatch(nameof(Enemies.EnemyAbilities.OnHitreact))]
+        private static void Post_OnHitreact(Enemies.EnemyAbilities __instance)
+        {
+            EnemyAbilitiesEvents.OnHitreact(__instance);
+        }
+
+        [HarmonyPostfix]
+        [HarmonyWrapSafe]
+        [HarmonyPatch(nameof(Enemies.EnemyAbilities.OnHeadDestroyed))]
+        private static void Post_OnHeadDestroyed(Enemies.EnemyAbilities __instance)
+        {
+            EnemyAbilitiesEvents.OnHeadDestroyed(__instance);
+        }
+
+        [HarmonyPostfix]
+        [HarmonyWrapSafe]
+        [HarmonyPatch(nameof(Enemies.EnemyAbilities.OnDead))]
+        private static void Post_OnDead(Enemies.EnemyAbilities __instance)
+        {
+            EnemyAbilitiesEvents.OnDead(__instance);
+        }
+    }
+}

@@ -1,6 +1,7 @@
 ﻿using EECustom.Configs;
 using EECustom.Configs.Customizations;
 using EECustom.Customizations;
+using EECustom.Customizations.EnemyAbilities;
 using EECustom.CustomSettings;
 using EECustom.Events;
 using EECustom.Utils;
@@ -95,6 +96,7 @@ namespace EECustom.Managers
 
             CustomProjectileManager.DestroyAllProjectile();
             CustomScoutWaveManager.ClearAll();
+            EnemyAbilityManager.Clear();
         }
 
         private static void LoadConfigs()
@@ -110,6 +112,14 @@ namespace EECustom.Managers
                     {
                         Current.Categories = categoryConfig;
                         Current.Categories.Cache();
+                    }
+
+                    Logger.Debug("Loading EnemyAbility.json");
+                    if (TryLoadConfig(BasePath, "EnemyAbility.json", out EnemyAbilityCustomConfig enemyabConfig))
+                    {
+                        Current.EnemyAbilityCustom = enemyabConfig;
+                        Current.EnemyAbilityCustom.Abilities.RegisterAll();
+                        EnemyAbilityManager.Setup();
                     }
 
                     Logger.Debug("Loading ScoutWave.json");
@@ -190,6 +200,7 @@ namespace EECustom.Managers
         public TentacleCustomConfig TentacleCustom { get; private set; } = new();
         public DetectionCustomConfig DetectionCustom { get; private set; } = new();
         public SpawnCostCustomConfig SpawnCostCustom { get; private set; } = new();
+        public EnemyAbilityCustomConfig EnemyAbilityCustom { get; private set; } = new();
 
         private readonly List<EnemyCustomBase> _customizationBuffer = new();
 
@@ -202,6 +213,7 @@ namespace EECustom.Managers
             _customizationBuffer.AddRange(TentacleCustom.GetAllSettings());
             _customizationBuffer.AddRange(DetectionCustom.GetAllSettings());
             _customizationBuffer.AddRange(SpawnCostCustom.GetAllSettings());
+            _customizationBuffer.AddRange(EnemyAbilityCustom.GetAllSettings());
             foreach (var custom in _customizationBuffer)
             {
                 custom.OnConfigLoaded();
