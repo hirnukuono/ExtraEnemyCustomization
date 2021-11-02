@@ -27,14 +27,6 @@ namespace EECustom.Customizations.EnemyAbilities.Events.Inject
 
         [HarmonyPostfix]
         [HarmonyWrapSafe]
-        [HarmonyPatch(nameof(Enemies.EnemyAbilities.OnHeadDestroyed))]
-        private static void Post_OnHeadDestroyed(Enemies.EnemyAbilities __instance)
-        {
-            EnemyAbilitiesEvents.OnHeadDestroyed(__instance);
-        }
-
-        [HarmonyPostfix]
-        [HarmonyWrapSafe]
         [HarmonyPatch(nameof(Enemies.EnemyAbilities.OnDead))]
         private static void Post_OnDead(Enemies.EnemyAbilities __instance)
         {
