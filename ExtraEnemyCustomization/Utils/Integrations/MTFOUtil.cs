@@ -9,8 +9,9 @@ namespace EECustom.Utils.Integrations
     public static class MTFOUtil
     {
         public const string PLUGIN_GUID = "com.dak.MTFO";
+        public const BindingFlags PUBLIC_STATIC = BindingFlags.Public | BindingFlags.Static;
 
-        public static readonly SemanticVersioning.Version MTFO_V2 = new("999.999.999");
+        public static readonly SemanticVersioning.Version MTFO_V5 = new("5.0.0");
         public static string GameDataPath { get; private set; } = string.Empty;
         public static string CustomPath { get; private set; } = string.Empty;
         public static bool HasCustomContent { get; private set; } = false;
@@ -26,17 +27,17 @@ namespace EECustom.Utils.Integrations
 
             var version = info.Metadata.Version;
 
-            if (version < MTFO_V2)
+            if (version >= MTFO_V5)
             {
-                InitMTFO_V1(info);
+                InitMTFO_V5(info);
             }
-            else if (version >= MTFO_V2)
+            else
             {
-                InitMTFO_V2(info);
+                InitMTFO_V4(info);
             }
         }
 
-        private static void InitMTFO_V1(PluginInfo info)
+        private static void InitMTFO_V4(PluginInfo info)
         {
             try
             {
@@ -51,9 +52,9 @@ namespace EECustom.Utils.Integrations
                 if (cfgManagerType is null)
                     throw new Exception("Unable to Find ConfigManager Class");
 
-                var dataPathField = cfgManagerType.GetField("GameDataPath", BindingFlags.Public | BindingFlags.Static);
-                var customPathField = cfgManagerType.GetField("CustomPath", BindingFlags.Public | BindingFlags.Static);
-                var hasCustomField = cfgManagerType.GetField("HasCustomContent", BindingFlags.Public | BindingFlags.Static);
+                var dataPathField = cfgManagerType.GetField("GameDataPath", PUBLIC_STATIC);
+                var customPathField = cfgManagerType.GetField("CustomPath", PUBLIC_STATIC);
+                var hasCustomField = cfgManagerType.GetField("HasCustomContent", PUBLIC_STATIC);
 
                 if (dataPathField is null)
                     throw new Exception("Unable to Find Field: GameDataPath");
@@ -71,11 +72,11 @@ namespace EECustom.Utils.Integrations
             }
             catch (Exception e)
             {
-                Logger.Error($"Exception thrown while reading path from DataDumper(MTFO V1): \n{e}");
+                Logger.Error($"Exception thrown while reading path from DataDumper (MTFO V{info.Metadata.Version}): \n{e}");
             }
         }
 
-        private static void InitMTFO_V2(PluginInfo info)
+        private static void InitMTFO_V5(PluginInfo info)
         {
             try
             {
@@ -90,9 +91,10 @@ namespace EECustom.Utils.Integrations
                 if (cfgManagerType is null)
                     throw new Exception("Unable to Find ConfigManager Class");
 
-                var dataPathField = cfgManagerType.GetField("GameDataPath", BindingFlags.Public | BindingFlags.Static);
-                var customPathField = cfgManagerType.GetField("CustomPath", BindingFlags.Public | BindingFlags.Static);
-                var hasCustomField = cfgManagerType.GetField("HasCustomContent", BindingFlags.Public | BindingFlags.Static);
+                var dataPathField = cfgManagerType.GetField("GameDataPath", PUBLIC_STATIC);
+                var customPathField = cfgManagerType.GetField("CustomPath", PUBLIC_STATIC);
+                var hasCustomField = cfgManagerType.GetField("HasCustomContent", PUBLIC_STATIC);
+                var hasHotReloadProperty = cfgManagerType.GetProperty("IsHotReloadEnabled", PUBLIC_STATIC);
 
                 if (dataPathField is null)
                     throw new Exception("Unable to Find Field: GameDataPath");
@@ -103,14 +105,21 @@ namespace EECustom.Utils.Integrations
                 if (hasCustomField is null)
                     throw new Exception("Unable to Find Field: HasCustomContent");
 
+                if (hasCustomField is null)
+                    throw new Exception("Unable to Find Field: HasCustomContent");
+
+                if (hasHotReloadProperty is null)
+                    throw new Exception("Unable to Find Property: IsHotReloadEnabled");
+
                 GameDataPath = (string)dataPathField.GetValue(null);
                 CustomPath = (string)customPathField.GetValue(null);
                 HasCustomContent = (bool)hasCustomField.GetValue(null);
+                HasHotReload = (bool)hasHotReloadProperty.GetValue(null);
                 IsLoaded = true;
             }
             catch (Exception e)
             {
-                Logger.Error($"Exception thrown while reading path from MTFO (V2): \n{e}");
+                Logger.Error($"Exception thrown while reading metadata from MTFO (V{info.Metadata.Version}): \n{e}");
             }
         }
     }
