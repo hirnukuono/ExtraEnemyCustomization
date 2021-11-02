@@ -96,7 +96,6 @@ namespace EECustom.Managers
 
         private readonly EventHolder<IEnemyPrefabBuiltEvent> _enemyPrefabBuiltHolder = new("PrefabBuilt");
         private readonly EventHolder<IEnemySpawnedEvent> _enemySpawnedHolder = new("Spawned");
-        private readonly EventHolder<IEnemyDespawnedEvent> _enemyDespawnedHolder = new("Despawned");
         private readonly EventHolder<IEnemyGlowEvent> _enemyGlowHolder = new("Glow", ignoreLogs: true);
 
         private void GenerateEventBuffer()
@@ -105,7 +104,6 @@ namespace EECustom.Managers
             {
                 _enemyPrefabBuiltHolder.TryAdd(custom);
                 _enemySpawnedHolder.TryAdd(custom);
-                _enemyDespawnedHolder.TryAdd(custom);
                 _enemyGlowHolder.TryAdd(custom);
             }
         }
@@ -123,14 +121,6 @@ namespace EECustom.Managers
             _enemySpawnedHolder.FireEvent(agent, (e) =>
             {
                 e.OnSpawned(agent);
-            });
-        }
-
-        internal void FireDespawnedEvent(EnemyAgent agent)
-        {
-            _enemyDespawnedHolder.FireEvent(agent, (e) =>
-            {
-                e.OnDespawned(agent);
             });
         }
 
