@@ -48,6 +48,7 @@ namespace EECustom.Customizations.Models
                     mat.m_material = originalMat;
                 });
 
+                mat.m_material = newMat;
                 LogVerbose(" - Replaced!");
             }
         }
