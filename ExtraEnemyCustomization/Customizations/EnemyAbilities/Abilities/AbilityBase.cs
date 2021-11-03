@@ -45,7 +45,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
         public void Trigger(EnemyAgent agent)
         {
-            if (_behaviourLookup.TryGetValue(agent.GlobalID, out var behaviour))
+            if (TryGetBehaviour(agent, out var behaviour))
             {
                 behaviour.DoTrigger();
             }
