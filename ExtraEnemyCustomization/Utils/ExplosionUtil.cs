@@ -86,13 +86,6 @@ namespace EECustom.Utils
             return newDamage;
         }
 
-        public static string GetPath(this Transform current)
-        {
-            if (current.parent == null)
-                return "/" + current.name;
-            return current.parent.GetPath() + "/" + current.name;
-        }
-
         [Obsolete("FX_Light has issue with level Lighting", true)]
         public static async Task LightFlash(Vector3 pos)
         {
