@@ -2,9 +2,6 @@
 using EECustom.Events;
 using Enemies;
 using SNetwork;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
 namespace EECustom.Customizations.EnemyAbilities.Abilities
@@ -34,7 +31,6 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
         public abstract bool AllowEABAbilityWhileExecuting { get; }
         public abstract bool IsHostOnlyBehaviour { get; }
-        
 
         private float _lazyUpdateTimer = 0.0f;
         private bool _executing = false;
@@ -104,7 +100,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
             }
         }
 
-        #endregion
+        #endregion EVENT DELEGATES
 
         #region EVENT CALLERS
 
@@ -204,60 +200,50 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
             OnLimbDestroyed(limb);
         }
 
-        #endregion
+        #endregion EVENT CALLERS
 
         #region OVERRIDES
 
         protected virtual void OnAbilityUpdate()
         {
-
         }
 
         protected virtual void OnEnter()
         {
-
         }
 
         protected virtual void OnAbilityLazyUpdate()
         {
-
         }
 
         protected virtual void OnExit()
         {
-
         }
 
         protected virtual void OnSetup()
         {
-
         }
 
         protected virtual void OnUpdate()
         {
-
         }
 
         protected virtual void OnDead()
         {
-
         }
 
         protected virtual void OnTakeDamage(float damage)
         {
-
         }
 
         protected virtual void OnHitreact()
         {
-
         }
 
         protected virtual void OnLimbDestroyed(Dam_EnemyDamageLimb limb)
         {
-
         }
 
-        #endregion
+        #endregion OVERRIDES
     }
 }

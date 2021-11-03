@@ -1,10 +1,6 @@
 ﻿using EECustom.Events;
-using EECustom.Extensions;
-using EECustom.Utils;
 using Enemies;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
 namespace EECustom.Customizations.EnemyAbilities.Abilities
@@ -83,17 +79,14 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
         public virtual void OnAbilityLoaded()
         {
-
         }
 
         public virtual void OnAbilityUnloaded()
         {
-
         }
 
         public virtual void OnBehaviourAssigned(EnemyAgent agent, T behaviour)
         {
-
         }
 
         public bool TryGetBehaviour(EnemyAgent agent, out AbilityBehaviour behaviour)
