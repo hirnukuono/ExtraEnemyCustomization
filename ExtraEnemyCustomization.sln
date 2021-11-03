@@ -13,13 +13,25 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		MSIL|Any CPU = MSIL|Any CPU
+		MSIL|x64 = MSIL|x64
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{53CC5CF0-F368-4078-B504-579AD678C2C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{53CC5CF0-F368-4078-B504-579AD678C2C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53CC5CF0-F368-4078-B504-579AD678C2C6}.Debug|x64.ActiveCfg = Debug|x64
+		{53CC5CF0-F368-4078-B504-579AD678C2C6}.Debug|x64.Build.0 = Debug|x64
+		{53CC5CF0-F368-4078-B504-579AD678C2C6}.MSIL|Any CPU.ActiveCfg = MSIL|Any CPU
+		{53CC5CF0-F368-4078-B504-579AD678C2C6}.MSIL|Any CPU.Build.0 = MSIL|Any CPU
+		{53CC5CF0-F368-4078-B504-579AD678C2C6}.MSIL|x64.ActiveCfg = MSIL|x64
+		{53CC5CF0-F368-4078-B504-579AD678C2C6}.MSIL|x64.Build.0 = MSIL|x64
 		{53CC5CF0-F368-4078-B504-579AD678C2C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53CC5CF0-F368-4078-B504-579AD678C2C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53CC5CF0-F368-4078-B504-579AD678C2C6}.Release|x64.ActiveCfg = Release|x64
+		{53CC5CF0-F368-4078-B504-579AD678C2C6}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

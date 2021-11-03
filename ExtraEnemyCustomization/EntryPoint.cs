@@ -22,6 +22,7 @@ namespace EECustom
     [BepInPlugin("GTFO.EECustomization", "EECustom", "0.8.1")]
     [BepInProcess("GTFO.exe")]
     [BepInDependency(MTFOUtil.PLUGIN_GUID, BepInDependency.DependencyFlags.HardDependency)]
+    [BepInDependency("dev.gtfomodding.gtfo-api", BepInDependency.DependencyFlags.HardDependency)]
     [BepInDependency(MTFOPartialDataUtil.PLUGIN_GUID, BepInDependency.DependencyFlags.SoftDependency)]
     public class EntryPoint : BasePlugin
     {
