@@ -59,63 +59,6 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         }
     }
 
-    public class SomeBehaviour : AbilityBehaviour
-    {
-        public override bool AllowEABAbilityWhileExecuting => throw new NotImplementedException();
-
-        public override bool IsHostOnlyBehaviour => throw new NotImplementedException();
-
-        protected override void OnSetup()
-        {
-            base.OnSetup();
-        }
-
-        protected override void OnUpdate()
-        {
-            base.OnUpdate();
-        }
-
-        protected override void OnEnter()
-        {
-            base.OnEnter();
-        }
-
-        protected override void OnAbilityUpdate()
-        {
-            base.OnAbilityUpdate();
-        }
-
-        protected override void OnAbilityLazyUpdate()
-        {
-            base.OnAbilityLazyUpdate();
-        }
-
-        protected override void OnExit()
-        {
-            base.OnExit();
-        }
-
-        protected override void OnDead()
-        {
-            base.OnDead();
-        }
-
-        protected override void OnLimbDestroyed(Dam_EnemyDamageLimb limb)
-        {
-            base.OnLimbDestroyed(limb);
-        }
-
-        protected override void OnHitreact()
-        {
-            base.OnHitreact();
-        }
-
-        protected override void OnTakeDamage(float damage)
-        {
-            base.OnTakeDamage(damage);
-        }
-    }
-
     public class FogSphereBehaviour : AbilityBehaviour
     {
         public GameObject FogPrefab;
