@@ -1,5 +1,6 @@
 ﻿using AIGraph;
 using EECustom.Attributes;
+using EECustom.Networking;
 using EECustom.Utils;
 using System;
 using UnhollowerBaseLib.Attributes;
@@ -23,7 +24,7 @@ namespace EECustom.CustomSettings.Handlers
 
         public void OnDestroy()
         {
-            ExplosionUtil.TriggerExplodion(transform.position, Damage, EnemyMulti, MinRange, MaxRange);
+            ExplosionUtil.MakeExplosion(transform.position, Damage, EnemyMulti, MinRange, MaxRange);
 
             var newPos = transform.position;
             if (!PhysicsUtil.SlamPos(ref newPos, Vector3.down, 64.0f, LayerManager.MASK_LEVELGEN, false, 0.0f, 0.0f))

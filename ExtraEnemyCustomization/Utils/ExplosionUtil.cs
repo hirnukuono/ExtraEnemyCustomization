@@ -1,5 +1,7 @@
 ﻿using Agents;
 using AK;
+using EECustom.Attributes;
+using EECustom.Networking;
 using FX_EffectSystem;
 using SNetwork;
 using System;
@@ -10,7 +12,19 @@ namespace EECustom.Utils
 {
     public static class ExplosionUtil
     {
-        public static void TriggerExplodion(Vector3 position, float damage, float enemyMulti, float minRange, float maxRange)
+        public static void MakeExplosion(Vector3 position, float damage, float enemyMulti, float minRange, float maxRange)
+        {
+            NetworkManager.Explosion.Send(new Networking.Events.ExplosionPacket()
+            {
+                position = position,
+                damage = damage,
+                enemyMulti = enemyMulti,
+                minRange = minRange,
+                maxRange = maxRange
+            });
+        }
+
+        internal static void Internal_TriggerExplosion(Vector3 position, float damage, float enemyMulti, float minRange, float maxRange)
         {
             CellSound.Post(EVENTS.STICKYMINEEXPLODE, position);
             //_ = LightFlash(position);

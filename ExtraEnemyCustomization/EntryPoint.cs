@@ -3,6 +3,7 @@ using BepInEx.Configuration;
 using BepInEx.IL2CPP;
 using EECustom.Attributes;
 using EECustom.Managers;
+using EECustom.Networking;
 using EECustom.Utils.Integrations;
 using HarmonyLib;
 using System;
@@ -43,6 +44,7 @@ namespace EECustom
             HarmonyInstance = new Harmony("EECustomization.Harmony");
             HarmonyInstance.PatchAll();
 
+            NetworkManager.Initialize();
             SpriteManager.Initialize();
             ConfigManager.Initialize();
         }

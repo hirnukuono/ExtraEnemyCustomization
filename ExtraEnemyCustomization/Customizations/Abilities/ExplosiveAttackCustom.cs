@@ -1,5 +1,6 @@
 ﻿using Agents;
 using EECustom.Events;
+using EECustom.Networking;
 using EECustom.Utils;
 using Player;
 
@@ -48,7 +49,7 @@ namespace EECustom.Customizations.Abilities
             var maxDamage = data.Damage.GetAbsValue(PlayerData.MaxHealth);
             if (maxDamage > 0.0f)
             {
-                ExplosionUtil.TriggerExplodion(player.EyePosition, maxDamage, data.EnemyDamageMulti, data.MinRange, data.MaxRange);
+                ExplosionUtil.MakeExplosion(player.EyePosition, maxDamage, data.EnemyDamageMulti, data.MinRange, data.MaxRange);
 
                 var noise = new NM_NoiseData()
                 {
