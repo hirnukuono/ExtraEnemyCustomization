@@ -1,6 +1,8 @@
-﻿using Agents;
-using AK;
+﻿using AK;
+using EECustom.Networking;
+using Enemies;
 using FX_EffectSystem;
+using Player;
 using SNetwork;
 using System;
 using System.Threading.Tasks;
@@ -10,7 +12,19 @@ namespace EECustom.Utils
 {
     public static class ExplosionUtil
     {
-        public static void TriggerExplodion(Vector3 position, float damage, float enemyMulti, float minRange, float maxRange)
+        public static void MakeExplosion(Vector3 position, float damage, float enemyMulti, float minRange, float maxRange)
+        {
+            NetworkManager.Explosion.Send(new Networking.Events.ExplosionPacket()
+            {
+                position = position,
+                damage = damage,
+                enemyMulti = enemyMulti,
+                minRange = minRange,
+                maxRange = maxRange
+            });
+        }
+
+        internal static void Internal_TriggerExplosion(Vector3 position, float damage, float enemyMulti, float minRange, float maxRange)
         {
             CellSound.Post(EVENTS.STICKYMINEEXPLODE, position);
             //_ = LightFlash(position);
@@ -27,50 +41,49 @@ namespace EECustom.Utils
 
             foreach (var target in targets)
             {
-                Vector3 targetPosition = target.transform.position;
+                var targetDamagable = target.GetComponent<IDamageable>();
+                if (targetDamagable == null)
+                    continue;
 
-                Agent agent = target.GetComponent<Agent>();
-                if (agent != null)
+                targetDamagable = targetDamagable.GetBaseDamagable();
+                var targetPosition = targetDamagable.GetBaseAgent()?.EyePosition ?? target.transform.position;
+
+                if (targetDamagable.TempSearchID == searchID)
                 {
-                    targetPosition = agent.EyePosition;
-                }
-                Vector3 direction = (targetPosition - position).normalized;
+                    continue;
+                } 
+                targetDamagable.TempSearchID = searchID;
 
-                if (!Physics.Raycast(position, direction.normalized, out RaycastHit _, maxRange, LayerManager.MASK_EXPLOSION_BLOCKERS))
+                var distance = Vector3.Distance(position, targetPosition);
+                if (Physics.Linecast(position, targetPosition, out RaycastHit _, LayerManager.MASK_WORLD))
                 {
-                    var comp = target.GetComponent<IDamageable>();
-
-                    if (comp == null)
-                        continue;
-
-                    if (comp.GetBaseDamagable().TempSearchID == searchID)
-                        continue;
-
-                    comp.GetBaseDamagable().TempSearchID = searchID;
-
-                    var distance = Vector3.Distance(position, targetPosition);
-                    var newDamage = 0.0f;
-                    if (distance <= minRange)
-                    {
-                        newDamage = damage;
-                    }
-                    else if (distance <= maxRange)
-                    {
-                        newDamage = Mathf.Lerp(damage, 0.0f, (distance - minRange) / (maxRange - minRange));
-                    }
-                    Logger.Verbose($"Explosive damage: {newDamage} out of max: {damage}, Dist: {distance}, min: {minRange}, max: {maxRange}");
-
-                    var enemyLimb = comp.TryCast<Dam_EnemyDamageLimb>();
-                    if (enemyLimb != null)
-                    {
-                        comp.GetBaseDamagable().ExplosionDamage(newDamage * enemyMulti, position, Vector3.up * 1000);
-                    }
-                    else
-                    {
-                        comp.ExplosionDamage(newDamage, position, Vector3.up * 1000);
-                    }
+                    continue;
                 }
+
+                var newDamage = CalcRangeDamage(damage, distance, minRange, maxRange);
+                var enemyBase = targetDamagable.TryCast<Dam_EnemyDamageBase>();
+                if (enemyBase != null)
+                {
+                    newDamage *= enemyMulti;
+                }
+                Logger.Verbose($"Explosive damage: {newDamage} out of max: {damage}, Dist: {distance}, min: {minRange}, max: {maxRange}");
+
+                targetDamagable.ExplosionDamage(damage, position, Vector3.up * 1000);
             }
+        }
+
+        private static float CalcRangeDamage(float damage, float distance, float minRange, float maxRange)
+        {
+            var newDamage = 0.0f;
+            if (distance <= minRange)
+            {
+                newDamage = damage;
+            }
+            else if (distance <= maxRange)
+            {
+                newDamage = Mathf.Lerp(damage, 0.0f, (distance - minRange) / (maxRange - minRange));
+            }
+            return newDamage;
         }
 
         [Obsolete("FX_Light has issue with level Lighting", true)]

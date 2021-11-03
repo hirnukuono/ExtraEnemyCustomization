@@ -8,11 +8,14 @@
   <PropertyGroup>
     <BIELibsFolder>$(GameFolder)/BepInEx/core</BIELibsFolder>
     <UnhollowedLibsFolder>$(GameFolder)/BepInEx/unhollowed</UnhollowedLibsFolder>
+    <PluginsFolder>$(GameFolder)/BepInEx/plugins</PluginsFolder>
     <TargetFramework>netstandard2.1</TargetFramework>
     <LangVersion>Latest</LangVersion>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <Version>0.8.1</Version>
     <RootNamespace>EECustom</RootNamespace>
+    <Configurations>Debug;Release</Configurations>
+    <Platforms>x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,6 +25,7 @@
     <Reference Include="$(BIELibsFolder)/UnhollowerRuntimeLib.dll" Private="false" />
     <Reference Include="$(BIELibsFolder)/SemanticVersioning.dll" Private="false" />
     <Reference Include="$(UnhollowedLibsFolder)/*.dll" Private="false" />
+    <Reference Include="$(PluginsFolder)/GTFO-API.dll" Private="false" />
     <Reference Remove="$(UnhollowedLibsFolder)/Newtonsoft.Json.dll" />
     <Reference Remove="$(UnhollowedLibsFolder)/netstandard.dll" />
   </ItemGroup>

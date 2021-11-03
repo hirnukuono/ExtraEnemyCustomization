@@ -3,6 +3,7 @@ using BepInEx.Configuration;
 using BepInEx.IL2CPP;
 using EECustom.Attributes;
 using EECustom.Managers;
+using EECustom.Networking;
 using EECustom.Utils.Integrations;
 using HarmonyLib;
 using System;
@@ -22,6 +23,7 @@ namespace EECustom
     [BepInPlugin("GTFO.EECustomization", "EECustom", "0.8.1")]
     [BepInProcess("GTFO.exe")]
     [BepInDependency(MTFOUtil.PLUGIN_GUID, BepInDependency.DependencyFlags.HardDependency)]
+    [BepInDependency("dev.gtfomodding.gtfo-api", BepInDependency.DependencyFlags.HardDependency)]
     [BepInDependency(MTFOPartialDataUtil.PLUGIN_GUID, BepInDependency.DependencyFlags.SoftDependency)]
     public class EntryPoint : BasePlugin
     {
@@ -42,6 +44,7 @@ namespace EECustom
             HarmonyInstance = new Harmony("EECustomization.Harmony");
             HarmonyInstance.PatchAll();
 
+            NetworkManager.Initialize();
             SpriteManager.Initialize();
             ConfigManager.Initialize();
         }
