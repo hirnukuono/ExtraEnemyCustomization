@@ -48,7 +48,7 @@ namespace EECustom.Customizations.Abilities
             var maxDamage = data.Damage.GetAbsValue(PlayerData.MaxHealth);
             if (maxDamage > 0.0f)
             {
-                ExplosionUtil.TriggerExplodion(player.Position, maxDamage, data.EnemyDamageMulti, data.MinRange, data.MaxRange);
+                ExplosionUtil.TriggerExplodion(player.EyePosition, maxDamage, data.EnemyDamageMulti, data.MinRange, data.MaxRange);
 
                 var noise = new NM_NoiseData()
                 {
