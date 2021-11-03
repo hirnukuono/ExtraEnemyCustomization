@@ -14,6 +14,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         public const float LAZYUPDATE_DELAY = 0.15f;
 
         public EnemyAgent Agent { get; private set; }
+
         public bool Executing
         {
             get => _executing;
@@ -30,10 +31,10 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
                 }
             }
         }
-        public float CooldownTimer { get; set; }
 
         public abstract bool AllowEABAbilityWhileExecuting { get; }
         public abstract bool IsHostOnlyBehaviour { get; }
+        
 
         private float _lazyUpdateTimer = 0.0f;
         private bool _executing = false;
@@ -41,6 +42,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         public void Setup(EnemyAgent agent)
         {
             Agent = agent;
+
             var mbEventHandler = Agent.gameObject.AddComponent<MonoBehaviourEventHandler>();
 
             mbEventHandler.OnUpdate += Update_Del;

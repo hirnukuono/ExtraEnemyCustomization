@@ -2,6 +2,8 @@
 using EECustom.Customizations.EnemyAbilities.Abilities;
 using EECustom.Events;
 using Enemies;
+using Player;
+using SNetwork;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,65 +20,78 @@ namespace EECustom.Customizations.EnemyAbilities
 
         public override void OnSpawnedPost(EnemyAgent agent)
         {
-            var unityEventHandler = agent.gameObject.AddComponent<MonoBehaviourEventHandler>();
-            unityEventHandler.OnUpdate += (GameObject _) =>
-            {
-                OnUpdate(agent);
-            };
+            
         }
 
         public override void OnBehaviourAssigned(EnemyAgent agent, AbilityBehaviour behaviour, BehaviourAbilitySetting setting)
         {
+            var data = new BehaviourEnemyData()
+            {
+                Agent = agent,
+                Behaviour = behaviour,
+                Setting = setting,
+                UpdateTimer = 0.0f,
+                CooldownTimer = 0.0f
+            };
+
+            var unityEventHandler = agent.gameObject.AddComponent<MonoBehaviourEventHandler>();
+            unityEventHandler.OnUpdate += (GameObject _) =>
+            {
+                OnUpdate(data);
+            };
+
             if (setting.Cooldown.InitCooldown > 0.0f)
             {
-                behaviour.CooldownTimer = Clock.Time + setting.Cooldown.InitCooldown;
+                data.CooldownTimer = Clock.Time + setting.Cooldown.InitCooldown;
             }
         }
 
-        private void OnUpdate(EnemyAgent agent)
+        private void OnUpdate(BehaviourEnemyData data)
         {
-            foreach (var ab in Abilities)
+            if (Clock.Time < data.UpdateTimer)
+                return;
+
+            var agent = data.Agent;
+            var setting = data.Setting;
+            var behaviour = data.Behaviour;
+
+            data.UpdateTimer = Clock.Time + setting.UpdateInterval;
+
+            if (!data.Setting.KeepOnDead && !data.Agent.Alive)
+                return;
+
+            var canUseAbility = true;
+            canUseAbility &= data.Setting.ActiveType switch
             {
-                if (Clock.Time < ab.UpdateTimer)
-                    continue;
+                AbilityActiveType.Hibernate => agent.AI.Mode == AgentMode.Hibernate,
+                AbilityActiveType.Combat => agent.AI.Mode == AgentMode.Agressive,
+                AbilityActiveType.Scout => agent.AI.Mode == AgentMode.Scout,
+                AbilityActiveType.All => agent.AI.Mode != AgentMode.Off,
+                _ => false
+            };
+            canUseAbility &= setting.Cooldown.CanUseAbility(data.CooldownTimer);
+            canUseAbility &= setting.DistanceWithLOS.CanUseAbility(behaviour.Agent, shouldCheckLOS: true);
+            canUseAbility &= setting.DistanceWithoutLOS.CanUseAbility(behaviour.Agent, shouldCheckLOS: false);
 
-                ab.UpdateTimer = Clock.Time + ab.UpdateInterval;
+            if (!canUseAbility)
+                return;
 
-                if (!ab.KeepOnDead && !agent.Alive)
-                    continue;
-
-                if (!ab.Ability.TryGetBehaviour(agent, out var behaviour))
-                    continue;
-
-                var canUseAbility = true;
-                canUseAbility &= ab.ActiveType switch
-                {
-                    AbilityActiveType.Hibernate => agent.AI.Mode == AgentMode.Hibernate,
-                    AbilityActiveType.Combat => agent.AI.Mode == AgentMode.Agressive,
-                    AbilityActiveType.Scout => agent.AI.Mode == AgentMode.Scout,
-                    AbilityActiveType.All => agent.AI.Mode != AgentMode.Off,
-                    _ => false
-                };
-                canUseAbility &= ab.Cooldown.CanUseAbility(behaviour.CooldownTimer);
-                switch (agent.AI.Mode)
-                {
-                    case AgentMode.Agressive:
-                        canUseAbility &= ab.DistanceWithLOS.CanUseAbility(behaviour.Agent, shouldCheckLOS: true);
-                        canUseAbility &= ab.DistanceWithoutLOS.CanUseAbility(behaviour.Agent, shouldCheckLOS: false);
-                        break;
-                }
-
-                if (!canUseAbility)
-                    continue;
-
-                if (ab.Cooldown.Enabled)
-                {
-                    behaviour.CooldownTimer = Clock.Time + ab.Cooldown.Cooldown;
-                }
-
-                behaviour.DoTrigger();
+            if (setting.Cooldown.Enabled)
+            {
+                data.CooldownTimer = Clock.Time + setting.Cooldown.Cooldown;
             }
+
+            behaviour.DoTrigger();
         }
+    }
+
+    public class BehaviourEnemyData
+    {
+        public EnemyAgent Agent;
+        public AbilityBehaviour Behaviour;
+        public BehaviourAbilitySetting Setting;
+        public float UpdateTimer = 0.0f;
+        public float CooldownTimer = 0.0f;
     }
 
     public class BehaviourAbilitySetting : AbilitySettingBase
@@ -87,8 +102,6 @@ namespace EECustom.Customizations.EnemyAbilities
         public DistanceSetting DistanceWithLOS { get; set; } = new();
         public DistanceSetting DistanceWithoutLOS { get; set; } = new();
         public CooldownSetting Cooldown { get; set; } = new();
-
-        public float UpdateTimer = 0.0f;
     }
 
     public enum AbilityActiveType
@@ -116,20 +129,54 @@ namespace EECustom.Customizations.EnemyAbilities
 
     public class DistanceSetting
     {
-        public bool DoCheck { get; set; } = false;
+        public DistanceCheckingBehaviour Mode { get; set; } = DistanceCheckingBehaviour.AlwaysAllow;
         public float Min { get; set; } = 0.0f;
         public float Max { get; set; } = 1.0f;
 
         public bool CanUseAbility(EnemyAgent agent, bool shouldCheckLOS, bool mismatchingLOSsettingResult = true)
         {
-            if (!DoCheck)
-                return true;
+            switch (Mode)
+            {
+                case DistanceCheckingBehaviour.AlwaysAllow:
+                    return true;
+                case DistanceCheckingBehaviour.AlwaysDisallow:
+                    return false;
+            }
 
-            if (!agent.AI.IsTargetValid)
-                return false;
+            var hasLos = false;
+            var distance = float.MaxValue;
+            if (agent.AI.Mode == AgentMode.Agressive)
+            {
+                if (!agent.AI.IsTargetValid)
+                    return false;
 
-            var hasLos = agent.AI.Target.m_hasLineOfSight;
-            var distance = agent.AI.Target.m_distance;
+                hasLos = agent.AI.Target.m_hasLineOfSight;
+                distance = agent.AI.Target.m_distance;
+            }
+            else
+            {
+                for (int i = 0; i < SNet.Slots.SlottedPlayers.Count; i++)
+                {
+                    SNet_Player snet_Player = SNet.Slots.SlottedPlayers[i];
+
+                    var iPlayerAgent = snet_Player.PlayerAgent;
+                    if (iPlayerAgent == null)
+                        continue;
+
+                    var playerAgent = iPlayerAgent.Cast<PlayerAgent>();
+                    var tempDistance = Vector3.Distance(agent.EyePosition, playerAgent.EyePosition);
+                    if (distance >= tempDistance)
+                    {
+                        distance = tempDistance;
+                        hasLos = !Physics.Linecast(agent.EyePosition, playerAgent.EyePosition, LayerManager.MASK_WORLD);
+                    }
+                }
+
+                if (distance == float.MaxValue)
+                {
+                    return false;
+                }
+            }
 
             if (shouldCheckLOS != hasLos)
                 return mismatchingLOSsettingResult;
@@ -142,5 +189,12 @@ namespace EECustom.Customizations.EnemyAbilities
 
             return true;
         }
+    }
+
+    public enum DistanceCheckingBehaviour
+    {
+        AlwaysAllow,
+        AlwaysDisallow,
+        UsingDistance
     }
 }

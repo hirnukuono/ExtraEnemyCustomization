@@ -45,7 +45,7 @@ namespace EECustom.Customizations.EnemyAbilities
         {
             foreach(var ab in Abilities)
             {
-                var newBehaviour = ab.Ability.RegisterBehaviour(agent);
+                var newBehaviour = ab.Ability.RegisterBehaviour(agent, ab);
                 OnBehaviourAssigned(agent, newBehaviour, ab);
             }
 
