@@ -14,8 +14,8 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <Version>0.8.1</Version>
     <RootNamespace>EECustom</RootNamespace>
-    <Configurations>Debug;Release;MSIL</Configurations>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Configurations>Debug;Release</Configurations>
+    <Platforms>x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
