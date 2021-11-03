@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-namespace EECustom.Customizations.Abilities.Handlers
+namespace EECustom.Customizations.Shared.Handlers
 {
     [InjectToIl2Cpp]
     internal class EffectFogSphereHandler : MonoBehaviour

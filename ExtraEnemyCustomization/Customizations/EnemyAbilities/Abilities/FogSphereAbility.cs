@@ -1,5 +1,7 @@
 ﻿using AK;
 using AssetShards;
+using EECustom.Customizations.Shared;
+using EECustom.Customizations.Shared.Handlers;
 using Enemies;
 using System;
 using System.Collections.Generic;
@@ -12,6 +14,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
     {
         public const string EAB_FOG_PREFAB = "Assets/AssetPrefabs/Characters/Enemies/Abilities/EAB_FogSphere.prefab";
 
+        public uint SoundEventID { get; set; } = 0u;
         public Color ColorMin { get; set; } = Color.white;
         public Color ColorMax { get; set; } = Color.clear;
         public float IntensityMin { get; set; } = 1.0f;
@@ -23,6 +26,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         public float DensityAmountMin { get; set; } = 0.0f;
         public float DensityAmountMax { get; set; } = 5.0f;
         public float Duration { get; set; } = 30.0f;
+        public EffectVolumeSetting EffectVolume { get; set; } = new();
 
         private GameObject _fogSpherePrefab;
 
@@ -55,13 +59,18 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
         public override void OnBehaviourAssigned(EnemyAgent agent, FogSphereBehaviour behaviour)
         {
+            behaviour.SoundEffectID = SoundEventID;
             behaviour.FogPrefab = _fogSpherePrefab;
+            behaviour.Effect = EffectVolume;
         }
     }
 
     public class FogSphereBehaviour : AbilityBehaviour
     {
+        public uint SoundEffectID;
+        public EffectVolumeSetting Effect;
         public GameObject FogPrefab;
+
         private readonly List<FogSphereHandler> _fogSphereHandlers = new();
 
         public override bool AllowEABAbilityWhileExecuting => true;
@@ -69,12 +78,23 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
         protected override void OnEnter()
         {
-            Agent.Sound.Post(EVENTS.BIRTHER_FOG_BALL_APPEAR);
+            if (SoundEffectID != 0u)
+            {
+                Agent.Sound.Post(SoundEffectID);
+            }
+            
             var fogObject = UnityEngine.Object.Instantiate(FogPrefab, Agent.Position, Quaternion.identity);
             var handler = fogObject.GetComponent<FogSphereHandler>();
             if (handler.Play())
             {
                 _fogSphereHandlers.Add(handler);
+                if (Effect.Enabled)
+                {
+                    var effectHandler = handler.gameObject.AddComponent<EffectFogSphereHandler>();
+                    effectHandler.Handler = handler;
+                    effectHandler.EVSphere = Effect.CreateSphere(handler.transform.position, 0.0f, 0.0f);
+                    EffectVolumeManager.RegisterVolume(effectHandler.EVSphere);
+                }
             }
 
             DoExit();

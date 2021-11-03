@@ -26,11 +26,13 @@ namespace EECustom.Configs.Customizations
     public class EnemyAbilitiesSetting
     {
         public FogSphereAbility[] FogSphere { get; set; } = new FogSphereAbility[0];
+        public ExplosionAbility[] Explosion { get; set; } = new ExplosionAbility[0];
 
         public void RegisterAll()
         {
             var list = new List<IAbility>();
             list.AddRange(FogSphere);
+            list.AddRange(Explosion);
 
             foreach(var ab in list)
             {
