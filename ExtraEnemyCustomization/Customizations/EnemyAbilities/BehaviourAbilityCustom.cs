@@ -74,16 +74,20 @@ namespace EECustom.Customizations.EnemyAbilities
             if (!data.Setting.KeepOnDead && !data.Agent.Alive)
                 return;
 
-            var canUseAbility = true;
-            canUseAbility &= setting.Cooldown.CanUseAbility(data.CooldownTimer);
-            canUseAbility &= data.Setting.ActiveType switch
+            var isMatchingMode = data.Setting.ActiveType switch
             {
                 AbilityActiveType.Hibernate => agent.AI.Mode == AgentMode.Hibernate,
                 AbilityActiveType.Combat => agent.AI.Mode == AgentMode.Agressive,
                 AbilityActiveType.Scout => agent.AI.Mode == AgentMode.Scout,
-                AbilityActiveType.All => agent.AI.Mode != AgentMode.Off,
+                AbilityActiveType.All => true,
                 _ => false
             };
+
+            if (!isMatchingMode)
+                return;
+
+            var canUseAbility = true;
+            canUseAbility &= setting.Cooldown.CanUseAbility(data.CooldownTimer);
 
             var hasLos = false;
             var distance = float.MaxValue;
@@ -109,8 +113,8 @@ namespace EECustom.Customizations.EnemyAbilities
                 hasLos = false;
             }
 
-            canUseAbility &= setting.DistanceWithLOS.CanUseAbility(behaviour.Agent, hasLos, distance);
-            canUseAbility &= setting.DistanceWithoutLOS.CanUseAbility(behaviour.Agent, hasLos, distance);
+            canUseAbility &= setting.DistanceWithLOS.CanUseAbility(hasLos, distance);
+            canUseAbility &= setting.DistanceWithoutLOS.CanUseAbility(hasLos, distance);
 
             if (!canUseAbility)
                 return;
@@ -174,7 +178,7 @@ namespace EECustom.Customizations.EnemyAbilities
 
         public bool ShouldCheckLOS = false;
 
-        public bool CanUseAbility(EnemyAgent agent, bool hasLosOnTargetEmpty, float distanceToClosestOnTargetEmpty)
+        public bool CanUseAbility(bool hasLosOnTarget, float distanceToClosestTarget)
         {
             switch (Mode)
             {
@@ -184,26 +188,13 @@ namespace EECustom.Customizations.EnemyAbilities
                     return false;
             }
 
-            bool hasLos;
-            float distance;
-            if (agent.AI.IsTargetValid)
-            {
-                hasLos = agent.AI.Target.m_hasLineOfSight;
-                distance = agent.AI.Target.m_distance;
-            }
-            else
-            {
-                hasLos = hasLosOnTargetEmpty;
-                distance = distanceToClosestOnTargetEmpty;
-            }
-
-            if (ShouldCheckLOS != hasLos)
+            if (ShouldCheckLOS != hasLosOnTarget)
                 return true;
 
-            if (distance < Min)
+            if (distanceToClosestTarget < Min)
                 return false;
 
-            if (distance > Max)
+            if (distanceToClosestTarget > Max)
                 return false;
 
             return true;

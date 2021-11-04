@@ -70,9 +70,11 @@ namespace EECustom.Customizations.EnemyAbilities
 
             foreach (var ab in _abilities.Values)
             {
-                var id = _syncIDBuffer++;
+                var id = _syncIDBuffer;
                 _abilityIDLookup[id] = ab;
-                ab.Setup(_syncIDBuffer++);
+                ab.Setup(id);
+
+                _syncIDBuffer++;
             }  
         }
 
@@ -83,6 +85,8 @@ namespace EECustom.Customizations.EnemyAbilities
 
             _abilities.Clear();
             _syncIDBuffer = 1;
+            _abilityIDLookup.Clear();
+            _allAssetLoaded = false;
         }
 
         public static void SendEvent(ushort syncID, ushort enemyID, AbilityPacketType type)
@@ -119,7 +123,15 @@ namespace EECustom.Customizations.EnemyAbilities
                     case AbilityPacketType.DoTriggerAll:
                         ability.TriggerAll();
                         break;
+
+                    default:
+                        Logger.Error($"PacketType was invalid: {packet.Type}");
+                        break;
                 }
+            }
+            else
+            {
+                Logger.Error($"Packet was invalid: {packet.SyncID} {packet.EnemyID} {packet.Type}");
             }
         }
     }
