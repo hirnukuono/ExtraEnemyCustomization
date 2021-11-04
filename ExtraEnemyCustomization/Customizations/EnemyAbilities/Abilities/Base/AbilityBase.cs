@@ -1,4 +1,5 @@
-﻿using EECustom.Events;
+﻿using BepInEx.Logging;
+using EECustom.Events;
 using EECustom.Networking;
 using Enemies;
 using System.Collections.Generic;
@@ -42,6 +43,8 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
             _behaviours.Clear();
             OnAbilityUnloaded();
         }
+
+        #region ABILITY CALLER
 
         public void TriggerSync(ushort enemyID)
         {
@@ -95,6 +98,8 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
             }
         }
 
+        #endregion ABILITY CALLER
+
         public AbilityBehaviour RegisterBehaviour(EnemyAgent agent)
         {
             var id = agent.GlobalID;
@@ -134,5 +139,42 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         {
             return _behaviourLookup.TryGetValue(enemyID, out behaviour);
         }
+
+        #region LOGGING
+
+        public void LogVerbose(string str)
+        {
+            LogFormatDebug(str, true);
+        }
+
+        public void LogDev(string str)
+        {
+            LogFormatDebug(str, false);
+        }
+
+        public void LogError(string str)
+        {
+            LogFormat(LogLevel.Error, str);
+        }
+
+        public void LogWarning(string str)
+        {
+            LogFormat(LogLevel.Warning, str);
+        }
+
+        private void LogFormat(LogLevel level, string str)
+        {
+            Logger.LogInstance.Log(level, $"[{Name}] {str}");
+        }
+
+        private void LogFormatDebug(string str, bool verbose)
+        {
+            if (verbose)
+                Logger.Verbose($"[{Name}] {str}");
+            else
+                Logger.Debug($"[{Name}] {str}");
+        }
+
+        #endregion
     }
 }
