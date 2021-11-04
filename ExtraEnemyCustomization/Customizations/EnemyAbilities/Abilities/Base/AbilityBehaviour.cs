@@ -6,16 +6,22 @@ using UnityEngine;
 
 namespace EECustom.Customizations.EnemyAbilities.Abilities
 {
-    public abstract class AbilityBehaviour<AB> : AbilityBehaviour where AB : IAbility
+    public abstract class AbilityBehaviour<AB> : AbilityBehaviour where AB : class, IAbility
     {
-        public new AB Ability { get; private set; }
+        public AB Ability
+        {
+            get
+            {
+                return BaseAbility as AB;
+            }
+        }
     }
 
     public abstract class AbilityBehaviour
     {
         public const float LAZYUPDATE_DELAY = 0.15f;
 
-        public IAbility Ability { get; private set; }
+        public IAbility BaseAbility { get; private set; }
         public EnemyAgent Agent { get; private set; }
 
         public bool Executing
@@ -43,7 +49,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
         public void Setup(IAbility baseAbility, EnemyAgent agent)
         {
-            Ability = baseAbility;
+            BaseAbility = baseAbility;
             Agent = agent;
 
             var mbEventHandler = Agent.gameObject.AddComponent<MonoBehaviourEventHandler>();
@@ -156,7 +162,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
         public void DoTriggerSync()
         {
-            EnemyAbilityManager.SendEvent(Ability.SyncID, Agent.GlobalID, AbilityPacketType.DoTrigger);
+            EnemyAbilityManager.SendEvent(BaseAbility.SyncID, Agent.GlobalID, AbilityPacketType.DoTrigger);
         }
 
         public void DoTrigger()
@@ -166,7 +172,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
         public void DoEnterSync()
         {
-            EnemyAbilityManager.SendEvent(Ability.SyncID, Agent.GlobalID, AbilityPacketType.DoTrigger);
+            EnemyAbilityManager.SendEvent(BaseAbility.SyncID, Agent.GlobalID, AbilityPacketType.DoTrigger);
         }
 
         public void DoEnter()
@@ -183,7 +189,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         
         public void DoExitSync()
         {
-            EnemyAbilityManager.SendEvent(Ability.SyncID, Agent.GlobalID, AbilityPacketType.DoExit);
+            EnemyAbilityManager.SendEvent(BaseAbility.SyncID, Agent.GlobalID, AbilityPacketType.DoExit);
         }
 
         public void DoExit()
