@@ -28,15 +28,15 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         public float Duration { get; set; } = 30.0f;
         public EffectVolumeSetting EffectVolume { get; set; } = new();
 
-        private GameObject _fogSpherePrefab;
+        public GameObject FogSpherePrefab;
 
         public override void OnAbilityLoaded()
         {
             var eabFogPrefab = AssetShardManager.GetLoadedAsset(EAB_FOG_PREFAB, false);
             var eabFog = eabFogPrefab.Cast<GameObject>().GetComponent<EAB_FogSphere>();
-            _fogSpherePrefab = GameObject.Instantiate(eabFog.m_fogSpherePrefab).Cast<GameObject>();
+            FogSpherePrefab = GameObject.Instantiate(eabFog.m_fogSpherePrefab).Cast<GameObject>();
 
-            var fogHandler = _fogSpherePrefab.GetComponent<FogSphereHandler>();
+            var fogHandler = FogSpherePrefab.GetComponent<FogSphereHandler>();
             fogHandler.m_colorMin = ColorMin;
             fogHandler.m_colorMax = ColorMax;
             fogHandler.m_intensityMin = IntensityMin;
@@ -49,28 +49,17 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
             fogHandler.m_densityAmountMax = DensityAmountMax;
             fogHandler.m_totalLength = Duration;
 
-            GameObject.DontDestroyOnLoad(_fogSpherePrefab);
+            GameObject.DontDestroyOnLoad(FogSpherePrefab);
         }
 
         public override void OnAbilityUnloaded()
         {
-            GameObject.Destroy(_fogSpherePrefab);
-        }
-
-        public override void OnBehaviourAssigned(EnemyAgent agent, FogSphereBehaviour behaviour)
-        {
-            behaviour.SoundEffectID = SoundEventID;
-            behaviour.FogPrefab = _fogSpherePrefab;
-            behaviour.Effect = EffectVolume;
+            GameObject.Destroy(FogSpherePrefab);
         }
     }
 
-    public class FogSphereBehaviour : AbilityBehaviour
+    public class FogSphereBehaviour : AbilityBehaviour<FogSphereAbility>
     {
-        public uint SoundEffectID;
-        public EffectVolumeSetting Effect;
-        public GameObject FogPrefab;
-
         private readonly List<FogSphereHandler> _fogSphereHandlers = new();
 
         public override bool AllowEABAbilityWhileExecuting => true;
@@ -78,21 +67,21 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
         protected override void OnEnter()
         {
-            if (SoundEffectID != 0u)
+            if (Ability.SoundEventID != 0u)
             {
-                Agent.Sound.Post(SoundEffectID);
+                Agent.Sound.Post(Ability.SoundEventID);
             }
             
-            var fogObject = UnityEngine.Object.Instantiate(FogPrefab, Agent.Position, Quaternion.identity);
+            var fogObject = UnityEngine.Object.Instantiate(Ability.FogSpherePrefab, Agent.Position, Quaternion.identity);
             var handler = fogObject.GetComponent<FogSphereHandler>();
             if (handler.Play())
             {
                 _fogSphereHandlers.Add(handler);
-                if (Effect.Enabled)
+                if (Ability.EffectVolume.Enabled)
                 {
                     var effectHandler = handler.gameObject.AddComponent<EffectFogSphereHandler>();
                     effectHandler.Handler = handler;
-                    effectHandler.EVSphere = Effect.CreateSphere(handler.transform.position, 0.0f, 0.0f);
+                    effectHandler.EVSphere = Ability.EffectVolume.CreateSphere(handler.transform.position, 0.0f, 0.0f);
                     EffectVolumeManager.RegisterVolume(effectHandler.EVSphere);
                 }
             }

@@ -6,6 +6,11 @@ using UnityEngine;
 
 namespace EECustom.Customizations.EnemyAbilities.Abilities
 {
+    public abstract class AbilityBehaviour<AB> : AbilityBehaviour where AB : IAbility
+    {
+        public new AB Ability { get; private set; }
+    }
+
     public abstract class AbilityBehaviour
     {
         public const float LAZYUPDATE_DELAY = 0.15f;

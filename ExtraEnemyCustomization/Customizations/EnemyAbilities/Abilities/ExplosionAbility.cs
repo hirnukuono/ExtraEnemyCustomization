@@ -14,40 +14,25 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         public float MaxRange { get; set; } = 5.0f;
         public float NoiseMinRange { get; set; } = 5.0f;
         public float NoiseMaxRange { get; set; } = 10.0f;
-
-        public override void OnBehaviourAssigned(EnemyAgent agent, ExplosionBehaviour behaviour)
-        {
-            behaviour.Damage = Damage.GetAbsValue(PlayerData.MaxHealth);
-            behaviour.EnemyMulti = EnemyDamageMulti;
-            behaviour.MinRange = MinRange;
-            behaviour.MaxRange = MaxRange;
-            behaviour.NoiseMinRange = NoiseMinRange;
-            behaviour.NoiseMaxRange = NoiseMaxRange;
-        }
     }
 
-    public class ExplosionBehaviour : AbilityBehaviour
+    public class ExplosionBehaviour : AbilityBehaviour<ExplosionAbility>
     {
-        public float Damage;
-        public float EnemyMulti;
-        public float MinRange;
-        public float MaxRange;
-        public float NoiseMinRange;
-        public float NoiseMaxRange;
-
         public override bool AllowEABAbilityWhileExecuting => true;
         public override bool IsHostOnlyBehaviour => true;
 
         protected override void OnEnter()
         {
-            ExplosionUtil.MakeExplosion(Agent.EyePosition, Damage, EnemyMulti, MinRange, MaxRange);
+
+            var damage = Ability.Damage.GetAbsValue(PlayerData.MaxHealth);
+            ExplosionUtil.MakeExplosion(Agent.EyePosition, damage, Ability.EnemyDamageMulti, Ability.MinRange, Ability.MaxRange);
 
             var noise = new NM_NoiseData()
             {
                 noiseMaker = null,
                 position = Agent.EyePosition,
-                radiusMin = NoiseMinRange,
-                radiusMax = NoiseMaxRange,
+                radiusMin = Ability.NoiseMinRange,
+                radiusMax = Ability.NoiseMaxRange,
                 yScale = 1,
                 node = Agent.CourseNode,
                 type = NM_NoiseType.Detectable,
