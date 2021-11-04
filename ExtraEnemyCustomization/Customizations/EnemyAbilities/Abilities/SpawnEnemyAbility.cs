@@ -42,7 +42,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         private bool _shouldRevertNavMeshAgent = false;
         private State _state;
         private float _stateTimer = 0.0f;
-        private List<ushort> _spawnedChilds = new();
+        private readonly List<ushort> _spawnedChilds = new();
 
         public override bool AllowEABAbilityWhileExecuting => false;
         public override bool IsHostOnlyBehaviour => false;
