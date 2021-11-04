@@ -1,4 +1,5 @@
 ﻿using EECustom.Events;
+using EECustom.Networking;
 using Enemies;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,8 +29,11 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
             }
         }
 
-        public void Setup()
+        public ushort SyncID { get; private set; }
+
+        public void Setup(ushort syncID)
         {
+            SyncID = syncID;
             OnAbilityLoaded();
         }
 
@@ -39,12 +43,22 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
             OnAbilityUnloaded();
         }
 
-        public void Trigger(EnemyAgent agent)
+        public void TriggerSync(ushort enemyID)
         {
-            if (TryGetBehaviour(agent, out var behaviour))
+            EnemyAbilityManager.SendEvent(SyncID, enemyID, AbilityPacketType.DoTrigger);
+        }
+
+        public void Trigger(ushort enemyID)
+        {
+            if (TryGetBehaviour(enemyID, out var behaviour))
             {
                 behaviour.DoTrigger();
             }
+        }
+
+        public void TriggerAllSync()
+        {
+            EnemyAbilityManager.SendEvent(SyncID, 0, AbilityPacketType.DoTriggerAll);
         }
 
         public void TriggerAll()
@@ -55,12 +69,38 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
             }
         }
 
+        public void ExitSync(ushort enemyID)
+        {
+            EnemyAbilityManager.SendEvent(SyncID, enemyID, AbilityPacketType.DoExit);
+        }
+
+        public void Exit(ushort enemyID)
+        {
+            if (TryGetBehaviour(enemyID, out var behaviour))
+            {
+                behaviour.DoExit();
+            }
+        }
+
+        public void ExitAllSync()
+        {
+            EnemyAbilityManager.SendEvent(SyncID, 0, AbilityPacketType.DoExitAll);
+        }
+
+        public void ExitAll()
+        {
+            foreach (var behaviour in _behaviours)
+            {
+                behaviour.DoExit();
+            }
+        }
+
         public AbilityBehaviour RegisterBehaviour(EnemyAgent agent)
         {
             var id = agent.GlobalID;
 
             var behaviour = new T();
-            behaviour.Setup(agent);
+            behaviour.Setup(this, agent);
             _behaviours.Add(behaviour);
             _isBehavioursDirty = true;
             _behaviourLookup[id] = behaviour;
@@ -87,11 +127,12 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
         public virtual void OnBehaviourAssigned(EnemyAgent agent, T behaviour)
         {
+
         }
 
-        public bool TryGetBehaviour(EnemyAgent agent, out AbilityBehaviour behaviour)
+        public bool TryGetBehaviour(ushort enemyID, out AbilityBehaviour behaviour)
         {
-            return _behaviourLookup.TryGetValue(agent.GlobalID, out behaviour);
+            return _behaviourLookup.TryGetValue(enemyID, out behaviour);
         }
     }
 }

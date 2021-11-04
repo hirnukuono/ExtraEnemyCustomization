@@ -14,7 +14,7 @@ namespace EECustom.Customizations.EnemyAbilities
         public sealed override void OnConfigLoaded()
         {
             Abilities = CacheAbilities(Abilities);
-            OnConfigUnloadedPost();
+            OnConfigLoadedPost();
         }
 
 
@@ -36,7 +36,7 @@ namespace EECustom.Customizations.EnemyAbilities
             return settingsList.ToArray();
         }
 
-        public virtual void OnConfigUnloadedPost()
+        public virtual void OnConfigLoadedPost()
         {
 
         }

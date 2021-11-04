@@ -21,7 +21,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
     }
 
     //MAJOR: Please Implement this Dak
-    [Obsolete("PLEASE IMPLEMENT THIS DAK", true)]
+    [Obsolete("PLEASE IMPLEMENT THIS DAK", false)]
     public class EMPBehaviour : AbilityBehaviour
     {
         public Color FogColor;

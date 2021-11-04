@@ -1,6 +1,8 @@
 ﻿using Agents;
 using EECustom.Customizations.EnemyAbilities.Abilities;
+using EECustom.Customizations.Shared;
 using EECustom.Events;
+using EECustom.Utils;
 using Enemies;
 using Player;
 using SNetwork;
@@ -16,6 +18,15 @@ namespace EECustom.Customizations.EnemyAbilities
         public override string GetProcessName()
         {
             return "BehaviourAbility";
+        }
+
+        public override void OnConfigLoadedPost()
+        {
+            foreach (var abSetting in Abilities)
+            {
+                abSetting.DistanceWithLOS.ShouldCheckLOS = true;
+                abSetting.DistanceWithoutLOS.ShouldCheckLOS = false;
+            }
         }
 
         public override void OnSpawnedPost(EnemyAgent agent)
@@ -51,6 +62,9 @@ namespace EECustom.Customizations.EnemyAbilities
             if (Clock.Time < data.UpdateTimer)
                 return;
 
+            if (!SNet.IsMaster)
+                return;
+
             var agent = data.Agent;
             var setting = data.Setting;
             var behaviour = data.Behaviour;
@@ -61,6 +75,7 @@ namespace EECustom.Customizations.EnemyAbilities
                 return;
 
             var canUseAbility = true;
+            canUseAbility &= setting.Cooldown.CanUseAbility(data.CooldownTimer);
             canUseAbility &= data.Setting.ActiveType switch
             {
                 AbilityActiveType.Hibernate => agent.AI.Mode == AgentMode.Hibernate,
@@ -69,9 +84,33 @@ namespace EECustom.Customizations.EnemyAbilities
                 AbilityActiveType.All => agent.AI.Mode != AgentMode.Off,
                 _ => false
             };
-            canUseAbility &= setting.Cooldown.CanUseAbility(data.CooldownTimer);
-            canUseAbility &= setting.DistanceWithLOS.CanUseAbility(behaviour.Agent, shouldCheckLOS: true);
-            canUseAbility &= setting.DistanceWithoutLOS.CanUseAbility(behaviour.Agent, shouldCheckLOS: false);
+
+            var hasLos = false;
+            var distance = float.MaxValue;
+            for (int i = 0; i < SNet.Slots.SlottedPlayers.Count; i++)
+            {
+                SNet_Player snet_Player = SNet.Slots.SlottedPlayers[i];
+
+                var iPlayerAgent = snet_Player.PlayerAgent;
+                if (iPlayerAgent == null)
+                    continue;
+
+                var playerAgent = iPlayerAgent.Cast<PlayerAgent>();
+                var tempDistance = Vector3.Distance(agent.EyePosition, playerAgent.EyePosition);
+                if (distance >= tempDistance)
+                {
+                    distance = tempDistance;
+                    hasLos = !Physics.Linecast(agent.EyePosition, playerAgent.EyePosition, LayerManager.MASK_WORLD);
+                }
+            }
+
+            if (distance == float.MaxValue)
+            {
+                hasLos = false;
+            }
+
+            canUseAbility &= setting.DistanceWithLOS.CanUseAbility(behaviour.Agent, hasLos, distance);
+            canUseAbility &= setting.DistanceWithoutLOS.CanUseAbility(behaviour.Agent, hasLos, distance);
 
             if (!canUseAbility)
                 return;
@@ -81,7 +120,7 @@ namespace EECustom.Customizations.EnemyAbilities
                 data.CooldownTimer = Clock.Time + setting.Cooldown.Cooldown;
             }
 
-            behaviour.DoTrigger();
+            behaviour.DoTriggerSync();
         }
     }
 
@@ -133,7 +172,9 @@ namespace EECustom.Customizations.EnemyAbilities
         public float Min { get; set; } = 0.0f;
         public float Max { get; set; } = 1.0f;
 
-        public bool CanUseAbility(EnemyAgent agent, bool shouldCheckLOS, bool mismatchingLOSsettingResult = true)
+        public bool ShouldCheckLOS = false;
+
+        public bool CanUseAbility(EnemyAgent agent, bool hasLosOnTargetEmpty, float distanceToClosestOnTargetEmpty)
         {
             switch (Mode)
             {
@@ -143,43 +184,21 @@ namespace EECustom.Customizations.EnemyAbilities
                     return false;
             }
 
-            var hasLos = false;
-            var distance = float.MaxValue;
-            if (agent.AI.Mode == AgentMode.Agressive)
+            bool hasLos;
+            float distance;
+            if (agent.AI.IsTargetValid)
             {
-                if (!agent.AI.IsTargetValid)
-                    return false;
-
                 hasLos = agent.AI.Target.m_hasLineOfSight;
                 distance = agent.AI.Target.m_distance;
             }
             else
             {
-                for (int i = 0; i < SNet.Slots.SlottedPlayers.Count; i++)
-                {
-                    SNet_Player snet_Player = SNet.Slots.SlottedPlayers[i];
-
-                    var iPlayerAgent = snet_Player.PlayerAgent;
-                    if (iPlayerAgent == null)
-                        continue;
-
-                    var playerAgent = iPlayerAgent.Cast<PlayerAgent>();
-                    var tempDistance = Vector3.Distance(agent.EyePosition, playerAgent.EyePosition);
-                    if (distance >= tempDistance)
-                    {
-                        distance = tempDistance;
-                        hasLos = !Physics.Linecast(agent.EyePosition, playerAgent.EyePosition, LayerManager.MASK_WORLD);
-                    }
-                }
-
-                if (distance == float.MaxValue)
-                {
-                    return false;
-                }
+                hasLos = hasLosOnTargetEmpty;
+                distance = distanceToClosestOnTargetEmpty;
             }
 
-            if (shouldCheckLOS != hasLos)
-                return mismatchingLOSsettingResult;
+            if (ShouldCheckLOS != hasLos)
+                return true;
 
             if (distance < Min)
                 return false;
