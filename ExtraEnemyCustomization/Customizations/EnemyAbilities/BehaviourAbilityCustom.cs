@@ -113,8 +113,15 @@ namespace EECustom.Customizations.EnemyAbilities
                 hasLos = false;
             }
 
-            canUseAbility &= setting.DistanceWithLOS.CanUseAbility(hasLos, distance);
-            canUseAbility &= setting.DistanceWithoutLOS.CanUseAbility(hasLos, distance);
+            if (hasLos)
+            {
+                canUseAbility &= setting.DistanceWithLOS.CanUseAbility(hasLos, distance);
+            }
+            else
+            {
+                canUseAbility &= setting.DistanceWithoutLOS.CanUseAbility(hasLos, distance);
+            }
+            
 
             if (!canUseAbility)
                 return;
