@@ -45,8 +45,7 @@ namespace EECustom.Customizations.EnemyAbilities
             {
                 Logger.Error($"Duplicated EnemyAbility Name was detected! : \"{key}\"");
                 return;
-            }
-                
+            }   
 
             _abilities.Add(key, ability);
         }
