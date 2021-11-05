@@ -124,7 +124,14 @@ namespace EECustom.Customizations.EnemyAbilities
             
 
             if (!canUseAbility)
+            {
+                if (setting.ForceExitOnConditionMismatch || behaviour.Executing)
+                {
+                    behaviour.DoExitSync();
+                }
                 return;
+            }
+                
 
             if (setting.Cooldown.Enabled)
             {
@@ -149,6 +156,7 @@ namespace EECustom.Customizations.EnemyAbilities
         public float UpdateInterval { get; set; } = 0.15f;
         public AbilityActiveType ActiveType { get; set; } = AbilityActiveType.Combat;
         public bool KeepOnDead { get; set; } = false;
+        public bool ForceExitOnConditionMismatch { get; set; } = false;
         public DistanceSetting DistanceWithLOS { get; set; } = new();
         public DistanceSetting DistanceWithoutLOS { get; set; } = new();
         public CooldownSetting Cooldown { get; set; } = new();
