@@ -9,5 +9,10 @@ namespace EECustom.Customizations.EnemyAbilities
     {
         public string AbilityName { get; set; }
         public IAbility Ability;
+
+        public bool TryCache()
+        {
+            return EnemyAbilityManager.TryGetAbility(AbilityName, out Ability);
+        }
     }
 }

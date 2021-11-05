@@ -23,14 +23,12 @@ namespace EECustom.Customizations.EnemyAbilities
             var settingsList = new List<T>(settings);
             foreach (var ab in settings)
             {
-                if (!EnemyAbilityManager.TryGetAbility(ab.AbilityName, out var ability))
+                if (!ab.TryCache())
                 {
                     LogError($"Key: [{ab.AbilityName}] was missing, unable to apply ability!");
                     settingsList.Remove(ab);
                     continue;
                 }
-
-                ab.Ability = ability;
             }
 
             return settingsList.ToArray();
