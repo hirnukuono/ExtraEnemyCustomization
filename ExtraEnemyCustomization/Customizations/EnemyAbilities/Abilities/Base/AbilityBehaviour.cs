@@ -1,4 +1,5 @@
-﻿using EECustom.Customizations.EnemyAbilities.Events;
+﻿using BepInEx.Logging;
+using EECustom.Customizations.EnemyAbilities.Events;
 using EECustom.Events;
 using Enemies;
 using SNetwork;
@@ -273,5 +274,42 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         }
 
         #endregion OVERRIDES
+
+        #region LOGGING
+
+        public void LogVerbose(string str)
+        {
+            LogFormatDebug(str, true);
+        }
+
+        public void LogDev(string str)
+        {
+            LogFormatDebug(str, false);
+        }
+
+        public void LogError(string str)
+        {
+            LogFormat(LogLevel.Error, str);
+        }
+
+        public void LogWarning(string str)
+        {
+            LogFormat(LogLevel.Warning, str);
+        }
+
+        private void LogFormat(LogLevel level, string str)
+        {
+            Logger.LogInstance.Log(level, $"[{BaseAbility.Name}] [{Agent.name}] {str}");
+        }
+
+        private void LogFormatDebug(string str, bool verbose)
+        {
+            if (verbose)
+                Logger.Verbose($"[{BaseAbility.Name}] [{Agent.name}] {str}");
+            else
+                Logger.Debug($"[{BaseAbility.Name}] [{Agent.name}] {str}");
+        }
+
+        #endregion
     }
 }
