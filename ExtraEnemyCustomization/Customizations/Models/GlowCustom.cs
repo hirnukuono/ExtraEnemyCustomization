@@ -198,14 +198,6 @@ namespace EECustom.Customizations.Models
         }
     }
 
-    public enum PulseEffectTarget
-    {
-        None,
-        Hibernate,
-        Combat,
-        Scout
-    }
-
     public struct PatternDataCache
     {
         public int StepDuration;
