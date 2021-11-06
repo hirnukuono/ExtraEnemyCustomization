@@ -50,11 +50,6 @@ namespace EECustom.Customizations.EnemyAbilities
             {
                 OnUpdate(data);
             };
-
-            if (setting.Cooldown.InitCooldown > 0.0f)
-            {
-                data.CooldownTimer = Clock.Time + setting.Cooldown.InitCooldown;
-            }
         }
 
         private void OnUpdate(BehaviourEnemyData data)
@@ -71,10 +66,9 @@ namespace EECustom.Customizations.EnemyAbilities
 
             data.UpdateTimer = Clock.Time + setting.UpdateInterval;
 
-            if (!data.Setting.KeepOnDead && !data.Agent.Alive)
-                return;
-
-            var isMatchingMode = data.Setting.ActiveType switch
+            var canUseAbility = true;
+            canUseAbility &= data.Setting.KeepOnDead || data.Agent.Alive;
+            canUseAbility &= data.Setting.ActiveType switch
             {
                 AbilityActiveType.Hibernate => agent.AI.Mode == AgentMode.Hibernate,
                 AbilityActiveType.Combat => agent.AI.Mode == AgentMode.Agressive,
@@ -82,24 +76,14 @@ namespace EECustom.Customizations.EnemyAbilities
                 AbilityActiveType.All => true,
                 _ => false
             };
-
-            if (!isMatchingMode)
-                return;
-
-            var canUseAbility = true;
+            
             canUseAbility &= setting.Cooldown.CanUseAbility(data.CooldownTimer);
 
             var hasLos = false;
             var sqrDistance = float.MaxValue;
-            for (int i = 0; i < SNet.Slots.SlottedPlayers.Count; i++)
+            for (int i = 0; i < PlayerManager.PlayerAgentsInLevel.Count; i++)
             {
-                SNet_Player snet_Player = SNet.Slots.SlottedPlayers[i];
-
-                var iPlayerAgent = snet_Player.PlayerAgent;
-                if (iPlayerAgent == null)
-                    continue;
-
-                var playerAgent = iPlayerAgent.Cast<PlayerAgent>();
+                var playerAgent = PlayerManager.PlayerAgentsInLevel[i];
                 var tempDistance = (agent.EyePosition - playerAgent.EyePosition).sqrMagnitude;
                 if (sqrDistance >= tempDistance)
                 {
@@ -125,11 +109,16 @@ namespace EECustom.Customizations.EnemyAbilities
                 }
                 return;
             }
-                
 
             if (setting.Cooldown.Enabled)
             {
                 data.CooldownTimer = Clock.Time + setting.Cooldown.Cooldown;
+                if (!data.HasInitialTimerDone)
+                {
+                    data.CooldownTimer = Clock.Time + setting.Cooldown.InitCooldown;
+                    data.HasInitialTimerDone = true;
+                    return;
+                }
             }
 
             behaviour.DoTriggerSync();
@@ -143,6 +132,7 @@ namespace EECustom.Customizations.EnemyAbilities
         public BehaviourAbilitySetting Setting;
         public float UpdateTimer = 0.0f;
         public float CooldownTimer = 0.0f;
+        public bool HasInitialTimerDone = false;
     }
 
     public class BehaviourAbilitySetting : AbilitySettingBase
