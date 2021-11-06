@@ -1,4 +1,5 @@
 ﻿using EECustom.Customizations.Models.Handlers;
+using EECustom.Utils.JsonElements;
 using Enemies;
 using System;
 using System.Collections.Generic;
@@ -93,7 +94,7 @@ namespace EECustom.Customizations.Models
 
     public struct PulseEffectData
     {
-        public PulseEffectTarget Target { get; set; }
+        public AgentModeTarget Target { get; set; }
         public float Duration { get; set; }
 
         [JsonPropertyName("GlowPattern")]
@@ -106,7 +107,7 @@ namespace EECustom.Customizations.Models
 
         public PatternDataCache[] PatternData;
 
-        public PulseEffectData(PulseEffectTarget target = PulseEffectTarget.None, float interval = 1.0f, string pattern = "0")
+        public PulseEffectData(AgentModeTarget target, float interval, string pattern)
         {
             Target = target;
             Duration = interval;
