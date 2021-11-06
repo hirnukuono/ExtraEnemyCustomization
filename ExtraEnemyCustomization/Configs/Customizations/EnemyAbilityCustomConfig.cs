@@ -23,6 +23,7 @@ namespace EECustom.Configs.Customizations
 
     public class EnemyAbilitiesSetting
     {
+        public ChainedAbility[] Chain { get; set; } = new ChainedAbility[0];
         public FogSphereAbility[] FogSphere { get; set; } = new FogSphereAbility[0];
         public ExplosionAbility[] Explosion { get; set; } = new ExplosionAbility[0];
         public SpawnEnemyAbility[] SpawnEnemy { get; set; } = new SpawnEnemyAbility[0];
