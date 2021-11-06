@@ -90,7 +90,7 @@ namespace EECustom.Customizations.EnemyAbilities
             canUseAbility &= setting.Cooldown.CanUseAbility(data.CooldownTimer);
 
             var hasLos = false;
-            var distance = float.MaxValue;
+            var sqrDistance = float.MaxValue;
             for (int i = 0; i < SNet.Slots.SlottedPlayers.Count; i++)
             {
                 SNet_Player snet_Player = SNet.Slots.SlottedPlayers[i];
@@ -100,28 +100,22 @@ namespace EECustom.Customizations.EnemyAbilities
                     continue;
 
                 var playerAgent = iPlayerAgent.Cast<PlayerAgent>();
-                var tempDistance = Vector3.Distance(agent.EyePosition, playerAgent.EyePosition);
-                if (distance >= tempDistance)
+                var tempDistance = (agent.EyePosition - playerAgent.EyePosition).sqrMagnitude;
+                if (sqrDistance >= tempDistance)
                 {
-                    distance = tempDistance;
+                    sqrDistance = tempDistance;
                     hasLos = !Physics.Linecast(agent.EyePosition, playerAgent.EyePosition, LayerManager.MASK_WORLD);
                 }
             }
 
-            if (distance == float.MaxValue)
+            if (sqrDistance == float.MaxValue)
             {
                 hasLos = false;
             }
 
-            if (hasLos)
-            {
-                canUseAbility &= setting.DistanceWithLOS.CanUseAbility(hasLos, distance);
-            }
-            else
-            {
-                canUseAbility &= setting.DistanceWithoutLOS.CanUseAbility(hasLos, distance);
-            }
-            
+            var distance = Mathf.Sqrt(sqrDistance);
+            var distSettingToUse = hasLos ? setting.DistanceWithLOS : setting.DistanceWithoutLOS;
+            canUseAbility &= distSettingToUse.CanUseAbility(hasLos, distance);
 
             if (!canUseAbility)
             {
