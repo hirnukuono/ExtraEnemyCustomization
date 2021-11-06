@@ -65,8 +65,6 @@ namespace EECustom.Customizations.EnemyAbilities
             canUseAbility &= data.Setting.KeepOnDead || data.Agent.Alive;
             canUseAbility &= data.Setting.AllowedMode.IsMatch(agent);
 
-            canUseAbility &= setting.Cooldown.CanUseAbility(data.CooldownTimer);
-
             var hasLos = false;
             var sqrDistance = float.MaxValue;
             for (int i = 0; i < PlayerManager.PlayerAgentsInLevel.Count; i++)
@@ -98,18 +96,19 @@ namespace EECustom.Customizations.EnemyAbilities
                 return;
             }
 
-            if (setting.Cooldown.Enabled)
+            if (setting.Cooldown.Enabled && setting.Cooldown.CanUseAbility(data.CooldownTimer))
             {
-                data.CooldownTimer = Clock.Time + setting.Cooldown.Cooldown;
                 if (!data.HasInitialTimerDone)
                 {
                     data.CooldownTimer = Clock.Time + setting.Cooldown.InitCooldown;
                     data.HasInitialTimerDone = true;
                     return;
                 }
-            }
+                else
+                    data.CooldownTimer = Clock.Time + setting.Cooldown.Cooldown;
 
-            behaviour.DoTriggerSync();
+                behaviour.DoTriggerSync();
+            }
         }
     }
 
@@ -128,9 +127,9 @@ namespace EECustom.Customizations.EnemyAbilities
         public float UpdateInterval { get; set; } = 0.15f;
         public AgentModeTarget AllowedMode { get; set; } = AgentModeTarget.None;
         public bool KeepOnDead { get; set; } = false;
-        public bool ForceExitOnConditionMismatch { get; set; } = false;
         public DistanceSetting DistanceWithLOS { get; set; } = new();
         public DistanceSetting DistanceWithoutLOS { get; set; } = new();
+        public bool ForceExitOnConditionMismatch { get; set; } = false;
         public CooldownSetting Cooldown { get; set; } = new();
     }
 
