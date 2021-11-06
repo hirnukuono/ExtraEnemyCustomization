@@ -3,6 +3,7 @@ using EECustom.Customizations.Abilities.Handlers;
 using EECustom.Events;
 using EECustom.Managers;
 using EECustom.Utils;
+using EECustom.Utils.JsonElements;
 using Enemies;
 using Gear;
 using Player;

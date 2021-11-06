@@ -1,9 +1,7 @@
 ﻿using EECustom.Customizations;
 using EECustom.Customizations.EnemyAbilities;
 using EECustom.Customizations.EnemyAbilities.Abilities;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace EECustom.Configs.Customizations
 {
@@ -12,7 +10,7 @@ namespace EECustom.Configs.Customizations
         public BehaviourAbilityCustom[] BehaviourAbilityCustom { get; set; } = new BehaviourAbilityCustom[0];
         public DeathAbilityCustom[] DeathAbilityCustom { get; set; } = new DeathAbilityCustom[0];
         public EnemyAbilitiesSetting Abilities { get; set; } = new EnemyAbilitiesSetting();
-        
+
 
         public override EnemyCustomBase[] GetAllSettings()
         {
@@ -36,7 +34,7 @@ namespace EECustom.Configs.Customizations
             list.AddRange(Explosion);
             list.AddRange(SpawnEnemy);
 
-            foreach(var ab in list)
+            foreach (var ab in list)
             {
                 EnemyAbilityManager.AddAbility(ab);
             }

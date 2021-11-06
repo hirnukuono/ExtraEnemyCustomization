@@ -1,8 +1,6 @@
 ﻿using AK;
 using EECustom.Networking;
-using Enemies;
 using FX_EffectSystem;
-using Player;
 using SNetwork;
 using System;
 using System.Threading.Tasks;
@@ -51,7 +49,7 @@ namespace EECustom.Utils
                 if (targetDamagable.TempSearchID == searchID)
                 {
                     continue;
-                } 
+                }
                 targetDamagable.TempSearchID = searchID;
 
                 var distance = Vector3.Distance(position, targetPosition);

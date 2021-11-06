@@ -187,7 +187,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
             Executing = true;
             OnEnter();
         }
-        
+
         public void DoExitSync()
         {
             EnemyAbilityManager.SendEvent(BaseAbility.SyncID, Agent.GlobalID, AbilityPacketType.DoExit);

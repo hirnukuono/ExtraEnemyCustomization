@@ -1,14 +1,9 @@
-﻿using Agents;
-using EECustom.Customizations.EnemyAbilities.Abilities;
-using EECustom.Customizations.Shared;
+﻿using EECustom.Customizations.EnemyAbilities.Abilities;
 using EECustom.Events;
-using EECustom.Utils;
+using EECustom.Utils.JsonElements;
 using Enemies;
 using Player;
 using SNetwork;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
 namespace EECustom.Customizations.EnemyAbilities
@@ -31,7 +26,7 @@ namespace EECustom.Customizations.EnemyAbilities
 
         public override void OnSpawnedPost(EnemyAgent agent)
         {
-            
+
         }
 
         public override void OnBehaviourAssigned(EnemyAgent agent, AbilityBehaviour behaviour, BehaviourAbilitySetting setting)
@@ -68,15 +63,8 @@ namespace EECustom.Customizations.EnemyAbilities
 
             var canUseAbility = true;
             canUseAbility &= data.Setting.KeepOnDead || data.Agent.Alive;
-            canUseAbility &= data.Setting.ActiveType switch
-            {
-                AbilityActiveType.Hibernate => agent.AI.Mode == AgentMode.Hibernate,
-                AbilityActiveType.Combat => agent.AI.Mode == AgentMode.Agressive,
-                AbilityActiveType.Scout => agent.AI.Mode == AgentMode.Scout,
-                AbilityActiveType.All => true,
-                _ => false
-            };
-            
+            canUseAbility &= data.Setting.AllowedMode.IsMatch(agent);
+
             canUseAbility &= setting.Cooldown.CanUseAbility(data.CooldownTimer);
 
             var hasLos = false;
@@ -138,7 +126,7 @@ namespace EECustom.Customizations.EnemyAbilities
     public class BehaviourAbilitySetting : AbilitySettingBase
     {
         public float UpdateInterval { get; set; } = 0.15f;
-        public AbilityActiveType ActiveType { get; set; } = AbilityActiveType.Combat;
+        public AgentModeTarget AllowedMode { get; set; } = AgentModeTarget.None;
         public bool KeepOnDead { get; set; } = false;
         public bool ForceExitOnConditionMismatch { get; set; } = false;
         public DistanceSetting DistanceWithLOS { get; set; } = new();

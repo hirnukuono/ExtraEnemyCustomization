@@ -2,9 +2,7 @@
 using EECustom.Events;
 using EECustom.Networking;
 using SNetwork;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace EECustom.Customizations.EnemyAbilities
 {
@@ -45,7 +43,7 @@ namespace EECustom.Customizations.EnemyAbilities
             {
                 Logger.Error($"Duplicated EnemyAbility Name was detected! : \"{key}\"");
                 return;
-            }   
+            }
 
             _abilities.Add(key, ability);
         }
@@ -74,7 +72,7 @@ namespace EECustom.Customizations.EnemyAbilities
                 ab.Setup(id);
 
                 _syncIDBuffer++;
-            }  
+            }
         }
 
         public static void Clear()

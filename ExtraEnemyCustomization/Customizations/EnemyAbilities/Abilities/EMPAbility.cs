@@ -1,5 +1,4 @@
-﻿using Enemies;
-using System;
+﻿using System;
 using UnityEngine;
 
 namespace EECustom.Customizations.EnemyAbilities.Abilities

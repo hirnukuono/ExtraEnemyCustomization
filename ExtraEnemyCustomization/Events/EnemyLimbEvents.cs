@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace EECustom.Events
+﻿namespace EECustom.Events
 {
     public delegate void EnemyLimbHandler(Dam_EnemyDamageLimb limb);
 

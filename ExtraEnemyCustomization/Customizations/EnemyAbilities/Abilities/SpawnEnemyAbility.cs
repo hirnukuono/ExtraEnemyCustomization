@@ -3,9 +3,7 @@ using AK;
 using EECustom.Events;
 using Enemies;
 using SNetwork;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace EECustom.Customizations.EnemyAbilities.Abilities
 {
@@ -26,7 +24,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
                 LogError($"TotalCount was below zero! : setting to default value");
                 TotalCount = 0;
             }
-                
+
             if (CountPerSpawn < 1)
             {
                 LogError($"CountPerSpawn was below one! : setting to default value");
@@ -126,7 +124,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
                 case State.DoneSpawning:
                     DoExit();
                     break;
-                
+
             }
         }
 

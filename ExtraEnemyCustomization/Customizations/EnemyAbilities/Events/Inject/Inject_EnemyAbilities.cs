@@ -1,8 +1,4 @@
-﻿using Enemies;
-using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using HarmonyLib;
 
 namespace EECustom.Customizations.EnemyAbilities.Events.Inject
 {

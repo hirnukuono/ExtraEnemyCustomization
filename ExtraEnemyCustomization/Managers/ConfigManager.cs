@@ -78,7 +78,7 @@ namespace EECustom.Managers
             if (doClear)
             {
                 ClearConfigs();
-            } 
+            }
         }
 
         internal static void ClearConfigs()

@@ -1,4 +1,4 @@
-﻿using EECustom.Utils;
+﻿using EECustom.Utils.JsonElements;
 using UnityEngine;
 
 namespace EECustom.CustomSettings.DTO

@@ -18,7 +18,7 @@ namespace EECustom.Utils.Integrations
         public static bool IsLoaded { get; private set; } = false;
         public static bool HasHotReload { get; private set; } = false;
 
-        
+
 
         static MTFOUtil()
         {

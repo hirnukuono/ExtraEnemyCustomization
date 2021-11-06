@@ -1,5 +1,6 @@
 ﻿using EECustom.Utils.Integrations;
 using EECustom.Utils.JsonConverters;
+using EECustom.Utils.JsonElements;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -17,6 +18,7 @@ namespace EECustom.Utils
         static JSON()
         {
             _setting.Converters.Add(new ValueBaseConverter());
+            _setting.Converters.Add(new AgentModeTargetConverter());
             _setting.Converters.Add(new ColorConverter());
             _setting.Converters.Add(new JsonStringEnumConverter());
             _setting.Converters.Add(new Vector2Converter());

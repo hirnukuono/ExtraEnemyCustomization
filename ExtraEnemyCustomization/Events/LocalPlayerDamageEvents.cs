@@ -1,6 +1,5 @@
 ﻿using Agents;
 using Player;
-using System;
 
 namespace EECustom.Events
 {

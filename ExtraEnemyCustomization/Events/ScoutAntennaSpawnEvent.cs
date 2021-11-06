@@ -1,5 +1,4 @@
 ﻿using Enemies;
-using System;
 
 namespace EECustom.Events
 {

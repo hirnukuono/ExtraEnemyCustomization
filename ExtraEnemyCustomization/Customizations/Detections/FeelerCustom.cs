@@ -1,8 +1,6 @@
 ﻿using EECustom.Events;
-using EECustom.Extensions;
-using EECustom.Utils;
+using EECustom.Utils.JsonElements;
 using Enemies;
-using System;
 using UnityEngine;
 
 namespace EECustom.Customizations.Detections

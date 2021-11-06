@@ -1,9 +1,4 @@
-﻿using Enemies;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace EECustom.Customizations.EnemyAbilities.Events
+﻿namespace EECustom.Customizations.EnemyAbilities.Events
 {
     public delegate void GenericAbilitiesHandler(Enemies.EnemyAbilities enemyAbilities);
     public delegate void AbilitiesDamageHanalder(Enemies.EnemyAbilities enemyAbilities, float damage);

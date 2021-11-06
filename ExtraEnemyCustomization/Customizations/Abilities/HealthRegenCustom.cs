@@ -1,5 +1,5 @@
 ﻿using EECustom.Customizations.Abilities.Handlers;
-using EECustom.Utils;
+using EECustom.Utils.JsonElements;
 using Enemies;
 
 namespace EECustom.Customizations.Abilities

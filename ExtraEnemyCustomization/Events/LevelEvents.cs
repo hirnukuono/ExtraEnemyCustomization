@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EECustom.Events
+﻿namespace EECustom.Events
 {
     public delegate void LevelEventHandler();
 

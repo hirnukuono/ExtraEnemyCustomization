@@ -1,9 +1,6 @@
 ﻿using EECustom.Customizations.EnemyAbilities.Abilities;
-using EECustom.Extensions;
 using Enemies;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace EECustom.Customizations.EnemyAbilities

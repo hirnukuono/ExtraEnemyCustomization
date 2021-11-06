@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EECustom.Utils
+namespace EECustom.Utils.JsonElements
 {
     public struct ValueBase
     {

@@ -1,5 +1,4 @@
 ﻿using Gear;
-using System;
 
 namespace EECustom.Events
 {

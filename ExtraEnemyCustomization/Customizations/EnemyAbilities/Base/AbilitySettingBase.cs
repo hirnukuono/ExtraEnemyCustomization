@@ -1,7 +1,4 @@
 ﻿using EECustom.Customizations.EnemyAbilities.Abilities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EECustom.Customizations.EnemyAbilities
 {

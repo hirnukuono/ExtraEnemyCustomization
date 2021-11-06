@@ -1,11 +1,7 @@
-﻿using AK;
-using AssetShards;
+﻿using AssetShards;
 using EECustom.Customizations.Shared;
 using EECustom.Customizations.Shared.Handlers;
-using Enemies;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
 namespace EECustom.Customizations.EnemyAbilities.Abilities
@@ -71,7 +67,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
             {
                 Agent.Sound.Post(Ability.SoundEventID);
             }
-            
+
             var fogObject = UnityEngine.Object.Instantiate(Ability.FogSpherePrefab, Agent.Position, Quaternion.identity);
             var handler = fogObject.GetComponent<FogSphereHandler>();
             if (handler.Play())

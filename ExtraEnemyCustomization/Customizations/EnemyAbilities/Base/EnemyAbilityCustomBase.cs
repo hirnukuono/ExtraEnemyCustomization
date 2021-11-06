@@ -1,9 +1,7 @@
 ﻿using EECustom.Customizations.EnemyAbilities.Abilities;
 using EECustom.Extensions;
 using Enemies;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace EECustom.Customizations.EnemyAbilities
 {
@@ -41,7 +39,7 @@ namespace EECustom.Customizations.EnemyAbilities
 
         public void OnSpawned(EnemyAgent agent)
         {
-            foreach(var ab in Abilities)
+            foreach (var ab in Abilities)
             {
                 var newBehaviour = ab.Ability.RegisterBehaviour(agent);
                 OnBehaviourAssigned(agent, newBehaviour, ab);
