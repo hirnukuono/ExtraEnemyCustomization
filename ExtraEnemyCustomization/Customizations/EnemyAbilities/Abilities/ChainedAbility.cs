@@ -8,6 +8,8 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         public const string DefaultGroupName = "$__DefaultGroup__";
 
         public EventBlock[] Abilities { get; set; } = new EventBlock[0];
+
+        //TODO: Implement This ffs
         public bool WaitForLastAbilityDone { get; set; } = false;
         public bool ExitAllInForceExit { get; set; } = true;
 
