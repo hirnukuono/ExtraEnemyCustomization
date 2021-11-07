@@ -41,16 +41,26 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
             });
             foreach (var ab in tempList)
             {
-                var tempWaitingGroupEvents = tempList.Where(x => ab.GroupToWait == x.Group)
+                List<EventBlock> tempWaitingGroupEvents;
+                if (string.IsNullOrEmpty(ab.GroupToWait))
+                {
+                    ab.Group = DefaultGroupName;
+                    tempWaitingGroupEvents = new List<EventBlock>();
+                }
+                else
+                {
+                    tempWaitingGroupEvents = tempList.Where(x => ab.GroupToWait == x.Group)
                     .ToList();
 
-                if (tempWaitingGroupEvents.Count <= 0)
-                {
-                    LogError($"There were no group data with: [{ab.GroupToWait}] assigning it to Default!");
-                    ab.Group = DefaultGroupName;
+                    if (tempWaitingGroupEvents.Count <= 0)
+                    {
+                        LogError($"There were no group data with: [{ab.GroupToWait}] assigning it to Default!");
+                        ab.Group = DefaultGroupName;
+                    }
                 }
+                
 
-                var entry = tempGroupList.SingleOrDefault(x => x.Group == ab.Group);
+                var entry = tempGroupList.SingleOrDefault(x => x.Group == ab.Group && x.GroupToWait == ab.GroupToWait);
                 if (entry == null)
                 {
                     tempGroupList.Add(new EventGroup()
