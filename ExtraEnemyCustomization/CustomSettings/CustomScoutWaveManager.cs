@@ -316,7 +316,7 @@ namespace EECustom.CustomSettings
                 switch (wave.SpawnSetting.NodeType)
                 {
                     case SpawnNodeType.FromArea:
-                        if (Builder.CurrentFloor.TryGetZoneByLocalIndex(wave.SpawnSetting.Layer, wave.SpawnSetting.LocalIndex, out var zone))
+                        if (Builder.CurrentFloor.TryGetZoneByLocalIndex(node.m_dimension.DimensionIndex, wave.SpawnSetting.Layer, wave.SpawnSetting.LocalIndex, out var zone))
                         {
                             if (wave.SpawnSetting.AreaIndex < zone.m_areas.Count)
                             {

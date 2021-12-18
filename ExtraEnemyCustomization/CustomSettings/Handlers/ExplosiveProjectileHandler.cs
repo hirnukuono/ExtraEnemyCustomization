@@ -1,6 +1,7 @@
 ﻿using AIGraph;
 using EECustom.Attributes;
 using EECustom.Utils;
+using LevelGeneration;
 using System;
 using UnhollowerBaseLib.Attributes;
 using UnityEngine;
@@ -31,7 +32,7 @@ namespace EECustom.CustomSettings.Handlers
                 return;
             }
 
-            if (AIG_GeomorphNodeVolume.TryGetCourseNode(newPos, out var courseNode))
+            if (AIG_GeomorphNodeVolume.TryGetCourseNode(Dimension.GetDimensionFromPos(newPos).DimensionIndex, newPos, out var courseNode))
             {
                 var noise = new NM_NoiseData()
                 {

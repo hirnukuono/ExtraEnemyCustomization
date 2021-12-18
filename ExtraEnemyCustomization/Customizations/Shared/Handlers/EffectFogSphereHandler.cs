@@ -21,12 +21,10 @@ namespace EECustom.Customizations.Shared.Handlers
             if (Handler.m_sphere != null && _updateTimer < Clock.Time)
             {
                 var sphere = Handler.m_sphere;
-                var range = Mathf.Sqrt(1.0f / sphere.m_data.invRangeSqr);
+                var range = Mathf.Sqrt(1.0f / sphere.m_data.InvRangeSqr);
                 EVSphere.minRadius = range * 0.8f;
                 EVSphere.maxRadius = range;
                 _updateTimer = Clock.Time + 0.1f;
-
-                //Logger.Log($"invSqr: {sphere.m_data.invRangeSqr} Range : {range} Density: {sphere.m_data.density}");
             }
 
             if (Handler.m_sphere == null && _updateTimer > 0.0f)

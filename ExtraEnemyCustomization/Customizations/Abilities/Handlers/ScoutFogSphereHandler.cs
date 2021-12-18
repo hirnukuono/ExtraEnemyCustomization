@@ -36,10 +36,10 @@ namespace EECustom.Customizations.Abilities.Handlers
                 if (ScoutScream.m_fogSphereAdd.IsAllocated)
                 {
                     var sphere = ScoutScream.m_fogSphereAdd.m_sphere;
-                    var range = Mathf.Sqrt(1.0f / sphere.m_data.invRangeSqr);
+                    var range = Mathf.Sqrt(1.0f / sphere.m_data.InvRangeSqr);
                     EVSphere.minRadius = range * 0.8f;
                     EVSphere.maxRadius = range;
-                    EVSphere.position = ScoutScream.m_fogSphereAdd.m_sphere.m_data.position;
+                    EVSphere.position = ScoutScream.m_fogSphereAdd.m_sphere.m_data.Position;
                     _updateTimer = Clock.Time + 0.1f;
                 }
                 else
