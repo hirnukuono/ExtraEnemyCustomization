@@ -33,7 +33,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
         protected override void OnDead()
         {
-            
+            DoExit();
         }
 
         protected override void OnEnter()

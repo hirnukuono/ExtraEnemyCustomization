@@ -4,7 +4,7 @@ using System;
 using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 
-namespace EECustom.Customizations.Abilities.Handlers
+namespace EECustom.Customizations.Shared.Handlers
 {
     [InjectToIl2Cpp]
     public class BleedingHandler : MonoBehaviour
@@ -31,7 +31,7 @@ namespace EECustom.Customizations.Abilities.Handlers
 
             if (_bleedingTimer <= Clock.Time)
             {
-                _bleeding = false;
+                StopBleed();
                 return;
             }
 

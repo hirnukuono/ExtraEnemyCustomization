@@ -1,5 +1,5 @@
-﻿using EECustom.CustomSettings.DTO;
-using EECustom.CustomSettings.Handlers;
+﻿using EECustom.Customizations.Shared;
+using EECustom.CustomSettings.DTO;
 using EECustom.Utils;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ namespace EECustom.CustomSettings
 {
     public static class CustomProjectileManager
     {
-        private static readonly Dictionary<byte, GameObject> _projectilePrefabs = new();
+        private static readonly Dictionary<byte, ProjectileData> _projDataLookup = new();
 
         public static void GenerateProjectile(CustomProjectile projInfo)
         {
@@ -19,7 +19,7 @@ namespace EECustom.CustomSettings
                 return;
             }
 
-            if (_projectilePrefabs.ContainsKey(projInfo.ID))
+            if (_projDataLookup.ContainsKey(projInfo.ID))
             {
                 Logger.Error($"ProjectileID Conflict!, ProjID: {projInfo.ID}");
                 return;
@@ -52,19 +52,6 @@ namespace EECustom.CustomSettings
                 {
                     Logger.Warning($"ProjectileBase is not a ProjectileTargeting, Ignore few settings, ProjID: {projInfo.ID}, Name: {projInfo.DebugName}");
                 }
-
-                var explosiveDamage = projInfo.ExplosionDamage.GetAbsValue(PlayerData.MaxHealth);
-                if (explosiveDamage > 0.0f)
-                {
-                    Logger.Debug($"Adding Explosive Effect!  Dmg: {explosiveDamage}");
-                    var explosive = newPrefab.gameObject.AddComponent<ExplosiveProjectileHandler>();
-                    explosive.Damage = explosiveDamage;
-                    explosive.EnemyMulti = projInfo.ExplosionEnemyDamageMulti;
-                    explosive.MinRange = projInfo.ExplosionMinRange;
-                    explosive.MaxRange = projInfo.ExplosionMaxRange;
-                    explosive.NoiseMinRange = projInfo.ExplosionNoiseMinRange;
-                    explosive.NoiseMaxRange = projInfo.ExplosionNoiseMaxRange;
-                }
             }
             else
             {
@@ -72,27 +59,46 @@ namespace EECustom.CustomSettings
             }
             newPrefab.SetActive(false);
             newPrefab.name = "GeneratedProjectilePrefab_" + projInfo.ID;
-            _projectilePrefabs.Add(projInfo.ID, newPrefab);
+            _projDataLookup.Add(projInfo.ID, new ProjectileData()
+            {
+                Prefab = newPrefab,
+                Explosion = projInfo.Explosion,
+                Knockback = projInfo.Knockback,
+                Bleed = projInfo.Bleed
+            });
             Logger.Debug($"Added Projectile!: {projInfo.ID} ({projInfo.DebugName})");
         }
 
         public static void DestroyAllProjectile()
         {
-            foreach (var prefabs in _projectilePrefabs.Values)
+            foreach (var data in _projDataLookup.Values)
             {
-                GameObject.Destroy(prefabs);
+                GameObject.Destroy(data.Prefab);
             }
 
-            _projectilePrefabs.Clear();
+            _projDataLookup.Clear();
         }
 
-        public static GameObject GetProjectile(byte id)
+        public static ProjectileData GetProjectile(byte id)
         {
-            if (_projectilePrefabs.TryGetValue(id, out var prefab))
+            if (_projDataLookup.TryGetValue(id, out var data))
             {
-                return prefab;
+                return data;
             }
             return null;
+        }
+
+        public class ProjectileData
+        {
+            public GameObject Prefab;
+            public ExplosionSetting Explosion;
+            public KnockbackSetting Knockback;
+            public BleedSetting Bleed;
+
+            public void RegisterHandlers(GameObject gameObject)
+            {
+                //MAJOR: CREATE EXPLOSIVE AND KNOCKBACK EVENT HANDLER
+            }
         }
     }
 }

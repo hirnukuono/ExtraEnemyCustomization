@@ -10,6 +10,7 @@ namespace EECustom.Configs.Customizations
         public BehaviourAbilityCustom[] BehaviourAbilityCustom { get; set; } = new BehaviourAbilityCustom[0];
         public DeathAbilityCustom[] DeathAbilityCustom { get; set; } = new DeathAbilityCustom[0];
         public EnemyAbilitiesSetting Abilities { get; set; } = new EnemyAbilitiesSetting();
+        public EnemyAbilitiesEvent[] Events { get; set; } = new EnemyAbilitiesEvent[0];
 
 
         public override EnemyCustomBase[] GetAllSettings()
@@ -40,5 +41,10 @@ namespace EECustom.Configs.Customizations
                 EnemyAbilityManager.AddAbility(ab);
             }
         }
+    }
+
+    public class EnemyAbilitiesEvent
+    {
+
     }
 }

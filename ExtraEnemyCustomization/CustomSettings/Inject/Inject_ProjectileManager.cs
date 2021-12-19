@@ -1,5 +1,4 @@
-﻿using EECustom.CustomSettings.Handlers;
-using EECustom.Managers;
+﻿using EECustom.Managers;
 using HarmonyLib;
 using LevelGeneration;
 using System;
@@ -31,23 +30,18 @@ namespace EECustom.CustomSettings.Inject
                 return true;
             }
 
-            var projectilePrefab = CustomProjectileManager.GetProjectile((byte)type);
-            if (projectilePrefab == null)
+            var projInfo = CustomProjectileManager.GetProjectile((byte)type);
+            if (projInfo == null)
             {
-                Logger.Error($"CANT FIND PREFAB WITH ID: {(int)type}");
+                Logger.Error($"CANT FIND PROJECTILE DATA WITH ID: {(int)type}");
                 type = ProjectileType.TargetingSmall;
                 return true;
             }
 
-            var gameObject = GameObject.Instantiate(projectilePrefab, pos, rot, ProjectileManager.Current.m_root.transform);
+            var gameObject = GameObject.Instantiate(projInfo.Prefab, pos, rot, ProjectileManager.Current.m_root.transform);
             gameObject.SetActive(true);
 
-            var baseExplosive = projectilePrefab.GetComponent<ExplosiveProjectileHandler>(); //MINOR: Maybe Unhollower Bug? Fields are reset when you Instantiate them
-            if (baseExplosive != null)
-            {
-                var newExplosive = gameObject.GetComponent<ExplosiveProjectileHandler>();
-                newExplosive.CopyValueFrom(baseExplosive);
-            }
+            projInfo.RegisterHandlers(gameObject);
 
             __result = gameObject;
             return false;
