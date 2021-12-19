@@ -40,11 +40,10 @@ namespace EECustom.Customizations.EnemyAbilities
                 CooldownTimer = 0.0f
             };
 
-            var unityEventHandler = agent.gameObject.AddComponent<MonoBehaviourEventHandler>();
-            unityEventHandler.OnUpdate += (GameObject _) =>
+            MonoBehaviourEventHandler.AttatchToObject(agent.gameObject, onUpdate: (GameObject _) =>
             {
                 OnUpdate(data);
-            };
+            });
         }
 
         private void OnUpdate(BehaviourEnemyData data)

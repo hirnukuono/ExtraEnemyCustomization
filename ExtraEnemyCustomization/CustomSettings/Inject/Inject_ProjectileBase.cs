@@ -7,13 +7,13 @@ using UnityEngine;
 
 namespace EECustom.CustomSettings.Inject
 {
-    [HarmonyPatch(typeof(ProjectileTargeting))]
-    internal class Inject_ProjectileTargeting
+    [HarmonyPatch(typeof(ProjectileBase))]
+    internal class Inject_ProjectileBase
     {
         [HarmonyPrefix]
         [HarmonyWrapSafe]
-        [HarmonyPatch(nameof(ProjectileTargeting.Collision))]
-        public static void Pre_Collision(ProjectileTargeting __instance, Ray ray, RaycastHit hit)
+        [HarmonyPatch(nameof(ProjectileBase.Collision))]
+        public static void Pre_Collision(ProjectileBase __instance, Ray ray, RaycastHit hit)
         {
             var instanceID = __instance.gameObject.GetInstanceID();
             var data = CustomProjectileManager.GetInstanceData(instanceID);
@@ -32,19 +32,6 @@ namespace EECustom.CustomSettings.Inject
 
                 if (data.Bleed.Enabled)
                     data.Bleed.DoBleed(agent);
-            }
-        }
-
-        [HarmonyPrefix]
-        [HarmonyWrapSafe]
-        [HarmonyPatch(nameof(ProjectileTargeting.OnDestroy))]
-        public static void Pre_Destroy(ProjectileTargeting __instance)
-        {
-            var instanceID = __instance.gameObject.GetInstanceID();
-            var data = CustomProjectileManager.GetInstanceData(instanceID);
-            if (data != null)
-            {
-                CustomProjectileManager.RemoveInstanceLookup(instanceID);
             }
         }
     }

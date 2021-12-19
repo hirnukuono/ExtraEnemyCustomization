@@ -124,7 +124,15 @@ namespace EECustom.CustomSettings
                 var projectile = gameObject.GetComponent<ProjectileTargeting>();
                 if (projectile != null)
                 {
-                    _instanceProjLookup[gameObject.GetInstanceID()] = this;
+                    var instanceID = gameObject.GetInstanceID();
+
+                    _instanceProjLookup[instanceID] = this;
+
+                    MonoBehaviourEventHandler.AttatchToObject(gameObject, onDestroyed: (_) =>
+                    {
+                        RemoveInstanceLookup(instanceID);
+                        Logger.Log($"ProjectileDied: {instanceID}");
+                    });
                 }
             }
         }

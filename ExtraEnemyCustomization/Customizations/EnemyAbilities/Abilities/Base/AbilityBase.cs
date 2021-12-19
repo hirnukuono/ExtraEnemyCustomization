@@ -111,12 +111,11 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
             OnBehaviourAssigned(agent, behaviour);
 
-            var handler = agent.gameObject.AddComponent<MonoBehaviourEventHandler>();
-            handler.OnDestroyed += (GameObject _) =>
+            MonoBehaviourEventHandler.AttatchToObject(agent.gameObject, onDestroyed: (GameObject _) =>
             {
                 behaviour.Unload();
                 _behaviourLookup.Remove(id);
-            };
+            });
 
             return behaviour;
         }
