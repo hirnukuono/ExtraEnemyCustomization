@@ -1,6 +1,7 @@
 ﻿using EECustom.Customizations;
 using EECustom.Customizations.EnemyAbilities;
 using EECustom.Customizations.EnemyAbilities.Abilities;
+using System;
 using System.Collections.Generic;
 
 namespace EECustom.Configs.Customizations
@@ -12,12 +13,12 @@ namespace EECustom.Configs.Customizations
         public EnemyAbilitiesSetting Abilities { get; set; } = new EnemyAbilitiesSetting();
         public EnemyAbilitiesEvent[] Events { get; set; } = new EnemyAbilitiesEvent[0];
 
-
+        [Obsolete("Disabled for now")]
         public override EnemyCustomBase[] GetAllSettings()
         {
             var list = new List<EnemyCustomBase>();
-            list.AddRange(BehaviourAbilityCustom);
-            list.AddRange(DeathAbilityCustom);
+            //list.AddRange(BehaviourAbilityCustom);
+            //list.AddRange(DeathAbilityCustom);
             return list.ToArray();
         }
     }
