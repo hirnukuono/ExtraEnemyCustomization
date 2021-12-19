@@ -14,7 +14,8 @@ namespace EECustom.Networking
         {
             if (!SNet_Packet<T>.s_hasMarshaller)
             {
-                SNet_Packet<T>.s_hasMarshaller = SNet_Marshal.TryGetMarshaler<T>(out SNet_Packet<T>.s_marshaller);
+                //MAJOR: FIX THIS
+                //SNet_Packet<T>.s_hasMarshaller = SNet_Marshal.TryGetMarshaler<T>(out SNet_Packet<T>.s_marshaller);
                 if (!SNet_Packet<T>.s_hasMarshaller)
                 {
                     return null;

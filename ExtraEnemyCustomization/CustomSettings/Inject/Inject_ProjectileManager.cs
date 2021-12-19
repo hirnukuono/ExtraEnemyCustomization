@@ -30,7 +30,7 @@ namespace EECustom.CustomSettings.Inject
                 return true;
             }
 
-            var projInfo = CustomProjectileManager.GetProjectile((byte)type);
+            var projInfo = CustomProjectileManager.GetProjectileData((byte)type);
             if (projInfo == null)
             {
                 Logger.Error($"CANT FIND PROJECTILE DATA WITH ID: {(int)type}");
@@ -40,8 +40,7 @@ namespace EECustom.CustomSettings.Inject
 
             var gameObject = GameObject.Instantiate(projInfo.Prefab, pos, rot, ProjectileManager.Current.m_root.transform);
             gameObject.SetActive(true);
-
-            projInfo.RegisterHandlers(gameObject);
+            projInfo.RegisterInstance(gameObject);
 
             __result = gameObject;
             return false;

@@ -1,5 +1,6 @@
 ﻿using EECustom.Customizations.Shared;
 using EECustom.CustomSettings.DTO;
+using EECustom.Events;
 using EECustom.Utils;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,15 @@ namespace EECustom.CustomSettings
     public static class CustomProjectileManager
     {
         private static readonly Dictionary<byte, ProjectileData> _projDataLookup = new();
+        private static readonly Dictionary<int, ProjectileData> _instanceProjLookup = new();
+
+        static CustomProjectileManager()
+        {
+            LevelEvents.LevelCleanup += () =>
+            {
+                _instanceProjLookup.Clear();
+            };
+        }
 
         public static void GenerateProjectile(CustomProjectile projInfo)
         {
@@ -79,13 +89,27 @@ namespace EECustom.CustomSettings
             _projDataLookup.Clear();
         }
 
-        public static ProjectileData GetProjectile(byte id)
+        public static ProjectileData GetProjectileData(byte id)
         {
             if (_projDataLookup.TryGetValue(id, out var data))
             {
                 return data;
             }
             return null;
+        }
+
+        public static ProjectileData GetInstanceData(int id)
+        {
+            if (_instanceProjLookup.TryGetValue(id, out var data))
+            {
+                return data;
+            }
+            return null;
+        }
+
+        public static void RemoveInstanceLookup(int id)
+        {
+            _instanceProjLookup.Remove(id);
         }
 
         public class ProjectileData
@@ -95,9 +119,13 @@ namespace EECustom.CustomSettings
             public KnockbackSetting Knockback;
             public BleedSetting Bleed;
 
-            public void RegisterHandlers(GameObject gameObject)
+            public void RegisterInstance(GameObject gameObject)
             {
-                //MAJOR: CREATE EXPLOSIVE AND KNOCKBACK EVENT HANDLER
+                var projectile = gameObject.GetComponent<ProjectileTargeting>();
+                if (projectile != null)
+                {
+                    _instanceProjLookup[gameObject.GetInstanceID()] = this;
+                }
             }
         }
     }

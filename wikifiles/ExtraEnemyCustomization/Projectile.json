@@ -96,12 +96,28 @@
 			"GlowRange": 1.0, //BasedValue Glow Range
 			"Damage": "50% of default", //BasedValue: (Based on PlayerDataBlock.health, Has original Value): Damage to deal 
 			"Infection": "0%", //BasedValue: (Based on 1.0, Has Original Value): Add Infection On Hit
-			"ExplosionDamage": "5%", //BasedValue: (Based on PlayerDataBlock.health): Damage to deal with explosion (0 to disable it)
-			"ExplosionEnemyDamageMulti": 1.0, //Multiplier when enemy is receiving explosion damage
-			"ExplosionMinRange": 2.0, //How far it does maximum damage?
-			"ExplosionMaxRange": 5.0, //How far it does damage?
-			"ExplosionNoiseMinRange": 5.0, //How far it awake nearby enemies when it explodes
-			"ExplosionNoiseMaxRange": 10.0 //How for it can be hear by nearby enemy when it explodes
+			"Explosion": {
+				"Enabled": true,
+				"Damage": "5%", //BasedValue: (Based on PlayerDataBlock.health): Damage to deal with explosion (0 to disable it)
+				"EnemyDamageMulti": 1.0, //Multiplier when enemy is receiving explosion damage
+				"MinRange": 2.0, //How far it does maximum damage?
+				"MaxRange": 5.0, //How far it does damage?
+				"NoiseMinRange": 5.0, //How far it awake nearby enemies when it explodes
+				"NoiseMaxRange": 10.0, //How for it can be hear by nearby enemy when it explodes
+				"NoiseType": "Detectable" //Detectable, InstaDetect, PulseOnly
+			},
+			"Knockback": {
+				"Enabled": true,
+				"Velocity": -10.0, //Knockback Velocity from enemies to player
+				"VelocityZ": 3.0 //Z (Vertical) Velocity to apply (not affected by position)
+			},
+			"Bleed": {
+				"Enabled": true,
+				"Damage": "0.1%",
+				"ChanceToBleed": 0.5,
+				"Interval": 0.15,
+				"Duration": 10.0
+			}
 		},
 		{
 			"DebugName": "Small-Magenta-LessHoming",
