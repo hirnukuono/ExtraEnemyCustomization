@@ -13,12 +13,11 @@ namespace EECustom.Configs.Customizations
         public EnemyAbilitiesSetting Abilities { get; set; } = new EnemyAbilitiesSetting();
         public EnemyAbilitiesEvent[] Events { get; set; } = new EnemyAbilitiesEvent[0];
 
-        [Obsolete("Disabled for now")]
         public override EnemyCustomBase[] GetAllSettings()
         {
             var list = new List<EnemyCustomBase>();
-            //list.AddRange(BehaviourAbilityCustom);
-            //list.AddRange(DeathAbilityCustom);
+            list.AddRange(BehaviourAbilityCustom);
+            list.AddRange(DeathAbilityCustom);
             return list.ToArray();
         }
     }
@@ -29,6 +28,7 @@ namespace EECustom.Configs.Customizations
         public FogSphereAbility[] FogSphere { get; set; } = new FogSphereAbility[0];
         public ExplosionAbility[] Explosion { get; set; } = new ExplosionAbility[0];
         public SpawnEnemyAbility[] SpawnEnemy { get; set; } = new SpawnEnemyAbility[0];
+        public EMPAbility[] EMP { get; set; } = new EMPAbility[0];
 
         public void RegisterAll()
         {
@@ -36,6 +36,7 @@ namespace EECustom.Configs.Customizations
             list.AddRange(FogSphere);
             list.AddRange(Explosion);
             list.AddRange(SpawnEnemy);
+            list.AddRange(EMP);
 
             foreach (var ab in list)
             {
