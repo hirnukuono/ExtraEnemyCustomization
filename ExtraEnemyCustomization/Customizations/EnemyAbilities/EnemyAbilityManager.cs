@@ -145,7 +145,7 @@ namespace EECustom.Customizations.EnemyAbilities
         public ushort EnemyID;
     }
 
-    public enum AbilityPacketType
+    public enum AbilityPacketType : byte
     {
         DoTrigger,
         DoTriggerAll,
