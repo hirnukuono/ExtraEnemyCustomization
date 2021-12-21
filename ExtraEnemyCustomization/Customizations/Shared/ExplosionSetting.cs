@@ -52,12 +52,13 @@ namespace EECustom.Customizations.Shared
             {
                 ExplosionUtil.MakeExplosion(position, maxDamage, EnemyDamageMulti, MinRange, MaxRange);
 
-                if (!PhysicsUtil.SlamPos(ref position, Vector3.down, 64.0f, LayerManager.MASK_LEVELGEN, false, 0.0f, 0.0f))
+                var newPos = position;
+                if (!PhysicsUtil.SlamPos(ref newPos, Vector3.down, 64.0f, LayerManager.MASK_LEVELGEN, false, 0.0f, 0.0f))
                 {
                     return;
                 }
 
-                if (AIG_GeomorphNodeVolume.TryGetCourseNode(Dimension.GetDimensionFromPos(position).DimensionIndex, position, out var courseNode))
+                if (AIG_GeomorphNodeVolume.TryGetCourseNode(Dimension.GetDimensionFromPos(newPos).DimensionIndex, newPos, out var courseNode))
                 {
                     var noise = new NM_NoiseData()
                     {
