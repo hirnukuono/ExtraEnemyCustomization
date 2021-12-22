@@ -9,7 +9,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
     {
         uint ID { get; }
         Vector3 Position { get; }
-        void Enable();
-        void Disable();
+        void DisableEmp();
+        void EnableEmp();
     }
 }

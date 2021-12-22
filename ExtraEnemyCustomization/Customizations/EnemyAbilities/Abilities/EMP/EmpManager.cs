@@ -8,8 +8,9 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
 {
     public static class EmpManager
     {
-        private static List<IEmpTarget> _empTargets = new();
-        private static List<ActiveEmp> _activeTargets = new();
+        private static readonly List<IEmpTarget> _empTargets = new();
+        private static readonly List<ActiveEmp> _activeTargets = new();
+        private static uint _nextId;
 
         static EmpManager()
         {
@@ -18,6 +19,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
                 _empTargets.Clear();
                 _activeTargets.Clear();
             };
+            _nextId = 0;
         }
 
         public static void AddTarget(IEmpTarget target) => _empTargets.Add(target);
@@ -37,7 +39,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
                         continue;
                     }
 
-                    target.Disable();
+                    target.EnableEmp();
                     _activeTargets.Add(new ActiveEmp(target, Clock.Time + duration));
                 }
             }
@@ -49,10 +51,17 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
             {
                 if (activeEmp.Duration < Clock.Time)
                 {
-                    activeEmp.target.Enable();
-                    _activeTargets.Remove(activeEmp);
+                    activeEmp.DisableEmp();
                 }
             }
+
+            _activeTargets.RemoveAll(t => t.Duration < Clock.Time);
+        }
+
+        public static uint GetID()
+        {
+            _nextId++;
+            return _nextId;
         }
 
         private class ActiveEmp
@@ -60,6 +69,14 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
             public IEmpTarget target;
             public float Duration;
             public uint ID => target.ID;
+
+            public void DisableEmp()
+            {
+                if (target != null)
+                {
+                    target.DisableEmp();
+                }
+            }
 
             public ActiveEmp(IEmpTarget target, float duration)
             {

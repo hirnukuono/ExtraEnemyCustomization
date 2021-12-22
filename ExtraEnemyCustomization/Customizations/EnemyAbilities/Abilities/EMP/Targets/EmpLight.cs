@@ -10,8 +10,11 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Targets
     [InjectToIl2Cpp]
     public class EmpLight : MonoBehaviour, IEmpTarget
     {
-        private LG_Light light;
-        private float originalIntensity;
+        public Vector3 Position => transform.position;
+        public uint ID => _id;
+        private uint _id;
+        private LG_Light _light;
+        private float _originalIntensity;
 
         public EmpLight(IntPtr ptr) : base(ptr)
         {
@@ -19,18 +22,33 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Targets
 
         void Awake()
         {
-            light = GetComponent<LG_Light>();
-            originalIntensity = light.GetIntensity();
+            _light = GetComponent<LG_Light>();
+            if (_light == null)
+            {
+                Logger.Error("No light found on game object EmpLight was added to!");
+                Destroy(this);
+                return;
+            }
+            _originalIntensity = _light.GetIntensity();
+            _id = EmpManager.GetID();
+            EmpManager.AddTarget(this);
         }
 
-        public void Disable()
+        void OnDestroy()
         {
-            
+            EmpManager.RemoveTarget(this);
         }
 
-        public void Enable()
+        public void EnableEmp()
         {
-            
+            if (_light != null)
+                _light.ChangeIntensity(0);
+        }
+
+        public void DisableEmp()
+        {
+            if (_light != null)
+                _light.ChangeIntensity(_originalIntensity);
         }
     }
 }
