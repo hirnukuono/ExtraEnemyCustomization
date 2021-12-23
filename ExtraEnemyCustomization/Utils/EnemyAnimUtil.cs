@@ -65,6 +65,33 @@ namespace EECustom.Utils
             }
         }
 
+        public static void DoAnimationLocal(EnemyAgent agent, EnemyAnimType type, float crossfadeTime, bool pauseAI)
+        {
+            if (!_initialized)
+            {
+                Logger.Error("EnemyAnimUtil.DoAnimation was called too fast before it got cached!");
+                return;
+            }
+
+            if (!_animHashsLookup.TryGetValue(type, out var hashes))
+            {
+                Logger.Error($"Cannot find AnimationHash with: {type}");
+                return;
+            }
+
+            var index = hashes.Length > 1 ? (int)(_random.NextDouble() * hashes.Length) : 0;
+            agent.Locomotion.m_animator.applyRootMotion = true;
+            agent.Locomotion.m_animator.CrossFadeInFixedTime(hashes[index], crossfadeTime);
+
+            if (pauseAI)
+            {
+                if (agent.AI.m_navMeshAgent.isOnNavMesh)
+                {
+                    agent.AI.m_navMeshAgent.isStopped = true;
+                }
+            }
+        }
+
         public static void DoAnimation(EnemyAgent agent, EnemyAnimType type, float crossfadeTime, bool pauseAI)
         {
             if (!_initialized)

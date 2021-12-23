@@ -42,12 +42,8 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         protected override void OnEnter()
         {
             _exitTimer = Clock.Time + Ability.Duration;
-            _animator.applyRootMotion = true;
 
-            if (SNet.IsMaster)
-            {
-                EnemyAnimUtil.DoAnimation(Agent, Ability.Animation, Ability.CrossFadeTime, true);
-            }
+            EnemyAnimUtil.DoAnimationLocal(Agent, Ability.Animation, Ability.CrossFadeTime, true);
 
             if (Ability.SoundEvent != 0u)
             {
