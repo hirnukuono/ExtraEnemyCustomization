@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Enemies;
+using System;
 using UnityEngine;
 
 namespace EECustom.Customizations.EnemyAbilities.Abilities
@@ -15,6 +16,11 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         public float FogIntensity { get; set; } = 1.0f;
         public Color BuildupColor { get; set; } = new Color(0.525f, 0.956f, 0.886f, 1.0f) * 2.0f;
         public Color ScreamColor { get; set; } = new Color(0.525f, 0.956f, 0.886f, 1.0f) * 20.0f;
+
+        public override void OnBehaviourAssigned(EnemyAgent agent, EMPBehaviour behaviour)
+        {
+            EmpManager.Initialize();
+        }
     }
 
     public class EMPBehaviour : AbilityBehaviour<EMPAbility>

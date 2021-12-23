@@ -11,6 +11,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
         private static readonly List<IEmpTarget> _empTargets = new();
         private static readonly List<ActiveEmp> _activeTargets = new();
         private static uint _nextId;
+        private static bool _initialized = false;
 
         static EmpManager()
         {
@@ -20,6 +21,20 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
                 _activeTargets.Clear();
             };
             _nextId = 0;
+        }
+
+        public static void Initialize()
+        {
+            if (_initialized)
+                return;
+
+            var newUpdater = new GameObject();
+            MonoBehaviourEventHandler.AttatchToObject(newUpdater, onUpdate: (_) =>
+            {
+                Tick();
+            });
+
+            _initialized = true;
         }
 
         public static void AddTarget(IEmpTarget target) => _empTargets.Add(target);
@@ -45,7 +60,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
             }
         }
 
-        public static void Tick()
+        private static void Tick()
         {
             foreach (ActiveEmp activeEmp in _activeTargets)
             {
