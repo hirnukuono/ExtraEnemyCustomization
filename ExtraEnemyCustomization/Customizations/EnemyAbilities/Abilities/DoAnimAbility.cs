@@ -1,4 +1,6 @@
-﻿using Enemies;
+﻿using EECustom.Utils;
+using Enemies;
+using SNetwork;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,6 +11,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 {
     public class DoAnimAbility : AbilityBase<DoAnimBehaviour>
     {
+        public EnemyAnimType Animation { get; set; } = EnemyAnimType.Screams;
         public uint SoundEvent { get; set; } = 0u;
         public uint VoiceEvent { get; set; } = 0u;
         public float Duration { get; set; } = 1.0f;
@@ -40,12 +43,10 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         {
             _exitTimer = Clock.Time + Ability.Duration;
             _animator.applyRootMotion = true;
-            
-            _animator.CrossFadeInFixedTime(EnemyLocomotion.s_hashScreams[0], Ability.CrossFadeTime);
 
-            if (_navAgent.isOnNavMesh)
+            if (SNet.IsMaster)
             {
-                _navAgent.isStopped = true;
+                EnemyAnimUtil.DoAnimation(Agent, Ability.Animation, Ability.CrossFadeTime, true);
             }
 
             if (Ability.SoundEvent != 0u)
