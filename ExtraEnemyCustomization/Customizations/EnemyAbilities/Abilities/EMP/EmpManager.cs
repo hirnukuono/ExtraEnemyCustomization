@@ -33,6 +33,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
             {
                 Tick();
             });
+            GameObject.DontDestroyOnLoad(newUpdater);
 
             _initialized = true;
         }

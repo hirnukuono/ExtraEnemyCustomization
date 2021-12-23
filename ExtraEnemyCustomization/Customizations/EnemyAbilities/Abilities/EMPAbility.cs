@@ -1,4 +1,5 @@
-﻿using Enemies;
+﻿using EECustom.Customizations.EnemyAbilities.Abilities.EMP;
+using Enemies;
 using System;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
         public override void OnBehaviourAssigned(EnemyAgent agent, EMPBehaviour behaviour)
         {
-            EmpManager.Initialize();
+            EMPManager.Initialize();
         }
     }
 
