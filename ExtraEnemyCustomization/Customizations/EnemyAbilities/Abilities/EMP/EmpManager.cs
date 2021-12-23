@@ -6,14 +6,14 @@ using UnityEngine;
 
 namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
 {
-    public static class EmpManager
+    public static class EMPManager
     {
         private static readonly List<IEmpTarget> _empTargets = new();
         private static readonly List<ActiveEmp> _activeTargets = new();
         private static uint _nextId;
         private static bool _initialized = false;
 
-        static EmpManager()
+        static EMPManager()
         {
             LevelEvents.LevelCleanup += () =>
             {

@@ -30,13 +30,13 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Targets
                 return;
             }
             _originalIntensity = _light.GetIntensity();
-            _id = EmpManager.GetID();
-            EmpManager.AddTarget(this);
+            _id = EMPManager.GetID();
+            EMPManager.AddTarget(this);
         }
 
         void OnDestroy()
         {
-            EmpManager.RemoveTarget(this);
+            EMPManager.RemoveTarget(this);
         }
 
         public void EnableEmp()
