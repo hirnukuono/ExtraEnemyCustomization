@@ -8,7 +8,7 @@ using UnityEngine;
 namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Targets
 {
     [InjectToIl2Cpp]
-    public class EmpLight : MonoBehaviour, IEmpTarget
+    public class EMPLight : MonoBehaviour, IEMPTarget
     {
         public Vector3 Position => transform.position;
         public uint ID => _id;
@@ -16,7 +16,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Targets
         private LG_Light _light;
         private float _originalIntensity;
 
-        public EmpLight(IntPtr ptr) : base(ptr)
+        public EMPLight(IntPtr ptr) : base(ptr)
         {
         }
 

@@ -8,7 +8,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
 {
     public static class EMPManager
     {
-        private static readonly List<IEmpTarget> _empTargets = new();
+        private static readonly List<IEMPTarget> _empTargets = new();
         private static readonly List<ActiveEmp> _activeTargets = new();
         private static uint _nextId;
         private static bool _initialized = false;
@@ -38,12 +38,12 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
             _initialized = true;
         }
 
-        public static void AddTarget(IEmpTarget target) => _empTargets.Add(target);
-        public static void RemoveTarget(IEmpTarget target) => _empTargets.Remove(target);
+        public static void AddTarget(IEMPTarget target) => _empTargets.Add(target);
+        public static void RemoveTarget(IEMPTarget target) => _empTargets.Remove(target);
 
         public static void Activate(Vector3 position, float range, float duration)
         {
-            foreach (IEmpTarget target in _empTargets)
+            foreach (IEMPTarget target in _empTargets)
             {
                 float dist = Vector3.Distance(position, target.Position);
                 if (dist < range)
@@ -82,7 +82,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
 
         private class ActiveEmp
         {
-            public IEmpTarget target;
+            public IEMPTarget target;
             public float Duration;
             public uint ID => target.ID;
 
@@ -94,7 +94,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
                 }
             }
 
-            public ActiveEmp(IEmpTarget target, float duration)
+            public ActiveEmp(IEMPTarget target, float duration)
             {
                 this.target = target;
                 Duration = duration;
