@@ -7,10 +7,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
     public static class EMPManager
     {
         private static readonly List<EMPController> _empTargets = new();
-        private static readonly List<EMPController> _activeTargets = new();
         private static uint _nextId;
-        private static bool _initialized = false;
-        private static bool _adding = false;
 
         static EMPManager()
         {
@@ -19,21 +16,6 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
                 _empTargets.Clear();
             };
             _nextId = 0;
-        }
-
-        public static void Initialize()
-        {
-            //if (_initialized)
-            //    return;
-            //
-            //var newUpdater = new GameObject();
-            //MonoBehaviourEventHandler.AttatchToObject(newUpdater, onUpdate: (_) =>
-            //{
-            //    Tick();
-            //});
-            //GameObject.DontDestroyOnLoad(newUpdater);
-            //
-            //_initialized = true;
         }
 
         public static void AddTarget(EMPController target) => _empTargets.Add(target);
