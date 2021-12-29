@@ -1,4 +1,4 @@
-﻿using EECustom.Customizations.EnemyAbilities.Abilities.EMP.Targets;
+﻿using EECustom.Customizations.EnemyAbilities.Abilities.EMP.Handlers;
 using HarmonyLib;
 using LevelGeneration;
 using System;
@@ -15,8 +15,8 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Inject
         [HarmonyPatch(nameof(LG_Light.Start))]
         public static void Pre_Start(LG_Light __instance)
         {
-            __instance.gameObject.AddComponent<EMPLight>();
-            Logger.Debug($"Added EmpLight to {__instance.m_name}");
+            EMPController controller = __instance.gameObject.AddComponent<EMPController>();
+            controller.AssignHandler(new EMPLightHandler());
         }
     }
 }
