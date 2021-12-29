@@ -11,9 +11,34 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
     public abstract class EMPHandlerBase : IEMPHandler
     {
         /// <summary>
+        /// Tracks if the local player is under the effects of an EMP
+        /// </summary>
+        public static bool IsLocalPlayerDisabled => _isLocalPlayerDisabled;
+
+        /// <summary>
+        /// How long the flickering effect should last
+        /// </summary>
+        protected virtual float FlickerDuration { get => 0.2f; }
+
+        /// <summary>
+        /// The minimum delay before the device turns back on
+        /// </summary>
+        protected virtual float MinDelay { get => 0f; }
+
+        /// <summary>
+        /// The maximum delay before the device turns back on
+        /// </summary>
+        protected virtual float MaxDelay { get => 1.5f; }
+
+        /// <summary>
+        /// Set to true if the controller is attached to the player agent, used to tell if the player is EMP'd
+        /// </summary>
+        protected virtual bool IsDeviceOnPlayer { get => false; }
+
+        /// <summary>
         /// If the device is currently active 
         /// </summary>
-        protected bool _isDeviceOn = false;
+        protected bool _isDeviceOn = true;
 
         /// <summary>
         /// The current EMP State
@@ -26,25 +51,24 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
         protected float _stateTimer;
 
         /// <summary>
-        /// Used to give random delay to how long it takes the device to turn back on, if desired
+        /// Internally tracks if the player is under the effects of an EMP
         /// </summary>
-        protected float _delayTimer;
+        private static bool _isLocalPlayerDisabled;
 
         /// <summary>
-        /// How long the flickering effect should last
+        /// Stores the random delay before the device turns back on
         /// </summary>
-        protected const float _flickerDuration = 0.2f;
-
+        private float _delayTimer;
 
         public abstract void Setup(GameObject gameObject, EMPController controller);
         public void Tick(bool isEMPD)
         {
             if (isEMPD && _state == EMPState.On)
             {
-                float delay = GetRandomDelay(0, 1.5f);
+                float delay = GetRandomDelay(MinDelay, MaxDelay);
                 _state = EMPState.FlickerOff;
                 _delayTimer = Clock.Time + delay;
-                _stateTimer = Clock.Time + _flickerDuration + delay;
+                _stateTimer = Clock.Time + FlickerDuration + delay;
             }
 
             if (!isEMPD && _state == EMPState.Off)
@@ -52,7 +76,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
                 float delay = GetRandomDelay(0, 1.5f);
                 _state = EMPState.FlickerOn;
                 _delayTimer = Clock.Time + delay;
-                _stateTimer = Clock.Time + _flickerDuration + delay;
+                _stateTimer = Clock.Time + FlickerDuration + delay;
             }
 
             switch (_state)
@@ -61,6 +85,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
                     if (_isDeviceOn) return;
                     DeviceOn();
                     _isDeviceOn = true;
+                    if (IsDeviceOnPlayer) _isLocalPlayerDisabled = false;
                     break;
                 case EMPState.FlickerOff:
                     if (_delayTimer > Clock.Time) return;
@@ -75,6 +100,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
                     if (!_isDeviceOn) return;
                     DeviceOff();
                     _isDeviceOn = false;
+                    if (IsDeviceOnPlayer) _isLocalPlayerDisabled = true;
                     break;
                 case EMPState.FlickerOn:
                     if (_delayTimer > Clock.Time) return;
