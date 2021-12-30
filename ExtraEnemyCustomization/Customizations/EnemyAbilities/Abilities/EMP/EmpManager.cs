@@ -23,6 +23,11 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
 
         public static void Activate(Vector3 position, float range, float duration)
         {
+            if (!GameStateManager.IsInExpedition)
+            {
+                Logger.Error("Tried to activate an EMP when not in level, this shouldn't happen!");
+                return;
+            }
             foreach (EMPController targetController in _empTargets)
             {
                 float dist = Vector3.Distance(position, targetController.Position);

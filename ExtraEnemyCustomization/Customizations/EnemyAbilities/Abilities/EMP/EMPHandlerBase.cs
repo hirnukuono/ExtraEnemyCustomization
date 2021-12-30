@@ -61,6 +61,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
         private float _delayTimer;
 
         public abstract void Setup(GameObject gameObject, EMPController controller);
+
         public void Tick(bool isEMPD)
         {
             if (isEMPD && _state == EMPState.On)
@@ -116,34 +117,30 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
             }
         }
 
+        /// <summary>
+        /// This method should handle the flickering effect of the device
+        /// </summary>
         protected abstract void FlickerDevice();
+
+        /// <summary>
+        /// This method should reset the device to its original state
+        /// </summary>
         protected abstract void DeviceOn();
+
+        /// <summary>
+        /// This method should shut the device off
+        /// </summary>
         protected abstract void DeviceOff();
 
+        /// <summary>
+        /// Returns a random delay between the min and max values
+        /// </summary>
+        /// <param name="min">The minimum value</param>
+        /// <param name="max">The maximum value</param>
+        /// <returns></returns>
         protected float GetRandomDelay(float min, float max)
         {
             return UnityEngine.Random.RandomRange(min, max);
         }
-
-        //protected float FlickerUtil()
-        //{
-        //    this.m_timePassed += Time.deltaTime;
-        //    if (this.m_stableTime < this.m_timePassed)
-        //    {
-        //        this.m_stable = !this.m_stable;
-        //        this.m_stableTime = UnityEngine.Random.Range(this.m_stableTimeMin, this.m_stableTimeMax);
-        //        this.m_timePassed = 0f;
-        //    }
-        //    if (!this.m_stable)
-        //    {
-        //        this.m_lt.intensity = Mathf.Lerp(this.m_lastIntensity, this.m_targetIntensity, this.m_timePassed / this.m_accelerateTime);
-        //        if ((double)Mathf.Abs(this.m_lt.intensity - this.m_targetIntensity) < 0.0001)
-        //        {
-        //            this.m_lastIntensity = this.m_lt.intensity;
-        //            this.m_maxLightIntensity = this.m_startIntensity + 0.2f;
-        //            this.m_targetIntensity = UnityEngine.Random.Range(this.m_minLightIntensity, this.m_maxLightIntensity);
-        //        }
-        //    }
-        //}
     }
 }
