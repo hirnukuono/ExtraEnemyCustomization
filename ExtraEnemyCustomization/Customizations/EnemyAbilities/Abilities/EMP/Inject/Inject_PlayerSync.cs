@@ -13,7 +13,6 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Inject
         {
             if (EMPHandlerBase.IsLocalPlayerDisabled)
             {
-                Logger.Debug("Prevented player from toggling flashlight");
                 return false;
             }
 

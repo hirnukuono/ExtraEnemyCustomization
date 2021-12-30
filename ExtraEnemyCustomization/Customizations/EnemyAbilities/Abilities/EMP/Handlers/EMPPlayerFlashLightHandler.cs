@@ -11,14 +11,14 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Handlers
     public class EMPPlayerFlashLightHandler : EMPHandlerBase
     {
         protected override bool IsDeviceOnPlayer => true;
-        private PlayerInventoryLocal _localInventory;
-        private bool FlashlightEnabled => _localInventory.FlashlightEnabled;
+        private PlayerInventoryBase _inventory;
+        private bool FlashlightEnabled => _inventory.FlashlightEnabled;
         private float _originalIntensity;
         private bool _originalFlashlightState;
         public override void Setup(GameObject gameObject, EMPController controller)
         {
-            _localInventory = gameObject.GetComponent<PlayerInventoryLocal>();
-            if (_localInventory == null)
+            _inventory = gameObject.GetComponent<PlayerAgent>().Inventory;
+            if (_inventory == null)
             {
                 Logger.Warning("Player inventory was null!");
                 return;
@@ -36,19 +36,23 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Handlers
         protected override void DeviceOff()
         {
             _originalFlashlightState = FlashlightEnabled;
-            _localInventory.Owner.Sync.WantsToSetFlashlightEnabled(false);
+
+            if (_originalFlashlightState != false)
+                _inventory.Owner.Sync.WantsToSetFlashlightEnabled(false);
         }
 
         protected override void DeviceOn()
         {
-            _localInventory.Owner.Sync.WantsToSetFlashlightEnabled(_originalFlashlightState);
-            _localInventory.m_flashlight.intensity = _originalIntensity;
+            if (_originalFlashlightState != FlashlightEnabled)
+                _inventory.Owner.Sync.WantsToSetFlashlightEnabled(_originalFlashlightState);
+
+            _inventory.m_flashlight.intensity = _originalIntensity;
         }
 
         protected override void FlickerDevice()
         {
             if (!FlashlightEnabled) return;
-            _localInventory.m_flashlight.intensity = UnityEngine.Random.value * _originalIntensity;
+            _inventory.m_flashlight.intensity = UnityEngine.Random.value * _originalIntensity;
         }
     }
 }
