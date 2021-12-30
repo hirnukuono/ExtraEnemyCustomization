@@ -14,6 +14,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
             LevelEvents.LevelCleanup += () =>
             {
                 _empTargets.Clear();
+                EMPHandlerBase.Cleanup();
             };
             _nextId = 0;
         }

@@ -62,6 +62,11 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
 
         public abstract void Setup(GameObject gameObject, EMPController controller);
 
+        public static void Cleanup()
+        {
+            _isLocalPlayerDisabled = false;
+        }
+
         public void Tick(bool isEMPD)
         {
             if (isEMPD && _state == EMPState.On)
