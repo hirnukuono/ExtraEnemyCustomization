@@ -17,5 +17,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
         /// </summary>
         /// <param name="gameObject">The game object EMPController is attached to</param>
         void Setup(GameObject gameObject, EMPController controller);
+
+        void OnDespawn();
     }
 }
