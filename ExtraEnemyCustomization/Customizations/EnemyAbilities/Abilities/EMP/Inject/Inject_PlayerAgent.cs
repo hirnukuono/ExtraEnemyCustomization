@@ -7,7 +7,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Inject
     [HarmonyPatch(typeof(PlayerAgent))]
     internal class Inject_PlayerAgent
     {
-        [HarmonyPrefix]
+        [HarmonyPostfix]
         [HarmonyWrapSafe]
         [HarmonyPatch(nameof(PlayerAgent.Setup))]
         public static void Post_Setup(PlayerAgent __instance)
