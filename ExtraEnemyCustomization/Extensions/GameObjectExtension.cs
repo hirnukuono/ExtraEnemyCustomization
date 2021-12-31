@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Text.RegularExpressions;
+using UnityEngine;
 
 namespace EECustom.Extensions
 {
@@ -15,12 +16,12 @@ namespace EECustom.Extensions
             return null;
         }
 
-        public static GameObject FuzzyFindChild(this GameObject obj, string name, bool includeInactive = false)
+        public static GameObject RegexFindChild(this GameObject obj, Regex rx, bool includeInactive = false)
         {
             var comps = obj.GetComponentsInChildren<Transform>(includeInactive);
             foreach (var comp in comps)
             {
-                if (!comp.gameObject.name.Contains(name)) continue;
+                if (!rx.IsMatch(comp.name)) continue;
                 return comp.gameObject;
             }
             return null;

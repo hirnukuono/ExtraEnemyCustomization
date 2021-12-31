@@ -1,7 +1,5 @@
 ﻿using EECustom.Attributes;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
 namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
@@ -12,6 +10,8 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
         private IEMPHandler _handler = null;
         private bool _hasHandler = false;
         private float _duration;
+        private bool _setup = false;
+        private bool _isEMPActive => _duration > Clock.Time;
 
         public EMPController(IntPtr ptr) : base(ptr)
         {
@@ -36,6 +36,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
             _handler = handler;
             _handler.Setup(gameObject, this);
             _hasHandler = true;
+            _setup = true;
         }
 
         void Awake()
@@ -49,10 +50,28 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
             _handler.OnDespawn();
         }
 
+        void OnEnable()
+        {
+            if (GameStateManager.CurrentStateName != eGameStateName.InLevel ) return;
+            if (!_setup) return;
+            _duration = Clock.Time + EMPManager.DurationFromPosition(transform.position);
+            if (_duration > Clock.Time)
+            {
+                Logger.Debug("FORCE STATE -> OFF, IsDeviceActive: {0}", _isEMPActive);
+                _handler.ForceState(EMPState.Off);
+                _handler.Tick(_isEMPActive);
+            } else
+            {
+                Logger.Debug("FORCE STATE -> ON, IsEMPActive: {0}", _isEMPActive);
+                _handler.ForceState(EMPState.On);
+                _handler.Tick(_isEMPActive);
+            }
+        }
+
         void Update()
         {
             if (!_hasHandler) return;
-            _handler.Tick(_duration > Clock.Time);
+            _handler.Tick(_isEMPActive);
         }
     }
 }

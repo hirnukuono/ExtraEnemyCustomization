@@ -38,7 +38,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
         /// <summary>
         /// If the device is currently active 
         /// </summary>
-        protected bool _isDeviceOn = true;
+        protected DeviceState _deviceState = DeviceState.Unknown;
 
         /// <summary>
         /// The current EMP State
@@ -69,6 +69,28 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
             _isLocalPlayerDisabled = false;
         }
 
+        public void ForceState(EMPState state)
+        {
+            if (_state == state) return;
+            _state = state;
+            _delayTimer = Clock.Time - 1;
+            _stateTimer = Clock.Time - 1;
+            switch (state)
+            {
+                case EMPState.On:
+                    _deviceState = DeviceState.On;
+                    DeviceOn();
+                    break;
+                case EMPState.Off:
+                    _deviceState = DeviceState.Off;
+                    DeviceOff();
+                    break;
+                default:
+                    _deviceState = DeviceState.Unknown;
+                    break;
+            }
+        }
+
         public void Tick(bool isEMPD)
         {
             if (_destroyed) return;
@@ -91,9 +113,9 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
             switch (_state)
             {
                 case EMPState.On:
-                    if (_isDeviceOn) return;
+                    if (_deviceState == DeviceState.On) return;
                     DeviceOn();
-                    _isDeviceOn = true;
+                    _deviceState = DeviceState.On;
                     if (IsDeviceOnPlayer) _isLocalPlayerDisabled = false;
                     break;
                 case EMPState.FlickerOff:
@@ -106,9 +128,9 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
                     _state = EMPState.Off;
                     break;
                 case EMPState.Off:
-                    if (!_isDeviceOn) return;
+                    if (_deviceState == DeviceState.Off) return;
                     DeviceOff();
-                    _isDeviceOn = false;
+                    _deviceState = DeviceState.Off;
                     if (IsDeviceOnPlayer) _isLocalPlayerDisabled = true;
                     break;
                 case EMPState.FlickerOn:
@@ -159,6 +181,13 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
         protected bool FlickerUtil(int oneInX = 2)
         {
             return UnityEngine.Random.RandomRange(0, oneInX) == 0;
+        }
+
+        protected enum DeviceState
+        {
+            On,
+            Off,
+            Unknown
         }
     }
 }
