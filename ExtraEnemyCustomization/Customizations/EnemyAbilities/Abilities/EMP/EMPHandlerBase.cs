@@ -155,5 +155,10 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
         {
             return UnityEngine.Random.RandomRange(min, max);
         }
+
+        protected bool FlickerUtil(int oneInX = 2)
+        {
+            return UnityEngine.Random.RandomRange(0, oneInX) == 0;
+        }
     }
 }
