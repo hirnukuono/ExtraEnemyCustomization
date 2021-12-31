@@ -15,6 +15,17 @@ namespace EECustom.Extensions
             return null;
         }
 
+        public static GameObject FuzzyFindChild(this GameObject obj, string name, bool includeInactive = false)
+        {
+            var comps = obj.GetComponentsInChildren<Transform>(includeInactive);
+            foreach (var comp in comps)
+            {
+                if (!comp.gameObject.name.Contains(name)) continue;
+                return comp.gameObject;
+            }
+            return null;
+        }
+
         public static GameObject Instantiate(this GameObject obj, Transform toParent, string name)
         {
             var newObj = GameObject.Instantiate(obj);
