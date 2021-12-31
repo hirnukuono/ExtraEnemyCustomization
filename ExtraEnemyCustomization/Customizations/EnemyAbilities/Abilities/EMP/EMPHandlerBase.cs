@@ -60,6 +60,8 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
         /// </summary>
         private float _delayTimer;
 
+        private bool _destroyed = false;
+
         public abstract void Setup(GameObject gameObject, EMPController controller);
 
         public static void Cleanup()
@@ -69,6 +71,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
 
         public void Tick(bool isEMPD)
         {
+            if (_destroyed) return;
             if (isEMPD && _state == EMPState.On)
             {
                 float delay = GetRandomDelay(MinDelay, MaxDelay);
@@ -120,6 +123,11 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
                 default:
                     break;
             }
+        }
+
+        public void OnDespawn()
+        {
+            _destroyed = true;
         }
 
         /// <summary>
