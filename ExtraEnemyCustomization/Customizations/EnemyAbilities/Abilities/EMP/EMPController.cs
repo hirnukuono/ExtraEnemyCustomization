@@ -11,13 +11,13 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
     {
         private IEMPHandler _handler = null;
         private bool _hasHandler = false;
+        private float _duration;
 
         public EMPController(IntPtr ptr) : base(ptr)
         {
         }
 
         public Vector3 Position => transform.position;
-        private float _duration;
 
 
         public void AddTime(float time)
@@ -46,6 +46,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
         void OnDestroy()
         {
             EMPManager.RemoveTarget(this);
+            _handler.OnDespawn();
         }
 
         void Update()
