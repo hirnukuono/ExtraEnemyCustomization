@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using EECustom.Customizations.EnemyAbilities.Abilities.EMP.Handlers;
+using HarmonyLib;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,9 +12,17 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Inject
         [HarmonyPrefix]
         [HarmonyWrapSafe]
         [HarmonyPatch(nameof(PlayerGuiLayer.UpdateGUIElementsVisibility))]
-        public static bool Pre_UpdateGUIElementsVisibility(PlayerGuiLayer __instance)
+        public static bool Pre_UpdateGUIElementsVisibility()
         {
-            if (!__instance.m_compass.Visible && EMPHandlerBase.IsLocalPlayerDisabled) return false;
+            if (EMPHandlerBase.IsLocalPlayerDisabled)
+            {
+                EMPPlayerHudHandler.Instance.ForceState(EMPState.Off);
+                return false;
+            }
+            if (GameStateManager.CurrentStateName == eGameStateName.InLevel)
+            {
+                EMPPlayerHudHandler.Instance.ForceState(EMPState.On);
+            }
             return true;
         }
     }
