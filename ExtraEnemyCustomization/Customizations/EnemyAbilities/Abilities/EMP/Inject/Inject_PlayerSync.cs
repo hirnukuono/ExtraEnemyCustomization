@@ -17,7 +17,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Inject
             }
 
             // This is so fucking stupid but if I don't do this "enable" will always be true for some god-forsaken reason
-            if (enable != !__instance.m_agent.Inventory.FlashlightEnabled)
+            if (enable == __instance.m_agent.Inventory.FlashlightEnabled)
             {
                 __instance.WantsToSetFlashlightEnabled(!__instance.m_agent.Inventory.FlashlightEnabled);
                 return false;
