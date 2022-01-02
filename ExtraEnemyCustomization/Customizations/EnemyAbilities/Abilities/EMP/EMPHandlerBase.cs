@@ -13,7 +13,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
         /// <summary>
         /// Tracks if the local player is under the effects of an EMP
         /// </summary>
-        public static bool IsLocalPlayerDisabled => _isLocalPlayerDisabled;
+        public static bool IsLocalPlayerDisabled => _isLocalPlayerDisabled && GameStateManager.CurrentStateName == eGameStateName.InLevel;
 
         /// <summary>
         /// How long the flickering effect should last
@@ -38,7 +38,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
         /// <summary>
         /// If the device is currently active 
         /// </summary>
-        protected DeviceState _deviceState = DeviceState.Unknown;
+        protected DeviceState _deviceState = DeviceState.On;
 
         /// <summary>
         /// The current EMP State
@@ -73,6 +73,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
         {
             if (_state == state) return;
             _state = state;
+            Logger.Debug("Force State -> {0}", state);
             _delayTimer = Clock.Time - 1;
             _stateTimer = Clock.Time - 1;
             switch (state)
