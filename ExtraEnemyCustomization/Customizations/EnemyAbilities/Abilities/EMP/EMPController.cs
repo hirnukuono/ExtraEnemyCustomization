@@ -57,14 +57,10 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
             _duration = Clock.Time + EMPManager.DurationFromPosition(transform.position);
             if (_duration > Clock.Time)
             {
-                Logger.Debug("FORCE STATE -> OFF, IsDeviceActive: {0}", _isEMPActive);
                 _handler.ForceState(EMPState.Off);
-                _handler.Tick(_isEMPActive);
             } else
             {
-                Logger.Debug("FORCE STATE -> ON, IsEMPActive: {0}", _isEMPActive);
                 _handler.ForceState(EMPState.On);
-                _handler.Tick(_isEMPActive);
             }
         }
 
