@@ -33,6 +33,9 @@ namespace EECustom.Customizations
 
         internal void RegisterTargetLookup(EnemyAgent enemyAgent)
         {
+            if (!Enabled)
+                return;
+
             var id = enemyAgent.GlobalID;
             if (!_isTargetLookup.ContainsKey(id))
             {
