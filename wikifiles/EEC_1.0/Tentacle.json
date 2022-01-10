@@ -1,0 +1,105 @@
+{
+	//Modify the Striker based enemy tentacle Type
+	"StrikerTentacleCustom": [
+		{
+			"Enabled": false, //You can check first item of Model.json if you have no idea with this formatting
+			"DebugName": "Shadow-Slow",
+			"Target": {
+				"Mode": "NameContains",
+				"persistentIDs": [],
+				"nameParam": "Shadow",
+				"nameIgnoreCase": true,
+				"categories": []
+			},
+			"TentacleTypes": [
+				"Shadow"
+				//Possible Value List:
+				//None - 0
+				//Striker - 1
+				//StrikerBig - 2
+				//Tank - 3
+				//TankDecoration - 4 //CANT HIT PLAYER
+				//Static - 5 //CANT HIT PLAYER
+				//StaticBig - 6 //CANT HIT PLAYER
+				//BioScan - 7 //CANT HIT PLAYER
+				//WrapAroundPlayer - 8
+				//TankDragMove - 9 //CANT HIT PLAYER
+				//Shadow - 10
+				//OR other Custom Types (watch "TentacleDefinitions" section)
+				//NOTE: If enemy have multiple Tentacles, You can list multiple Types so each of them have different Type
+				//Example) "Shadow", "Tank", "Striker" will gives you Tank that shoot three different type of Tentacles
+			],
+			"TentacleSettings": [
+				{
+					"InEaseType": "EaseInExpo", //Ease Type
+					"OutEaseType": "EaseOutCirc", //Ease Type
+					"InDuration": "50%", //BasedValue: How long it takes to pull out the tentacle?
+					"OutDuration": "50%", //BasedValue: How long it takes to pull in the tentacle?
+					"HangDuration": "200%" //BasedValue: How long does tentacle stay in air?
+				}
+				/*Possible Ease Type
+				//Preview: https://matthewlein.com/tools/ceaser
+				Linear = 0
+				EaseInQuad = 1
+				EaseOutQuad
+				EaseInOutQuad
+				EaseInCubic = 4
+				EaseOutCubic
+				EaseInOutCubic
+				EaseInQuart = 7
+				EaseOutQuart
+				EaseInOutQuart
+				EaseInQuint = 10
+				EaseOutQuint
+				EaseInOutQuint
+				EaseInSine = 13
+				EaseOutSine
+				EaseInOutSine
+				EaseInExpo = 16
+				EaseOutExpo
+				EaseInOutExpo
+				EaseInCirc = 19
+				EaseOutCirc
+				EaseInOutCirc
+				*/
+			]
+		},
+		{
+			"Enabled": false,
+			"DebugName": "ShadowTentacle-BIG",
+			"Target": {
+				"Mode": "NameContains",
+				"persistentIDs": [],
+				"nameParam": "Big_Shadow",
+				"nameIgnoreCase": true,
+				"categories": []
+			},
+			"TentacleTypes": [
+				50
+			],
+			"TentacleSettings": [
+				{
+					"InEaseType": "EaseInExpo",
+					"OutEaseType": "EaseOutCirc",
+					"InDuration": 2.0,
+					"OutDuration": 0.35,
+					"HangDuration": 2.0
+				}
+			]
+		}
+	]/*,
+	//!!!!!THIS IS NOT WORKING FOR NOW!!!!!
+	"TentacleDefinitions": [
+		{
+			"DebugName": "Shadow_Big",
+			"ID": 50, //Do not overlap with existing one (0~10), It also should be between -2147483648~2147483647 (int type)
+			"BodyPrefab": "StrikerBig", //It should be from existing tentacle type
+			"BodyMaterial": "StrikerBig", //It should be from existing tentacle type
+			"HeadPrefab": "StrikerBig", //It should be from existing tentacle type
+			"HeadMaterial": "StrikerBig", //It should be from existing tentacle type
+			"Shape": "StrikerBig", //Shape?
+			"MaxCount": 50 //Only this amount of tentacle will be spawned in once.
+		}
+	]
+	*/
+}

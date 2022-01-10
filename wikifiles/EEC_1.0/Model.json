@@ -1,0 +1,481 @@
+{
+	//Cache Every Material in-game (For Material Custom)
+	//Better leave it as false unless you know what you doing.
+	"CacheAllMaterials": false,
+	//Make every model act as Shadow
+	"ShadowCustom": [
+		{
+			"Enabled": false, //Enable/Disable this Customization Setting
+			"DebugName": "Shadow 29/30", //Debug name to use for Console Log. Also good for organize stuffs
+			"Target": {
+				"Mode": "PersistentID",
+				//Possible Values for Mode:
+				//PersistentID - uses persistentIDs field, enemy with matching id will be selected
+				//NameEquals - uses nameParam field, If enemy's datablock name is equal to this
+				//NameContains - uses nameParam field, If enemy's datablock name contains this substring
+				//Everything - this applies to every enemies!
+				//CategoryAny - uses categories field, If enemy is matching with any category that listed (SEE ALSO: Category.json file!)
+				//CategoryAll - uses categories field, If enemy is matching with all category that listed
+				"persistentIDs": [
+					29,
+					30
+				], //PersistentIDs for PersistentID Mode
+				"nameParam": "Shadow!", //NameParameter for NameEquals and NameContains Mode
+				"nameIgnoreCase": false, //Should we ignore case for NameContains and NameEquals? (default: false)
+				"categories": [
+					"Shadow", "Big", "Shooter", "...And More"
+				] //Category list for CategoryAny/CategoryAll Setting
+			},
+			"IncludeEggSack": false, //WARNING: Shadow Eggsack is completely Invisible, not even a single shadow!
+			"RequireTagForDetection": true,
+			"FullyInvisible": false //Fully Invisible Shadows (Ghosts)! You can't see them even with flashlight.
+		}
+	],
+	//Material Customization
+	"MaterialCustom": [
+		{
+			"Enabled": false, //Slimy RapidFire Shooter (Head)
+			"DebugName": "HybridToChild",
+			"Target": {
+				"Mode": "NameEquals",
+				"persistentIDs": [],
+				"nameParam": "Shooter_Big_RapidFire",
+				"nameIgnoreCase": true,
+				"categories": []
+			},
+			"MaterialSets": [
+				{
+					//Head Part
+					"From": "shooter_RapidFire", //Material Name that enemy originally have
+					"To": "mtr_StrikerChild" //Material Name that will be changed to
+				},
+				{
+					//Body Part
+					"From": "shooter_wave",
+					"To": "mtr_StrikerChild"
+				}
+			]
+		},
+		{
+			"Enabled": false, //Make Charger Unoiled
+			"DebugName": "UnoiledCharger",
+			"Target": {
+				"Mode": "NameContains",
+				"persistentIDs": [],
+				"nameParam": "Bullrush",
+				"nameIgnoreCase": true,
+				"categories": []
+			},
+			"MaterialSets": [
+				{
+					//Head Part (Kinda works)
+					"From": "mtr_striker_bullrush_head",
+					"To": "mtr_striker_wave"
+				},
+				{
+					//Body Part
+					"From": "mtr_striker_bullrush",
+					"To": "mtr_striker_wave"
+				}
+			]
+		},
+		{
+			"Enabled": false, //Make Every Shooter Oiled, Except Rapid Shooter
+			"DebugName": "OiledShooter",
+			"Target": {
+				"Mode": "PersistentID",
+				"persistentIDs": [
+					26, //Hibernate
+					18, //Big
+					11 //Wave
+				],
+				"nameParam": "",
+				"nameIgnoreCase": true,
+				"categories": []
+			},
+			"MaterialSets": [
+				{
+					//Hibernate Shooter
+					"From": "shooter_hibernate",
+					"To": "mtr_striker_bullrush"
+				},
+				{
+					//Big Shooter
+					"From": "shooterBig",
+					"To": "mtr_striker_bullrush"
+				},
+				{
+					//Wave Shooter
+					"From": "shooter_wave",
+					"To": "mtr_striker_bullrush"
+				}
+			]
+		},
+		{
+			"Enabled": false, //Make Birthers Oiled?
+			"DebugName": "OiledBirther",
+			"Target": {
+				"Mode": "NameContains",
+				"persistentIDs": [],
+				"nameParam": "Birther_Boss",
+				"nameIgnoreCase": true,
+				"categories": []
+			},
+			"MaterialSets": [
+				{
+					"From": "birther",
+					"To": "mtr_striker_bullrush"
+				}
+			]
+		}
+		/*
+		Possible Material List (Only Enemy Materials)
+		mtr_head_henk
+		birther
+		mtr_cocoon
+		mtr_dest_arm_shtr
+		mtr_dest_chest_sides
+		mtr_dest_half_shtr
+		mtr_dest_head_1
+		mtr_hip_side
+		mtr_hips_hole
+		mtr_hole_shtr
+		mtr_leg_shtr
+		scout
+		shooter
+		shooterBig
+		shooter_RapidFire
+		shooter_hibernate
+		shooter_wave
+		mtr_tank
+		mtr_gib_meat_trailer
+		mtr_striker
+		mtr_StrikerChild
+		mtr_chest_hole
+		mtr_chest_side_fix
+		mtr_dest_arm
+		mtr_dest_leg
+		mtr_half
+		mtr_headshot
+		mtr_hip
+		mtr_stomache_fix
+		mtr_striker_bullrush
+		mtr_striker_bullrush_head
+		mtr_striker_hibernate
+		mtr_striker_wave
+		striker
+		strikerBig
+		*/
+	],
+	//Glow Customization (Glowing Color for enemy state)
+	"GlowCustom": [
+		{
+			"Enabled": false,
+			"DebugName": "InfectionHybrid",
+			"Target": {
+				"Mode": "PersistentID",
+				"persistentIDs": [
+					//"Enemy_Shooter_Infection_Big"
+					5000
+				],
+				"nameParam": "",
+				"nameIgnoreCase": true,
+				"categories": []
+			},
+			"DefaultColor": "black", //Color: Color when this enemy aren't glowing at all.
+			"HeartbeatColor": "#86F8BD", //Color: Color for Heartbeating phase of Hibernation
+			"DetectionColor": "#86F8BD", //Color: Color for Detecting phase of Hibernation
+			"SelfWakeupColor": "red", //Color: Color when this enemy has awake from Hibernate by himself (sounds, detection)
+			"PropagateWakeupColor": "red", //Color: Color when enemy has woke up from Propagate
+			"TentacleAttackColor": "red", //Color: Striker Tentacle Attack Glow Color
+			"ShooterFireColor": "#86F8BD", //Shooter Firing Glow Color
+			"PulseEffects": [ //Pulsating Effects
+				{
+					"Target": "Hibernate", //AgentTarget: Which Mode you want to select?
+					//Hibernate - This only works during Hibernate phase (not include scout)
+					//Combat - This only works during combat phase
+					//Scout - This only works during scout is patrolling
+					"Duration": 1.75, //Total duration of Pulse Effect
+					"GlowPattern": "04", //Pattern String for Effect
+					//0~9 and f means Intensity
+					//0 = 0.0
+					//1 = 0.1
+					//...
+					//9 = 0.9
+					//f = 1.0
+					//+ means extend, it extend the previous intensity setting duration
+					//- means delay, it does not extend previous intensity setting and just wait for next pattern
+					//So "f+++0" on Duration 1.0 means...
+					//Make it to full intensity for 0.8 seconds duration, and make it to zero for only 0.2 seconds.
+					//And repeat
+					"GlowColor": "#86F8BD * 10.0", //Pulse Effect Color
+					"RandomizeTime": true, //Should Time for each enemy be randomized? (useful for hibernating enemies having different glow timing)
+					"KeepOnDead": false, //Should Effect continue even if enemy has died?
+					"AlwaysPulse": false //Preventing Glowing Effects (Striker Tentacle, Shooter Firing, Scout Screaming, etc) temporary stop the pulse effect?
+				},
+				{
+					"Target": "Combat",
+					"Duration": 5.0,
+					"GlowPattern": "0+6+0+6+060606",
+					"GlowColor": "#86F8BD",
+					"RandomizeTime": true,
+					"KeepOnDead": false,
+					"AlwaysPulse": false
+				}
+			]
+		}
+	],
+	//Limb Customization (BodyPart HealthInfo)
+	"LimbCustom": [
+		{
+			"Enabled": false, //Make Birther's head be Weakspot (x10)
+			"DebugName": "Birther-MoreLimbs",
+			"Target": {
+				"Mode": "NameContains",
+				"persistentIDs": [],
+				"nameParam": "Birther",
+				"nameIgnoreCase": true,
+				"categories": []
+			},
+			"Limbs": [
+				{
+					"LimbName": "All", //If you use All for LimbName, it will applied to every bodypart that isn't explicitly wrote
+					"LimbType": "Normal",
+					//LimbType:
+					//Normal - Mark this bodypart as Normal, uses 1.0x multi
+					//Weakspot - Mark this bodypart as WeakSpot, uses WeakspotDamageMulti from EnemyDataBlock
+					//WeakspotCustom - Mark this bodypart as Weakspot, uses CustomMulti value from this config
+					//Armor - Mark this bodypart as Armor, uses ArmorDamageMulti from EnemyDataBlock
+					//ArmorCustom - Mark this bodypart as Armor, uses CustomMulti value from this config
+					"CustomMulti": 1.0,
+					"Health": "Unchanged"
+				},
+				{
+					"LimbName": "Head", //Head, Each body part name can be found in Console Debug Log
+					/*
+					- Possible BodyPart List (Based on Striker)
+					Hips
+					LeftUpperLeg
+					LeftLowerLeg
+					RightUpperLeg
+					RightLowerLeg
+					Spine
+					Chest
+					LeftUpperArm
+					LeftLowerArm
+					Head
+					RightUpperArm
+					RightLowerArm
+					*/
+					"LimbType": "WeakspotCustom",
+					"CustomMulti": 10.0, //Headshot her will now do x10 damage
+					"Health": "Unchanged" //##BasedValue (Based on original limb health): Health for this Limb
+				},
+				{
+					"LimbName": "EggSack(Clone)",
+					"LimbType": "Weakspot", //Set EggSack to use normal Weakspot Multiplier
+					"CustomMulti": 1.0,
+					"Health": "Unchanged"
+				}
+			]
+		}
+	],
+	"ModelRefCustom": [
+		{
+			"Enabled": false,
+			"DebugName": "Shooter-FireFromChest",
+			"Target": {
+				"Mode": "NameContains",
+				"persistentIDs": [],
+				"nameParam": "Shooter",
+				"nameIgnoreCase": true,
+				"categories": []
+			},
+			"ModelRefs": [
+				{
+					"Type": "ShooterFire",
+					/*
+					Possible Value for "Type" and "CopyFrom"
+					None - Only for "CopyFrom", No Base ModelRef You should use "CopyFromPath" to specify the parent body part you want to use it for this ModelRef
+					Tentacle - Default Striker Tentacle
+					Tentacle2 - Tank Tentacle 2
+					Tentacle3 - Tank Tentacle 3
+					TentacleNoHead - Use this position for tentacle when head is gone
+					TentacleNoCheat - Use this position for tentacle when chest is gone
+					ShooterFire - Shooter Firing Position
+					ScoutFeeler - Scout Feeler Spawn Position
+					BioMarker - Bio Ping Marker Spawn Position
+					*/
+					"CopyFrom": "BioMarker", //
+					"CopyFromPath": "", //GameObject Path for "CopyFrom": "None", You can use UnityExplorer to find them
+					"Offset": { //Position Offset for this ModelRef
+						"x": 0.0,
+						"y": 0.0,
+						"z": 0.0
+					},
+					"RotateOffset": { //Rotation Offset for this ModelRef
+						"x": 0.0,
+						"y": 0.0,
+						"z": 0.0
+					}
+				},
+				{
+					"Type": "BioMarker",
+					"CopyFrom": "ShooterFire", //Mention that every ModelRef stay within this config, so this position is still head
+					"CopyFromPath": "",
+					"Offset": {
+						"x": 0.0,
+						"y": 0.0,
+						"z": 0.0
+					},
+					"RotateOffset": {
+						"x": 0.0,
+						"y": 0.0,
+						"z": 0.0
+					}
+				}
+			]
+		}
+	],
+	"MarkerCustom": [
+		{
+			"Enabled": false,
+			"DebugName": "Shadow",
+			"Target": {
+				"Mode": "NameContains",
+				"persistentIDs": [],
+				"nameParam": "Shadow",
+				"nameIgnoreCase": true,
+				"categories": []
+			},
+			"SpriteName": "marker_shadow.png", //FileName for icon, Leave it as blank if you want default sprite, image files should placed in ExtraEnemyCustomization/icons folder
+			"MarkerColor": "#d22f1e", //Color for Marker: Official one is #d22f1e
+			"BlinkIn": true, //Use Blink Effect when first spawned?
+			"Blink": true, //Use Random Blink Effect?
+			"BlinkDuration": 7.0, //How long should Random Blink effect work?
+			"BlinkMinDelay": 0.5, //Minimum delay for Random Blink
+			"BlinkMaxDelay": 2.0, //Maximum delay for Random Blink
+			"AllowMarkingOnHibernate": true //Allow This Enemies can be pinged even in Hibernate Status? (KNOWN BUG: It will turn enemies into white ping icon in every time, use ScannerCustom to prevent this)
+		},
+		{
+			"Enabled": false,
+			"DebugName": "Scout",
+			"Target": {
+				"Mode": "NameContains",
+				"persistentIDs": [],
+				"nameParam": "Scout",
+				"nameIgnoreCase": true,
+				"categories": []
+			},
+			"SpriteName": "marker_special.png",
+			"MarkerColor": "#F08080",
+			"BlinkIn": true,
+			"Blink": true,
+			"BlinkDuration": 60.0,
+			"BlinkMinDelay": 9.0,
+			"BlinkMaxDelay": 18.0,
+			"AllowMarkingOnHibernate": false
+		},
+		{
+			"Enabled": false,
+			"DebugName": "Bigs",
+			"Target": {
+				"Mode": "NameContains",
+				"persistentIDs": [],
+				"nameParam": "Big",
+				"nameIgnoreCase": true,
+				"categories": []
+			},
+			"SpriteName": "marker_miniboss.png",
+			"MarkerColor": "red",
+			"BlinkIn": true,
+			"Blink": true,
+			"BlinkDuration": 60.0,
+			"BlinkMinDelay": 1.5,
+			"BlinkMaxDelay": 5.0,
+			"AllowMarkingOnHibernate": false
+		}
+	],
+	"ScannerCustom": [
+		{
+			"Enabled": false,
+			"DebugName": "All",
+			"Target": {
+				"Mode": "Everything",
+				"persistentIDs": [],
+				"nameParam": "",
+				"nameIgnoreCase": true,
+				"categories": []
+			},
+			"DefaultColor": "#b3b3b3", //Color: Hibernating Color
+			"DefaultSize": 1.0, //Size of the Hibernating Color
+			"WakeupColor": "#ff1a1a", //Color: Wakeup Color
+			"WakeupSize": 1.0, //Size of the Wakeup Color
+
+			"LerpingDuration": 0.4, //Color-Color Transition duration, longer means smoother
+
+			"UsingDetectionColor": true, //Use Detection/Heartbeat ColorSet?
+			"DetectionColor": "#B18904", //Color: Hibernate Detection Phase Color
+			"DetectionSize": 1.0, //Size of the Hibernate Detection Phase Color
+			"HeartbeatColor": "#F78181", //Color: Hibernate Heartbeat Phase Color
+			"HeartbeatSize": 1.0, //Size of the Hibernate Heartbeat Phase Color
+
+			"UsingScoutColor": true, //Use ScoutPatrol/ScoutFeeler ColorSet?
+			"ScoutPatrolColor": "#ff1a1a", //Color: Scout Patrolling Color
+			"ScoutPatrolSize": 1.0, //Size of the Scout Patrolling Color
+			"ScoutFeelerColor": "#ff1a1a", //Color: Scout Feeler Out Color
+			"ScoutFeelerSize": 1.2 //Size of the Scout Feeler Out Color
+		},
+		{
+			"Enabled": false,
+			"DebugName": "Bigs",
+			"Target": {
+				"Mode": "CategoryAny",
+				"persistentIDs": [],
+				"nameParam": "",
+				"nameIgnoreCase": true,
+				"categories": [
+					"Big"
+				]
+			},
+			"DefaultColor": "#b3b3b3",
+			"DefaultSize": 1.3,
+			"WakeupColor": "#ff1a1a",
+			"WakeupSize": 1.3,
+
+			"LerpingDuration": 0.4,
+
+			"UsingDetectionColor": true,
+			"DetectionColor": "#B18904",
+			"DetectionSize": 1.3,
+			"HeartbeatColor": "#F78181",
+			"HeartbeatSize": 1.3,
+
+			"UsingScoutColor": true,
+			"ScoutPatrolColor": "#ff1a1a",
+			"ScoutPatrolSize": 1.3,
+			"ScoutFeelerColor": "#ff1a1a",
+			"ScoutFeelerSize": 1.5
+		}
+	],
+	"SilhouetteCustom": [
+		{
+			"Enabled": false,
+			"DebugName": "Shadow",
+			"Target": {
+				"Mode": "CategoryAny",
+				"persistentIDs": [],
+				"nameParam": "",
+				"nameIgnoreCase": true,
+				"categories": [
+					"Shadow"
+				]
+			},
+			"DefaultColor": "blue", //Color: Default Color for Silhouette
+			"RequireTag": false, //Does it requires Bio Tag to be able to see?
+			"ReplaceColorWithMarker": true, //Does it varies Color to Bio Tag Marker Color when it's tagged?
+			"KeepOnDead": false, //Keep Silhouettes When Enemy Dead?
+			"DeadEffectDelay": 0.75 //How Long it takes to disabling Silhouette effect happens?
+		}
+	]
+}

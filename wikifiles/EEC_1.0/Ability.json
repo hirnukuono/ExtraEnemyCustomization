@@ -1,0 +1,228 @@
+{
+	"CanMediStopBleeding": true, //Setting for BleedAttackCustom, Will using medi stops bleeding?
+
+	//EAB_FogSphere Fog Custom
+	"FogSphereCustom": [
+		{
+			"Enabled": false, //You can check first item of Model.json if you have no idea with this formatting
+			"DebugName": "BirtherFog_InfectionWave",
+			"Target": {
+				"Mode": "PersistentID",
+				"persistentIDs": [
+					36
+				],
+				"nameParam": "",
+				"nameIgnoreCase": true,
+				"categories": []
+			},
+			"ColorMin": "#A9F5F2",
+			"ColorMax": "#A9F5F2",
+			"IntensityMin": 1.0,
+			"IntensityMax": 20.0,
+			"RangeMin": 10.0, //How far it spread in initial spawn?
+			"RangeMax": 150.0, //How far it should be spread?
+			"DensityMin": 10.0,
+			"DensityMax": 150.0,
+			"DensityAmountMin": 0.0,
+			"DensityAmountMax": 4.0,
+			"Duration": 3.0,
+			"EffectVolume": {
+				"Enabled": true, //Do this fog changes infection status?
+				"Contents": "Infection", //All, Health, Infection
+				"Modification": "Inflict", //Inflict, Shield
+				"Scale": 0.1 //Scale for effect
+			}
+		}
+	],
+	"BirthingCustom": [
+		{
+			"Enabled": false, //Make Birther Boss spawn bullrushs!
+			"DebugName": "Birthing-Bullrushs",
+			"Target": {
+				"Mode": "NameContains",
+				"persistentIDs": [],
+				"nameParam": "Birther_Boss",
+				"nameIgnoreCase": true,
+				"categories": []
+			},
+			"EnemyGroupToSpawn": 32, //Persistent ID to EnemyGroupDataBlock you want to spawn
+			"ChildrenCost": 3.0, //##BasedValue: Single Enemy Cost, Check out EnemyPopulationDataBlock for get right value
+			"ChildrenPerBirth": 8, //##BasedValue: Maximum Number of babies in single spawn.
+			"ChildrenPerBirthMin": 4, //##BasedValue: At least this count of babies will be spawned. (If this count of babies breaks spawncap, birther won't spawn more)
+			"ChildrenMax": 16, //##BasedValue: Max Childrens that can be in active at once
+			"MinDelayUntilNextBirth": 1.0, //##BasedValue: Min Timer for next birth when Birther has spawned not that much babies. (in this case, if it only spawned 4)
+			"MaxDelayUntilNextBirth": 14.0 //##BasedValue: Max Timer for next birth when Birther has spawned maximum babies it can done in once. (in this case, if it spawned full 8 in once)
+		}
+	],
+	"HealthRegenCustom": [
+		{
+			"Enabled": false, //Health Regen Striker
+			"DebugName": "Striker-Kiter",
+			"Target": {
+				"Mode": "NameContains",
+				"persistentIDs": [],
+				"nameParam": "Striker",
+				"nameIgnoreCase": true,
+				"categories": []
+			},
+			"RegenDatas": [
+				{
+					"RegenInterval": 1.0, //Regen Interval after regen started
+					"DelayUntilRegenStart": 15.0, //Regen Delay after last damage has inflicted or spawned
+					"CanDamageInterruptRegen": true, //Can Dealing damage reset the Regen Delay Timer?
+					"RegenAmount": "1%", //##BasedValue: Regen Amount for each Interval
+					"RegenCap": "20%" //##BasedValue: Regen Cap, Regen will stop on this health
+				}
+			]
+		},
+		{
+			"Enabled": false, //Live Timer Shooter (They will start dying after 10 seconds, and will die in 2 seconds)
+			"DebugName": "Long Live the Shooter",
+			"Target": {
+				"Mode": "NameContains",
+				"persistentIDs": [],
+				"nameParam": "Shooter",
+				"nameIgnoreCase": true,
+				"categories": []
+			},
+			"RegenDatas": [
+				{
+					"RegenInterval": 0.1, //Decay Delay
+					"DelayUntilRegenStart": 10.0,
+					"CanDamageInterruptRegen": false,
+					"RegenAmount": "-5%", //Decay
+					"RegenCap": "0%" //In a decay type regen, it works as decay cap (How below it goes)
+				}
+			]
+		}
+	],
+	"InfectionAttackCustom": [
+		{
+			"Enabled": false, //Punch will do 2% infection, and Tentacle will do 8%
+			"DebugName": "Bullrush-Spitter",
+			"Target": {
+				"Mode": "NameContains",
+				"persistentIDs": [],
+				"nameParam": "Bullrush",
+				"nameIgnoreCase": true,
+				"categories": []
+			},
+			"MeleeData": {
+				"Infection": "2%", //##BasedValue: This Infection value will be applied to player, You can also use negative value for disinfection effect
+				"SoundEventID": 676801566, //SoundID to play
+				"UseEffect": true, //Should we use spitter/disinfection effect?
+				"ScreenLiquidRange": 3.0 //How far does effect should spread?
+			},
+			"TentacleData": {
+				"Infection": "8%",
+				"SoundEventID": 676801566,
+				"UseEffect": true,
+				"ScreenLiquidRange": 5.0
+			}
+			//For Shooter Infection, Check 'Projectile.json' file
+		}
+	],
+	"ExplosiveAttackCustom": [
+		{
+			"Enabled": false, //Explosive Attack!
+			"DebugName": "Everything",
+			"Target": {
+				"Mode": "Everything",
+				"persistentIDs": [],
+				"nameParam": "",
+				"nameIgnoreCase": true,
+				"categories": []
+			},
+			"MeleeData": {
+				"Damage": "20%", //BasedValue: (Based on PlayerDataBlock.health): Damage to deal with explosion (0 to disable it)
+				"EnemyDamageMulti": 1.0, //Multiplier when enemy is receiving explosion damage
+				"MinRange": 5.0, //How far it does maximum damage?
+				"MaxRange": 10.0, //How far it does damage?
+				"NoiseMinRange": 10.0, //How far it awake nearby enemies when it explodes
+				"NoiseMaxRange": 15.0, //How for it can be hear by nearby enemy when it explodes
+				"NoiseType": "Detectable" //InstaDetect, Detectable, PulseOnly
+			},
+			"TentacleData": {
+				"Damage": "10%",
+				"MinRange": 5.0,
+				"MaxRange": 10.0,
+				"NoiseMinRange": 10.0,
+				"NoiseMaxRange": 15.0
+			}
+			//For Shooter Explosion, Check 'Projectile.json' file
+		}
+	],
+	"KnockbackAttackCustom": [
+		{
+			"Enabled": false, //Knockback punch, and Snatcher Tentacle
+			"DebugName": "Big",
+			"Target": {
+				"Mode": "CategoryAny", //CategoryAll
+				"persistentIDs": [],
+				"nameParam": "",
+				"nameIgnoreCase": true,
+				"categories": [
+					"Big"
+				]
+			},
+			"MeleeData": {
+				"Velocity": 10.0, //Knockback Velocity from enemies to player
+				"VelocityZ": 6.0, //Z (Vertical) Velocity to apply (not affected by position)
+				"DoMultDistance": false, //Velocity will be affected by distance? (longer = stronger)
+				"DoMultDistanceZ": false //Z Velocity will be affected by distance? (longer = stronger)
+			},
+			"TentacleData": {
+				"Velocity": -1.5, //Allows Negative values to drag player instead of push it
+				"VelocityZ": 9.0,
+				"DoMultDistance": true,
+				"DoMultDistanceZ": false
+			}
+		}
+	],
+	"BleedAttackCustom": [
+		{
+			"Enabled": false, //Bullrush Attack will bleeds you in 50% chance
+			"DebugName": "Bullrush",
+			"Target": {
+				"Mode": "CategoryAny", //CategoryAll
+				"persistentIDs": [],
+				"nameParam": "",
+				"nameIgnoreCase": true,
+				"categories": [
+					"Bullrush"
+				]
+			},
+			"MeleeData": {
+				"Damage": "0.1%", //BasedValue: Based on PlayerMaxHealth, Damage for each interval
+				"ChanceToBleed": 0.5, //Chance to be bleed (0.0 = zero, 1.0 = always)
+				"Interval": 0.15, //Interval for each damage
+				"Duration": 10.0 //Duration for bleeding effect
+			},
+			"TentacleData": {
+				"Damage": "0.1%",
+				"ChanceToBleed": 0.5,
+				"Interval": 0.15,
+				"Duration": 10.0
+			}
+		}
+	],
+	"DoorBreakerCustom": [
+		{
+			"Enabled": false, //Big Sleepers will break door instantly
+			"DebugName": "Big/Boss Instant Break",
+			"Target": {
+				"Mode": "CategoryAny", //CategoryAll
+				"persistentIDs": [],
+				"nameParam": "",
+				"nameIgnoreCase": true,
+				"categories": [
+					"Big", "Boss"
+				]
+			},
+			"UseGlobalTimer": true, //Use Per Setting GlobalTimer (If it's false, timer runs on each enemies)
+			"Damage": 1000.0, //Damage to door (1.0 is default)
+			"MinDelay": 0.2, //Min Delay for each door break
+			"MaxDelay": 0.4 //Max Delay for each door break
+		}
+	]
+}

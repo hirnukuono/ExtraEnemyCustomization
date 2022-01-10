@@ -1,0 +1,34 @@
+What is ##Color?
+
+Color Formatting in this config file is much more free than officials "r", "g", "b" and "a" Mode.
+
+
+Supported Input with Examples:
+
+
+Hex Color code (aka HTML color code):
+"GlowColor": "#ff5733"
+"GlowColor": "#90ff33ff"
+ - Color code you can scrap from various Color code website!
+ - Also support RRGGBBAA format for alpha(transparent) channel.
+
+
+Color name:
+"GlowColor": "orange" //GTFO's favorite one
+"GlowColor": "cyan"
+ - Any color name that in HTML (mostly)
+ - You can check this website for reference: https://www.w3schools.com/colors/colors_names.asp
+
+
+Ye olde RGBA:
+"GlowColor": {
+	"r": 0.565,
+	"g": 1.0,
+	"b": 0.765753356,
+	"a": 1.0
+}
+ - Ew, But we still supports it. You can use it if you want.
+
+Also If you need to scale up your color with multiplier you could do that!
+"GlowColor": "red * 10.0"
+"GlowColor": "#ff1123 * 20.0"
