@@ -1,0 +1,74 @@
+{
+	//Category will helps you to organize & selecting enemies easier in every settings!
+
+	"Categories": [ //List of Category (case insensitive)
+		"Small",
+		"Shadow",
+		"Striker",
+		"Shooter",
+		"Scout",
+		"Big",
+		"Bullrush",
+		"Boss",
+		"Or Even More!"
+	],
+	//CategoryPair Type Category Setting
+	//Each Enemy will have multiple Category!
+	"CategoryPair": [ 
+		{
+			"PersistentID": 24, //Striker Hibernate
+			"Categories": [
+				"Small", "Striker"
+			]
+		},
+		{
+			"PersistentID": 35, //Big Shadow Striker
+			"Categories": [
+				"Big", "Striker", "Shadow"
+			]
+		}
+		//And so on!
+	],
+	//IdPair Type Category Setting
+	//Each Category will have multiple enemies!
+	"IdPair": [
+		{
+			"Category": "Small",
+			"PersistentIDs": [
+				24, //Striker Hibernate
+				13, //Striker Wave
+				21, //Shadow
+				30, //Bullrush
+				26, //Shooter Hibernate
+				11 //Shooter Wave
+			]
+		},
+		{
+			"Category": "Big",
+			"PersistentIDs": [
+				16, //Big Striker Wave
+				39, //Big Striker Bullrush
+				28, //Big Striker Hibernate
+				35, //Big Striker Shadow
+				18, //Big Shooter
+				33 //Hybrid
+			]
+		},
+		{
+			"Category": "Scout",
+			"PersistentIDs": [
+				20, //Scout
+				40, //Shadow Scout
+				41 //Bullrush Scout
+			]
+		},
+		{
+			"Category": "Boss",
+			"PersistentIDs": [
+				29, //Tank
+				36, //Brither
+				37 //Birther boss
+			]
+		}
+	]
+}

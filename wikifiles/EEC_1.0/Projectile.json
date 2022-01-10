@@ -1,0 +1,143 @@
+{
+	//Shooter Projectile Firing Custom
+	"ShooterFireCustom": [
+		{
+			"Enabled": false, //You can check first item of Model.json if you have no idea with this formatting
+			"DebugName": "Hibernate-TwoDistance",
+			"Target": {
+				"Mode": "PersistentID",
+				"persistentIDs": [
+					26
+				],
+				"nameParam": "",
+				"nameIgnoreCase": true,
+				"categories": []
+			},
+			"FireSettings": [
+				{
+					"FromDistance": -1.0, //Swap to this FireSetting when target is over this distance
+					"OverrideProjectileType": true, //Set this value to false if you only want to touch settings
+					"ProjectileType": 50,
+					//TargetingTiny - 3
+					//TargetingSmall - 0
+					//TargetingMedium - 1
+					//TargetingLarge - 2
+					//SemiTargetingQuick - 6
+					//InfectionBomb - 7
+					//TargetingSmallFast - 8
+					//NotTargetingSmallFast - 9
+					//SemiTargetingBoss - 10
+					//SemiTargetingBossArtillery - 11
+					//RagingBoss - 12
+					//GlueFlying - 4 //DONT
+					//GlueLanded - 5 //DONT
+					//Or other custom IDs! (check ProjectileDefinitions Section)
+					"BurstCount": 2, //##BasedValue (based on default value): How many Projectile should be fired for single attack?
+					"BurstDelay": 0.8, //##BasedValue (based on default value): Interval Between firing
+					"ShotDelayMin": 0.005, //##BasedValue (based on default value): Min Shot delay for each projectile
+					"ShotDelayMax": 0.01, //##BasedValue (based on default value): Max Shot delay for each projectile
+					"InitialFireDelay": 0.0, //##BasedValue (based on default value): Initial Shot delay after spawn
+					"ShotSpreadXMin": -45.0, //##BasedValue (based on default value): Min X degree spread value (Left-Right)
+					"ShotSpreadXMax": 45.0, //##BasedValue (based on default value): Max X
+					"ShotSpreadYMin": -20.0, //##BasedValue (based on default value): Min Y degree spread value (Up-Down)
+					"ShotSpreadYMax": 20.0 //##BasedValue (based on default value): Max Y
+				},
+				{
+					"FromDistance": 9.0, //Swap to this FireSetting when target distance over this value
+					"OverrideProjectileType": true,
+					"ProjectileType": 51,
+					"BurstCount": 15,
+					"BurstDelay": 3.0,
+					"ShotDelayMin": 0.005,
+					"ShotDelayMax": 0.01,
+					"InitialFireDelay": 0.0,
+					"ShotSpreadXMin": -45.0,
+					"ShotSpreadXMax": 45.0,
+					"ShotSpreadYMin": -20.0,
+					"ShotSpreadYMax": 20.0
+				}
+			]
+		},
+		{
+			"Enabled": false,
+			"DebugName": "CombatRel_DoubleAmount",
+			"Target": {
+				"Mode": "PersistentID",
+				"persistentIDs": [
+					11, //Wave Shooter
+					18, //Big Shooter
+					33 //Hybrid
+				],
+				"nameParam": "",
+				"nameIgnoreCase": true,
+				"categories": []
+			},
+			"FireSettings": [
+				{
+					"FromDistance": -1.0,
+					"OverrideProjectileType": false,
+					"ProjectileType": 0,
+					"BurstCount": "200%", //Double the Burst Count
+					"BurstDelay": "Unchanged", //Keep the Original Burst Delay to default
+					"ShotDelayMin": "50%", //Half the Delay
+					"ShotDelayMax": "50%", //Half the Delay
+					"InitialFireDelay": "50%",
+					"ShotSpreadXMin": "Unchanged",
+					"ShotSpreadXMax": "Unchanged",
+					"ShotSpreadYMin": "Unchanged",
+					"ShotSpreadYMax": "Unchanged"
+				}
+			]
+		}
+	],
+	"ProjectileDefinitions": [
+		{
+			"DebugName": "Small-Cyan-HighHoming",
+			"ID": 50, //Do not overlap with existing one (0~12), It also should be between 0~255 (byte type)
+			"BaseProjectile": "TargetingSmall", //It should be from existing projectile
+			"Speed": "80%", //BasedValue (Based on base projectile speed): Speed of Projectile, meter/s I guess
+			"HomingStrength": "120%", //BasedValue (Based on base projectile strength): How strong it should be Homing to Target?
+			"GlowColor": "cyan", //Color: Glow Color
+			"GlowRange": 1.0, //BasedValue Glow Range
+			"Damage": "50% of default", //BasedValue: (Based on PlayerDataBlock.health, Has original Value): Damage to deal 
+			"Infection": "0%", //BasedValue: (Based on 1.0, Has Original Value): Add Infection On Hit
+			"Explosion": {
+				"Enabled": true,
+				"Damage": "0%", //BasedValue: (Based on PlayerDataBlock.health): Damage to deal with explosion
+				"EnemyDamageMulti": 1.0, //Multiplier when enemy is receiving explosion damage
+				"MinRange": 2.0, //How far it does maximum damage?
+				"MaxRange": 5.0, //How far it does damage?
+				"NoiseMinRange": 5.0, //How far it awake nearby enemies when it explodes
+				"NoiseMaxRange": 10.0, //How for it can be hear by nearby enemy when it explodes
+				"NoiseType": "Detectable" //InstaDetect, Detectable, PulseOnly
+			},
+			"Knockback": {
+				"Enabled": true,
+				"Velocity": 10.0,
+				"VelocityZ": 1.0
+			},
+			"Bleed": {
+				"Damage": "0.1%", //BasedValue: Based on PlayerMaxHealth, Damage for each interval
+				"ChanceToBleed": 0.5, //Chance to be bleed (0.0 = zero, 1.0 = always)
+				"Interval": 0.15, //Interval for each damage
+				"Duration": 10.0 //Duration for bleeding effect
+			}
+		},
+		{
+			"DebugName": "Small-Magenta-LessHoming",
+			"ID": 51,
+			"BaseProjectile": "TargetingSmall",
+			"Speed": "150%",
+			"HomingStrength": "50%",
+			"GlowColor": "magenta",
+			"GlowRange": 1.0,
+			"Damage": "3%",
+			"Infection": "0%",
+			"ExplosionDamage": "0%",
+			"ExplosionMinRange": 2.0,
+			"ExplosionMaxRange": 5.0,
+			"ExplosionNoiseMinRange": 5.0,
+			"ExplosionNoiseMaxRange": 10.0 
+		}
+	]
+}
