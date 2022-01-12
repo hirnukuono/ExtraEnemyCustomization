@@ -6,8 +6,6 @@ namespace EECustom.Configs.Customizations
 {
     public class AbilityCustomConfig : CustomizationConfig
     {
-        public bool CanMediStopBleeding { get; set; } = false;
-
         public BirthingCustom[] BirthingCustom { get; set; } = new BirthingCustom[0];
         public FogSphereCustom[] FogSphereCustom { get; set; } = new FogSphereCustom[0];
         public HealthRegenCustom[] HealthRegenCustom { get; set; } = new HealthRegenCustom[0];

@@ -22,7 +22,7 @@ namespace EECustom.Managers
         {
             LevelEvents.LevelCleanup += ClearTargetLookup;
 
-            Current = new ConfigManager();
+            Current = new();
 
             LoadConfigs();
             Current.GenerateBuffer();
@@ -86,13 +86,14 @@ namespace EECustom.Managers
             if (Current == null)
                 return;
 
-            Current.Categories = new CategoryConfig();
-            Current.ModelCustom = new ModelCustomConfig();
-            Current.AbilityCustom = new AbilityCustomConfig();
-            Current.ProjectileCustom = new ProjectileCustomConfig();
-            Current.TentacleCustom = new TentacleCustomConfig();
-            Current.DetectionCustom = new DetectionCustomConfig();
-            Current.SpawnCostCustom = new SpawnCostCustomConfig();
+            Current.Global = new();
+            Current.Categories = new();
+            Current.ModelCustom = new();
+            Current.AbilityCustom = new();
+            Current.ProjectileCustom = new();
+            Current.TentacleCustom = new();
+            Current.DetectionCustom = new();
+            Current.SpawnCostCustom = new();
 
             CustomProjectileManager.DestroyAllProjectile();
             CustomScoutWaveManager.ClearAll();
@@ -106,6 +107,10 @@ namespace EECustom.Managers
                 try
                 {
                     BasePath = Path.Combine(MTFOUtil.CustomPath, "ExtraEnemyCustomization");
+
+                    Logger.Debug("Loading Global.json");
+                    if (TryLoadConfig(BasePath, "Global.json", out GlobalConfig globalConfig))
+                        Current.Global = globalConfig;
 
                     Logger.Debug("Loading Category.json...");
                     if (TryLoadConfig(BasePath, "Category.json", out CategoryConfig categoryConfig))
@@ -193,6 +198,7 @@ namespace EECustom.Managers
 
         public static ConfigManager Current { get; private set; }
 
+        public GlobalConfig Global { get; private set; } = new();
         public CategoryConfig Categories { get; private set; } = new();
         public ModelCustomConfig ModelCustom { get; private set; } = new();
         public AbilityCustomConfig AbilityCustom { get; private set; } = new();
@@ -201,6 +207,7 @@ namespace EECustom.Managers
         public DetectionCustomConfig DetectionCustom { get; private set; } = new();
         public SpawnCostCustomConfig SpawnCostCustom { get; private set; } = new();
         public EnemyAbilityCustomConfig EnemyAbilityCustom { get; private set; } = new();
+        
 
         private readonly List<EnemyCustomBase> _customizationBuffer = new();
 
