@@ -14,6 +14,8 @@ namespace EECustom.Customizations.Detections
 
         private static readonly Random _rand = new();
 
+        public EnemyAnimType BendingAnimation { get; set; } = EnemyAnimType.AbilityUseOut;
+        public EnemyAnimType StandingAnimation { get; set; } = EnemyAnimType.AbilityUse;
         public float ChanceToBending { get; set; } = 1.0f;
 
         static ScoutAnimCustom()
@@ -65,6 +67,8 @@ namespace EECustom.Customizations.Detections
             var data = EnemyProperty<ScoutAnimOverrideData>.RegisterOrGet(agent);
             data.Agent = agent;
             data.ChanceToBending = ChanceToBending;
+            data.BendingAnim = BendingAnimation;
+            data.StandingAnim = StandingAnimation;
         }
 
         private static void ReceivedAnimPacket(ulong id, ScoutAnimPacket anim)
@@ -78,10 +82,7 @@ namespace EECustom.Customizations.Detections
 
             if (data.BendingWasCalled)
             {
-                if (anim.nextAnim == ScoutAnimType.Standing)
-                {
-                    EnemyAnimUtil.DoAnimationLocal(data.Agent, EnemyAnimType.AbilityUse, 0.15f, false);
-                }
+                data.DoAnim(anim.nextAnim);
 
                 data.NextAnim = ScoutAnimType.Unknown;
                 data.BendingWasCalled = false;
@@ -102,6 +103,16 @@ namespace EECustom.Customizations.Detections
         public bool AnimDetermined = false;
         public bool BendingWasCalled = false;
         public ScoutAnimType NextAnim = ScoutAnimType.Unknown;
+        public EnemyAnimType BendingAnim = EnemyAnimType.AbilityUseOut;
+        public EnemyAnimType StandingAnim = EnemyAnimType.AbilityUse;
+
+        public void DoAnim(ScoutAnimType anim)
+        {
+            if (anim == ScoutAnimType.Standing)
+                EnemyAnimUtil.DoAnimationLocal(Agent, StandingAnim, 0.15f, false);
+            else if (anim == ScoutAnimType.Bending)
+                EnemyAnimUtil.DoAnimationLocal(Agent, BendingAnim, 0.15f, false);
+        }
     }
 
     public struct ScoutAnimPacket

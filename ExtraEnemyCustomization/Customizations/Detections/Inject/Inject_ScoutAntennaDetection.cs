@@ -22,10 +22,7 @@ namespace EECustom.Customizations.Detections.Inject
 
             if (data.AnimDetermined)
             {
-                if (data.NextAnim == ScoutAnimType.Standing)
-                {
-                    EnemyAnimUtil.DoAnimationLocal(data.Agent, EnemyAnimType.AbilityUse, 0.15f, false);
-                }
+                data.DoAnim(data.NextAnim);
 
                 data.NextAnim = ScoutAnimType.Unknown;
                 data.BendingWasCalled = false;
