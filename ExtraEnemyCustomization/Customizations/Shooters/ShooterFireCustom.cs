@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace EECustom.Customizations.Shooters
 {
-    public class ShooterFireCustom : EnemyCustomBase, IEnemySpawnedEvent
+    public sealed class ShooterFireCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
         public FireSetting[] FireSettings { get; set; } = new FireSetting[0];
 

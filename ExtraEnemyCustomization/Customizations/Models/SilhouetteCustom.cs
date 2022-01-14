@@ -9,7 +9,7 @@ using UnityEngine.Rendering;
 namespace EECustom.Customizations.Models
 {
     //Original Code from Dex-EnemyGhosts
-    public class SilhouetteCustom : RevertableEnemyCustomBase, IEnemySpawnedEvent, IEnemyPrefabBuiltEvent
+    public sealed class SilhouetteCustom : RevertableEnemyCustomBase, IEnemySpawnedEvent, IEnemyPrefabBuiltEvent
     {
         public const string PlayerPrefabPath = "ASSETS/ASSETPREFABS/CHARACTERS/CHARACTER_A.PREFAB";
         public const string PlayerGhostName = "g_set_military_01_boots_ghost";

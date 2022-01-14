@@ -6,7 +6,7 @@ using Player;
 
 namespace EECustom.Customizations.Abilities
 {
-    public class InfectionAttackCustom : EnemyCustomBase
+    public sealed class InfectionAttackCustom : EnemyCustomBase
     {
         public InfectionAttackData MeleeData { get; set; } = new();
         public InfectionAttackData TentacleData { get; set; } = new();

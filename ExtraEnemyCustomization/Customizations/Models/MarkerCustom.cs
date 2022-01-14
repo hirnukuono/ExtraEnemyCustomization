@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace EECustom.Customizations.Models
 {
-    public class MarkerCustom : EnemyCustomBase, IEnemySpawnedEvent
+    public sealed class MarkerCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
         public string SpriteName { get; set; } = string.Empty;
         public Color MarkerColor { get; set; } = new Color(0.8235f, 0.1843f, 0.1176f);

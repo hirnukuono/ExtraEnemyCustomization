@@ -9,7 +9,7 @@ using System.Text;
 
 namespace EECustom.Customizations.Detections
 {
-    public class ScoutAnimCustom : EnemyCustomBase, IEnemySpawnedEvent
+    public sealed class ScoutAnimCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
         internal static readonly ScoutAnimSync _animSync = new();
 

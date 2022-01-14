@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace EECustom.Customizations.Abilities
 {
-    public class KnockbackAttackCustom : EnemyCustomBase
+    public sealed class KnockbackAttackCustom : EnemyCustomBase
     {
         public KnockbackSetting MeleeData { get; set; } = new();
         public KnockbackSetting TentacleData { get; set; } = new();

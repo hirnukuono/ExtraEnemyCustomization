@@ -9,7 +9,7 @@ using System.Text;
 
 namespace EECustom.Customizations.Shared
 {
-    public class BleedSetting
+    public sealed class BleedSetting
     {
         public bool Enabled { get; set; } = false;
         public ValueBase Damage { get; set; } = ValueBase.Zero;

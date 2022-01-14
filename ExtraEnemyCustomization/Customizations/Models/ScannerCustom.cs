@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace EECustom.Customizations.Models
 {
-    public class ScannerCustom : EnemyCustomBase, IEnemySpawnedEvent
+    public sealed class ScannerCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
         public static readonly Color DefaultDetectionColor = new(1f, 0.1f, 0.1f, 1f);
 

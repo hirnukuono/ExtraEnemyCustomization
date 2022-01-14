@@ -7,7 +7,7 @@ using Player;
 
 namespace EECustom.Customizations.Abilities
 {
-    public class ExplosiveAttackCustom : EnemyCustomBase
+    public sealed class ExplosiveAttackCustom : EnemyCustomBase
     {
         public ExplosionSetting MeleeData { get; set; } = new();
         public ExplosionSetting TentacleData { get; set; } = new();

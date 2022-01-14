@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace EECustom.Customizations.Models
 {
-    public class ModelRefCustom : RevertableEnemyCustomBase, IEnemyPrefabBuiltEvent
+    public sealed class ModelRefCustom : RevertableEnemyCustomBase, IEnemyPrefabBuiltEvent
     {
         public ModelRefData[] ModelRefs { get; set; } = new ModelRefData[0];
 

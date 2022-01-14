@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace EECustom.Customizations.EnemyAbilities
 {
-    public class DeathAbilityCustom : EnemyAbilityCustomBase<DeathAbilitySetting>, IEnemySpawnedEvent
+    public sealed class DeathAbilityCustom : EnemyAbilityCustomBase<DeathAbilitySetting>, IEnemySpawnedEvent
     {
 
         public override string GetProcessName()

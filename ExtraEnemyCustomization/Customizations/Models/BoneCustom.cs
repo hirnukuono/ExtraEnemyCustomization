@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace EECustom.Customizations.Models
 {
-    public class BoneCustom : EnemyCustomBase, IEnemySpawnedEvent
+    public sealed class BoneCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
         public BoneTransform[] Bones { get; set; } = new BoneTransform[0];
 

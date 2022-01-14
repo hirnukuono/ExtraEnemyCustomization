@@ -8,7 +8,7 @@ using System.Text;
 
 namespace EECustom.Customizations.Detections
 {
-    public class ScoutAnimSync : SyncedEvent<ScoutAnimPacket>
+    public sealed class ScoutAnimSync : SyncedEvent<ScoutAnimPacket>
     {
         private static readonly Random _rand = new();
 

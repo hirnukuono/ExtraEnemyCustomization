@@ -6,7 +6,7 @@ namespace EECustom.Customizations.Strikers
 {
     using EaseFunc = Func<float, float, float, float, float>;
 
-    public class StrikerTentacleCustom : EnemyCustomBase, IEnemySpawnedEvent
+    public sealed class StrikerTentacleCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
         public GPUCurvyType[] TentacleTypes { get; set; } = new GPUCurvyType[0];
         public TentacleSettingData[] TentacleSettings { get; set; } = new TentacleSettingData[0];

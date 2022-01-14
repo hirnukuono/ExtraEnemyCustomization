@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace EECustom.Customizations.EnemyAbilities
 {
-    public class BehaviourAbilityCustom : EnemyAbilityCustomBase<BehaviourAbilitySetting>, IEnemySpawnedEvent
+    public sealed class BehaviourAbilityCustom : EnemyAbilityCustomBase<BehaviourAbilitySetting>, IEnemySpawnedEvent
     {
         public override string GetProcessName()
         {

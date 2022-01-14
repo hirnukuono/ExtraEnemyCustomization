@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace EECustom.Customizations.Models
 {
-    public class GlowCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyGlowEvent
+    public sealed class GlowCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyGlowEvent
     {
         public readonly static Color DefaultPropaWakeColor = ES_HibernateWakeUp.m_propagatedWakeupColor;
 

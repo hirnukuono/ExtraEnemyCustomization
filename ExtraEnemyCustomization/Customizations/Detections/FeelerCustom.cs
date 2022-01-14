@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace EECustom.Customizations.Detections
 {
-    public class FeelerCustom : EnemyCustomBase
+    public sealed class FeelerCustom : EnemyCustomBase
     {
         public ValueBase TendrilCount { get; set; } = ValueBase.Unchanged;
         public float TendrilAngleOffset { get; set; } = 0.0f;

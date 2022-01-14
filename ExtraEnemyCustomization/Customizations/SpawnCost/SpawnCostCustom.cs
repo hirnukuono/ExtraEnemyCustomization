@@ -3,7 +3,7 @@ using Enemies;
 
 namespace EECustom.Customizations.SpawnCost
 {
-    public class SpawnCostCustom : EnemyCustomBase, IEnemySpawnedEvent
+    public sealed class SpawnCostCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
         public float SpawnCost { get; set; } = 0.0f;
 

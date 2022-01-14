@@ -2,7 +2,7 @@
 
 namespace EECustom.Customizations.Detections
 {
-    public class ScreamingCustom : EnemyCustomBase, IEnemySpawnedEvent
+    public sealed class ScreamingCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
         //TODO: Implement me Daddy
 

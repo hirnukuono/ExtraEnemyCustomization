@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace EECustom.Customizations.Abilities
 {
-    public class ScoutScreamingCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyGlowEvent
+    public sealed class ScoutScreamingCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyGlowEvent
     {
         public readonly static Color DefaultChargeupColor = ES_ScoutScream.s_screamChargeupColor;
         public readonly static Color DefaultScreamColor = ES_ScoutScream.s_screamPopColor;

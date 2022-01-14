@@ -4,7 +4,7 @@ using Enemies;
 
 namespace EECustom.Customizations.Abilities
 {
-    public class DoorBreakerCustom : EnemyCustomBase, IEnemySpawnedEvent
+    public sealed class DoorBreakerCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
         public bool UseGlobalTimer { get; set; } = false;
         public float Damage { get; set; } = 1.0f;

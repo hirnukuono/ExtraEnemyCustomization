@@ -4,7 +4,7 @@ using Enemies;
 
 namespace EECustom.Customizations.Abilities
 {
-    public class HealthRegenCustom : EnemyCustomBase, IEnemySpawnedEvent
+    public sealed class HealthRegenCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
         public HealthRegenData[] RegenDatas { get; set; } = new HealthRegenData[0];
 

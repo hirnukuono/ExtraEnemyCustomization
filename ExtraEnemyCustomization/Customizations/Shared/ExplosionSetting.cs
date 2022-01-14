@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace EECustom.Customizations.Shared
 {
-    public class ExplosionSetting
+    public sealed class ExplosionSetting
     {
         public bool Enabled { get; set; } = false;
         public ValueBase Damage { get; set; } = ValueBase.Zero;

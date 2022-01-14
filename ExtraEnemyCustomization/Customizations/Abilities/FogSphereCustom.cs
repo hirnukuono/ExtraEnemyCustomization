@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace EECustom.Customizations.Abilities
 {
-    public class FogSphereCustom : RevertableEnemyCustomBase, IEnemySpawnedEvent, IEnemyPrefabBuiltEvent
+    public sealed class FogSphereCustom : RevertableEnemyCustomBase, IEnemySpawnedEvent, IEnemyPrefabBuiltEvent
     {
         public Color ColorMin { get; set; } = Color.white;
         public Color ColorMax { get; set; } = Color.clear;

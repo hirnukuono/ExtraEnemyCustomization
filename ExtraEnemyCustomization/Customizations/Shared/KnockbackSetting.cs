@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace EECustom.Customizations.Shared
 {
-    public class KnockbackSetting
+    public sealed class KnockbackSetting
     {
         public bool Enabled { get; set; } = false;
         public float Velocity { get; set; } = 0.0f;

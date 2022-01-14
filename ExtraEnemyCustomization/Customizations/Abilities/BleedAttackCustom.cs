@@ -11,7 +11,7 @@ using Player;
 
 namespace EECustom.Customizations.Abilities
 {
-    public class BleedAttackCustom : EnemyCustomBase
+    public sealed class BleedAttackCustom : EnemyCustomBase
     {
         public BleedSetting MeleeData { get; set; } = new();
         public BleedSetting TentacleData { get; set; } = new();
