@@ -131,7 +131,6 @@ namespace EECustom.CustomSettings
                     MonoBehaviourEventHandler.AttatchToObject(gameObject, onDestroyed: (_) =>
                     {
                         RemoveInstanceLookup(instanceID);
-                        Logger.Log($"ProjectileDied: {instanceID}");
                     });
                 }
             }
