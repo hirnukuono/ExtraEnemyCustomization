@@ -16,16 +16,21 @@ namespace EECustom.Events
         public event UnityEventHandler OnFixedUpdate;
         [HideFromIl2Cpp]
         public event UnityEventHandler OnDestroyed;
+        [HideFromIl2Cpp]
+        public event UnityEventHandler OnLateUpdate;
 
         public MonoBehaviourEventHandler(IntPtr ptr) : base(ptr)
         {
         }
 
-        public static void AttatchToObject(GameObject obj, UnityEventHandler onUpdate = null, UnityEventHandler onFixedUpdate = null, UnityEventHandler onDestroyed = null)
+        public static void AttatchToObject(GameObject obj, UnityEventHandler onUpdate = null, UnityEventHandler onLateUpdate = null, UnityEventHandler onFixedUpdate = null, UnityEventHandler onDestroyed = null)
         {
             var handler = obj.AddComponent<MonoBehaviourEventHandler>();
             if (onUpdate != null)
                 handler.OnUpdate += onUpdate;
+
+            if (onLateUpdate != null)
+                handler.OnLateUpdate += onLateUpdate;
 
             if (onFixedUpdate != null)
                 handler.OnFixedUpdate += onFixedUpdate;
@@ -38,6 +43,11 @@ namespace EECustom.Events
         private void Update()
         {
             OnUpdate?.Invoke(gameObject);
+        }
+
+        private void LateUpdate()
+        {
+            OnLateUpdate?.Invoke(gameObject);
         }
 
 
