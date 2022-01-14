@@ -13,7 +13,7 @@ namespace EECustom.CustomSettings.Inject
         [HarmonyPrefix]
         [HarmonyWrapSafe]
         [HarmonyPatch(nameof(ProjectileBase.Collision))]
-        public static void Pre_Collision(ProjectileBase __instance, Ray ray, RaycastHit hit)
+        public static void Pre_Collision(ProjectileBase __instance, RaycastHit hit)
         {
             var instanceID = __instance.gameObject.GetInstanceID();
             var data = CustomProjectileManager.GetInstanceData(instanceID);
@@ -27,6 +27,9 @@ namespace EECustom.CustomSettings.Inject
                     return;
 
                 var agent = baseAgent.Cast<PlayerAgent>();
+                if (agent == null)
+                    return;
+
                 if (data.Knockback.Enabled)
                     data.Knockback.DoKnockbackIgnoreDistance(__instance.transform.position, agent);
 
