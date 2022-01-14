@@ -26,7 +26,7 @@ namespace EECustom.Customizations.Abilities
             LocalPlayerDamageEvents.MeleeDamage += OnMelee;
             LocalPlayerDamageEvents.TentacleDamage += OnTentacle;
 
-            if (ConfigManager.Current.AbilityCustom.CanMediStopBleeding)
+            if (ConfigManager.Current.Global.CanMediStopBleeding)
                 ResourcePackEvents.ReceiveMedi += RecieveMedi;
         }
 
@@ -35,7 +35,7 @@ namespace EECustom.Customizations.Abilities
             LocalPlayerDamageEvents.MeleeDamage -= OnMelee;
             LocalPlayerDamageEvents.TentacleDamage -= OnTentacle;
 
-            if (ConfigManager.Current.AbilityCustom.CanMediStopBleeding)
+            if (ConfigManager.Current.Global.CanMediStopBleeding)
                 ResourcePackEvents.ReceiveMedi -= RecieveMedi;
         }
 
