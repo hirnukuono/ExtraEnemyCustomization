@@ -16,7 +16,7 @@ namespace EECustom.Customizations.Detections
 
         public EnemyAnimType BendAnimation { get; set; } = EnemyAnimType.AbilityUseOut;
         public EnemyAnimType StandAnimation { get; set; } = EnemyAnimType.AbilityUse;
-        public float ChanceForBend { get; set; } = 1.0f;
+        public float ChanceToBend { get; set; } = 1.0f;
 
         static ScoutAnimCustom()
         {
@@ -33,17 +33,17 @@ namespace EECustom.Customizations.Detections
                 return;
 
             ScoutAnimType nextAnim = ScoutAnimType.Standing;
-            if (data.ChanceForBend >= 1.0f)
+            if (data.ChanceToBend >= 1.0f)
             {
                 nextAnim = ScoutAnimType.Bending;
             }
-            else if (data.ChanceForBend <= 0.0f)
+            else if (data.ChanceToBend <= 0.0f)
             {
                 nextAnim = ScoutAnimType.Standing;
             }
             else
             {
-                if (_rand.NextDouble() <= data.ChanceForBend)
+                if (_rand.NextDouble() <= data.ChanceToBend)
                     nextAnim = ScoutAnimType.Bending;
             }
 
@@ -66,7 +66,7 @@ namespace EECustom.Customizations.Detections
         {
             var data = EnemyProperty<ScoutAnimOverrideData>.RegisterOrGet(agent);
             data.Agent = agent;
-            data.ChanceForBend = ChanceForBend;
+            data.ChanceToBend = ChanceToBend;
             data.BendAnimation = BendAnimation;
             data.StandAnimation = StandAnimation;
         }
@@ -99,7 +99,7 @@ namespace EECustom.Customizations.Detections
     public class ScoutAnimOverrideData
     {
         public EnemyAgent Agent;
-        public float ChanceForBend = 0.0f;
+        public float ChanceToBend = 0.0f;
         public bool AnimDetermined = false;
         public bool BendingWasCalled = false;
         public ScoutAnimType NextAnim = ScoutAnimType.Unknown;
