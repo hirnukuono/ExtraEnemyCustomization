@@ -11,7 +11,7 @@ namespace EECustom.Utils
 {
     public static class EnemyAnimUtil
     {
-        private static Dictionary<EnemyAnimType, int[]> _animHashsLookup = new();
+        private static readonly Dictionary<EnemyAnimType, int[]> _animHashsLookup = new();
         private readonly static Random _random = new();
         private static bool _initialized = false;
 
