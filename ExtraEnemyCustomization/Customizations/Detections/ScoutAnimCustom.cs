@@ -16,7 +16,7 @@ namespace EECustom.Customizations.Detections
 
         public EnemyAnimType BendAnimation { get; set; } = EnemyAnimType.AbilityUseOut;
         public EnemyAnimType StandAnimation { get; set; } = EnemyAnimType.AbilityUse;
-        public float ChanceForBending { get; set; } = 1.0f;
+        public float ChanceForBend { get; set; } = 1.0f;
 
         static ScoutAnimCustom()
         {
@@ -66,7 +66,7 @@ namespace EECustom.Customizations.Detections
         {
             var data = EnemyProperty<ScoutAnimOverrideData>.RegisterOrGet(agent);
             data.Agent = agent;
-            data.ChanceForBend = ChanceForBending;
+            data.ChanceForBend = ChanceForBend;
             data.BendAnimation = BendAnimation;
             data.StandAnimation = StandAnimation;
         }
