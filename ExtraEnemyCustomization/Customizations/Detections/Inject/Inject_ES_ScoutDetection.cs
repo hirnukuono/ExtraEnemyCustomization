@@ -1,4 +1,5 @@
-﻿using EECustom.Utils;
+﻿using EECustom.Networking.Events;
+using EECustom.Utils;
 using HarmonyLib;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace EECustom.Customizations.Detections.Inject
             if (data == null)
                 return true;
 
-            ScoutAnimCustom.DoAnimRandom(__instance.m_owner);
+            ScoutAnimCustom._animSync.DoRandom(__instance.m_owner);
             __instance.m_enemyAgent.MovingCuller.UpdatePosition(__instance.m_enemyAgent.DimensionIndex, __instance.m_enemyAgent.Position);
             __instance.m_enemyAgent.Locomotion.m_animator.applyRootMotion = true;
             return false;
