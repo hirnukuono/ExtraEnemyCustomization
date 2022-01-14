@@ -51,7 +51,7 @@ namespace EECustom.Customizations.Models.Handlers
             if (_timer > Clock.Time)
                 return;
 
-            if (PulseData.Target.IsMatch(_ownerAgent))
+            if (!PulseData.Target.IsMatch(_ownerAgent))
                 return;
 
             if (!_ownerAgent.Alive && !PulseData.KeepOnDead)
