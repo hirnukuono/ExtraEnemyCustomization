@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace EECustom.Managers
 {
-    public class SpriteManager
+    public static class SpriteManager
     {
         public static string BaseSpritePath { get; private set; }
 
