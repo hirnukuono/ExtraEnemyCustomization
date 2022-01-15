@@ -16,11 +16,6 @@ namespace EECustom.Configs
 
         public override void Loaded()
         {
-            Cache();
-        }
-
-        internal void Cache()
-        {
             //Assign Category
             foreach (var category in Categories)
             {
