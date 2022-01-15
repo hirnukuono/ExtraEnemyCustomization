@@ -13,6 +13,8 @@ namespace EECustom.Configs.Customizations
         public EnemyAbilitiesSetting Abilities { get; set; } = new EnemyAbilitiesSetting();
         public EnemyAbilitiesEvent[] Events { get; set; } = new EnemyAbilitiesEvent[0];
 
+        public override CustomizationConfigType Type => CustomizationConfigType.EnemyAbility;
+
         public override EnemyCustomBase[] GetAllSettings()
         {
             var list = new List<EnemyCustomBase>();

@@ -10,6 +10,8 @@ namespace EECustom.Configs.Customizations
         public FeelerCustom[] FeelerCustom { get; set; } = new FeelerCustom[0];
         public ScoutAnimCustom[] ScoutAnimCustom { get; set; } = new ScoutAnimCustom[0];
 
+        public override CustomizationConfigType Type => CustomizationConfigType.Detection;
+
         public override EnemyCustomBase[] GetAllSettings()
         {
             var list = new List<EnemyCustomBase>();

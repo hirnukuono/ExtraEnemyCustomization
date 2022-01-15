@@ -8,6 +8,8 @@ namespace EECustom.Configs.Customizations
     {
         public SpawnCostCustom[] SpawnCostCustom { get; set; } = new SpawnCostCustom[0];
 
+        public override CustomizationConfigType Type => CustomizationConfigType.SpawnCost;
+
         public override EnemyCustomBase[] GetAllSettings()
         {
             var list = new List<EnemyCustomBase>();
