@@ -6,13 +6,13 @@ namespace EECustom.Configs
 {
     public sealed class CategoryConfig : Config
     {
-        public override string FileName => "Category";
-
         public string[] Categories { get; set; } = new string[0];
         public IdWithCategories[] CategoryPair { get; set; } = new IdWithCategories[0];
         public CategoryWithIds[] IdPair { get; set; } = new CategoryWithIds[0];
 
         private readonly Dictionary<string, CategoryDefinition> _categoryCache = new();
+
+        public override string FileName => "Category";
 
         public override void Loaded()
         {
