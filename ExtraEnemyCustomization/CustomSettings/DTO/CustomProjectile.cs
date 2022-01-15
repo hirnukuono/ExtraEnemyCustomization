@@ -15,7 +15,6 @@ namespace EECustom.CustomSettings.DTO
         public ValueBase GlowRange { get; set; } = ValueBase.Unchanged;
         public ValueBase Damage { get; set; } = ValueBase.Unchanged;
         public ValueBase Infection { get; set; } = ValueBase.Unchanged;
-        public ValueBase ExplosionDamage { get; set; } = ValueBase.Zero;
         public ExplosionSetting Explosion { get; set; } = new ();
         public KnockbackSetting Knockback { get; set; } = new ();
         public BleedSetting Bleed { get; set; } = new ();
