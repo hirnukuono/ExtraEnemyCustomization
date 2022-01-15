@@ -18,6 +18,7 @@ namespace EECustom.Configs.Customizations
         public SilhouetteCustom[] SilhouetteCustom { get; set; } = new SilhouetteCustom[0];
         public BoneCustom[] BoneCustom { get; set; } = new BoneCustom[0];
 
+        public override string FileName => "Model";
         public override CustomizationConfigType Type => CustomizationConfigType.Model;
 
         public override EnemyCustomBase[] GetAllSettings()

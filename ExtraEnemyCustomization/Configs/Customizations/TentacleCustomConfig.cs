@@ -10,6 +10,7 @@ namespace EECustom.Configs.Customizations
         public StrikerTentacleCustom[] StrikerTentacleCustom { get; set; } = new StrikerTentacleCustom[0];
         public CustomTentacle[] TentacleDefinitions { get; set; } = new CustomTentacle[0];
 
+        public override string FileName => "Tentacle";
         public override CustomizationConfigType Type => CustomizationConfigType.Tentacle;
 
         public override EnemyCustomBase[] GetAllSettings()

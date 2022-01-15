@@ -10,6 +10,7 @@ namespace EECustom.Configs.Customizations
         public ShooterFireCustom[] ShooterFireCustom { get; set; } = new ShooterFireCustom[0];
         public CustomProjectile[] ProjectileDefinitions { get; set; } = new CustomProjectile[0];
 
+        public override string FileName => "Projectile";
         public override CustomizationConfigType Type => CustomizationConfigType.Projectile;
 
         public override EnemyCustomBase[] GetAllSettings()

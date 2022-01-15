@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace EECustom.Customizations.Models
 {
-    public sealed class MaterialCustom : RevertableEnemyCustomBase, IEnemyPrefabBuiltEvent, IEnemySpawnedEvent
+    public sealed class MaterialCustom : RevertableEnemyCustomBase, IEnemyPrefabBuiltEvent
     {
         private readonly static Dictionary<string, Material> _matDict = new();
         private readonly static Dictionary<string, Texture3D> _tex3DDict = new();

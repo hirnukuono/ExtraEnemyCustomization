@@ -37,6 +37,7 @@ namespace EECustom
 
             var useDevMsg = Config.Bind(new ConfigDefinition("Logging", "UseDevMessage"), false, new ConfigDescription("Using Dev Message for Debugging your config?"));
             var useVerbose = Config.Bind(new ConfigDefinition("Logging", "Verbose"), false, new ConfigDescription("Using Much more detailed Message for Debugging?"));
+            var dumpConfig = Config.Bind(new ConfigDefinition("Developer", "DumpConfig"), false, new ConfigDescription("Dump Empty Config file?"));
 
             Logger.UsingDevMessage = useDevMsg.Value;
             Logger.UsingVerbose = useVerbose.Value;
@@ -47,6 +48,10 @@ namespace EECustom
             NetworkManager.Initialize();
             SpriteManager.Initialize();
             ConfigManager.Initialize();
+            if(dumpConfig.Value == true)
+            {
+                ConfigManager.DumpDefault();
+            }
         }
 
         public override bool Unload()

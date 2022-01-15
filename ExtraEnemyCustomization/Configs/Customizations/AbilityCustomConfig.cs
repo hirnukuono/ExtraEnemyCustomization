@@ -16,6 +16,7 @@ namespace EECustom.Configs.Customizations
         public DoorBreakerCustom[] DoorBreakerCustom { get; set; } = new DoorBreakerCustom[0];
         public ScoutScreamingCustom[] ScoutScreamingCustom { get; set; } = new ScoutScreamingCustom[0];
 
+        public override string FileName => "Ability";
         public override CustomizationConfigType Type => CustomizationConfigType.Ability;
 
         public override EnemyCustomBase[] GetAllSettings()
