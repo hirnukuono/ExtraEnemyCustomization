@@ -9,5 +9,15 @@ namespace EECustom.Configs
     {
         [JsonIgnore]
         public abstract string FileName { get; }
+
+        public virtual void Loaded()
+        {
+
+        }
+
+        public virtual void Unloaded()
+        {
+
+        }
     }
 }

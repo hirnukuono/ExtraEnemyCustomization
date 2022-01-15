@@ -108,6 +108,11 @@ namespace EECustom.Managers
                 config.OnConfigUnloaded();
             }
 
+            foreach (var item in _configInstanceLookup)
+            {
+                item.Value.Unloaded();
+            }
+
             if (doClear)
             {
                 ClearConfigs();
@@ -125,8 +130,6 @@ namespace EECustom.Managers
             }
 
             CustomProjectileManager.DestroyAllProjectile();
-            CustomScoutWaveManager.ClearAll();
-            EnemyAbilityManager.Clear();
         }
 
         private static void LoadConfigs()
@@ -155,25 +158,7 @@ namespace EECustom.Managers
                         }
 
                         _configInstanceLookup[name] = config;
-
-                        switch (config)
-                        {
-                            case ScoutWaveConfig scoutWaveConfig:
-                                CustomScoutWaveManager.ClearAll();
-                                CustomScoutWaveManager.AddScoutSetting(scoutWaveConfig.Expeditions);
-                                CustomScoutWaveManager.AddTargetSetting(scoutWaveConfig.TargetSettings);
-                                CustomScoutWaveManager.AddWaveSetting(scoutWaveConfig.WaveSettings);
-                                break;
-
-                            case CategoryConfig:
-                                Current.Categories.Cache();
-                                break;
-
-                            case EnemyAbilityCustomConfig:
-                                Current.EnemyAbilityCustom.Abilities.RegisterAll();
-                                EnemyAbilityManager.Setup();
-                                break;
-                        }
+                        config.Loaded();
                     }
                 }
                 catch (Exception e)

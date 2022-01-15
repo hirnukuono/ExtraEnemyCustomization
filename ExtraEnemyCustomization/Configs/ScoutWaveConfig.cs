@@ -1,4 +1,5 @@
-﻿using EECustom.CustomSettings.DTO;
+﻿using EECustom.CustomSettings;
+using EECustom.CustomSettings.DTO;
 
 namespace EECustom.Configs
 {
@@ -9,5 +10,17 @@ namespace EECustom.Configs
         public ScoutWaveSetting[] WaveSettings { get; set; } = new ScoutWaveSetting[0];
 
         public override string FileName => "ScoutWave";
+
+        public override void Loaded()
+        {
+            CustomScoutWaveManager.AddScoutSetting(Expeditions);
+            CustomScoutWaveManager.AddTargetSetting(TargetSettings);
+            CustomScoutWaveManager.AddWaveSetting(WaveSettings);
+        }
+
+        public override void Unloaded()
+        {
+            CustomScoutWaveManager.ClearAll();
+        }
     }
 }

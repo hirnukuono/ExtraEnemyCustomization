@@ -14,7 +14,18 @@ namespace EECustom.Configs.Customizations
         public EnemyAbilitiesEvent[] Events { get; set; } = new EnemyAbilitiesEvent[0];
 
         public override string FileName => "EnemyAbility";
-        public override CustomizationConfigType Type => CustomizationConfigType.EnemyAbility; 
+        public override CustomizationConfigType Type => CustomizationConfigType.EnemyAbility;
+
+        public override void Loaded()
+        {
+            Abilities.RegisterAll();
+            EnemyAbilityManager.Setup();
+        }
+
+        public override void Unloaded()
+        {
+            EnemyAbilityManager.Clear();
+        }
 
         public override EnemyCustomBase[] GetAllSettings()
         {

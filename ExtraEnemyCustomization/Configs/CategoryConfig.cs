@@ -14,6 +14,11 @@ namespace EECustom.Configs
 
         private readonly Dictionary<string, CategoryDefinition> _categoryCache = new();
 
+        public override void Loaded()
+        {
+            Cache();
+        }
+
         internal void Cache()
         {
             //Assign Category
