@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace EECustom.Configs.Customizations
 {
-    public class SpawnCostCustomConfig : CustomizationConfig
+    public sealed class SpawnCostCustomConfig : CustomizationConfig
     {
         public SpawnCostCustom[] SpawnCostCustom { get; set; } = new SpawnCostCustom[0];
 

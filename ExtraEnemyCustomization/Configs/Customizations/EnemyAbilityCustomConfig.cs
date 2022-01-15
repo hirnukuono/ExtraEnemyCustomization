@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace EECustom.Configs.Customizations
 {
-    public class EnemyAbilityCustomConfig : CustomizationConfig
+    public sealed class EnemyAbilityCustomConfig : CustomizationConfig
     {
         public BehaviourAbilityCustom[] BehaviourAbilityCustom { get; set; } = new BehaviourAbilityCustom[0];
         public DeathAbilityCustom[] DeathAbilityCustom { get; set; } = new DeathAbilityCustom[0];

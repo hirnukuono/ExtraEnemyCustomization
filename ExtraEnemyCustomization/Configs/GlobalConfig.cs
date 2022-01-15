@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EECustom.Configs
 {
-    public class GlobalConfig : Config
+    public sealed class GlobalConfig : Config
     {
         public bool CanMediStopBleeding { get; set; } = false;
 

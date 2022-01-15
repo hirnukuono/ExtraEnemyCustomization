@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace EECustom.Configs.Customizations
 {
-    public class AbilityCustomConfig : CustomizationConfig
+    public sealed class AbilityCustomConfig : CustomizationConfig
     {
         public BirthingCustom[] BirthingCustom { get; set; } = new BirthingCustom[0];
         public FogSphereCustom[] FogSphereCustom { get; set; } = new FogSphereCustom[0];

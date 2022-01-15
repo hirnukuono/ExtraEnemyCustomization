@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace EECustom.Configs.Customizations
 {
-    public class ModelCustomConfig : CustomizationConfig
+    public sealed class ModelCustomConfig : CustomizationConfig
     {
         public bool CacheAllMaterials { get; set; } = false;
 

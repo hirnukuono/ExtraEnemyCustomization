@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace EECustom.Configs.Customizations
 {
-    public class ProjectileCustomConfig : CustomizationConfig
+    public sealed class ProjectileCustomConfig : CustomizationConfig
     {
         public ShooterFireCustom[] ShooterFireCustom { get; set; } = new ShooterFireCustom[0];
         public CustomProjectile[] ProjectileDefinitions { get; set; } = new CustomProjectile[0];

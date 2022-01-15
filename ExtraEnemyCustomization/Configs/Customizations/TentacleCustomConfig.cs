@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace EECustom.Configs.Customizations
 {
-    public class TentacleCustomConfig : CustomizationConfig
+    public sealed class TentacleCustomConfig : CustomizationConfig
     {
         public StrikerTentacleCustom[] StrikerTentacleCustom { get; set; } = new StrikerTentacleCustom[0];
         public CustomTentacle[] TentacleDefinitions { get; set; } = new CustomTentacle[0];

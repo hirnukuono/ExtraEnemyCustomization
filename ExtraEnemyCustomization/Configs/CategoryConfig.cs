@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace EECustom.Configs
 {
-    public class CategoryConfig : Config
+    public sealed class CategoryConfig : Config
     {
         public override string FileName => "Category";
 

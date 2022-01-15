@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace EECustom.Configs.Customizations
 {
-    public class DetectionCustomConfig : CustomizationConfig
+    public sealed class DetectionCustomConfig : CustomizationConfig
     {
         public ScreamingCustom[] ScreamingCustom { get; set; } = new ScreamingCustom[0];
         public FeelerCustom[] FeelerCustom { get; set; } = new FeelerCustom[0];
