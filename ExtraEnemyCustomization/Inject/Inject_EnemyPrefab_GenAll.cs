@@ -17,6 +17,8 @@ namespace EECustom.Inject
 
             //TODO: Replace this to AssetShardManager Code
             var fullmats = Resources.FindObjectsOfTypeAll(Il2CppType.Of<Material>());
+            var fulltex3Ds = Resources.FindObjectsOfTypeAll(Il2CppType.Of<Texture3D>());
+
             foreach (var obj in fullmats)
             {
                 var mat = obj.Cast<Material>();
@@ -34,6 +36,21 @@ namespace EECustom.Inject
 
                 MaterialCustom.AddToCache(matName, mat);
                 Logger.Debug(matName);
+            }
+
+            Logger.Debug("== End of List ==");
+            Logger.Debug("== List of Texture3D that can be used for SkinNoiseTexture Parameters ==");
+
+            foreach (var obj in fulltex3Ds)
+            {
+                var tex3D = obj.Cast<Texture3D>();
+                var texName = tex3D?.name ?? string.Empty;
+
+                if (string.IsNullOrEmpty(texName))
+                    continue;
+
+                MaterialCustom.AddToCacheTexture3D(texName, tex3D);
+                Logger.Debug(texName);
             }
 
             Logger.Debug("== End of List ==");
