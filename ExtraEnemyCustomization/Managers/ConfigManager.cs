@@ -58,7 +58,14 @@ namespace EECustom.Managers
 
         internal static void DumpDefault()
         {
+            var dumpPath = Path.Combine(BasePath, "Dump");
+            Directory.CreateDirectory(dumpPath);
 
+            foreach (var item in _configInstanceLookup)
+            {
+                var file = Path.Combine(dumpPath, $"{item.Key}.json");
+                File.WriteAllText(file, JSON.Serialize(item.Value.CreateBlankConfig(), item.Value.GetType()));
+            }
         }
 
         private static void ClearTargetLookup()

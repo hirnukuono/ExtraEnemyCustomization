@@ -13,7 +13,9 @@ namespace EECustom.Utils
         {
             ReadCommentHandling = JsonCommentHandling.Skip,
             IncludeFields = false,
-            PropertyNameCaseInsensitive = true
+            PropertyNameCaseInsensitive = true,
+            WriteIndented = true,
+            IgnoreReadOnlyProperties = true
         };
 
         static JSON()
@@ -40,6 +42,11 @@ namespace EECustom.Utils
         public static object Deserialize(Type type, string json)
         {
             return JsonSerializer.Deserialize(json, type, _setting);
+        }
+
+        public static string Serialize(object value, Type type)
+        {
+            return JsonSerializer.Serialize(value, type, _setting);
         }
     }
 }
