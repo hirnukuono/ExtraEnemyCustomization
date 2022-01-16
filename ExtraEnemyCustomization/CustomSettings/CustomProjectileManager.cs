@@ -10,6 +10,8 @@ namespace EECustom.CustomSettings
 {
     public static class CustomProjectileManager
     {
+        public static bool AssetLoaded { get; internal set; } = false;
+
         private static readonly Dictionary<byte, ProjectileData> _projDataLookup = new();
         private static readonly Dictionary<int, ProjectileData> _instanceProjLookup = new();
 
@@ -23,6 +25,14 @@ namespace EECustom.CustomSettings
 
         public static void GenerateProjectile(CustomProjectile projInfo)
         {
+            Logger.Verbose($"Trying to Add Projectile... {projInfo.DebugName}");
+
+            if (!AssetLoaded)
+            {
+                Logger.Error($"Cannot Create CustomProjectile before asset fully loaded!");
+                return;
+            }
+
             if (Enum.IsDefined(typeof(ProjectileType), projInfo.ID))
             {
                 Logger.Error($"ProjectileID Conflict with Official ID!, ProjID: {projInfo.ID}");
@@ -41,15 +51,14 @@ namespace EECustom.CustomSettings
                 return;
             }
 
-            var basePrefab = ProjectileManager.Current.m_projectilePrefabs[(int)projInfo.BaseProjectile];
-            var newPrefab = GameObject.Instantiate(basePrefab);
+            var newPrefab = ProjectileManager.SpawnProjectileType(projInfo.BaseProjectile, Vector3.zero, Quaternion.identity);
             UnityEngine.Object.DontDestroyOnLoad(newPrefab);
+
             var projectileBase = newPrefab.GetComponent<ProjectileBase>();
             if (projectileBase != null)
             {
                 projectileBase.m_maxDamage = projInfo.Damage.GetAbsValue(PlayerData.MaxHealth, projectileBase.m_maxDamage);
                 projectileBase.m_maxInfection = projInfo.Infection.GetAbsValue(PlayerData.MaxInfection, projectileBase.m_maxInfection);
-
                 var targeting = projectileBase.TryCast<ProjectileTargeting>();
                 if (targeting != null)
                 {
@@ -85,6 +94,7 @@ namespace EECustom.CustomSettings
             {
                 GameObject.Destroy(data.Prefab);
             }
+            Logger.Debug("Custom Projectile has Cleaned up!");
 
             _projDataLookup.Clear();
         }

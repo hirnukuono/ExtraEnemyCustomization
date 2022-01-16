@@ -14,6 +14,8 @@ namespace EECustom.CustomSettings.Inject
         [HarmonyPatch(nameof(ProjectileManager.LoadAssets))]
         public static void Post_LoadAsset()
         {
+            CustomProjectileManager.AssetLoaded = true;
+
             foreach (var proj in ConfigManager.Current.ProjectileCustom.ProjectileDefinitions)
             {
                 CustomProjectileManager.GenerateProjectile(proj);
