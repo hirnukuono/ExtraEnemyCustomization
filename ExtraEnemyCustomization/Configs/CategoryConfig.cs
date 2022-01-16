@@ -121,7 +121,7 @@ namespace EECustom.Configs
 
     public class CategoryWithIds
     {
-        public string Category { get; set; }
+        public string Category { get; set; } = string.Empty;
         public uint[] PersistentIDs { get; set; } = new uint[0];
     }
 

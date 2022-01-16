@@ -69,19 +69,19 @@ namespace EECustom.CustomSettings.DTO
 
     public class ScoutWaveSet
     {
-        public string TargetSetting { get; set; }
-        public string WaveSetting { get; set; }
+        public string TargetSetting { get; set; } = string.Empty;
+        public string WaveSetting { get; set; } = string.Empty;
     }
 
     public class ScoutTargetSetting
     {
-        public string Name { get; set; }
-        public TargetSetting Target { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public TargetSetting Target { get; set; } = new TargetSetting();
     }
 
     public class ScoutWaveSetting
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         public WaveSetting[][] Waves { get; set; } = new WaveSetting[0][];
         public float[] WeightsOverride { get; set; } = new float[0];
     }
