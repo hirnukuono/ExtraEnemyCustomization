@@ -114,7 +114,7 @@ namespace EECustom.Managers
             var dumpPath = Path.Combine(BasePath, "Dump");
             Directory.CreateDirectory(dumpPath);
 
-            foreach (var item in _configInstanceLookup)
+            foreach (var item in _configInstances)
             {
                 var file = Path.Combine(dumpPath, $"{item.Key}.json");
                 File.WriteAllText(file, JSON.Serialize(item.Value.CreateBlankConfig(), item.Value.GetType()));
