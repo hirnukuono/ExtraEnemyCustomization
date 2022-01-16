@@ -71,7 +71,7 @@ namespace EECustom.Utils.JsonConverters
 
         public override void Write(Utf8JsonWriter writer, Vector2 value, JsonSerializerOptions options)
         {
-            throw new NotImplementedException();
+            writer.WriteStringValue(string.Format("({0} {1})", value.x, value.y));
         }
     }
 }

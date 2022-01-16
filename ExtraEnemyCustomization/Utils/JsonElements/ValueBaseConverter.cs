@@ -89,7 +89,25 @@ namespace EECustom.Utils.JsonElements
 
         public override void Write(Utf8JsonWriter writer, ValueBase value, JsonSerializerOptions options)
         {
-            throw new NotImplementedException();
+            
+            switch (value.Mode)
+            {
+                case ValueMode.Rel:
+                    string format = string.Empty;
+                    if (value.FromDefault)
+                    {
+                        format = "{0}% of default";
+                    }
+                    else
+                    {
+                        format = "{0}%";
+                    }
+                    writer.WriteStringValue(string.Format(format, value.Value * 100.0f));
+                    break;
+                case ValueMode.Abs:
+                    writer.WriteStringValue(value.Value.ToString());
+                    break;
+            }
         }
     }
 }

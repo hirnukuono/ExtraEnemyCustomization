@@ -122,7 +122,7 @@ namespace EECustom.Utils.JsonConverters
 
         public override void Write(Utf8JsonWriter writer, Color value, JsonSerializerOptions options)
         {
-            throw new NotImplementedException();
+            writer.WriteStringValue(ColorUtility.ToHtmlStringRGBA(value));
         }
     }
 }

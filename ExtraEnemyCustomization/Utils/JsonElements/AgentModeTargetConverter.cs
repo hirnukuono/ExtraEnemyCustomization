@@ -65,7 +65,7 @@ namespace EECustom.Utils.JsonElements
 
         public override void Write(Utf8JsonWriter writer, AgentModeTarget value, JsonSerializerOptions options)
         {
-            throw new NotImplementedException();
+            writer.WriteNumberValue((int)value.Mode);
         }
     }
 }
