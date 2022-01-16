@@ -36,7 +36,7 @@ namespace EECustom
             Logger.LogInstance = Log;
 
             var useLiveEdit = Config.Bind(new ConfigDefinition("General", "Live Edit"), false, new ConfigDescription("Reload Config when they are edited while in-game"));
-            var linkMTFOHotReload = Config.Bind(new ConfigDefinition("General", "Reload on MTFO HotReload"), false, new ConfigDescription("Reload Configs when MTFO's HotReload button has pressed?"));
+            var linkMTFOHotReload = Config.Bind(new ConfigDefinition("General", "Reload on MTFO HotReload"), true, new ConfigDescription("Reload Configs when MTFO's HotReload button has pressed?"));
             var useDevMsg = Config.Bind(new ConfigDefinition("Logging", "UseDevMessage"), false, new ConfigDescription("Using Dev Message for Debugging your config?"));
             var useVerbose = Config.Bind(new ConfigDefinition("Logging", "Verbose"), false, new ConfigDescription("Using Much more detailed Message for Debugging?"));
             var dumpConfig = Config.Bind(new ConfigDefinition("Developer", "DumpConfig"), false, new ConfigDescription("Dump Empty Config file?"));
