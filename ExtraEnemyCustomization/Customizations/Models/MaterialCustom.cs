@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace EECustom.Customizations.Models
 {
-    public sealed class MaterialCustom : RevertableEnemyCustomBase, IEnemyPrefabBuiltEvent, IEnemySpawnedEvent
+    public sealed class MaterialCustom : RevertableEnemyCustomBase, IEnemyPrefabBuiltEvent
     {
         private readonly static Dictionary<string, Material> _matDict = new();
         private readonly static Dictionary<string, Texture3D> _tex3DDict = new();
@@ -55,7 +55,6 @@ namespace EECustom.Customizations.Models
                     mat.m_material = originalMat;
                 });
 
-                //TODO: FIX SKIN NOISE STUFF
                 var newMaterial = new Material(newMat);
                 switch(swapSet.SkinNoise)
                 {
@@ -69,13 +68,12 @@ namespace EECustom.Customizations.Models
                         newMaterial.DisableKeyword("ENABLE_SKIN_NOISE");
                         break;
                 }
-                var newnewMaterial = new Material(newMat);
 
                 if (!string.IsNullOrEmpty(swapSet.SkinNoiseTexture))
                 {
                     if (_tex3DDict.TryGetValue(swapSet.SkinNoiseTexture, out var tex3D))
                     {
-                        newnewMaterial.SetTexture("_VolumeNoise", tex3D);
+                        newMaterial.SetTexture("_VolumeNoise", tex3D);
                     }
                     else
                     {
@@ -83,7 +81,7 @@ namespace EECustom.Customizations.Models
                     }
                 }
                 
-                mat.m_material = newnewMaterial;
+                mat.m_material = newMaterial;
                 LogVerbose(" - Replaced!");
             }
         }
