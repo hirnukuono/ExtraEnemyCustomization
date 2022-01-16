@@ -11,15 +11,15 @@ namespace EECustom.Managers
 {
     public partial class ConfigManager
     {
-        public GlobalConfig Global { get => GetConfig<GlobalConfig>(); }
-        public CategoryConfig Categories { get => GetConfig<CategoryConfig>(); }
-        public ModelCustomConfig ModelCustom { get => GetConfig<ModelCustomConfig>(); }
-        public AbilityCustomConfig AbilityCustom { get => GetConfig<AbilityCustomConfig>(); }
-        public ProjectileCustomConfig ProjectileCustom { get => GetConfig<ProjectileCustomConfig>(); }
-        public TentacleCustomConfig TentacleCustom { get => GetConfig<TentacleCustomConfig>(); }
-        public DetectionCustomConfig DetectionCustom { get => GetConfig<DetectionCustomConfig>(); }
-        public SpawnCostCustomConfig SpawnCostCustom { get => GetConfig<SpawnCostCustomConfig>(); }
-        public EnemyAbilityCustomConfig EnemyAbilityCustom { get => GetConfig<EnemyAbilityCustomConfig>(); }
+        public GlobalConfig Global => GetConfig<GlobalConfig>();
+        public CategoryConfig Categories => GetConfig<CategoryConfig>();
+        public ModelCustomConfig ModelCustom => GetConfig<ModelCustomConfig>();
+        public AbilityCustomConfig AbilityCustom => GetConfig<AbilityCustomConfig>();
+        public ProjectileCustomConfig ProjectileCustom => GetConfig<ProjectileCustomConfig>();
+        public TentacleCustomConfig TentacleCustom => GetConfig<TentacleCustomConfig>();
+        public DetectionCustomConfig DetectionCustom => GetConfig<DetectionCustomConfig>();
+        public SpawnCostCustomConfig SpawnCostCustom => GetConfig<SpawnCostCustomConfig>();
+        public EnemyAbilityCustomConfig EnemyAbilityCustom => GetConfig<EnemyAbilityCustomConfig>();
 
 
         private readonly List<EnemyCustomBase> _customizationBuffer = new();
