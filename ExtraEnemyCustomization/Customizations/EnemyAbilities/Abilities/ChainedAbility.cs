@@ -5,15 +5,13 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 {
     public class ChainedAbility : AbilityBase<ExplosionBehaviour>
     {
-        public const string DefaultGroupName = "$__DefaultGroup__";
-
         public EventBlock[] Abilities { get; set; } = new EventBlock[0];
 
-        //TODO: Implement This ffs
-        public bool WaitForLastAbilityDone { get; set; } = false;
+        public float ExitDelay { get; set; } = 0.0f;
         public bool ExitAllInForceExit { get; set; } = true;
-
-        public EventGroup[] Groups = new EventGroup[0];
+        public bool ForceExitOnHitreact { get; set; } = false;
+        public bool ForceExitOnDead { get; set; } = false;
+        public bool ForceExitOnLimbDestroy { get; set; } = false;
 
         public override void OnAbilityLoaded()
         {
@@ -28,107 +26,18 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
                 }
                 else
                 {
-                    LogVerbose($"Ability was assigned! name: {ab.AbilityName} group: {ab.Group} waitfor: {ab.GroupToWait} delay: {ab.Delay}");
-                }
-            }
-
-
-            var tempGroupList = new List<EventGroup>();
-            tempGroupList.Add(new EventGroup()
-            {
-                EventsToWait = new(),
-                Events = new(),
-                Group = DefaultGroupName,
-                GroupToWait = string.Empty
-            });
-            foreach (var ab in tempList)
-            {
-                List<EventBlock> tempWaitingGroupEvents;
-                if (string.IsNullOrEmpty(ab.GroupToWait))
-                {
-                    ab.Group = DefaultGroupName;
-                    tempWaitingGroupEvents = new List<EventBlock>();
-                }
-                else
-                {
-                    tempWaitingGroupEvents = tempList.Where(x => ab.GroupToWait == x.Group)
-                    .ToList();
-
-                    if (tempWaitingGroupEvents.Count <= 0)
-                    {
-                        LogError($"There were no group data with: [{ab.GroupToWait}] assigning it to Default!");
-                        ab.Group = DefaultGroupName;
-                    }
-                }
-                
-
-                var entry = tempGroupList.SingleOrDefault(x => x.Group == ab.Group && x.GroupToWait == ab.GroupToWait);
-                if (entry == null)
-                {
-                    tempGroupList.Add(new EventGroup()
-                    {
-                        Events = new(),
-                        EventsToWait = tempWaitingGroupEvents,
-                        Group = ab.Group,
-                        GroupToWait = ab.GroupToWait
-                    });
-                }
-                else
-                {
-                    entry.Events.Add(ab);
+                    LogVerbose($"Ability was assigned! name: {ab.AbilityName} delay: {ab.Delay}");
                 }
             }
 
             Abilities = tempList.ToArray();
-            Groups = tempGroupList.ToArray();
         }
 
         public class EventBlock : AbilitySettingBase
         {
-            public string Group { get; set; } = string.Empty;
-            public string GroupToWait { get; set; } = string.Empty;
             public float Delay { get; set; } = 0.0f;
-
-            public EventState State = EventState.None;
             public float TriggerTimer = 0.0f;
-            public AbilityBehaviour RunningBehaviour = null;
-
-            public enum EventState
-            {
-                None,
-                WaitingForDelay,
-                Executing,
-                Done
-            }
-        }
-
-        public class EventGroup
-        {
-            public string Group;
-            public string GroupToWait;
-            public List<EventBlock> Events;
-            public List<EventBlock> EventsToWait;
-
-            public bool IsDoneExcuting = false;
-
-            public bool CanExecute
-            {
-                get
-                {
-                    if (EventsToWait.Count <= 0)
-                        return true;
-
-                    return EventsToWait.TrueForAll(x => x.State == EventBlock.EventState.Done);
-                }
-            }
-        }
-
-        public enum WaitingBehaviour
-        {
-            Instantly,
-            WaitForDelay,
-            WaitForPreviousAbility,
-            WaitForPreviousAbilityThenDelay
+            public bool Triggered = false;
         }
     }
 
@@ -137,105 +46,57 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         public override bool AllowEABAbilityWhileExecuting => false;
         public override bool IsHostOnlyBehaviour => true;
 
+        private float _endTimer = 0.0f;
+        private bool _waitingEndTimer = false;
+
         protected override void OnSetup()
         {
             foreach (var abSetting in Ability.Abilities)
             {
                 _ = abSetting.Ability.RegisterBehaviour(Agent);
             }
-
-            foreach (var abGroup in Ability.Groups)
-            {
-                abGroup.IsDoneExcuting = false;
-
-                foreach (var e in abGroup.Events)
-                {
-                    e.State = ChainedAbility.EventBlock.EventState.None;
-                    e.TriggerTimer = 0.0f;
-                }
-            }
         }
 
         protected override void OnEnter()
         {
-            if (Ability.Abilities.Length < 1)
+            foreach (var abSetting in Ability.Abilities)
             {
-                LogError("Ability Count was zero! Unable to start ChainedAbility!");
-                DoExit();
-                return;
+                abSetting.Ability.TriggerSync(Agent);
+                abSetting.TriggerTimer = abSetting.Delay + Clock.Time;
+                abSetting.Triggered = false;
             }
+
+            _waitingEndTimer = false;
         }
 
         protected override void OnUpdate()
         {
             var isAllDone = true;
-            foreach (var group in Ability.Groups)
+            
+            foreach (var abSetting in Ability.Abilities)
             {
-                var isGroupDone = false;
-                if (group.IsDoneExcuting)
+                if (abSetting.TriggerTimer <= Clock.Time)
                 {
-                    isGroupDone = true;
-                    continue;
+                    abSetting.Ability.TriggerSync(Agent);
+                    abSetting.Triggered = true;
                 }
-
-                if (!group.CanExecute)
+                else if (!abSetting.Triggered)
                 {
                     isAllDone = false;
-                    continue;
                 }
-
-                foreach (var e in group.Events)
-                {
-                    var isDone = false;
-                    switch (e.State)
-                    {
-                        case ChainedAbility.EventBlock.EventState.None:
-                            e.TriggerTimer = Clock.Time + e.Delay;
-                            e.State = ChainedAbility.EventBlock.EventState.WaitingForDelay;
-                            break;
-
-                        case ChainedAbility.EventBlock.EventState.WaitingForDelay:
-                            if (Clock.Time <= e.TriggerTimer)
-                            {
-                                if (e.Ability.TryGetBehaviour(Agent, out var behaviour))
-                                {
-                                    behaviour.DoEnterSync();
-                                    e.RunningBehaviour = behaviour;
-                                    e.State = ChainedAbility.EventBlock.EventState.Executing;
-                                }
-                                else
-                                {
-                                    LogWarning($"Unable to get Behaviour from [{e.Ability}]");
-                                    e.State = ChainedAbility.EventBlock.EventState.Done;
-                                }
-                            }
-                            break;
-
-                        case ChainedAbility.EventBlock.EventState.Executing:
-                            if (!e.RunningBehaviour.Executing)
-                            {
-                                e.State = ChainedAbility.EventBlock.EventState.Done;
-                            }
-                            break;
-
-                        case ChainedAbility.EventBlock.EventState.Done:
-                            isDone = true;
-                            break;
-                    }
-                    isGroupDone &= isDone;
-                }
-
-                if (isGroupDone)
-                {
-                    group.IsDoneExcuting = true;
-                }
-
-                isAllDone &= isGroupDone;
             }
 
             if (isAllDone)
             {
-                DoExit();
+                if (!_waitingEndTimer)
+                {
+                    _endTimer = Ability.ExitDelay + Clock.Time;
+                    _waitingEndTimer = true;
+                }
+                else if (_waitingEndTimer && _endTimer <= Clock.Time)
+                {
+                    DoExit();
+                }
             }
         }
 
@@ -247,6 +108,30 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
                 {
                     abSetting.Ability.ExitSync(Agent);
                 }
+            }
+        }
+
+        protected override void OnHitreact()
+        {
+            if (Ability.ForceExitOnHitreact)
+            {
+                DoExit();
+            }
+        }
+
+        protected override void OnLimbDestroyed(Dam_EnemyDamageLimb _)
+        {
+            if (Ability.ForceExitOnLimbDestroy)
+            {
+                DoExit();
+            }
+        }
+
+        protected override void OnDead()
+        {
+            if (Ability.ForceExitOnDead)
+            {
+                DoExit();
             }
         }
     }
