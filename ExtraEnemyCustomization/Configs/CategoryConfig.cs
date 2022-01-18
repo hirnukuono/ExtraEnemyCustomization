@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace EECustom.Configs
 {
-    public class CategoryConfig
+    public sealed class CategoryConfig : Config
     {
         public string[] Categories { get; set; } = new string[0];
         public IdWithCategories[] CategoryPair { get; set; } = new IdWithCategories[0];
@@ -12,7 +12,9 @@ namespace EECustom.Configs
 
         private readonly Dictionary<string, CategoryDefinition> _categoryCache = new();
 
-        internal void Cache()
+        public override string FileName => "Category";
+
+        public override void Loaded()
         {
             //Assign Category
             foreach (var category in Categories)
@@ -119,7 +121,7 @@ namespace EECustom.Configs
 
     public class CategoryWithIds
     {
-        public string Category { get; set; }
+        public string Category { get; set; } = string.Empty;
         public uint[] PersistentIDs { get; set; } = new uint[0];
     }
 

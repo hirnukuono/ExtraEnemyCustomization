@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace EECustom.Configs.Customizations
 {
-    public class ModelCustomConfig : CustomizationConfig
+    public sealed class ModelCustomConfig : CustomizationConfig
     {
         public bool CacheAllMaterials { get; set; } = false;
 
@@ -17,6 +17,9 @@ namespace EECustom.Configs.Customizations
         public ScannerCustom[] ScannerCustom { get; set; } = new ScannerCustom[0];
         public SilhouetteCustom[] SilhouetteCustom { get; set; } = new SilhouetteCustom[0];
         public BoneCustom[] BoneCustom { get; set; } = new BoneCustom[0];
+
+        public override string FileName => "Model";
+        public override CustomizationConfigType Type => CustomizationConfigType.Model;
 
         public override EnemyCustomBase[] GetAllSettings()
         {

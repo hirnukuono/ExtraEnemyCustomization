@@ -4,9 +4,12 @@ using System.Collections.Generic;
 
 namespace EECustom.Configs.Customizations
 {
-    public class SpawnCostCustomConfig : CustomizationConfig
+    public sealed class SpawnCostCustomConfig : CustomizationConfig
     {
         public SpawnCostCustom[] SpawnCostCustom { get; set; } = new SpawnCostCustom[0];
+
+        public override string FileName => "SpawnCost";
+        public override CustomizationConfigType Type => CustomizationConfigType.SpawnCost;
 
         public override EnemyCustomBase[] GetAllSettings()
         {

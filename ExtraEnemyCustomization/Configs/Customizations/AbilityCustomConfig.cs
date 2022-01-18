@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace EECustom.Configs.Customizations
 {
-    public class AbilityCustomConfig : CustomizationConfig
+    public sealed class AbilityCustomConfig : CustomizationConfig
     {
         public BirthingCustom[] BirthingCustom { get; set; } = new BirthingCustom[0];
         public FogSphereCustom[] FogSphereCustom { get; set; } = new FogSphereCustom[0];
@@ -15,6 +15,9 @@ namespace EECustom.Configs.Customizations
         public BleedAttackCustom[] BleedAttackCustom { get; set; } = new BleedAttackCustom[0];
         public DoorBreakerCustom[] DoorBreakerCustom { get; set; } = new DoorBreakerCustom[0];
         public ScoutScreamingCustom[] ScoutScreamingCustom { get; set; } = new ScoutScreamingCustom[0];
+
+        public override string FileName => "Ability";
+        public override CustomizationConfigType Type => CustomizationConfigType.Ability;
 
         public override EnemyCustomBase[] GetAllSettings()
         {

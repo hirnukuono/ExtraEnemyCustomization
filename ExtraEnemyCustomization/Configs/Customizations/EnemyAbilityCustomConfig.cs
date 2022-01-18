@@ -6,12 +6,26 @@ using System.Collections.Generic;
 
 namespace EECustom.Configs.Customizations
 {
-    public class EnemyAbilityCustomConfig : CustomizationConfig
+    public sealed class EnemyAbilityCustomConfig : CustomizationConfig
     {
         public BehaviourAbilityCustom[] BehaviourAbilityCustom { get; set; } = new BehaviourAbilityCustom[0];
         public DeathAbilityCustom[] DeathAbilityCustom { get; set; } = new DeathAbilityCustom[0];
         public EnemyAbilitiesSetting Abilities { get; set; } = new EnemyAbilitiesSetting();
         public EnemyAbilitiesEvent[] Events { get; set; } = new EnemyAbilitiesEvent[0];
+
+        public override string FileName => "EnemyAbility";
+        public override CustomizationConfigType Type => CustomizationConfigType.EnemyAbility;
+
+        public override void Loaded()
+        {
+            Abilities.RegisterAll();
+            EnemyAbilityManager.Setup();
+        }
+
+        public override void Unloaded()
+        {
+            EnemyAbilityManager.Clear();
+        }
 
         public override EnemyCustomBase[] GetAllSettings()
         {

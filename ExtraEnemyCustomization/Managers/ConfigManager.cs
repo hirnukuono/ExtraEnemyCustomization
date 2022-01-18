@@ -1,7 +1,5 @@
 ﻿using EECustom.Configs;
 using EECustom.Configs.Customizations;
-using EECustom.Customizations;
-using EECustom.Customizations.EnemyAbilities;
 using EECustom.CustomSettings;
 using EECustom.Events;
 using EECustom.Utils;
@@ -11,21 +9,116 @@ using GameData;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace EECustom.Managers
 {
     public partial class ConfigManager
     {
+        public static bool UseLiveEdit { get; set; }
+        public static bool LinkMTFOHotReload { get; set; }
         public static string BasePath { get; private set; }
+        public static ConfigManager Current { get; private set; }
+
+        private static readonly Type[] _configTypes = new Type[]
+        {
+            //Normal Configs
+            typeof(GlobalConfig),
+            typeof(CategoryConfig),
+            typeof(ScoutWaveConfig),
+
+            //Customization Configs
+            typeof(AbilityCustomConfig),
+            typeof(DetectionCustomConfig),
+            typeof(EnemyAbilityCustomConfig),
+            typeof(ModelCustomConfig),
+            typeof(ProjectileCustomConfig),
+            typeof(SpawnCostCustomConfig),
+            typeof(TentacleCustomConfig)
+        };
+
+        private static readonly Dictionary<Type, string> _configTypeToFileName = new();
+        private static readonly Dictionary<string, Type> _configFileNameToType = new();
+        private static readonly Dictionary<string, Config> _configInstances = new();
 
         internal static void Initialize()
         {
-            LevelEvents.LevelCleanup += ClearTargetLookup;
+            foreach (var configType in _configTypes)
+            {
+                var instance = Activator.CreateInstance(configType) as Config;
+                var fileName = instance.FileName;
+                _configTypeToFileName[configType] = fileName;
+                _configFileNameToType[fileName] = configType;
+                _configFileNameToType[fileName.ToUpper()] = configType; //For Easier Access
+                _configInstances[fileName] = instance;
+            }
 
+            BasePath = Path.Combine(MTFOUtil.CustomPath, "ExtraEnemyCustomization");
             Current = new();
 
-            LoadConfigs();
+            LoadAllConfig();
             Current.GenerateBuffer();
+
+            if (LinkMTFOHotReload)
+            {
+                MTFOUtil.HotReloaded += ReloadConfig;
+            }
+
+            if (UseLiveEdit)
+            {
+                var watcher = new FileSystemWatcher
+                {
+                    Path = BasePath,
+                    IncludeSubdirectories = false,
+                    NotifyFilter = NotifyFilters.LastWrite,
+                    Filter = "*.json"
+                };
+                watcher.Changed += new FileSystemEventHandler(OnConfigFileEdited);
+                watcher.EnableRaisingEvents = true;
+            }
+            
+            LevelEvents.LevelCleanup += ClearTargetLookup;
+        }
+
+        private static void OnConfigFileEdited(object sender, FileSystemEventArgs e)
+        {
+            var filename = Path.GetFileNameWithoutExtension(e.Name);
+            if (_configFileNameToType.TryGetValue(filename.ToUpper(), out var type))
+            {
+                filename = _configTypeToFileName[type];
+
+                Logger.Log($"Config File Changed: {e.Name}");
+
+                ReloadConfig();
+
+                //TODO: Implement Reload Individual File
+
+                /*
+                _configInstances[filename].Unloaded();
+                if (_configInstances[filename] is CustomizationConfig custom)
+                {
+                    var settings = custom.GetAllSettings();
+                    foreach (var setting in settings)
+                    {
+                        setting.OnConfigUnloaded();
+                    }
+                }
+                LoadConfig(type);
+                Current.GenerateBuffer();
+                */
+            }
+        }
+
+        internal static void DumpDefault()
+        {
+            var dumpPath = Path.Combine(BasePath, "Dump");
+            Directory.CreateDirectory(dumpPath);
+
+            foreach (var item in _configInstances)
+            {
+                var file = Path.Combine(dumpPath, $"{item.Key}.json");
+                File.WriteAllText(file, JSON.Serialize(item.Value.CreateBlankConfig(), item.Value.GetType()));
+            }
         }
 
         private static void ClearTargetLookup()
@@ -43,19 +136,12 @@ namespace EECustom.Managers
         {
             Logger.Log("HOT RELOADING CONFIG!");
 
-            UnloadConfig(doClear: true);
-            LoadConfigs();
+            UnloadAllConfig(doClear: true);
+            LoadAllConfig();
             Current.GenerateBuffer();
-
-            //Rebuild Projectile
-            foreach (var proj in Current.ProjectileCustom.ProjectileDefinitions)
-            {
-                CustomProjectileManager.GenerateProjectile(proj);
-            }
 
             foreach (var block in GameDataBlockBase<EnemyDataBlock>.GetAllBlocks())
             {
-
                 var prefab = EnemyPrefabManager.GetEnemyPrefab(block.persistentID);
                 if (prefab == null)
                     continue;
@@ -68,11 +154,16 @@ namespace EECustom.Managers
             }
         }
 
-        internal static void UnloadConfig(bool doClear)
+        internal static void UnloadAllConfig(bool doClear)
         {
             foreach (var config in Current._customizationBuffer)
             {
                 config.OnConfigUnloaded();
+            }
+
+            foreach (var item in _configInstances)
+            {
+                item.Value.Unloaded();
             }
 
             if (doClear)
@@ -86,83 +177,19 @@ namespace EECustom.Managers
             if (Current == null)
                 return;
 
-            Current.Global = new();
-            Current.Categories = new();
-            Current.ModelCustom = new();
-            Current.AbilityCustom = new();
-            Current.ProjectileCustom = new();
-            Current.TentacleCustom = new();
-            Current.DetectionCustom = new();
-            Current.SpawnCostCustom = new();
-
-            CustomProjectileManager.DestroyAllProjectile();
-            CustomScoutWaveManager.ClearAll();
-            EnemyAbilityManager.Clear();
+            foreach (var item in _configInstances.ToArray())
+            {
+                _configInstances[item.Key] = Activator.CreateInstance(item.Value.GetType()) as Config;
+            }
         }
 
-        private static void LoadConfigs()
+        internal static void LoadAllConfig()
         {
             if (MTFOUtil.IsLoaded && MTFOUtil.HasCustomContent)
             {
-                try
+                foreach (var configType in _configTypes)
                 {
-                    BasePath = Path.Combine(MTFOUtil.CustomPath, "ExtraEnemyCustomization");
-
-                    Logger.Debug("Loading Global.json");
-                    if (TryLoadConfig(BasePath, "Global.json", out GlobalConfig globalConfig))
-                        Current.Global = globalConfig;
-
-                    Logger.Debug("Loading Category.json...");
-                    if (TryLoadConfig(BasePath, "Category.json", out CategoryConfig categoryConfig))
-                    {
-                        Current.Categories = categoryConfig;
-                        Current.Categories.Cache();
-                    }
-
-                    Logger.Debug("Loading EnemyAbility.json");
-                    if (TryLoadConfig(BasePath, "EnemyAbility.json", out EnemyAbilityCustomConfig enemyabConfig))
-                    {
-                        Current.EnemyAbilityCustom = enemyabConfig;
-                        Current.EnemyAbilityCustom.Abilities.RegisterAll();
-                        EnemyAbilityManager.Setup();
-                    }
-
-                    Logger.Debug("Loading ScoutWave.json");
-                    if (TryLoadConfig(BasePath, "ScoutWave.json", out ScoutWaveConfig scoutWaveConfig))
-                    {
-                        CustomScoutWaveManager.ClearAll();
-                        CustomScoutWaveManager.AddScoutSetting(scoutWaveConfig.Expeditions);
-                        CustomScoutWaveManager.AddTargetSetting(scoutWaveConfig.TargetSettings);
-                        CustomScoutWaveManager.AddWaveSetting(scoutWaveConfig.WaveSettings);
-                    }
-
-                    Logger.Debug("Loading Model.json...");
-                    if (TryLoadConfig(BasePath, "Model.json", out ModelCustomConfig modelConfig))
-                        Current.ModelCustom = modelConfig;
-
-                    Logger.Debug("Loading Ability.json...");
-                    if (TryLoadConfig(BasePath, "Ability.json", out AbilityCustomConfig abilityConfig))
-                        Current.AbilityCustom = abilityConfig;
-
-                    Logger.Debug("Loading Projectile.json...");
-                    if (TryLoadConfig(BasePath, "Projectile.json", out ProjectileCustomConfig projConfig))
-                        Current.ProjectileCustom = projConfig;
-
-                    Logger.Debug("Loading Tentacle.json...");
-                    if (TryLoadConfig(BasePath, "Tentacle.json", out TentacleCustomConfig tentacleConfig))
-                        Current.TentacleCustom = tentacleConfig;
-
-                    Logger.Debug("Loading Detection.json...");
-                    if (TryLoadConfig(BasePath, "Detection.json", out DetectionCustomConfig detectionConfig))
-                        Current.DetectionCustom = detectionConfig;
-
-                    Logger.Debug("Loading SpawnCost.json...");
-                    if (TryLoadConfig(BasePath, "SpawnCost.json", out SpawnCostCustomConfig spawnCostConfig))
-                        Current.SpawnCostCustom = spawnCostConfig;
-                }
-                catch (Exception e)
-                {
-                    Logger.Error($"Error Occured While reading ExtraEnemyCustomization.json file: {e}");
+                    LoadConfig(configType);
                 }
             }
             else
@@ -171,72 +198,55 @@ namespace EECustom.Managers
             }
         }
 
-        internal static bool TryLoadConfig<T>(string basePath, string fileName, out T config)
+        internal static void LoadConfig(Type configType)
         {
-            var path = Path.Combine(basePath, fileName);
-            if (File.Exists(path))
+            try
+            {
+                if (!_configTypeToFileName.TryGetValue(configType, out var name))
+                {
+                    throw new ArgumentOutOfRangeException("configType");
+                }
+
+                var fileName = $"{name}.json";
+                var filePath = Path.Combine(BasePath, fileName);
+                Logger.Debug($"Loading {fileName}...");
+                Logger.Verbose($" - Full Path: {filePath}");
+
+                if (!TryLoadConfigData(filePath, configType, out var config))
+                {
+                    return;
+                }
+
+                _configInstances[name] = config;
+                config.Loaded();
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"Error Occured While reading Config from type: {configType.Name}\n{e}");
+            }
+        }
+
+        private static bool TryLoadConfigData(string filePath, Type type, out Config config)
+        {
+            if (File.Exists(filePath))
             {
                 try
                 {
-                    config = JSON.Deserialize<T>(File.ReadAllText(path));
+                    config = JSON.Deserialize(type, File.ReadAllText(filePath)) as Config;
                     return true;
                 }
                 catch (Exception e)
                 {
-                    Logger.Error($"Exception Occured While reading {path} file: {e}");
+                    Logger.Error($"Exception Occured While reading {filePath} file: {e}");
                     config = default;
                     return false;
                 }
             }
             else
             {
-                Logger.Warning($"File: {path} is not exist, ignoring this config...");
+                Logger.Warning($"File: {filePath} is not exist, ignoring this config...");
                 config = default;
                 return false;
-            }
-        }
-
-        public static ConfigManager Current { get; private set; }
-
-        public GlobalConfig Global { get; private set; } = new();
-        public CategoryConfig Categories { get; private set; } = new();
-        public ModelCustomConfig ModelCustom { get; private set; } = new();
-        public AbilityCustomConfig AbilityCustom { get; private set; } = new();
-        public ProjectileCustomConfig ProjectileCustom { get; private set; } = new();
-        public TentacleCustomConfig TentacleCustom { get; private set; } = new();
-        public DetectionCustomConfig DetectionCustom { get; private set; } = new();
-        public SpawnCostCustomConfig SpawnCostCustom { get; private set; } = new();
-        public EnemyAbilityCustomConfig EnemyAbilityCustom { get; private set; } = new();
-        
-
-        private readonly List<EnemyCustomBase> _customizationBuffer = new();
-
-        private void GenerateBuffer()
-        {
-            _customizationBuffer.Clear();
-            _customizationBuffer.AddRange(ModelCustom.GetAllSettings());
-            _customizationBuffer.AddRange(AbilityCustom.GetAllSettings());
-            _customizationBuffer.AddRange(ProjectileCustom.GetAllSettings());
-            _customizationBuffer.AddRange(TentacleCustom.GetAllSettings());
-            _customizationBuffer.AddRange(DetectionCustom.GetAllSettings());
-            _customizationBuffer.AddRange(SpawnCostCustom.GetAllSettings());
-            _customizationBuffer.AddRange(EnemyAbilityCustom.GetAllSettings());
-            _customizationBuffer.RemoveAll(x => !x.Enabled); //Remove Disabled Items
-            foreach (var custom in _customizationBuffer)
-            {
-                custom.OnConfigLoaded();
-                custom.LogDev("Initialized:");
-                custom.LogVerbose(custom.Target.ToDebugString());
-            }
-
-            GenerateEventBuffer();
-        }
-
-        internal void RegisterTargetLookup(EnemyAgent agent)
-        {
-            foreach (var custom in _customizationBuffer)
-            {
-                custom.RegisterTargetLookup(agent);
             }
         }
     }
