@@ -6,8 +6,6 @@ namespace EECustom.Configs.Customizations
 {
     public sealed class ModelCustomConfig : CustomizationConfig
     {
-        public bool CacheAllMaterials { get; set; } = false;
-
         public ShadowCustom[] ShadowCustom { get; set; } = new ShadowCustom[0];
         public MaterialCustom[] MaterialCustom { get; set; } = new MaterialCustom[0];
         public GlowCustom[] GlowCustom { get; set; } = new GlowCustom[0];

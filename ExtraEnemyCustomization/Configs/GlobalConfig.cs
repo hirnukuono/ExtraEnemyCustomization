@@ -6,6 +6,7 @@ namespace EECustom.Configs
 {
     public sealed class GlobalConfig : Config
     {
+        public bool CacheAllMaterials { get; set; } = false;
         public bool CanMediStopBleeding { get; set; } = false;
 
         public override string FileName => "Global";

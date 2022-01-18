@@ -28,7 +28,7 @@ namespace EECustom.Inject
                 if (string.IsNullOrEmpty(matName))
                     continue;
 
-                if (!ConfigManager.Current.ModelCustom.CacheAllMaterials)
+                if (!ConfigManager.Current.Global.CacheAllMaterials)
                 {
                     if (!shaderName.Contains("EnemyFlesh"))
                         continue;
