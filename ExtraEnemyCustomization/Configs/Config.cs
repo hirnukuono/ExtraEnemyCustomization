@@ -50,10 +50,8 @@ namespace EECustom.Configs
                 }
                 catch (Exception)
                 {
+                    //string type array throwing default ctor exception, but I'm simply too lazy to fix it also don't want to spam the console log
                     //Logger.Error(e.ToString());
-                }
-                finally
-                {
                 }
             }
         }
