@@ -204,7 +204,7 @@ namespace EECustom.Managers
             {
                 if (!_configTypeToFileName.TryGetValue(configType, out var name))
                 {
-                    throw new ArgumentOutOfRangeException("configType");
+                    throw new ArgumentOutOfRangeException(nameof(configType));
                 }
 
                 var fileName = $"{name}.json";
