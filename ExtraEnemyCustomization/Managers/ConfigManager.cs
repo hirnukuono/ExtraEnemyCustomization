@@ -87,7 +87,7 @@ namespace EECustom.Managers
             {
                 filename = _configTypeToFileName[type];
 
-                Logger.Log($"Config File Changed: {e.Name}");
+                Logger.Log($"Config File Changed: {filename}");
 
                 ReloadConfig();
 

@@ -48,7 +48,7 @@ namespace EECustom.Configs
 
                     SetDefaultArrayPropertyValue(instance, elementType);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     //Logger.Error(e.ToString());
                 }

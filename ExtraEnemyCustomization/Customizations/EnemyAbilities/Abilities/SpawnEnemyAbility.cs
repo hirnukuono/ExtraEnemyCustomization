@@ -40,31 +40,9 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         private bool _shouldRevertNavMeshAgent = false;
         private State _state;
         private float _stateTimer = 0.0f;
-        private readonly List<ushort> _spawnedChilds = new();
 
         public override bool AllowEABAbilityWhileExecuting => false;
         public override bool IsHostOnlyBehaviour => false;
-
-        protected override void OnSetup()
-        {
-            EnemyEvents.Spawned += OnEnemySpawned;
-        }
-
-        protected override void OnDead()
-        {
-            EnemyEvents.Spawned -= OnEnemySpawned;
-        }
-
-        private void OnEnemySpawned(EnemyAgent agent)
-        {
-            var index = _spawnedChilds.IndexOf(agent.GlobalID);
-            if (index > -1)
-            {
-                _spawnedChilds.RemoveAt(index);
-                agent.Sound.Post(agent.EnemySFXData.SFX_ID_hibernateWakeUp);
-                agent.Sound.Post(EVENTS.BIRTHER_BABY_DROP);
-            }
-        }
 
         protected override void OnEnter()
         {
@@ -96,10 +74,6 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
                     {
                         _state = State.Spawning;
                         _stateTimer = 0.0f;
-                    }
-                    else
-                    {
-                        Agent.Voice.PlayVoiceEvent(EVENTS.BIRTHER_GOING_INTO_LABOR);
                     }
                     break;
 
@@ -136,9 +110,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
                 {
                     var position = Agent.Position;
                     var rotation = Agent.Rotation;
-                    var enemyAgent = EnemyAllocator.Current.SpawnEnemy(Ability.EnemyID, Agent.CourseNode, Ability.AgentMode, position, rotation, null);
-                    _spawnedChilds.Add(enemyAgent.GlobalID);
-                    Logger.Error($"key was : {enemyAgent.GlobalID}");
+                    _ = EnemyAllocator.Current.SpawnEnemy(Ability.EnemyID, Agent.CourseNode, Ability.AgentMode, position, rotation, null);
                     _remainingSpawn--;
                 }
                 else

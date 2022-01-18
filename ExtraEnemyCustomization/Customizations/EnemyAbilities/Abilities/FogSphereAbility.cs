@@ -68,7 +68,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
                 Agent.Sound.Post(Ability.SoundEventID);
             }
 
-            var fogObject = UnityEngine.Object.Instantiate(Ability.FogSpherePrefab, Agent.Position, Quaternion.identity);
+            var fogObject = Object.Instantiate(Ability.FogSpherePrefab, Agent.Position, Quaternion.identity);
             var handler = fogObject.GetComponent<FogSphereHandler>();
             if (handler.Play())
             {
@@ -100,7 +100,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
                     else if (!handler.enabled)
                     {
                         _fogSphereHandlers.RemoveAt(i);
-                        UnityEngine.Object.DestroyImmediate(handler.gameObject);
+                        Object.DestroyImmediate(handler.gameObject);
                     }
                 }
                 return;

@@ -141,7 +141,7 @@ namespace EECustom.Utils.Integrations
             }
         }
 
-        internal static void OnHotReloaded(int id)
+        internal static void OnHotReloaded(int _)
         {
             HotReloaded?.Invoke();
         }
