@@ -12,6 +12,7 @@ namespace EECustom.Utils.Integrations
         public const string PLUGIN_GUID = "com.dak.MTFO";
         public const BindingFlags PUBLIC_STATIC = BindingFlags.Public | BindingFlags.Static;
 
+        public static readonly SemanticVersioning.Version MTFO_FORBID = new("4.2.0");
         public static readonly SemanticVersioning.Version MTFO_V5 = new("4.3.5");
         public static string GameDataPath { get; private set; } = string.Empty;
         public static string CustomPath { get; private set; } = string.Empty;
@@ -35,9 +36,13 @@ namespace EECustom.Utils.Integrations
             {
                 InitMTFO_V5(info);
             }
-            else
+            else if (version > MTFO_FORBID)
             {
                 InitMTFO_V4(info);
+            }
+            else
+            {
+                throw new Exception("You are using unsupported version of MTFO!");
             }
         }
 
