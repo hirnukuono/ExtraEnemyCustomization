@@ -54,8 +54,8 @@ namespace EECustom.Customizations.Strikers
 
     public class TentacleSettingData
     {
-        public eEasingType InEaseType { get; set; } = eEasingType.EaseInExpo;
-        public eEasingType OutEaseType { get; set; } = eEasingType.EaseOutCirc;
+        public eEasingType InEaseType { get; set; } = eEasingType.EaseOutCirc;
+        public eEasingType OutEaseType { get; set; } = eEasingType.EaseInExpo;
 
         public ValueBase InDuration { get; set; } = ValueBase.Unchanged;
         public ValueBase OutDuration { get; set; } = ValueBase.Unchanged;
