@@ -2,10 +2,10 @@
 using SNetwork;
 using System;
 
-namespace EECustom.Inject
+namespace EECustom.Patches.Inject
 {
     [HarmonyPatch(typeof(Dam_SyncedDamageBase))]
-    internal static class Inject_Dam_SyncedDamageBase
+    internal static class Inject_Patch_HealerEnemies
     {
         [HarmonyPatch(nameof(Dam_SyncedDamageBase.TentacleAttackDamage))]
         [HarmonyPrefix]
