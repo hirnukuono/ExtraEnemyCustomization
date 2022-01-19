@@ -41,6 +41,11 @@ namespace EECustom.Customizations.Strikers
                     tentacle.m_attackInDuration = setting.InDuration.GetAbsValue(tentacle.m_attackInDuration);
                     tentacle.m_attackOutDuration = setting.OutDuration.GetAbsValue(tentacle.m_attackOutDuration);
                     tentacle.m_attackHangDuration = setting.HangDuration.GetAbsValue(tentacle.m_attackHangDuration);
+                    tentacle.m_splineWidthSafe = setting.SplineWidthSafe.GetAbsValue(tentacle.m_splineWidthSafe);
+                    tentacle.m_splineWidthPos1 = setting.SplineWidthPos1.GetAbsValue(tentacle.m_splineWidthPos1);
+                    tentacle.m_splineWidthPos2 = setting.SplineWidthPos2.GetAbsValue(tentacle.m_splineWidthPos2);
+                    tentacle.m_splineHeightPos1 = setting.SplineHeightPos1.GetAbsValue(tentacle.m_splineHeightPos1);
+                    tentacle.m_splineHeightPos2 = setting.SplineHeightPos2.GetAbsValue(tentacle.m_splineHeightPos2);
                     LogVerbose($" - Applied Tentacle Setting!, index: {i}");
                 }
             }
@@ -55,6 +60,11 @@ namespace EECustom.Customizations.Strikers
         public ValueBase InDuration { get; set; } = ValueBase.Unchanged;
         public ValueBase OutDuration { get; set; } = ValueBase.Unchanged;
         public ValueBase HangDuration { get; set; } = ValueBase.Unchanged;
+        public ValueBase SplineWidthSafe { get; set; } = ValueBase.Unchanged;
+        public ValueBase SplineWidthPos1 { get; set; } = ValueBase.Unchanged;
+        public ValueBase SplineWidthPos2 { get; set; } = ValueBase.Unchanged;
+        public ValueBase SplineHeightPos1 { get; set; } = ValueBase.Unchanged;
+        public ValueBase SplineHeightPos2 { get; set; } = ValueBase.Unchanged;
 
         public EaseFunc GetInEaseFunction()
         {
