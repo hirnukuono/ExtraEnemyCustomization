@@ -1,11 +1,11 @@
-﻿using Enemies;
+﻿using EECustom.Attributes;
+using Enemies;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
 namespace EECustom.Patches.Handlers
 {
+    [InjectToIl2Cpp]
     public class FlyerStuckHandler : MonoBehaviour
     {
         public EnemyAgent Agent;
