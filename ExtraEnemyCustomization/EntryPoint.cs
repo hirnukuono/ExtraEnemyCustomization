@@ -63,7 +63,7 @@ namespace EECustom
         {
             UninjectAllIl2CppType();
 
-            HarmonyInstance.UnpatchAll();
+            HarmonyInstance.UnpatchSelf();
             ConfigManager.UnloadAllConfig(doClear: true);
             return base.Unload();
         }
