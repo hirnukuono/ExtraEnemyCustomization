@@ -9,29 +9,18 @@ using System.Text;
 
 namespace EECustom.Customizations.Detections.Inject
 {
-    [HarmonyPatch(typeof(ScoutAntennaDetection), nameof(ScoutAntennaDetection.SetState))]
+    [HarmonyPatch(typeof(ScoutAntennaDetection), nameof(ScoutAntennaDetection.PlayAbilityOutAnimation))]
     internal static class Inject_ScoutAntennaDetection
     {
-        public static void Postfix(ScoutAntennaDetection __instance, eDetectionState state)
+        public static void Postfix(ScoutAntennaDetection __instance)
         {
             var data = EnemyProperty<ScoutAnimOverrideData>.Get(__instance.m_owner);
             if (data == null)
                 return;
 
-            if (state != eDetectionState.WaitingOut)
-                return;
-
-            if (data.AnimDetermined)
+            if (data.OverridePullingAnimation)
             {
-                data.DoAnim(data.NextAnim);
-
-                data.NextAnim = ScoutAnimType.Unknown;
-                data.BendingWasCalled = false;
-                data.AnimDetermined = false;
-            }
-            else
-            {
-                data.BendingWasCalled = true;
+                data.DoPullingAnim();
             }
         }
     }

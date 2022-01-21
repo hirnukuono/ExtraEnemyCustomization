@@ -54,13 +54,11 @@ namespace EECustom.Customizations.Detections
             if (data.Agent.WasCollected)
                 return;
 
-            if (data.BendingWasCalled)
+            if (data.EnterWasCalled)
             {
                 data.DoAnim(packet.nextAnim);
-
-                data.NextAnim = ScoutAnimType.Unknown;
-                data.BendingWasCalled = false;
                 data.AnimDetermined = false;
+                data.EnterWasCalled = false;
             }
             else
             {
@@ -81,10 +79,13 @@ namespace EECustom.Customizations.Detections
         public EnemyAgent Agent;
         public float ChanceToBend = 0.0f;
         public bool AnimDetermined = false;
-        public bool BendingWasCalled = false;
+        public bool EnterWasCalled = false;
         public ScoutAnimType NextAnim = ScoutAnimType.Unknown;
         public EnemyAnimType BendAnimation = EnemyAnimType.AbilityUseOut;
         public EnemyAnimType StandAnimation = EnemyAnimType.AbilityUse;
+
+        public bool OverridePullingAnimation = false;
+        public EnemyAnimType PullingAnimation = EnemyAnimType.AbilityUseOut;
 
         public void DoAnim(ScoutAnimType anim)
         {
@@ -92,6 +93,11 @@ namespace EECustom.Customizations.Detections
                 EnemyAnimUtil.DoAnimationLocal(Agent, StandAnimation, 0.15f, false);
             else if (anim == ScoutAnimType.Bending)
                 EnemyAnimUtil.DoAnimationLocal(Agent, BendAnimation, 0.15f, false);
+        }
+
+        public void DoPullingAnim()
+        {
+            EnemyAnimUtil.DoAnimationLocal(Agent, PullingAnimation, 0.15f, false);
         }
     }
 
