@@ -25,6 +25,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Inject
         { 
             if (EMPHandlerBase.IsLocalPlayerDisabled)
             {
+                __instance.Sound.Post(EVENTS.BIOTRACKER_TOOL_LOOP_STOP, true);
                 __instance.m_screen.SetStatusText("ERROR");
                 return false;
             }

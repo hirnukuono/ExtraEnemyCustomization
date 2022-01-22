@@ -22,8 +22,8 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Handlers
 
         protected override void DeviceOff()
         {
-            _scanner.m_graphics.m_display.enabled = false;
             _scanner.Sound.Post(EVENTS.BIOTRACKER_TOOL_LOOP_STOP, true);
+            _scanner.m_graphics.m_display.enabled = false;
         }
 
         protected override void DeviceOn()
