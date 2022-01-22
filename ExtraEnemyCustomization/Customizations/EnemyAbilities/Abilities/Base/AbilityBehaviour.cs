@@ -101,7 +101,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
         private float _lazyUpdateTimer = 0.0f;
         private bool _executing = false;
-        private bool _standstill = false;
+        private bool _standStill = false;
         private ES_StateEnum _prevState;
 
         public void Setup(IAbility baseAbility, EnemyAgent agent)
