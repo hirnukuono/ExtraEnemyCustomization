@@ -14,7 +14,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         public EnemyAnimType ActivateAnimation { get; set; } = EnemyAnimType.AbilityUseOut;
         public float ChargeUpDuration { get; set; } = 3;
         public float EffectDuration { get; set; } = 30;
-        public int EffectRange { get; set; } = 20;
+        public float EffectRange { get; set; } = 20;
         public bool InvincibleWhileCharging { get; set; } = true;
         public Color BuildupColor { get; set; } = new Color(0.525f, 0.956f, 0.886f, 1.0f) * 2.0f;
         public Color ScreamColor { get; set; } = new Color(0.525f, 0.956f, 0.886f, 1.0f) * 20.0f;
