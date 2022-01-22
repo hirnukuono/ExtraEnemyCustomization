@@ -9,7 +9,6 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
     {
         private static readonly List<EMPController> _empTargets = new();
         private static readonly List<ActiveEMPs> _activeEMPs = new();
-        private static uint _nextId;
 
         static EMPManager()
         {
@@ -23,7 +22,6 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
             {
                 //TODO: Tool item? Inject_PlayerBackpack.Setup();
             };
-            _nextId = 0;
         }
 
         public static void AddTarget(EMPController target) => _empTargets.Add(target);
@@ -61,12 +59,6 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
             }
             Logger.Debug("Duration of effect: {0}", totalDurationForPosition);
             return totalDurationForPosition;
-        }
-
-        public static uint GetID()
-        {
-            _nextId++;
-            return _nextId;
         }
 
         private struct ActiveEMPs

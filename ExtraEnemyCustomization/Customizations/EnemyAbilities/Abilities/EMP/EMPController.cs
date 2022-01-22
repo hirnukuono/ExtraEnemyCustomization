@@ -11,7 +11,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
         private bool _hasHandler = false;
         private float _duration;
         private bool _setup = false;
-        private bool _isEMPActive => _duration > Clock.Time;
+        private bool IsEMPActive => _duration > Clock.Time;
 
         public EMPController(IntPtr ptr) : base(ptr)
         {
@@ -39,6 +39,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
             _setup = true;
         }
 
+#pragma warning disable IDE0051 // Remove unused private members
         void Awake()
         {
             EMPManager.AddTarget(this);
@@ -67,7 +68,8 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
         void Update()
         {
             if (!_hasHandler) return;
-            _handler.Tick(_isEMPActive);
+            _handler.Tick(IsEMPActive);
         }
+#pragma warning restore IDE0051 // Remove unused private members
     }
 }
