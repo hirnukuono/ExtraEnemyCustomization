@@ -51,8 +51,9 @@ namespace EECustom.CustomSettings
                 return;
             }
 
-            var newPrefab = ProjectileManager.SpawnProjectileType(projInfo.BaseProjectile, Vector3.zero, Quaternion.identity);
-            //UnityEngine.Object.DontDestroyOnLoad(newPrefab); //Doesn't needed, newPrefab will be generated under ProjectileManager so it will not be destroyed
+            var basePrefab = ProjectileManager.Current.m_projectilePrefabs[(int)projInfo.BaseProjectile];
+            var newPrefab = UnityEngine.Object.Instantiate(basePrefab);
+            UnityEngine.Object.DontDestroyOnLoad(newPrefab);
 
             var projectileBase = newPrefab.GetComponent<ProjectileBase>();
             if (projectileBase != null)
@@ -92,7 +93,7 @@ namespace EECustom.CustomSettings
         {
             foreach (var data in _projDataLookup.Values)
             {
-                GameObject.Destroy(data.Prefab);
+                UnityEngine.Object.Destroy(data.Prefab);
             }
             Logger.Debug("Custom Projectile has Cleaned up!");
 
