@@ -10,7 +10,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Handlers
 {
     public class EMPBioTrackerHandler : EMPHandlerBase
     {
-        EnemyScanner _scanner;
+        private EnemyScanner _scanner;
         public override void Setup(GameObject gameObject, EMPController controller)
         {
             _scanner = gameObject.GetComponent<EnemyScanner>();
