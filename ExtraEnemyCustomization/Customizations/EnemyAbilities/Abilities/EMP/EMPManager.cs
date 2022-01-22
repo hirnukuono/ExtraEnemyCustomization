@@ -20,7 +20,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
 
             LevelEvents.BuildDone += () =>
             {
-                //TODO: Tool item? Inject_PlayerBackpack.Setup();
+                Inject_PlayerBackpack.Setup();
             };
         }
 
