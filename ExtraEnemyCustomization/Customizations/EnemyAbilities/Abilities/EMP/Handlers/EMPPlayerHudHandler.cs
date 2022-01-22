@@ -8,7 +8,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Handlers
 {
     public class EMPPlayerHudHandler : EMPHandlerBase
     {
-        readonly List<RectTransformComp> _targets = new();
+        private readonly List<RectTransformComp> _targets = new();
         public static EMPPlayerHudHandler Instance => _instance;
         private static EMPPlayerHudHandler _instance;
 
