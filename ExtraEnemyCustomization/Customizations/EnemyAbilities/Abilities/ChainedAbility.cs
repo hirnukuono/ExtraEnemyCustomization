@@ -43,7 +43,8 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
     public class ChainedBehaviour : AbilityBehaviour<ChainedAbility>
     {
-        public override bool AllowEABAbilityWhileExecuting => false;
+        public override bool RunUpdateOnlyWhileExecuting => true;
+        public override bool AllowEABAbilityWhileExecuting => true;
         public override bool IsHostOnlyBehaviour => true;
 
         private float _endTimer = 0.0f;

@@ -12,7 +12,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         public uint ActivateSoundId { get; set; } = 0u;
         public EnemyAnimType ChargeUpAnimation { get; set; } = EnemyAnimType.AbilityUse;
         public EnemyAnimType ActivateAnimation { get; set; } = EnemyAnimType.AbilityUseOut;
-        public int ChargeUpDuration { get; set; } = 5;
+        public float ChargeUpDuration { get; set; } = 3;
         public float EffectDuration { get; set; } = 30;
         public int EffectRange { get; set; } = 20;
         public bool InvincibleWhileCharging { get; set; } = true;
@@ -25,13 +25,16 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         private EMPState _state = EMPState.None;
         private float _stateTimer = 0.0f;
 
+        public override bool RunUpdateOnlyWhileExecuting => true;
         public override bool AllowEABAbilityWhileExecuting => false;
         public override bool IsHostOnlyBehaviour => false;
 
         protected override void OnEnter()
         {
+            StandStill = true;
+
             _state = EMPState.BuildUp;
-            _stateTimer = Ability.ChargeUpDuration;
+            _stateTimer = Clock.Time + Ability.ChargeUpDuration;
 
             if (Ability.ChargeUpSoundId != 0u)
             {
@@ -41,12 +44,13 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
             if (Ability.InvincibleWhileCharging)
                 Agent.Damage.IsImortal = true;
 
-            Agent.Appearance.InterpolateGlow(Ability.BuildupColor, 1.0f);
+            Agent.Appearance.InterpolateGlow(Ability.BuildupColor, Ability.ChargeUpDuration);
             EnemyAnimUtil.DoAnimationLocal(Agent, Ability.ChargeUpAnimation, 0.15f, true);
         }
 
         protected override void OnUpdate()
         {
+            //Agent.Abilities.CanTriggerAbilities = false;
             switch (_state)
             {
                 case EMPState.BuildUp:
@@ -65,10 +69,6 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
                 case EMPState.AbilityUsed:
                     if (HasStateTimerFinished())
                     {
-                        if (Ability.InvincibleWhileCharging)
-                            Agent.Damage.IsImortal = false;
-
-                        Agent.Appearance.InterpolateGlow(Color.black, 0.5f);
                         _state = EMPState.Done;
                         _stateTimer = 0.0f;
                     }
@@ -82,6 +82,12 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
         protected override void OnExit()
         {
+            StandStill = false;
+
+            if (Ability.InvincibleWhileCharging)
+                Agent.Damage.IsImortal = false;
+            Agent.Appearance.InterpolateGlow(Color.black, 0.5f);
+
             _state = EMPState.None;
             _stateTimer = 0.0f;
         }

@@ -43,18 +43,44 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
                     return;
 
                 _executing = newValue;
-                if (AllowEABAbilityWhileExecuting)
+                if (!AllowEABAbilityWhileExecuting)
                 {
                     Agent.Abilities.CanTriggerAbilities = !_executing;
                 }
             }
         }
 
+        public bool StandStill
+        {
+            get => _standstill;
+            set
+            {
+                var newValue = value;
+                if (newValue == _standstill)
+                    return;
+
+                _standstill = newValue;
+
+                if (_standstill)
+                {
+                    _prevState = Agent.Locomotion.CurrentStateEnum;
+                    Agent.Locomotion.ChangeState(ES_StateEnum.None);
+                }
+                else
+                {
+                    Agent.Locomotion.ChangeState(_prevState);
+                }
+            }
+        }
+
+        public abstract bool RunUpdateOnlyWhileExecuting { get; }
         public abstract bool AllowEABAbilityWhileExecuting { get; }
         public abstract bool IsHostOnlyBehaviour { get; }
 
         private float _lazyUpdateTimer = 0.0f;
         private bool _executing = false;
+        private bool _standstill = false;
+        private ES_StateEnum _prevState;
 
         public void Setup(IAbility baseAbility, EnemyAgent agent)
         {
@@ -67,6 +93,8 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
             {
                 AgentDestroyed = true;
             };
+
+            Agent.Locomotion.AddState(ES_StateEnum.None, new ES_StandStill());
             
             EnemyAbilitiesEvents.TakeDamage += TakeDamage_Del;
             EnemyAbilitiesEvents.Dead += Dead_Del;
@@ -155,6 +183,9 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         private void DoUpdate()
         {
             if (IsMasterOnlyAndClient)
+                return;
+
+            if (RunUpdateOnlyWhileExecuting && !Executing)
                 return;
 
             OnUpdate();

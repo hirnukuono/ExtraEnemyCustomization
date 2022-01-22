@@ -15,6 +15,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
     public class ExplosionBehaviour : AbilityBehaviour<ExplosionAbility>
     {
+        public override bool RunUpdateOnlyWhileExecuting => true;
         public override bool AllowEABAbilityWhileExecuting => true;
         public override bool IsHostOnlyBehaviour => true;
 

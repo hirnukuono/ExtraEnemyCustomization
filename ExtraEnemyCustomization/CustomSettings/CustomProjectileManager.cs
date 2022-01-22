@@ -52,7 +52,7 @@ namespace EECustom.CustomSettings
             }
 
             var newPrefab = ProjectileManager.SpawnProjectileType(projInfo.BaseProjectile, Vector3.zero, Quaternion.identity);
-            UnityEngine.Object.DontDestroyOnLoad(newPrefab);
+            //UnityEngine.Object.DontDestroyOnLoad(newPrefab);
 
             var projectileBase = newPrefab.GetComponent<ProjectileBase>();
             if (projectileBase != null)
