@@ -10,7 +10,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Handlers
     public class EMPGunSightHandler : EMPHandlerBase
     {
         public GameObject _sightPicture;
-        const string _regex = "Sight_[0-9]*_[G-g]lass";
+        private const string _regex = @"Sight_[0-9]*_[G-g]lass";
 
         public override void Setup(GameObject gameObject, EMPController controller)
         {
