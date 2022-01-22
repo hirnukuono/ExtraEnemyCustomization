@@ -1,4 +1,5 @@
-﻿using BepInEx.Logging;
+﻿using Agents;
+using BepInEx.Logging;
 using EECustom.Customizations.EnemyAbilities.Events;
 using EECustom.Events;
 using Enemies;
@@ -64,10 +65,31 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
                 if (_standstill)
                 {
                     _prevState = Agent.Locomotion.CurrentStateEnum;
-                    Agent.Locomotion.ChangeState(ES_StateEnum.None);
+                    Agent.Locomotion.ChangeState(ES_StateEnum.StandStill);
                 }
-                else
+                else if (_prevState != ES_StateEnum.StandStill)
                 {
+                    switch (Agent.Locomotion.CurrentStateEnum)
+                    {
+                        //When in Specific State it should not change state
+                        case ES_StateEnum.Hitreact:
+                        case ES_StateEnum.HitReactFlyer:
+                            if (Agent.Locomotion.Hitreact.CurrentReactionType == ES_HitreactType.ToDeath)
+                                break;
+                            goto RevertState;
+
+                        case ES_StateEnum.Dead:
+                        case ES_StateEnum.DeadFlyer:
+                        case ES_StateEnum.DeadSquidBoss:
+                        case ES_StateEnum.ScoutScream:
+                            break;
+
+                        default:
+                            goto RevertState;
+                    }
+                    return;
+
+                    RevertState:
                     Agent.Locomotion.ChangeState(_prevState);
                 }
             }
@@ -94,7 +116,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
                 AgentDestroyed = true;
             };
 
-            Agent.Locomotion.AddState(ES_StateEnum.None, new ES_StandStill());
+            Agent.Locomotion.AddState(ES_StateEnum.StandStill, new ES_StandStill());
             
             EnemyAbilitiesEvents.TakeDamage += TakeDamage_Del;
             EnemyAbilitiesEvents.Dead += Dead_Del;
