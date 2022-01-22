@@ -8,9 +8,9 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Handlers
 {
     public class EMPSentryHandler : EMPHandlerBase
     {
-        static Color _offColor = new() { r = 0, g = 0, b = 0, a = 0 };
-        SentryGunInstance _sentry;
-        SentryGunInstance_ScannerVisuals_Plane _visuals;
+        private static Color _offColor = new() { r = 0, g = 0, b = 0, a = 0 };
+        private SentryGunInstance _sentry;
+        private SentryGunInstance_ScannerVisuals_Plane _visuals;
 
         public override void Setup(GameObject gameObject, EMPController controller)
         {
