@@ -39,7 +39,7 @@ namespace EECustom.Customizations.Detections
             switch (RandomType)
             {
                 case AnimationRandomType.PerEnemy:
-                    data.ChanceToBend = (float)_rand.NextDouble() <= ChanceToBend ? 1.0f : 0.0f;
+                    data.ChanceToBend = ((float)_rand.NextDouble() <= ChanceToBend) ? 1.0f : 0.0f;
                     break;
 
                 case AnimationRandomType.PerDetection:

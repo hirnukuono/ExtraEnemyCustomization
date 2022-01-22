@@ -21,7 +21,10 @@ namespace EECustom.Customizations.Detections.Inject
                 ScoutAnimCustom._animSync.DoRandom(__instance.m_owner);
             
             if (data.AnimDetermined)
+            {
                 data.DoAnim(data.NextAnim);
+                data.AnimDetermined = false;
+            }
 
             data.EnterWasCalled = true;
         }

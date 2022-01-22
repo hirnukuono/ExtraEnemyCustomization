@@ -21,7 +21,7 @@ namespace EECustom.Customizations.Detections
             if (data == null)
                 return;
 
-            ScoutAnimType nextAnim = ScoutAnimType.Standing;
+            ScoutAnimType nextAnim;
             if (data.ChanceToBend >= 1.0f)
             {
                 nextAnim = ScoutAnimType.Bending;
@@ -32,8 +32,9 @@ namespace EECustom.Customizations.Detections
             }
             else
             {
-                if (_rand.NextDouble() <= data.ChanceToBend)
-                    nextAnim = ScoutAnimType.Bending;
+                nextAnim = (_rand.NextDouble() <= data.ChanceToBend) ?
+                    ScoutAnimType.Bending :
+                    ScoutAnimType.Standing; 
             }
 
             var packet = new ScoutAnimPacket()
