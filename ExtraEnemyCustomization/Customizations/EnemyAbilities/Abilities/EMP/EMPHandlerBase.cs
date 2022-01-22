@@ -18,22 +18,22 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
         /// <summary>
         /// How long the flickering effect should last
         /// </summary>
-        protected virtual float FlickerDuration { get => 0.2f; }
+        protected virtual float FlickerDuration => 0.2f;
 
         /// <summary>
         /// The minimum delay before the device turns back on
         /// </summary>
-        protected virtual float MinDelay { get => 0f; }
+        protected virtual float MinDelay => 0f;
 
         /// <summary>
         /// The maximum delay before the device turns back on
         /// </summary>
-        protected virtual float MaxDelay { get => 1.5f; }
+        protected virtual float MaxDelay => 1.5f;
 
         /// <summary>
         /// Set to true if the controller is attached to the player agent, used to tell if the player is EMP'd
         /// </summary>
-        protected virtual bool IsDeviceOnPlayer { get => false; }
+        protected virtual bool IsDeviceOnPlayer => false;
 
         /// <summary>
         /// If the device is currently active 
