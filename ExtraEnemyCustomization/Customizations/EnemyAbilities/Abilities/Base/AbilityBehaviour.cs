@@ -53,16 +53,16 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
         public bool StandStill
         {
-            get => _standstill;
+            get => _standStill;
             set
             {
                 var newValue = value;
-                if (newValue == _standstill)
+                if (newValue == _standStill)
                     return;
 
-                _standstill = newValue;
+                _standStill = newValue;
 
-                if (_standstill)
+                if (_standStill)
                 {
                     _prevState = Agent.Locomotion.CurrentStateEnum;
                     Agent.Locomotion.ChangeState(ES_StateEnum.StandStill);
