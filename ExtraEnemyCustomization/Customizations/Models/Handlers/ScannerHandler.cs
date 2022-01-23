@@ -49,7 +49,7 @@ namespace EECustom.Customizations.Models.Handlers
             {
                 AgentMode.Off => EnemyState.Hibernate,
                 AgentMode.Agressive => EnemyState.Wakeup,
-                AgentMode.Patrolling => EnemyState.Scout,
+                AgentMode.Patrolling => EnemyState.Wakeup,
                 AgentMode.Scout => EnemyState.Wakeup,
                 AgentMode.Hibernate => EnemyState.Hibernate,
                 _ => EnemyState.Hibernate,
