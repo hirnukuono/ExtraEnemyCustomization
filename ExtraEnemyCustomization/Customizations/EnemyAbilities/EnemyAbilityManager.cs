@@ -83,7 +83,6 @@ namespace EECustom.Customizations.EnemyAbilities
             _abilities.Clear();
             _syncIDBuffer = 1;
             _abilityIDLookup.Clear();
-            _allAssetLoaded = false;
         }
 
         public static void SendEvent(ushort syncID, ushort enemyID, AbilityPacketType type)
