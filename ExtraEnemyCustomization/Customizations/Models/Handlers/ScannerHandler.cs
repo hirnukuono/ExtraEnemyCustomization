@@ -45,6 +45,16 @@ namespace EECustom.Customizations.Models.Handlers
 
         internal void Start()
         {
+            _currentState = OwnerAgent.AI.Mode switch
+            {
+                AgentMode.Off => EnemyState.Hibernate,
+                AgentMode.Agressive => EnemyState.Wakeup,
+                AgentMode.Patrolling => EnemyState.Scout,
+                AgentMode.Scout => EnemyState.Wakeup,
+                AgentMode.Hibernate => EnemyState.Hibernate,
+                _ => EnemyState.Hibernate,
+            };
+            _lastState = _currentState;
         }
 
         internal void Update()
