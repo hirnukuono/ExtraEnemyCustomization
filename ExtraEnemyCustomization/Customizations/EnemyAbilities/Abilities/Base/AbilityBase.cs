@@ -2,6 +2,7 @@
 using EECustom.Events;
 using Enemies;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using UnityEngine;
 
 namespace EECustom.Customizations.EnemyAbilities.Abilities
@@ -15,6 +16,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         private readonly List<AbilityBehaviour> _behaviours = new();
         private AbilityBehaviour[] _behavioursCache = null;
 
+        [JsonIgnore]
         public AbilityBehaviour[] Behaviours
         {
             get

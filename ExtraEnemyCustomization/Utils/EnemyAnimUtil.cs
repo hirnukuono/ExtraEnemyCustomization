@@ -31,7 +31,11 @@ namespace EECustom.Utils
 
             foreach (EnemyAnimType type in Enum.GetValues(typeof(EnemyAnimType)))
             {
-                if (type == EnemyAnimType.Heartbeats)
+                if (type == EnemyAnimType.None)
+                {
+                    continue;
+                }
+                else if (type == EnemyAnimType.Heartbeats)
                 {
                     _animHashsLookup.Add(type, EnemyLocomotion.s_hashHearbeats);
                     Logger.Verbose($"{type},  {string.Join(" / ", EnemyLocomotion.s_hashHearbeats)}");
@@ -73,6 +77,11 @@ namespace EECustom.Utils
                 return;
             }
 
+            if (type == EnemyAnimType.None)
+            {
+                return;
+            }
+
             if (!_animHashsLookup.TryGetValue(type, out var hashes))
             {
                 Logger.Error($"Cannot find AnimationHash with: {type}");
@@ -100,6 +109,11 @@ namespace EECustom.Utils
                 return;
             }
 
+            if (type == EnemyAnimType.None)
+            {
+                return;
+            }
+
             if (!_animHashsLookup.TryGetValue(type, out var hashes))
             {
                 Logger.Error($"Cannot find AnimationHash with: {type}");
@@ -119,6 +133,7 @@ namespace EECustom.Utils
 
     public enum EnemyAnimType : byte
     {
+        None,
         MoveOnGround,
         Forward,
         Right,

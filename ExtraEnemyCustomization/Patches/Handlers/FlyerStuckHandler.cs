@@ -20,7 +20,8 @@ namespace EECustom.Patches.Handlers
         {
         }
 
-        private void Update()
+#pragma warning disable IDE0051 // Remove unused private members
+        void Update()
         {
             if (_timer > Clock.Time)
                 return;
@@ -49,5 +50,6 @@ namespace EECustom.Patches.Handlers
                 enabled = false;
             }
         }
+#pragma warning restore IDE0051 // Remove unused private members
     }
 }

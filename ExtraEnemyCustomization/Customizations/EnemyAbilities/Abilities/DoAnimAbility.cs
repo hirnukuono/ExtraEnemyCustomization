@@ -21,6 +21,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
     public class DoAnimBehaviour : AbilityBehaviour<DoAnimAbility>
     {
+        public override bool RunUpdateOnlyWhileExecuting => true;
         public override bool AllowEABAbilityWhileExecuting => Ability.AllowUsingEABWhileExecuting;
         public override bool IsHostOnlyBehaviour => false;
 

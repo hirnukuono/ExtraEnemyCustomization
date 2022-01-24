@@ -58,6 +58,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
     {
         private readonly List<FogSphereHandler> _fogSphereHandlers = new();
 
+        public override bool RunUpdateOnlyWhileExecuting => false;
         public override bool AllowEABAbilityWhileExecuting => true;
         public override bool IsHostOnlyBehaviour => false;
 

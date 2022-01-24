@@ -1,4 +1,5 @@
-﻿using BepInEx.Logging;
+﻿using Agents;
+using BepInEx.Logging;
 using EECustom.Customizations.EnemyAbilities.Events;
 using EECustom.Events;
 using Enemies;
@@ -43,18 +44,65 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
                     return;
 
                 _executing = newValue;
-                if (AllowEABAbilityWhileExecuting)
+                if (!AllowEABAbilityWhileExecuting)
                 {
                     Agent.Abilities.CanTriggerAbilities = !_executing;
                 }
             }
         }
 
+        public bool StandStill
+        {
+            get => _standStill;
+            set
+            {
+                var newValue = value;
+                if (newValue == _standStill)
+                    return;
+
+                _standStill = newValue;
+
+                if (_standStill)
+                {
+                    _prevState = Agent.Locomotion.CurrentStateEnum;
+                    Agent.Locomotion.ChangeState(ES_StateEnum.StandStill);
+                }
+                else if (_prevState != ES_StateEnum.StandStill)
+                {
+                    switch (Agent.Locomotion.CurrentStateEnum)
+                    {
+                        //When in Specific State it should not change state
+                        case ES_StateEnum.Hitreact:
+                        case ES_StateEnum.HitReactFlyer:
+                            if (Agent.Locomotion.Hitreact.CurrentReactionType == ES_HitreactType.ToDeath)
+                                break;
+                            goto RevertState;
+
+                        case ES_StateEnum.Dead:
+                        case ES_StateEnum.DeadFlyer:
+                        case ES_StateEnum.DeadSquidBoss:
+                        case ES_StateEnum.ScoutScream:
+                            break;
+
+                        default:
+                            goto RevertState;
+                    }
+                    return;
+
+                    RevertState:
+                    Agent.Locomotion.ChangeState(_prevState);
+                }
+            }
+        }
+
+        public abstract bool RunUpdateOnlyWhileExecuting { get; }
         public abstract bool AllowEABAbilityWhileExecuting { get; }
         public abstract bool IsHostOnlyBehaviour { get; }
 
         private float _lazyUpdateTimer = 0.0f;
         private bool _executing = false;
+        private bool _standStill = false;
+        private ES_StateEnum _prevState;
 
         public void Setup(IAbility baseAbility, EnemyAgent agent)
         {
@@ -67,6 +115,8 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
             {
                 AgentDestroyed = true;
             };
+
+            Agent.Locomotion.AddState(ES_StateEnum.StandStill, new ES_StandStill());
             
             EnemyAbilitiesEvents.TakeDamage += TakeDamage_Del;
             EnemyAbilitiesEvents.Dead += Dead_Del;
@@ -155,6 +205,9 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         private void DoUpdate()
         {
             if (IsMasterOnlyAndClient)
+                return;
+
+            if (RunUpdateOnlyWhileExecuting && !Executing)
                 return;
 
             OnUpdate();
