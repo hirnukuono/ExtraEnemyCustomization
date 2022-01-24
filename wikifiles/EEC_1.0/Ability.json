@@ -239,9 +239,9 @@
 				"NameIgnoreCase": false,
 				"Categories": []
 			},
-			"ChargeupColor": "00FFFFFF",
-			"ScreamColor": "00FFFFFF",
-			"FogColor": "00FFFFFF",
+			"ChargeupColor": "#00FFFFFF",
+			"ScreamColor": "#00FFFFFF",
+			"FogColor": "#00FFFFFF",
 			"FogIntensity": 1,
 			"EffectVolume": {
 				"Enabled": false,

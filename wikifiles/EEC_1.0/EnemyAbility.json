@@ -23,7 +23,7 @@
             "InitCooldown": 0,
             "Cooldown": 5
           },
-          "AbilityName": null
+          "AbilityName": "EMP 30sec"
         }
       ],
       "DebugName": "",
@@ -44,7 +44,7 @@
       "Abilities": [
         {
           "Delay": 0,
-          "AbilityName": null
+          "AbilityName": "EMP 30sec"
         }
       ],
       "DebugName": "",
@@ -66,7 +66,11 @@
         "Abilities": [
           {
             "Delay": 0,
-            "AbilityName": null
+            "AbilityName": "EMP 30sec"
+          },
+          {
+            "Delay": 2.0,
+            "AbilityName": "EMP 30sec"
           }
         ],
         "ExitDelay": 0,
@@ -74,14 +78,14 @@
         "ForceExitOnHitreact": false,
         "ForceExitOnDead": false,
         "ForceExitOnLimbDestroy": false,
-        "Name": ""
+        "Name": "Chained EMP"
       }
     ],
     "FogSphere": [
       {
         "SoundEventID": 0,
-        "ColorMin": "FFFFFFFF",
-        "ColorMax": "00000000",
+        "ColorMin": "#FFFFFFFF",
+        "ColorMax": "#00000000",
         "IntensityMin": 1,
         "IntensityMax": 5,
         "RangeMin": 1,
@@ -97,7 +101,7 @@
           "Modification": "Inflict",
           "Scale": 1
         },
-        "Name": ""
+        "Name": "Fog 1"
       }
     ],
     "Explosion": [
@@ -120,7 +124,7 @@
         "TotalCount": 0,
         "CountPerSpawn": 0,
         "DelayPerSpawn": 0,
-        "Name": ""
+        "Name": "SpawnEnemy"
       }
     ],
     "EMP": [
@@ -133,9 +137,9 @@
         "EffectDuration": 30,
         "EffectRange": 20,
         "InvincibleWhileCharging": true,
-        "BuildupColor": "FFFFFFFF",
-        "ScreamColor": "FFFFFFFF",
-        "Name": ""
+        "BuildupColor": "#FFFFFFFF",
+        "ScreamColor": "#FFFFFFFF",
+        "Name": "EMP 30sec"
       }
     ]
   }
