@@ -35,7 +35,7 @@ namespace EECustom.CustomSettings.Inject
             var projInfo = CustomProjectileManager.GetProjectileData((byte)type);
             if (projInfo == null)
             {
-                Logger.Error($"CANT FIND PROJECTILE DATA WITH ID: {(int)type}");
+                Logger.Error($"CANT FIND PROJECTILE DATA WITH ID: {(byte)type}");
                 type = ProjectileType.TargetingSmall;
                 return true;
             }

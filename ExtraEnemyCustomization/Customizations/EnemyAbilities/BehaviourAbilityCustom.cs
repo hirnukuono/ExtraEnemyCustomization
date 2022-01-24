@@ -63,6 +63,7 @@ namespace EECustom.Customizations.EnemyAbilities
             var canUseAbility = true;
             canUseAbility &= data.Setting.KeepOnDead || data.Agent.Alive;
             canUseAbility &= data.Setting.AllowedMode.IsMatch(agent);
+            canUseAbility &= data.Setting.AllowWhileAttack || (!data.Agent.Locomotion.IsAttacking());
 
             var hasLos = false;
             var sqrDistance = float.MaxValue;
@@ -88,7 +89,7 @@ namespace EECustom.Customizations.EnemyAbilities
 
             if (!canUseAbility)
             {
-                if (setting.ForceExitOnConditionMismatch || behaviour.Executing)
+                if (setting.ForceExitOnConditionMismatch && behaviour.Executing)
                 {
                     behaviour.DoExitSync();
                 }
@@ -126,6 +127,7 @@ namespace EECustom.Customizations.EnemyAbilities
         public float UpdateInterval { get; set; } = 0.15f;
         public AgentModeTarget AllowedMode { get; set; } = AgentModeTarget.None;
         public bool KeepOnDead { get; set; } = false;
+        public bool AllowWhileAttack { get; set; } = false;
         public DistanceSetting DistanceWithLOS { get; set; } = new();
         public DistanceSetting DistanceWithoutLOS { get; set; } = new();
         public bool ForceExitOnConditionMismatch { get; set; } = false;

@@ -41,6 +41,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         private State _state;
         private float _stateTimer = 0.0f;
 
+        public override bool RunUpdateOnlyWhileExecuting => true;
         public override bool AllowEABAbilityWhileExecuting => false;
         public override bool IsHostOnlyBehaviour => false;
 
