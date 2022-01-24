@@ -1,5 +1,6 @@
 ﻿using EECustom.Attributes;
 using System;
+using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 
 namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
@@ -19,12 +20,13 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
 
         public Vector3 Position => transform.position;
 
-
+        [HideFromIl2Cpp]
         public void AddTime(float time)
         {
             _duration = Clock.Time + time;
         }
 
+        [HideFromIl2Cpp]
         public void AssignHandler(IEMPHandler handler)
         {
             if (_handler != null)
