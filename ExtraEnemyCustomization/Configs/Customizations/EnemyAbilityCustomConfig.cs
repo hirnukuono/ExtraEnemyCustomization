@@ -54,6 +54,12 @@ namespace EECustom.Configs.Customizations
 
             foreach (var ab in list)
             {
+                if (string.IsNullOrEmpty(ab.Name))
+                {
+                    Logger.Warning("Ignoring EnemyAbility without any Name!");
+                    continue;
+                }
+
                 EnemyAbilityManager.AddAbility(ab);
             }
         }
