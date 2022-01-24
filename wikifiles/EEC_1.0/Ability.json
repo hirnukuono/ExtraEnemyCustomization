@@ -1,6 +1,5 @@
 {
 	"CanMediStopBleeding": true, //Setting for BleedAttackCustom, Will using medi stops bleeding?
-
 	//EAB_FogSphere Fog Custom
 	"FogSphereCustom": [
 		{
@@ -147,7 +146,8 @@
 				"MinRange": 5.0,
 				"MaxRange": 10.0,
 				"NoiseMinRange": 10.0,
-				"NoiseMaxRange": 15.0
+				"NoiseMaxRange": 15.0,
+				"NoiseType": "Detectable"
 			}
 			//For Shooter Explosion, Check 'Projectile.json' file
 		}
@@ -216,13 +216,39 @@
 				"nameParam": "",
 				"nameIgnoreCase": true,
 				"categories": [
-					"Big", "Boss"
+					"Big",
+					"Boss"
 				]
 			},
 			"UseGlobalTimer": true, //Use Per Setting GlobalTimer (If it's false, timer runs on each enemies)
 			"Damage": 1000.0, //Damage to door (1.0 is default)
 			"MinDelay": 0.2, //Min Delay for each door break
 			"MaxDelay": 0.4 //Max Delay for each door break
+		}
+	],
+	"ScoutScreamingCustom": [
+		{
+			"Enabled": false,
+			"DebugName": "Scout Color Change",
+			"Target": {
+				"Mode": "PersistentID",
+				"PersistentIDs": [
+					0
+				],
+				"NameParam": "",
+				"NameIgnoreCase": false,
+				"Categories": []
+			},
+			"ChargeupColor": "00FFFFFF",
+			"ScreamColor": "00FFFFFF",
+			"FogColor": "00FFFFFF",
+			"FogIntensity": 1,
+			"EffectVolume": {
+				"Enabled": false,
+				"Contents": "Infection",
+				"Modification": "Inflict",
+				"Scale": 1
+			}
 		}
 	]
 }

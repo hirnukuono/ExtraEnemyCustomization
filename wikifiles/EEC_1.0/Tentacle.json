@@ -31,11 +31,16 @@
 			],
 			"TentacleSettings": [
 				{
-					"InEaseType": "EaseInExpo", //Ease Type
-					"OutEaseType": "EaseOutCirc", //Ease Type
+					"InEaseType": "EaseOutCirc", //Ease Type
+					"OutEaseType": "EaseInExpo", //Ease Type
 					"InDuration": "50%", //BasedValue: How long it takes to pull out the tentacle?
 					"OutDuration": "50%", //BasedValue: How long it takes to pull in the tentacle?
-					"HangDuration": "200%" //BasedValue: How long does tentacle stay in air?
+					"HangDuration": "200%", //BasedValue: How long does tentacle stay in air?
+					"SplineWidthSafe": "100%", //BasedValue: Not sure about this lol
+					"SplineWidthPos1": "100%", //BasedValue: How far tentacle be curvy in position 1 (Width)
+					"SplineWidthPos2": "100%", //BasedValue: How far tentacle be curvy in position 2 (Width)
+					"SplineHeightPos1": "100%", //BasedValue: How far tentacle be curvy in position 1 (Height)
+					"SplineHeightPos2": "100%" //BasedValue: How far tentacle be curvy in position 2 (Height)
 				}
 				/*Possible Ease Type
 				//Preview: https://matthewlein.com/tools/ceaser
@@ -87,7 +92,7 @@
 				}
 			]
 		}
-	]/*,
+	] /*,
 	//!!!!!THIS IS NOT WORKING FOR NOW!!!!!
 	"TentacleDefinitions": [
 		{

@@ -117,27 +117,12 @@
 				"VelocityZ": 1.0
 			},
 			"Bleed": {
+				"Enabled": true,
 				"Damage": "0.1%", //BasedValue: Based on PlayerMaxHealth, Damage for each interval
 				"ChanceToBleed": 0.5, //Chance to be bleed (0.0 = zero, 1.0 = always)
 				"Interval": 0.15, //Interval for each damage
 				"Duration": 10.0 //Duration for bleeding effect
 			}
-		},
-		{
-			"DebugName": "Small-Magenta-LessHoming",
-			"ID": 51,
-			"BaseProjectile": "TargetingSmall",
-			"Speed": "150%",
-			"HomingStrength": "50%",
-			"GlowColor": "magenta",
-			"GlowRange": 1.0,
-			"Damage": "3%",
-			"Infection": "0%",
-			"ExplosionDamage": "0%",
-			"ExplosionMinRange": 2.0,
-			"ExplosionMaxRange": 5.0,
-			"ExplosionNoiseMinRange": 5.0,
-			"ExplosionNoiseMaxRange": 10.0 
 		}
 	]
 }

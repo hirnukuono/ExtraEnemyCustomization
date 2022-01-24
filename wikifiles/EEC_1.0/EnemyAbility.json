@@ -1,0 +1,142 @@
+{
+  "BehaviourAbilityCustom": [
+    {
+      "Abilities": [
+        {
+          "UpdateInterval": 0.15,
+          "AllowedMode": 0,
+          "KeepOnDead": false,
+          "AllowWhileAttack": false,
+          "DistanceWithLOS": {
+            "Mode": "AlwaysAllow",
+            "Min": 0,
+            "Max": 1
+          },
+          "DistanceWithoutLOS": {
+            "Mode": "AlwaysAllow",
+            "Min": 0,
+            "Max": 1
+          },
+          "ForceExitOnConditionMismatch": false,
+          "Cooldown": {
+            "Enabled": false,
+            "InitCooldown": 0,
+            "Cooldown": 5
+          },
+          "AbilityName": null
+        }
+      ],
+      "DebugName": "",
+      "Enabled": true,
+      "Target": {
+        "Mode": "PersistentID",
+        "PersistentIDs": [
+          0
+        ],
+        "NameParam": "",
+        "NameIgnoreCase": false,
+        "Categories": []
+      }
+    }
+  ],
+  "DeathAbilityCustom": [
+    {
+      "Abilities": [
+        {
+          "Delay": 0,
+          "AbilityName": null
+        }
+      ],
+      "DebugName": "",
+      "Enabled": true,
+      "Target": {
+        "Mode": "PersistentID",
+        "PersistentIDs": [
+          0
+        ],
+        "NameParam": "",
+        "NameIgnoreCase": false,
+        "Categories": []
+      }
+    }
+  ],
+  "Abilities": {
+    "Chain": [
+      {
+        "Abilities": [
+          {
+            "Delay": 0,
+            "AbilityName": null
+          }
+        ],
+        "ExitDelay": 0,
+        "ExitAllInForceExit": true,
+        "ForceExitOnHitreact": false,
+        "ForceExitOnDead": false,
+        "ForceExitOnLimbDestroy": false,
+        "Name": ""
+      }
+    ],
+    "FogSphere": [
+      {
+        "SoundEventID": 0,
+        "ColorMin": "FFFFFFFF",
+        "ColorMax": "00000000",
+        "IntensityMin": 1,
+        "IntensityMax": 5,
+        "RangeMin": 1,
+        "RangeMax": 3,
+        "DensityMin": 1,
+        "DensityMax": 5,
+        "DensityAmountMin": 0,
+        "DensityAmountMax": 5,
+        "Duration": 30,
+        "EffectVolume": {
+          "Enabled": false,
+          "Contents": "Infection",
+          "Modification": "Inflict",
+          "Scale": 1
+        },
+        "Name": ""
+      }
+    ],
+    "Explosion": [
+      {
+        "Damage": "0",
+        "EnemyDamageMulti": 1,
+        "MinRange": 2,
+        "MaxRange": 5,
+        "NoiseMinRange": 5,
+        "NoiseMaxRange": 10,
+        "Name": ""
+      }
+    ],
+    "SpawnEnemy": [
+      {
+        "StopAgent": false,
+        "Delay": 0,
+        "EnemyID": 0,
+        "AgentMode": "Agressive",
+        "TotalCount": 0,
+        "CountPerSpawn": 0,
+        "DelayPerSpawn": 0,
+        "Name": ""
+      }
+    ],
+    "EMP": [
+      {
+        "ChargeUpSoundId": 0,
+        "ActivateSoundId": 0,
+        "ChargeUpAnimation": "AbilityUse",
+        "ActivateAnimation": "AbilityUseOut",
+        "ChargeUpDuration": 3,
+        "EffectDuration": 30,
+        "EffectRange": 20,
+        "InvincibleWhileCharging": true,
+        "BuildupColor": "FFFFFFFF",
+        "ScreamColor": "FFFFFFFF",
+        "Name": ""
+      }
+    ]
+  }
+}

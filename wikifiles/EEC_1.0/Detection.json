@@ -45,13 +45,63 @@
 			"TendrilMinYSpread": -0.4, //BasedValue (Based on Default MinY: -0.4): Value for up and down spread (Min) (THIS IS NOT A ANGLE, You can get this value by: tangent of angle) 
 			"TendrilMaxYSpread": 0.0, //BasedValue (Based on Default MinY: 0.0): Value for up and down spread (Max)
 			"TendrilOutTimer": 20.0, //BasedValue: How long should scout wait until it pull back it's feelers
-
 			"Distance": 30.0, //BasedValue (Based on Default Value): How long is the each tendril is?
 			"StepDistance": 7.5, //BasedValue (Based on Default Value): How far should tendril should move for each movement?
 			"RetractTime": 2.0, //BasedValue (Based on Default Value): How long it takes to Retract Tendril back?
 			"RetractTimeDetected": 1.0, //BasedValue (Based on Default Value): How long it takes to retract tendril that detected?
 			"NormalColor": "black", //Color: Normal Color for tendril, black is default
 			"DetectColor": "red" //Color: Color when detected, red is default
+		}
+	],
+	"ScoutAnimCustom": [
+		{
+			"Enabled": true,
+			"DebugName": "Scout_Randomly Bend",
+			"Target": {
+				"Mode": "NameContains",
+				"persistentIDs": [],
+				"nameParam": "Scout",
+				"nameIgnoreCase": true,
+				"categories": []
+			},
+
+			/*
+			POSSIBLE ANIMATIONS
+
+			MoveOnGround
+			Forward
+			Right
+			ClimbLadder - What da dog doin?
+			GiveBirth
+			HitLights_Fwd
+			HitLights_Bwd
+			HitLights_Rt
+			HitLights_Lt
+			HitHeavys_Fwd
+			HitHeavys_Bwd
+			HitHeavys_Rt
+			HitHeavys_Lt
+			Screams
+			ScreamTurns
+			HibernationIn
+			Heartbeats
+			HibernationWakeups
+			HibernationWakeupTurns
+			AbilityFires
+			AbilityUse - Default Standing Animation
+			AbilityUseOut - Default Bending Animation
+			MeleeWalkSequences
+			MeleeSequences
+			Melee180Sequences
+			JumpStart
+			JumpLand
+			*/
+			"RandomType": "PerEnemy", //PerEnemy - PerDetection
+			"BendAnimation": "AbilityUseOut",
+			"StandAnimation": "AbilityUse",
+			"ChanceToBend": 0.5,
+			"OverridePullingAnimation": false, //Override Tentacle Pulling Animation?
+			"PullingAnimation": "AbilityUseOut"
 		}
 	]
 }

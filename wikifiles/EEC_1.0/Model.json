@@ -1,7 +1,4 @@
 {
-	//Cache Every Material in-game (For Material Custom)
-	//Better leave it as false unless you know what you doing.
-	"CacheAllMaterials": false,
 	//Make every model act as Shadow
 	"ShadowCustom": [
 		{
@@ -47,12 +44,16 @@
 				{
 					//Head Part
 					"From": "shooter_RapidFire", //Material Name that enemy originally have
-					"To": "mtr_StrikerChild" //Material Name that will be changed to
+					"To": "mtr_StrikerChild", //Material Name that will be changed to
+					"SkinNoise": "KeepOriginal", //Skin Noise (Bullrush-like Materials) Mode: KeepOriginal, ForceOn, ForceOff
+					"SkinNoiseTexture": "" //Which Texture you want to use it for Skin Noise?
 				},
 				{
 					//Body Part
 					"From": "shooter_wave",
-					"To": "mtr_StrikerChild"
+					"To": "mtr_StrikerChild",
+					"SkinNoise": "KeepOriginal",
+					"SkinNoiseTexture": ""
 				}
 			]
 		},
@@ -68,46 +69,16 @@
 			},
 			"MaterialSets": [
 				{
-					//Head Part (Kinda works)
-					"From": "mtr_striker_bullrush_head",
-					"To": "mtr_striker_wave"
-				},
-				{
-					//Body Part
 					"From": "mtr_striker_bullrush",
-					"To": "mtr_striker_wave"
-				}
-			]
-		},
-		{
-			"Enabled": false, //Make Every Shooter Oiled, Except Rapid Shooter
-			"DebugName": "OiledShooter",
-			"Target": {
-				"Mode": "PersistentID",
-				"persistentIDs": [
-					26, //Hibernate
-					18, //Big
-					11 //Wave
-				],
-				"nameParam": "",
-				"nameIgnoreCase": true,
-				"categories": []
-			},
-			"MaterialSets": [
-				{
-					//Hibernate Shooter
-					"From": "shooter_hibernate",
-					"To": "mtr_striker_bullrush"
+					"To": "mtr_striker_bullrush",
+					"SkinNoise": "ForceOff",
+					"SkinNoiseTexture": ""
 				},
 				{
-					//Big Shooter
-					"From": "shooterBig",
-					"To": "mtr_striker_bullrush"
-				},
-				{
-					//Wave Shooter
-					"From": "shooter_wave",
-					"To": "mtr_striker_bullrush"
+					"From": "mtr_striker_bullrush_head",
+					"To": "mtr_striker_bullrush_head",
+					"SkinNoise": "ForceOff",
+					"SkinNoiseTexture": ""
 				}
 			]
 		},
@@ -124,7 +95,9 @@
 			"MaterialSets": [
 				{
 					"From": "birther",
-					"To": "mtr_striker_bullrush"
+					"To": "mtr_striker_bullrush",
+					"SkinNoise": "KeepOriginal",
+					"SkinNoiseTexture": ""
 				}
 			]
 		}
@@ -165,6 +138,11 @@
 		mtr_striker_wave
 		striker
 		strikerBig
+		*/
+
+		/*
+		Possible SkinNoise List
+
 		*/
 	],
 	//Glow Customization (Glowing Color for enemy state)
@@ -214,13 +192,48 @@
 					"AlwaysPulse": false //Preventing Glowing Effects (Striker Tentacle, Shooter Firing, Scout Screaming, etc) temporary stop the pulse effect?
 				},
 				{
-					"Target": "Combat",
+					"Target": "Combat | Scout",
 					"Duration": 5.0,
 					"GlowPattern": "0+6+0+6+060606",
 					"GlowColor": "#86F8BD",
 					"RandomizeTime": true,
 					"KeepOnDead": false,
 					"AlwaysPulse": false
+				}
+			]
+		}
+	],
+	//Body Part transform
+	"BoneCustom": [
+		{
+			"Enabled": false,
+			"DebugName": "Cursed",
+			"Target": {
+				"Mode": "Everything",
+				"persistentIDs": [],
+				"nameParam": "",
+				"nameIgnoreCase": true,
+				"categories": []
+			},
+			"Bones": [
+				{
+					"Bone": "Head", //https://docs.unity3d.com/ScriptReference/HumanBodyBones.html
+					"UsingRelativeScale": true, //Using Relative Scale for Scale Property? (OrginalScale * Scale)
+					"Scale": {
+						"x": 1.0,
+						"y": 1.0,
+						"z": 1.0
+					},
+					"Offset": {
+						"x": 0.45,
+						"y": 0.0,
+						"z": 0.0
+					},
+					"RotationOffset": {
+						"x": 90.0,
+						"y": 90.0,
+						"z": -90.0
+					}
 				}
 			]
 		}
