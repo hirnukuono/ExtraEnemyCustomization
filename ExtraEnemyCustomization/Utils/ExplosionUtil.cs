@@ -25,7 +25,7 @@ namespace EECustom.Utils
         internal static void Internal_TriggerExplosion(Vector3 position, float damage, float enemyMulti, float minRange, float maxRange)
         {
             CellSound.Post(EVENTS.STICKYMINEEXPLODE, position);
-            //_ = LightFlash(position);
+            _ = LightFlash(position);
 
             if (!SNet.IsMaster)
                 return;
@@ -66,7 +66,7 @@ namespace EECustom.Utils
                 }
                 Logger.Verbose($"Explosive damage: {newDamage} out of max: {damage}, Dist: {distance}, min: {minRange}, max: {maxRange}");
 
-                targetDamagable.ExplosionDamage(damage, position, Vector3.up * 1000);
+                targetDamagable.ExplosionDamage(newDamage, position, Vector3.up * 1000);
             }
         }
 
@@ -84,19 +84,20 @@ namespace EECustom.Utils
             return newDamage;
         }
 
-        [Obsolete("FX_Light has issue with level Lighting", true)]
         public static async Task LightFlash(Vector3 pos)
         {
-            FX_Manager.TryAllocateFXLight(out FX_PointLight light);
-            light.SetColor(new Color(1, 0.2f, 0, 1));
-            light.SetRange(50);
-            light.m_intensity = 5;
-            light.m_position = pos;
-            light.m_isOn = true;
-            light.UpdateData();
-            light.UpdateTransform();
-            await Task.Delay(50);
-            FX_Manager.DeallocateFXLight(light);
+            if (FX_Manager.TryAllocateFXLight(out var light, true))
+            {
+                light.SetColor(new Color(1, 0.2f, 0, 1));
+                light.SetRange(50);
+                light.m_intensity = 5;
+                light.m_position = pos;
+                light.m_isOn = true;
+                light.UpdateData();
+                light.UpdateTransform();
+                await Task.Delay(50);
+                FX_Manager.DeallocateFXLight(light);
+            }
         }
     }
 }
