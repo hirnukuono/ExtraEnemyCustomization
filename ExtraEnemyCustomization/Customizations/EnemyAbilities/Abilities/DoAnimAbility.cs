@@ -17,6 +17,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         public float Duration { get; set; } = 1.0f;
         public float CrossFadeTime { get; set; } = 0.0f;
         public bool AllowUsingEABWhileExecuting { get; set; } = false;
+        public bool StandStill { get; set; } = true;
     }
 
     public class DoAnimBehaviour : AbilityBehaviour<DoAnimAbility>
@@ -42,6 +43,8 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
         protected override void OnEnter()
         {
+            StandStill = Ability.StandStill;
+
             _exitTimer = Clock.Time + Ability.Duration;
 
             EnemyAnimUtil.DoAnimationLocal(Agent, Ability.Animation, Ability.CrossFadeTime, true);
@@ -67,6 +70,8 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
         protected override void OnExit()
         {
+            StandStill = false;
+
             _animator.applyRootMotion = false;
             if (_navAgent.isOnNavMesh)
             {

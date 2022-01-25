@@ -11,7 +11,6 @@ namespace EECustom.Configs.Customizations
         public BehaviourAbilityCustom[] BehaviourAbilityCustom { get; set; } = new BehaviourAbilityCustom[0];
         public DeathAbilityCustom[] DeathAbilityCustom { get; set; } = new DeathAbilityCustom[0];
         public EnemyAbilitiesSetting Abilities { get; set; } = new EnemyAbilitiesSetting();
-        public EnemyAbilitiesEvent[] Events { get; set; } = new EnemyAbilitiesEvent[0];
 
         public override string FileName => "EnemyAbility";
         public override CustomizationConfigType Type => CustomizationConfigType.EnemyAbility;
@@ -42,6 +41,7 @@ namespace EECustom.Configs.Customizations
         public FogSphereAbility[] FogSphere { get; set; } = new FogSphereAbility[0];
         public ExplosionAbility[] Explosion { get; set; } = new ExplosionAbility[0];
         public SpawnEnemyAbility[] SpawnEnemy { get; set; } = new SpawnEnemyAbility[0];
+        public DoAnimAbility[] DoAnim { get; set; } = new DoAnimAbility[0];
         public EMPAbility[] EMP { get; set; } = new EMPAbility[0];
 
         public void RegisterAll()
@@ -50,6 +50,7 @@ namespace EECustom.Configs.Customizations
             list.AddRange(FogSphere);
             list.AddRange(Explosion);
             list.AddRange(SpawnEnemy);
+            list.AddRange(DoAnim);
             list.AddRange(EMP);
 
             foreach (var ab in list)
@@ -63,10 +64,5 @@ namespace EECustom.Configs.Customizations
                 EnemyAbilityManager.AddAbility(ab);
             }
         }
-    }
-
-    public class EnemyAbilitiesEvent
-    {
-
     }
 }
