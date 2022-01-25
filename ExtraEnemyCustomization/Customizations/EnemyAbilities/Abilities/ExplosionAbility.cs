@@ -11,6 +11,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         public float MaxRange { get; set; } = 5.0f;
         public float NoiseMinRange { get; set; } = 5.0f;
         public float NoiseMaxRange { get; set; } = 10.0f;
+        public NM_NoiseType NoiseType { get; set; } = NM_NoiseType.Detectable;
     }
 
     public class ExplosionBehaviour : AbilityBehaviour<ExplosionAbility>
@@ -33,7 +34,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
                 radiusMax = Ability.NoiseMaxRange,
                 yScale = 1,
                 node = Agent.CourseNode,
-                type = NM_NoiseType.Detectable,
+                type = Ability.NoiseType,
                 includeToNeightbourAreas = true,
                 raycastFirstNode = false
             };
