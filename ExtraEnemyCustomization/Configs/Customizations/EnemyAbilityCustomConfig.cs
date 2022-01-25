@@ -46,6 +46,7 @@ namespace EECustom.Configs.Customizations
         public void RegisterAll()
         {
             var list = new List<IAbility>();
+            list.AddRange(Chain);
             list.AddRange(FogSphere);
             list.AddRange(Explosion);
             list.AddRange(SpawnEnemy);
