@@ -50,7 +50,6 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
         protected override void OnUpdate()
         {
-            //Agent.Abilities.CanTriggerAbilities = false;
             switch (_state)
             {
                 case EMPState.BuildUp:
