@@ -16,6 +16,8 @@ namespace EECustom.Customizations.Shared
         public float ChanceToBleed { get; set; } = 0.0f;
         public float Interval { get; set; } = 0.0f;
         public float Duration { get; set; } = 0.0f;
+        public bool HasLiquid { get; set; } = true;
+        public ScreenLiquidSettingName LiquidSetting { get; set; } = ScreenLiquidSettingName.enemyBlood_Squirt;
 
         public void TryBleed(PlayerAgent agent)
         {
@@ -25,7 +27,8 @@ namespace EECustom.Customizations.Shared
                 interval = Interval,
                 duration = Duration,
                 damage = Damage.GetAbsValue(PlayerData.MaxHealth),
-                chanceToBleed = ChanceToBleed
+                chanceToBleed = ChanceToBleed,
+                liquid = HasLiquid ? LiquidSetting : (ScreenLiquidSettingName)(-1)
             });
         }
 
@@ -37,7 +40,8 @@ namespace EECustom.Customizations.Shared
                 interval = Interval,
                 duration = Duration,
                 damage = Damage.GetAbsValue(PlayerData.MaxHealth),
-                chanceToBleed = 1.0f
+                chanceToBleed = 1.0f,
+                liquid = HasLiquid ? LiquidSetting : (ScreenLiquidSettingName)(-1)
             });
         }
 

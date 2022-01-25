@@ -14,30 +14,26 @@ namespace EECustom.Networking.Events
 
         public override void Receive(BleedingPacket packet)
         {
-            if (SNet.IsMaster)
+            if (!PlayerManager.HasLocalPlayerAgent())
+                return;
+
+            var localAgent = PlayerManager.GetLocalPlayerAgent();
+            if (localAgent.PlayerSlotIndex != packet.playerSlot)
+                return;
+
+            Logger.Verbose($"Bleed Received: [{packet.playerSlot}] {packet.damage} {packet.interval} {packet.duration}");
+
+            if (packet.chanceToBleed <= _random.NextDouble())
+                return;
+
+            var handler = localAgent.gameObject.GetComponent<BleedingHandler>();
+
+            if (handler == null)
             {
-                Logger.Verbose($"Bleed Received: [{packet.playerSlot}] {packet.damage} {packet.interval} {packet.duration}");
-
-                if (packet.chanceToBleed <= _random.NextDouble())
-                    return;
-
-                var player = SNet.Slots.GetPlayerInSlot(packet.playerSlot);
-                if (player == null)
-                    return;
-
-                if (!player.HasPlayerAgent)
-                    return;
-
-                var agent = player.PlayerAgent.Cast<PlayerAgent>();
-                var handler = agent.gameObject.GetComponent<BleedingHandler>();
-
-                if (handler == null)
-                {
-                    handler = agent.gameObject.AddComponent<BleedingHandler>();
-                }
-                handler.Agent = agent;
-                handler.DoBleed(packet.damage, packet.interval, packet.duration);
+                handler = localAgent.gameObject.AddComponent<BleedingHandler>();
             }
+            handler.Agent = localAgent;
+            handler.DoBleed(packet.damage, packet.interval, packet.duration, packet.liquid);
         }
     }
 
@@ -48,5 +44,6 @@ namespace EECustom.Networking.Events
         public float duration;
         public float damage;
         public float chanceToBleed;
+        public ScreenLiquidSettingName liquid;
     }
 }
