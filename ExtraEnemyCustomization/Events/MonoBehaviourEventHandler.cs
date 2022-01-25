@@ -37,28 +37,24 @@ namespace EECustom.Events
                 handler.OnDestroyed += onDestroyed;
         }
 
-#pragma warning disable IDE0051 // Remove unused private members
-
-        private void Update()
+        internal void Update()
         {
             OnUpdate?.Invoke(gameObject);
         }
 
-        private void LateUpdate()
+        internal void LateUpdate()
         {
             OnLateUpdate?.Invoke(gameObject);
         }
 
-        private void FixedUpdate()
+        internal void FixedUpdate()
         {
             OnFixedUpdate?.Invoke(gameObject);
         }
 
-        private void OnDestroy()
+        internal void OnDestroy()
         {
             OnDestroyed?.Invoke(gameObject);
         }
-
-#pragma warning restore IDE0051 // Remove unused private members
     }
 }

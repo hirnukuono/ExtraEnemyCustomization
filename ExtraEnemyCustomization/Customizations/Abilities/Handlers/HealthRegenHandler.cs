@@ -4,6 +4,7 @@ using EECustom.Events;
 using EECustom.Extensions;
 using Enemies;
 using SNetwork;
+using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 
 namespace EECustom.Customizations.Abilities.Handlers
@@ -99,6 +100,7 @@ namespace EECustom.Customizations.Abilities.Handlers
             }
         }
 
+        [HideFromIl2Cpp]
         private void OnTakeDamage(EnemyAgent enemy, Agent inflictor, float damage)
         {
             if (enemy.GlobalID != DamageBase.Owner.GlobalID)

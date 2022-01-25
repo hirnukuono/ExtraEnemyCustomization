@@ -15,9 +15,7 @@ namespace EECustom.Patches.Handlers
         private float _timer;
         private int _tryCount = -1;
 
-#pragma warning disable IDE0051 // Remove unused private members
-
-        private void Update()
+        internal void Update()
         {
             if (_timer > Clock.Time)
                 return;
@@ -46,7 +44,5 @@ namespace EECustom.Patches.Handlers
                 enabled = false;
             }
         }
-
-#pragma warning restore IDE0051 // Remove unused private members
     }
 }

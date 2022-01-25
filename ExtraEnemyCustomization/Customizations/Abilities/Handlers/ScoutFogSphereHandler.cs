@@ -15,7 +15,7 @@ namespace EECustom.Customizations.Abilities.Handlers
         private float _updateTimer = 0.0f;
         private bool _isColorSet = false;
 
-        public void Update()
+        internal void Update()
         {
             if (ScoutScream.m_fogSphereAdd == null)
                 return;
@@ -45,7 +45,7 @@ namespace EECustom.Customizations.Abilities.Handlers
             }
         }
 
-        public void OnDestroy()
+        internal void OnDestroy()
         {
             if (EVSphere != null)
                 EffectVolumeManager.UnregisterVolume(EVSphere);

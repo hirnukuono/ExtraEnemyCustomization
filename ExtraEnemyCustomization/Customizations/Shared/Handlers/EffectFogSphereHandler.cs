@@ -11,7 +11,7 @@ namespace EECustom.Customizations.Shared.Handlers
 
         private float _updateTimer = 0.0f;
 
-        public void Update()
+        internal void Update()
         {
             if (Handler.m_sphere != null && _updateTimer < Clock.Time)
             {
@@ -28,7 +28,7 @@ namespace EECustom.Customizations.Shared.Handlers
             }
         }
 
-        public void OnDestroy()
+        internal void OnDestroy()
         {
             EffectVolumeManager.UnregisterVolume(EVSphere);
         }
