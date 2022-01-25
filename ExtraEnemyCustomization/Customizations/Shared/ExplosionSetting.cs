@@ -15,6 +15,7 @@ namespace EECustom.Customizations.Shared
     {
         public bool Enabled { get; set; } = false;
         public ValueBase Damage { get; set; } = ValueBase.Zero;
+        public bool KillInflictor { get; set; } = true;
         public float EnemyDamageMulti { get; set; } = 1.0f;
         public float MinRange { get; set; } = 2.0f;
         public float MaxRange { get; set; } = 5.0f;

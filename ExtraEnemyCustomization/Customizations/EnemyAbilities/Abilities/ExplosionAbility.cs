@@ -1,11 +1,13 @@
 ﻿using EECustom.Utils;
 using EECustom.Utils.JsonElements;
+using UnityEngine;
 
 namespace EECustom.Customizations.EnemyAbilities.Abilities
 {
     public class ExplosionAbility : AbilityBase<ExplosionBehaviour>
     {
         public ValueBase Damage { get; set; } = ValueBase.Zero;
+        public bool KillInflictor { get; set; } = true;
         public float EnemyDamageMulti { get; set; } = 1.0f;
         public float MinRange { get; set; } = 2.0f;
         public float MaxRange { get; set; } = 5.0f;
@@ -22,6 +24,10 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
         protected override void OnEnter()
         {
+            if (Ability.KillInflictor)
+            {
+                Agent.Damage.ExplosionDamage(Agent.Damage.HealthMax, Vector3.zero, Vector3.zero);
+            }
 
             var damage = Ability.Damage.GetAbsValue(PlayerData.MaxHealth);
             ExplosionUtil.MakeExplosion(Agent.EyePosition, damage, Ability.EnemyDamageMulti, Ability.MinRange, Ability.MaxRange);

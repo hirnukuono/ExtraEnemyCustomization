@@ -3,7 +3,9 @@ using EECustom.Customizations.Shared;
 using EECustom.Events;
 using EECustom.Utils;
 using EECustom.Utils.JsonElements;
+using Enemies;
 using Player;
+using UnityEngine;
 
 namespace EECustom.Customizations.Abilities
 {
@@ -34,6 +36,15 @@ namespace EECustom.Customizations.Abilities
             if (IsTarget(inflictor.GlobalID))
             {
                 MeleeData.DoExplode(player);
+
+                if (!MeleeData.KillInflictor)
+                    return;
+
+                if (inflictor.Type != AgentType.Enemy)
+                    return;
+
+                var enemyAgent = inflictor as EnemyAgent;
+                enemyAgent.Damage.ExplosionDamage(enemyAgent.Damage.HealthMax, Vector3.zero, Vector3.zero);
             }
         }
 
@@ -42,6 +53,15 @@ namespace EECustom.Customizations.Abilities
             if (IsTarget(inflictor.GlobalID))
             {
                 TentacleData.DoExplode(player);
+
+                if (!TentacleData.KillInflictor)
+                    return;
+
+                if (inflictor.Type != AgentType.Enemy)
+                    return;
+
+                var enemyAgent = inflictor as EnemyAgent;
+                enemyAgent.Damage.ExplosionDamage(enemyAgent.Damage.HealthMax, Vector3.zero, Vector3.zero);
             }
         }
     }
