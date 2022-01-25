@@ -102,7 +102,10 @@
     "Explosion": [
       {
         "Damage": "15%",
-        "EnemyDamageMulti": 0.5,
+        "KillInflictor": true, //Kill Inflictor (Exploder)
+        "UseExplosionCounter": true, //Using Counter, Can limit the Explosion count for each enemy
+        "AllowedExplosionCount": 1, //Allowed Explosion count
+        "EnemyDamageMulti": 1.0,
         "MinRange": 2,
         "MaxRange": 5,
         "NoiseMinRange": 5,
@@ -121,6 +124,16 @@
         "CountPerSpawn": 0,
         "DelayPerSpawn": 0,
         "Name": "SpawnEnemy"
+      }
+    ],
+    "DoAnim": [
+      {
+        "Animation": "Screams",
+        "SoundEvent": 0,
+        "VoiceEvent": 0,
+        "Duration": 1.0,
+        "CrossFadeTime": 0.15,
+        "Name": "AnimScream"
       }
     ],
     "EMP": [

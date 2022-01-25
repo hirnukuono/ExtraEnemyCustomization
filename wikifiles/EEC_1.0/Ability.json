@@ -133,6 +133,7 @@
       },
       "MeleeData": {
         "Damage": "20%", //BasedValue: (Based on PlayerDataBlock.health): Damage to deal with explosion (0 to disable it)
+        "KillInflictor": true, //Kill Inflictor (Exploder)
         "EnemyDamageMulti": 1.0, //Multiplier when enemy is receiving explosion damage
         "MinRange": 5.0, //How far it does maximum damage?
         "MaxRange": 10.0, //How far it does damage?
@@ -142,6 +143,8 @@
       },
       "TentacleData": {
         "Damage": "10%",
+        "KillInflictor": false,
+        "EnemyDamageMulti": 1.0,
         "MinRange": 5.0,
         "MaxRange": 10.0,
         "NoiseMinRange": 10.0,
