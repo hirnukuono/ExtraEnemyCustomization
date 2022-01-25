@@ -8,6 +8,8 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
     {
         public ValueBase Damage { get; set; } = ValueBase.Zero;
         public bool KillInflictor { get; set; } = true;
+        public bool UseExplosionCounter { get; set; } = false;
+        public int AllowedExplosionCount { get; set; } = 1;
         public float EnemyDamageMulti { get; set; } = 1.0f;
         public float MinRange { get; set; } = 2.0f;
         public float MaxRange { get; set; } = 5.0f;
@@ -24,6 +26,18 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
         protected override void OnEnter()
         {
+            if (Ability.UseExplosionCounter)
+            {
+                var counter = EnemyProperty<ExplosionCounter>.RegisterOrGet(Agent);
+                if (counter.Count >= Ability.AllowedExplosionCount)
+                {
+                    DoExit();
+                    return;
+                }
+
+                counter.Count++;
+            }
+
             if (Ability.KillInflictor)
             {
                 Agent.Damage.ExplosionDamage(Agent.Damage.HealthMax, Vector3.zero, Vector3.zero);
@@ -48,5 +62,10 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
             DoExit();
         }
+    }
+
+    public class ExplosionCounter
+    {
+        public int Count = 0;
     }
 }
