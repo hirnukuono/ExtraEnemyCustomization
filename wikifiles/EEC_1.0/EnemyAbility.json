@@ -1,66 +1,61 @@
 {
   "BehaviourAbilityCustom": [
     {
+      "Enabled": true,
+      "DebugName": "EMP Shooter",
+      "Target": {
+        "Mode": "NameContains",
+        "persistentIDs": [],
+        "nameParam": "Shooter",
+        "nameIgnoreCase": true
+      },
       "Abilities": [
         {
           "UpdateInterval": 0.15,
-          "AllowedMode": 0,
+          "ForceExitOnConditionMismatch": false, //Abort Ability when Condition Mismatch
+          "AllowedMode": "Combat", //AgentTarget: Allowed AgentModes
           "KeepOnDead": false,
           "AllowWhileAttack": false,
-          "DistanceWithLOS": {
-            "Mode": "AlwaysAllow",
-            "Min": 0,
-            "Max": 1
+          "DistanceWithLOS": { //Can trigger Ability with having Line-of-sight for target
+            "Mode": "UsingDistance", //AlwaysAllow, AlwaysDisallow, UsingDistance
+            "Min": 0.0,
+            "Max": 20.0
           },
-          "DistanceWithoutLOS": {
-            "Mode": "AlwaysAllow",
-            "Min": 0,
-            "Max": 1
+          "DistanceWithoutLOS": { //Can Trigger Ability without having Line-of-sight for target
+            "Mode": "AlwaysDisallow",
+            "Min": -1.0,
+            "Max": -1.0
           },
-          "ForceExitOnConditionMismatch": false,
           "Cooldown": {
-            "Enabled": false,
-            "InitCooldown": 0,
-            "Cooldown": 5
+            "Enabled": false, //Using Cooldown?
+            "InitCooldown": 0, //Can not use ability for time after spawned
+            "Cooldown": 5 //Have to wait for this time after ability has used
           },
-          "AbilityName": "EMP 30sec"
+          "AbilityName": "EMP 30sec" //Each Ability uses different Updater, Use Chain to ensure Activate Multiple Ability at once
         }
-      ],
-      "DebugName": "",
-      "Enabled": true,
-      "Target": {
-        "Mode": "PersistentID",
-        "PersistentIDs": [
-          0
-        ],
-        "NameParam": "",
-        "NameIgnoreCase": false,
-        "Categories": []
-      }
+      ]
     }
   ],
   "DeathAbilityCustom": [
     {
+      "Enabled": true,
+      "DebugName": "Exploder!",
+      "Target": {
+        "Mode": "NameContains",
+        "persistentIDs": [],
+        "nameParam": "Explode",
+        "nameIgnoreCase": true
+      },
       "Abilities": [
         {
-          "Delay": 0,
-          "AbilityName": "EMP 30sec"
+          "AllowedMode": "Combat", //AgentTarget: Allowed AgentModes
+          "Delay": 0.0, //Delay
+          "AbilityName": "Explosion-Small"
         }
-      ],
-      "DebugName": "",
-      "Enabled": true,
-      "Target": {
-        "Mode": "PersistentID",
-        "PersistentIDs": [
-          0
-        ],
-        "NameParam": "",
-        "NameIgnoreCase": false,
-        "Categories": []
-      }
+      ]
     }
   ],
-  "Abilities": {
+  "Abilities": { //List of Ability
     "Chain": [
       {
         "Abilities": [
@@ -73,7 +68,7 @@
             "AbilityName": "EMP 30sec"
           }
         ],
-        "ExitDelay": 0,
+        "ExitDelay": 0.0,
         "ExitAllInForceExit": true,
         "ForceExitOnHitreact": false,
         "ForceExitOnDead": false,
@@ -106,13 +101,14 @@
     ],
     "Explosion": [
       {
-        "Damage": "0",
-        "EnemyDamageMulti": 1,
+        "Damage": "15%",
+        "EnemyDamageMulti": 0.5,
         "MinRange": 2,
         "MaxRange": 5,
         "NoiseMinRange": 5,
         "NoiseMaxRange": 10,
-        "Name": ""
+        "NoiseType": "Detectable",
+        "Name": "Explosion-Small"
       }
     ],
     "SpawnEnemy": [
@@ -129,16 +125,16 @@
     ],
     "EMP": [
       {
-        "ChargeUpSoundId": 0,
-        "ActivateSoundId": 0,
+        "ChargeUpSoundId": 0, //SoundID when Chargeup
+        "ActivateSoundId": 0, //SoundID when Activate
         "ChargeUpAnimation": "AbilityUse",
         "ActivateAnimation": "AbilityUseOut",
-        "ChargeUpDuration": 3,
-        "EffectDuration": 30,
-        "EffectRange": 20,
-        "InvincibleWhileCharging": true,
-        "BuildupColor": "#FFFFFFFF",
-        "ScreamColor": "#FFFFFFFF",
+        "ChargeUpDuration": 3, //Chargeup Animation Duration
+        "EffectDuration": 30.0, //EMP Effect Duration
+        "EffectRange": 20.0, //EMP Effect Range
+        "InvincibleWhileCharging": true, //Literally
+        "BuildupColor": "#FFFFFFFF", //Chargeup Color
+        "ScreamColor": "#FFFFFFFF", //Screaming Color
         "Name": "EMP 30sec"
       }
     ]

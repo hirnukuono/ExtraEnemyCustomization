@@ -1,11 +1,10 @@
 {
-	"Flyer.StuckCheck.Enabled": false, //Using Flyer Stuck Check? (Kill stuck flyer after few seconds)
-	"Flyer.StuckCheck.RetryCount": 5, //Check Retry Count
-	"Flyer.StuckCheck.RetryInterval": 1.5, //Check Interval
-	
-	//Cache Every Material in-game (For Material Custom)
-	//Better leave it as false unless you know what you doing.
-	"Material.CacheAll": false,
+  "Flyer.StuckCheck.Enabled": true, //Using Flyer Stuck Check? (Kill stuck flyer after few seconds)
+  "Flyer.StuckCheck.RetryCount": 5, //Check Retry Count
+  "Flyer.StuckCheck.RetryInterval": 1.5, //Check Interval
 
-	"Bleeding.UseMediToStop": false //Using Medipack can stop bleeding effects?
+  //Cache Every Material in-game (For Material Custom)
+  //Better leave it as false unless you know what you doing.
+  "Material.CacheAll": false,
+  "Bleeding.UseMediToStop": false //Using Medipack can stop bleeding effects?
 }

@@ -1,6 +1,6 @@
 {
-	//!!!!!THIS ONE IS WIP!!!!!
-	/*
+  //!!!!!THIS ONE IS WIP!!!!!
+  /*
 	"ScreamingCustom": [
 		{
 			"Enabled": false, //You can check first item of Model.json if you have no idea with this formatting
@@ -28,44 +28,43 @@
 		}
 	],
 	*/
-	"FeelerCustom": [
-		{
-			"Enabled": false,
-			"DebugName": "LongScout",
-			"Target": {
-				"Mode": "NameContains",
-				"persistentIDs": [],
-				"nameParam": "Scout",
-				"nameIgnoreCase": true,
-				"categories": []
-			},
-			"TendrilCount": 50, //BasedValue (Based on Default Default Tendril Count: 50): Tendril Count to Spawn
-			"TendrilAngleOffset": 0.0, //Starting Angle of Tendril
-			"TendrilStepAngle": 7.2, //BasedValue (Based on Default Angle): Angle for each tendril have
-			"TendrilMinYSpread": -0.4, //BasedValue (Based on Default MinY: -0.4): Value for up and down spread (Min) (THIS IS NOT A ANGLE, You can get this value by: tangent of angle) 
-			"TendrilMaxYSpread": 0.0, //BasedValue (Based on Default MinY: 0.0): Value for up and down spread (Max)
-			"TendrilOutTimer": 20.0, //BasedValue: How long should scout wait until it pull back it's feelers
-			"Distance": 30.0, //BasedValue (Based on Default Value): How long is the each tendril is?
-			"StepDistance": 7.5, //BasedValue (Based on Default Value): How far should tendril should move for each movement?
-			"RetractTime": 2.0, //BasedValue (Based on Default Value): How long it takes to Retract Tendril back?
-			"RetractTimeDetected": 1.0, //BasedValue (Based on Default Value): How long it takes to retract tendril that detected?
-			"NormalColor": "black", //Color: Normal Color for tendril, black is default
-			"DetectColor": "red" //Color: Color when detected, red is default
-		}
-	],
-	"ScoutAnimCustom": [
-		{
-			"Enabled": true,
-			"DebugName": "Scout_Randomly Bend",
-			"Target": {
-				"Mode": "NameContains",
-				"persistentIDs": [],
-				"nameParam": "Scout",
-				"nameIgnoreCase": true,
-				"categories": []
-			},
-
-			/*
+  "FeelerCustom": [
+    {
+      "Enabled": false,
+      "DebugName": "LongScout",
+      "Target": {
+        "Mode": "NameContains",
+        "persistentIDs": [],
+        "nameParam": "Scout",
+        "nameIgnoreCase": true,
+        "categories": []
+      },
+      "TendrilCount": 50, //BasedValue (Based on Default Default Tendril Count: 50): Tendril Count to Spawn
+      "TendrilAngleOffset": 0.0, //Starting Angle of Tendril
+      "TendrilStepAngle": 7.2, //BasedValue (Based on Default Angle): Angle for each tendril have
+      "TendrilMinYSpread": -0.4, //BasedValue (Based on Default MinY: -0.4): Value for up and down spread (Min) (THIS IS NOT A ANGLE, You can get this value by: tangent of angle) 
+      "TendrilMaxYSpread": 0.0, //BasedValue (Based on Default MinY: 0.0): Value for up and down spread (Max)
+      "TendrilOutTimer": 20.0, //BasedValue: How long should scout wait until it pull back it's feelers
+      "Distance": 30.0, //BasedValue (Based on Default Value): How long is the each tendril is?
+      "StepDistance": 7.5, //BasedValue (Based on Default Value): How far should tendril should move for each movement?
+      "RetractTime": 2.0, //BasedValue (Based on Default Value): How long it takes to Retract Tendril back?
+      "RetractTimeDetected": 1.0, //BasedValue (Based on Default Value): How long it takes to retract tendril that detected?
+      "NormalColor": "black", //Color: Normal Color for tendril, black is default
+      "DetectColor": "red" //Color: Color when detected, red is default
+    }
+  ],
+  "ScoutAnimCustom": [
+    {
+      "Enabled": true,
+      "DebugName": "Scout_Randomly Bend",
+      "Target": {
+        "Mode": "NameContains",
+        "persistentIDs": [],
+        "nameParam": "Scout",
+        "nameIgnoreCase": true,
+        "categories": []
+      },
+      /*
 			POSSIBLE ANIMATIONS
 
 			MoveOnGround
@@ -96,12 +95,12 @@
 			JumpStart
 			JumpLand
 			*/
-			"RandomType": "PerEnemy", //PerEnemy - PerDetection
-			"BendAnimation": "AbilityUseOut",
-			"StandAnimation": "AbilityUse",
-			"ChanceToBend": 0.5,
-			"OverridePullingAnimation": false, //Override Tentacle Pulling Animation?
-			"PullingAnimation": "AbilityUseOut"
-		}
-	]
+      "RandomType": "PerEnemy", //PerEnemy - PerDetection
+      "BendAnimation": "AbilityUseOut",
+      "StandAnimation": "AbilityUse",
+      "ChanceToBend": 0.5,
+      "OverridePullingAnimation": false, //Override Tentacle Pulling Animation?
+      "PullingAnimation": "AbilityUseOut"
+    }
+  ]
 }
