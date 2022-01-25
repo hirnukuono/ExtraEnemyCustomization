@@ -86,7 +86,7 @@ namespace EECustom.Utils
 
         public static async Task LightFlash(Vector3 pos)
         {
-            if (FX_Manager.TryAllocateFXLight(out var light, true))
+            if (FX_Manager.TryAllocateFXLight(out var light, important: false))
             {
                 light.SetColor(new Color(1, 0.2f, 0, 1));
                 light.SetRange(50);
