@@ -16,10 +16,6 @@ namespace EECustom.Customizations.Abilities.Handlers
         private float _updateTimer = 0.0f;
         private bool _isColorSet = false;
 
-        public ScoutFogSphereHandler(IntPtr ptr) : base(ptr)
-        {
-        }
-
         public void Update()
         {
             if (ScoutScream.m_fogSphereAdd == null)

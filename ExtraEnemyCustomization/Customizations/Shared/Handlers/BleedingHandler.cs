@@ -17,10 +17,6 @@ namespace EECustom.Customizations.Shared.Handlers
         private float _bleedingIntervalTimer;
         private bool _bleeding = false;
 
-        public BleedingHandler(IntPtr ptr) : base(ptr)
-        {
-        }
-
         internal void Update()
         {
             if (!_bleeding)

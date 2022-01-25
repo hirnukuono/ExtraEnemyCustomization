@@ -16,10 +16,6 @@ namespace EECustom.Patches.Handlers
         private float _timer;
         private int _tryCount = -1;
 
-        public FlyerStuckHandler(IntPtr ptr) : base(ptr)
-        {
-        }
-
 #pragma warning disable IDE0051 // Remove unused private members
         void Update()
         {

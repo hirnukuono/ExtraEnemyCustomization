@@ -14,10 +14,6 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
         private bool _setup = false;
         private bool IsEMPActive => _duration > Clock.Time;
 
-        public EMPController(IntPtr ptr) : base(ptr)
-        {
-        }
-
         public Vector3 Position => transform.position;
 
         [HideFromIl2Cpp]

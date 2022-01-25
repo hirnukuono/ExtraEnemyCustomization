@@ -19,10 +19,6 @@ namespace EECustom.Customizations.Models.Handlers
         private int _currentPatternIndex = 0;
         private int _patternLength = 0;
 
-        public PulseHandler(IntPtr ptr) : base(ptr)
-        {
-        }
-
         internal void Start()
         {
             if (PulseData.PatternData == null)

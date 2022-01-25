@@ -39,10 +39,6 @@ namespace EECustom.Customizations.Models.Handlers
         private float _interpTimer = 0.0f;
         private float _interpStartTime = 0.0f;
 
-        public ScannerHandler(IntPtr ptr) : base(ptr)
-        {
-        }
-
         internal void Start()
         {
             _currentState = OwnerAgent.AI.Mode switch

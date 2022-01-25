@@ -15,10 +15,6 @@ namespace EECustom.Customizations.Shooters.Handlers
         private FireSetting _currentSetting = null;
         private float _timerToUpdate = 0.0f;
 
-        public ShooterDistSettingHandler(IntPtr ptr) : base(ptr)
-        {
-        }
-
         internal void Update()
         {
             if (Clock.Time < _timerToUpdate)

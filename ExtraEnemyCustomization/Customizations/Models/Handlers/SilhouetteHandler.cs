@@ -14,10 +14,6 @@ namespace EECustom.Customizations.Models.Handlers
 
         private Color _latestColorB = Color.clear;
 
-        public EnemySilhouette(IntPtr ptr) : base(ptr)
-        {
-        }
-
         public void EnableSilhouette()
         {
             SetColorB(_latestColorB);
@@ -54,10 +50,6 @@ namespace EECustom.Customizations.Models.Handlers
         private NavMarker _enemyMarker = null;
         private EnemySilhouette[] _silhouettes = null;
         private bool _eventRegistered = false;
-
-        public SilhouetteHandler(IntPtr ptr) : base(ptr)
-        {
-        }
 
         internal void Start()
         {

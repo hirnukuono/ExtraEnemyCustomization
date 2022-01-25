@@ -12,10 +12,6 @@ namespace EECustom.Customizations.Shared.Handlers
 
         private float _updateTimer = 0.0f;
 
-        public EffectFogSphereHandler(IntPtr ptr) : base(ptr)
-        {
-        }
-
         public void Update()
         {
             if (Handler.m_sphere != null && _updateTimer < Clock.Time)

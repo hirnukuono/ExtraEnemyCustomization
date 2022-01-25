@@ -25,10 +25,6 @@ namespace EECustom.Customizations.Abilities.Handlers
         private float _regenCapAbsValue = 0.0f;
         private float _regenAmountAbsValue = 0.0f;
 
-        public HealthRegenHandler(IntPtr ptr) : base(ptr)
-        {
-        }
-
         internal void Start()
         {
             _isRegening = false;

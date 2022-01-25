@@ -19,10 +19,6 @@ namespace EECustom.Events
         [HideFromIl2Cpp]
         public event UnityEventHandler OnLateUpdate;
 
-        public MonoBehaviourEventHandler(IntPtr ptr) : base(ptr)
-        {
-        }
-
         public static void AttatchToObject(GameObject obj, UnityEventHandler onUpdate = null, UnityEventHandler onLateUpdate = null, UnityEventHandler onFixedUpdate = null, UnityEventHandler onDestroyed = null)
         {
             var handler = obj.AddComponent<MonoBehaviourEventHandler>();
