@@ -1,4 +1,5 @@
 ﻿using EECustom.Attributes;
+using EECustom.Customizations.Shared.Inject;
 using Player;
 using System;
 using UnhollowerBaseLib.Attributes;
@@ -61,12 +62,17 @@ namespace EECustom.Customizations.Shared.Handlers
             _liquid = liquid;
             _hasLiquid = Enum.IsDefined(typeof(ScreenLiquidSettingName), _liquid);
             _bleeding = true;
+
+            Inject_PUI_LocalPlayerStatus.IsBleeding = true;
         }
 
         [HideFromIl2Cpp]
         public void StopBleed()
         {
             _bleeding = false;
+
+            Inject_PUI_LocalPlayerStatus.IsBleeding = false;
+            GuiManager.PlayerLayer.UpdateHealth(Agent.Damage.GetHealthRel(), Agent.MeleeBuffTimer > Clock.Time);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace EECustom.Customizations.Shared
         public float Interval { get; set; } = 0.0f;
         public float Duration { get; set; } = 0.0f;
         public bool HasLiquid { get; set; } = true;
-        public ScreenLiquidSettingName LiquidSetting { get; set; } = ScreenLiquidSettingName.playerBlood_SmallDamage;
+        public ScreenLiquidSettingName LiquidSetting { get; set; } = ScreenLiquidSettingName.enemyBlood_Squirt;
 
         public void TryBleed(PlayerAgent agent)
         {
