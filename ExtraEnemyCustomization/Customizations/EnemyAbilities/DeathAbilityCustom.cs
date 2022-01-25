@@ -1,4 +1,5 @@
 ﻿using EECustom.Customizations.EnemyAbilities.Abilities;
+using EECustom.Utils.JsonElements;
 using Enemies;
 using System;
 using System.Threading.Tasks;
@@ -17,6 +18,9 @@ namespace EECustom.Customizations.EnemyAbilities
         {
             foreach (var ab in Abilities)
             {
+                if (!ab.AllowedMode.IsMatch(agent))
+                    return;
+
                 _ = DoTriggerDelayed(ab.Ability, agent, ab.Delay);
             }
         }
@@ -30,6 +34,7 @@ namespace EECustom.Customizations.EnemyAbilities
 
     public class DeathAbilitySetting : AbilitySettingBase
     {
+        public AgentModeTarget AllowedMode { get; set; } = AgentModeTarget.Agressive;
         public float Delay { get; set; } = 0.0f;
     }
 }

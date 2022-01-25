@@ -125,7 +125,7 @@ namespace EECustom.Customizations.EnemyAbilities
     public class BehaviourAbilitySetting : AbilitySettingBase
     {
         public float UpdateInterval { get; set; } = 0.15f;
-        public AgentModeTarget AllowedMode { get; set; } = AgentModeTarget.None;
+        public AgentModeTarget AllowedMode { get; set; } = AgentModeTarget.Agressive;
         public bool KeepOnDead { get; set; } = false;
         public bool AllowWhileAttack { get; set; } = false;
         public DistanceSetting DistanceWithLOS { get; set; } = new();
