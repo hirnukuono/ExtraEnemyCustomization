@@ -67,6 +67,9 @@ namespace EECustom.Customizations.Models.Handlers
                         break;
 
                     case AgentMode.Agressive:
+                        if (_ownerAgent.Locomotion.IsAttacking())
+                            return;
+
                         switch (_ownerAgent.Locomotion.CurrentStateEnum)
                         {
                             case ES_StateEnum.ShooterAttack:
@@ -75,6 +78,7 @@ namespace EECustom.Customizations.Models.Handlers
                             case ES_StateEnum.ScoutScream:
                                 return;
                         }
+
                         break;
 
                     case AgentMode.Scout:
