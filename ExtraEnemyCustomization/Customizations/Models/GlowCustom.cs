@@ -10,9 +10,9 @@ namespace EECustom.Customizations.Models
 {
     public sealed class GlowCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyGlowEvent
     {
-        public readonly static Color DefaultPropaWakeColor = ES_HibernateWakeUp.m_propagatedWakeupColor;
+        public static readonly Color DefaultPropaWakeColor = ES_HibernateWakeUp.m_propagatedWakeupColor;
 
-        private readonly static System.Random _random = new();
+        private static readonly System.Random _random = new();
 
         public Color DefaultColor { get; set; } = Color.black;
 

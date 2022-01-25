@@ -7,7 +7,7 @@ namespace EECustom.Utils
 {
     public static class EnemyProperty<T> where T : class, new()
     {
-        private readonly static Dictionary<ushort, T> _properties = new();
+        private static readonly Dictionary<ushort, T> _properties = new();
 
         static EnemyProperty()
         {

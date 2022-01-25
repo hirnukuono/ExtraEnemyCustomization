@@ -3,7 +3,6 @@ using EECustom.Customizations.Shared;
 using EECustom.Events;
 using Enemies;
 using Player;
-using UnityEngine;
 
 namespace EECustom.Customizations.Abilities
 {

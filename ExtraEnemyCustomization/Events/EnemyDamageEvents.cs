@@ -4,11 +4,15 @@ using Enemies;
 namespace EECustom.Events
 {
     public delegate void EnemyTakeDamageHandler(EnemyAgent enemyAgent, Agent inflictor, float damage);
+
     public static class EnemyDamageEvents
     {
         public static event EnemyTakeDamageHandler Damage;
+
         public static event EnemyTakeDamageHandler MeleeDamage;
+
         public static event EnemyTakeDamageHandler BulletDamage;
+
         public static event EnemyTakeDamageHandler ExplosionDamage;
 
         internal static void OnDamage(EnemyAgent enemyAgent, Agent inflictor, float damage)

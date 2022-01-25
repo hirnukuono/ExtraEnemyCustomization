@@ -1,7 +1,4 @@
 ﻿using AK;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
 namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Handlers
@@ -46,7 +43,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Handlers
             int state = UnityEngine.Random.RandomRangeInt(0, 3);
             _sentry.StopFiring();
 
-            switch(state)
+            switch (state)
             {
                 case 0:
                     _visuals.SetVisualStatus(eSentryGunStatus.OutOfAmmo);

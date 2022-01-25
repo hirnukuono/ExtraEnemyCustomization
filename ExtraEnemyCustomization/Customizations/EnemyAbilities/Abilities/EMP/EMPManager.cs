@@ -25,6 +25,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
         }
 
         public static void AddTarget(EMPController target) => _empTargets.Add(target);
+
         public static void RemoveTarget(EMPController target) => _empTargets.Remove(target);
 
         public static void Activate(Vector3 position, float range, float duration)
@@ -63,9 +64,9 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
 
         private struct ActiveEMPs
         {
-            readonly Vector3 _position;
-            readonly float _range;
-            readonly float _duration;
+            private readonly Vector3 _position;
+            private readonly float _range;
+            private readonly float _duration;
             public float RemainingTime => _duration - Clock.Time;
 
             public ActiveEMPs(Vector3 position, float range, float duration) : this()

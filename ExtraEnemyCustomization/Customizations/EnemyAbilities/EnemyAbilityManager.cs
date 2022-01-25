@@ -134,7 +134,6 @@ namespace EECustom.Customizations.EnemyAbilities
 
     public class AbilityEvent : SyncedEvent<AbilityPacket>
     {
-
     }
 
     public struct AbilityPacket

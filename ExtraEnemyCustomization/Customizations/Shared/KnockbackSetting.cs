@@ -1,8 +1,5 @@
 ﻿using Agents;
 using Player;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
 namespace EECustom.Customizations.Shared
@@ -16,6 +13,7 @@ namespace EECustom.Customizations.Shared
         public bool DoMultDistanceZ { get; set; } = false;
 
         public void DoKnockback(Agent inflictor, PlayerAgent player) => DoKnockback(inflictor.Position, player);
+
         public void DoKnockback(Vector3 inflictorPos, PlayerAgent player)
         {
             var playerPos = player.Position;
@@ -46,6 +44,7 @@ namespace EECustom.Customizations.Shared
         }
 
         public void DoKnockbackIgnoreDistance(Agent inflictor, PlayerAgent player) => DoKnockback(inflictor.Position, player);
+
         public void DoKnockbackIgnoreDistance(Vector3 inflictorPos, PlayerAgent player)
         {
             var playerPos = player.Position;

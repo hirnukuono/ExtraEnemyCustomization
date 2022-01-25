@@ -53,7 +53,7 @@ namespace EECustom
             ConfigManager.UseLiveEdit = useLiveEdit.Value;
             ConfigManager.LinkMTFOHotReload = linkMTFOHotReload.Value;
             ConfigManager.Initialize();
-            if(dumpConfig.Value == true)
+            if (dumpConfig.Value == true)
             {
                 ConfigManager.DumpDefault();
             }

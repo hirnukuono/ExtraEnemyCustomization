@@ -1,11 +1,6 @@
-﻿using EECustom.Networking.Events;
-using EECustom.Utils;
+﻿using EECustom.Utils;
 using Enemies;
-using GTFO.API;
-using SNetwork;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EECustom.Customizations.Detections
 {
@@ -46,7 +41,7 @@ namespace EECustom.Customizations.Detections
                     data.ChanceToBend = ChanceToBend;
                     break;
             }
-            
+
             data.BendAnimation = BendAnimation;
             data.StandAnimation = StandAnimation;
             data.OverridePullingAnimation = OverridePullingAnimation;

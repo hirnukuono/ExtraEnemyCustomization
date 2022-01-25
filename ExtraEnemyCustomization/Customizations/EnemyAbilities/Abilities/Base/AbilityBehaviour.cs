@@ -1,5 +1,4 @@
-﻿using Agents;
-using BepInEx.Logging;
+﻿using BepInEx.Logging;
 using EECustom.Customizations.EnemyAbilities.Events;
 using EECustom.Events;
 using Enemies;
@@ -26,6 +25,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         public IAbility BaseAbility { get; private set; }
         public EnemyAgent Agent { get; private set; }
         public bool AgentDestroyed { get; private set; } = false;
+
         public bool IsMasterOnlyAndClient
         {
             get
@@ -89,7 +89,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
                     }
                     return;
 
-                    RevertState:
+                RevertState:
                     Agent.Locomotion.ChangeState(_prevState);
                 }
             }
@@ -117,7 +117,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
             };
 
             Agent.Locomotion.AddState(ES_StateEnum.StandStill, new ES_StandStill());
-            
+
             EnemyAbilitiesEvents.TakeDamage += TakeDamage_Del;
             EnemyAbilitiesEvents.Dead += Dead_Del;
             EnemyAbilitiesEvents.Hitreact += Hitreact_Del;
@@ -381,6 +381,6 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
                 Logger.Debug($"[{BaseAbility.Name}] [{Agent.name}] {str}");
         }
 
-        #endregion
+        #endregion LOGGING
     }
 }

@@ -1,13 +1,8 @@
-﻿using EECustom.Events;
-using EECustom.Managers;
+﻿using EECustom.Managers;
 using EECustom.Patches.Handlers;
 using Enemies;
 using HarmonyLib;
 using SNetwork;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using UnityEngine;
 
 namespace EECustom.Patches.Inject
 {

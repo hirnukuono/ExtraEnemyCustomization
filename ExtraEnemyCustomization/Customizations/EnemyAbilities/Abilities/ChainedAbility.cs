@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace EECustom.Customizations.EnemyAbilities.Abilities
 {
@@ -73,7 +72,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         protected override void OnUpdate()
         {
             var isAllDone = true;
-            
+
             foreach (var abSetting in Ability.Abilities)
             {
                 if (abSetting.TriggerTimer <= Clock.Time)

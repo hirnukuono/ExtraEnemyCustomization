@@ -5,14 +5,14 @@ namespace EECustom.Customizations
 {
     public abstract class RevertableEnemyCustomBase : EnemyCustomBase
     {
-        private readonly static Stack<Action> _revertDelegates = new();
+        private static readonly Stack<Action> _revertDelegates = new();
 
         public void PushRevertJob(Action revertAction)
         {
             _revertDelegates.Push(revertAction);
         }
 
-        public sealed override void OnConfigUnloaded()
+        public override sealed void OnConfigUnloaded()
         {
             while (_revertDelegates.Count > 0)
             {
@@ -25,7 +25,6 @@ namespace EECustom.Customizations
 
         public virtual void OnConfigUnloadedPost()
         {
-
         }
     }
 }

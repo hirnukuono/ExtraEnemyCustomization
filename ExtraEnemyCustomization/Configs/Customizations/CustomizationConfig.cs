@@ -7,6 +7,7 @@ namespace EECustom.Configs.Customizations
     {
         [JsonIgnore]
         public abstract CustomizationConfigType Type { get; }
+
         public abstract EnemyCustomBase[] GetAllSettings();
     }
 

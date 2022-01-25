@@ -4,7 +4,6 @@ using Enemies;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 using UnhollowerBaseLib;
 
 namespace EECustom.Utils
@@ -12,7 +11,7 @@ namespace EECustom.Utils
     public static class EnemyAnimUtil
     {
         private static readonly Dictionary<EnemyAnimType, int[]> _animHashsLookup = new();
-        private readonly static Random _random = new();
+        private static readonly Random _random = new();
         private static bool _initialized = false;
 
         internal static void Initialize()

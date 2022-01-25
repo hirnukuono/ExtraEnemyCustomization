@@ -1,6 +1,5 @@
 ﻿using Gear;
 using HarmonyLib;
-using System;
 
 namespace EECustom.Events.Inject
 {

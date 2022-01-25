@@ -3,11 +3,15 @@
 namespace EECustom.Events
 {
     public delegate void EnemyAgentHandler(EnemyAgent agent);
+
     public static class EnemyEvents
     {
         public static event EnemyAgentHandler Spawn;
+
         public static event EnemyAgentHandler Spawned;
+
         public static event EnemyAgentHandler Despawn;
+
         public static event EnemyAgentHandler Despawned;
 
         internal static void OnSpawn(EnemyAgent agent)

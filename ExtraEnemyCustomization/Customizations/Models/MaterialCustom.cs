@@ -7,8 +7,8 @@ namespace EECustom.Customizations.Models
 {
     public sealed class MaterialCustom : RevertableEnemyCustomBase, IEnemyPrefabBuiltEvent
     {
-        private readonly static Dictionary<string, Material> _matDict = new();
-        private readonly static Dictionary<string, Texture3D> _tex3DDict = new();
+        private static readonly Dictionary<string, Material> _matDict = new();
+        private static readonly Dictionary<string, Texture3D> _tex3DDict = new();
 
         public static void AddToCache(string matName, Material mat)
         {
@@ -56,7 +56,7 @@ namespace EECustom.Customizations.Models
                 });
 
                 var newMaterial = new Material(newMat);
-                switch(swapSet.SkinNoise)
+                switch (swapSet.SkinNoise)
                 {
                     case SkinNoiseType.ForceOn:
                         newMaterial.SetFloat("_Enable_SkinNoise", 1.0f);
@@ -80,7 +80,7 @@ namespace EECustom.Customizations.Models
                         LogError($"TEXTURE3D WAS NOT CACHED!: {swapSet.SkinNoiseTexture}");
                     }
                 }
-                
+
                 mat.m_material = newMaterial;
                 LogVerbose(" - Replaced!");
             }

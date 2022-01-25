@@ -3,16 +3,23 @@
 namespace EECustom.Events
 {
     public delegate void ReceivePackHandler(iResourcePackReceiver receiver);
+
     public delegate void ReceiveMediHandler(iResourcePackReceiver receiver, float health);
+
     public delegate void ReceiveAmmoHandler(iResourcePackReceiver receiver, float main, float special);
+
     public delegate void ReceiveToolHandler(iResourcePackReceiver receiver, float tool);
+
     public delegate void ReceiveDisinfectHandler(iResourcePackReceiver receiver, float disinfect);
 
     public static class ResourcePackEvents
     {
         public static event ReceiveMediHandler ReceiveMedi;
+
         public static event ReceiveAmmoHandler ReceiveAmmo;
+
         public static event ReceiveToolHandler ReceiveTool;
+
         public static event ReceiveDisinfectHandler ReceiveDisinfect;
 
         internal static void OnReceiveMedi(iResourcePackReceiver receiver, float health)

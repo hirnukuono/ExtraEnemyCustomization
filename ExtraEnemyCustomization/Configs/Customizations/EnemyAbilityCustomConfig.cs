@@ -1,7 +1,6 @@
 ﻿using EECustom.Customizations;
 using EECustom.Customizations.EnemyAbilities;
 using EECustom.Customizations.EnemyAbilities.Abilities;
-using System;
 using System.Collections.Generic;
 
 namespace EECustom.Configs.Customizations

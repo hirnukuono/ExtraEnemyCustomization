@@ -1,11 +1,7 @@
-﻿using EECustom.Events;
-using EECustom.Networking;
+﻿using EECustom.Networking;
 using EECustom.Utils;
 using EECustom.Utils.JsonElements;
 using Player;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EECustom.Customizations.Shared
 {

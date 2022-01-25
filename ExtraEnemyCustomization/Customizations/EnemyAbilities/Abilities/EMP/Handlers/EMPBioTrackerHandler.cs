@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using UnityEngine;
-using EECustom.Extensions;
+﻿using AK;
 using Gear;
-using AK;
+using UnityEngine;
 
 namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Handlers
 {
     public class EMPBioTrackerHandler : EMPHandlerBase
     {
         private EnemyScanner _scanner;
+
         public override void Setup(GameObject gameObject, EMPController controller)
         {
             _scanner = gameObject.GetComponent<EnemyScanner>();

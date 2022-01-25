@@ -1,9 +1,6 @@
 ﻿using EECustom.Events;
 using GameData;
 using Player;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
 namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Handlers
@@ -15,6 +12,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Handlers
         private bool FlashlightEnabled => _inventory.FlashlightEnabled;
         private float _originalIntensity;
         private bool _originalFlashlightState;
+
         public override void Setup(GameObject gameObject, EMPController controller)
         {
             _inventory = gameObject.GetComponent<PlayerAgent>().Inventory;

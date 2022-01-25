@@ -43,15 +43,14 @@ namespace EECustom.Networking
 
         public virtual void ReceiveLocal(T packet)
         {
-
         }
 
         public virtual void Receive(T packet)
         {
-
         }
 
         public event ReceiveHandler OnReceive;
+
         public event ReceiveHandler OnReceiveLocal;
     }
 }

@@ -6,10 +6,10 @@ namespace EECustom.Utils.JsonElements
 {
     public struct AgentModeTarget
     {
-        public readonly static AgentModeTarget Scout = new(AgentModeType.Scout);
-        public readonly static AgentModeTarget Hibernate = new(AgentModeType.Hibernate);
-        public readonly static AgentModeTarget Agressive = new(AgentModeType.Agressive);
-        public readonly static AgentModeTarget None = new(AgentModeType.None);
+        public static readonly AgentModeTarget Scout = new(AgentModeType.Scout);
+        public static readonly AgentModeTarget Hibernate = new(AgentModeType.Hibernate);
+        public static readonly AgentModeTarget Agressive = new(AgentModeType.Agressive);
+        public static readonly AgentModeTarget None = new(AgentModeType.None);
 
         public AgentModeType Mode;
 

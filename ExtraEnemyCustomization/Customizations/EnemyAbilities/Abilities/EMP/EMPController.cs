@@ -1,5 +1,4 @@
 ﻿using EECustom.Attributes;
-using System;
 using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 
@@ -38,36 +37,39 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
         }
 
 #pragma warning disable IDE0051 // Remove unused private members
-        void Awake()
+
+        private void Awake()
         {
             EMPManager.AddTarget(this);
         }
 
-        void OnDestroy()
+        private void OnDestroy()
         {
             EMPManager.RemoveTarget(this);
             _handler.OnDespawn();
         }
 
-        void OnEnable()
+        private void OnEnable()
         {
-            if (GameStateManager.CurrentStateName != eGameStateName.InLevel ) return;
+            if (GameStateManager.CurrentStateName != eGameStateName.InLevel) return;
             if (!_setup) return;
             _duration = Clock.Time + EMPManager.DurationFromPosition(transform.position);
             if (_duration > Clock.Time)
             {
                 _handler.ForceState(EMPState.Off);
-            } else
+            }
+            else
             {
                 _handler.ForceState(EMPState.On);
             }
         }
 
-        void Update()
+        private void Update()
         {
             if (!_hasHandler) return;
             _handler.Tick(IsEMPActive);
         }
+
 #pragma warning restore IDE0051 // Remove unused private members
     }
 }

@@ -9,12 +9,11 @@ namespace EECustom.Customizations.EnemyAbilities
     {
         public T[] Abilities { get; set; } = new T[0];
 
-        public sealed override void OnConfigLoaded()
+        public override sealed void OnConfigLoaded()
         {
             Abilities = CacheAbilities(Abilities);
             OnConfigLoadedPost();
         }
-
 
         protected T[] CacheAbilities(T[] settings)
         {
@@ -34,7 +33,6 @@ namespace EECustom.Customizations.EnemyAbilities
 
         public virtual void OnConfigLoadedPost()
         {
-
         }
 
         public void OnSpawned(EnemyAgent agent)
@@ -54,17 +52,14 @@ namespace EECustom.Customizations.EnemyAbilities
 
         public virtual void OnBehaviourAssigned(EnemyAgent agent, AbilityBehaviour behaviour, T setting)
         {
-
         }
 
         public virtual void OnSpawnedPost(EnemyAgent agent)
         {
-
         }
 
         public virtual void OnDead(EnemyAgent agent)
         {
-
         }
     }
 }

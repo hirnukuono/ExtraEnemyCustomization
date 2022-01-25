@@ -1,8 +1,5 @@
 ﻿using EECustom.Customizations.EnemyAbilities.Abilities.EMP.Handlers;
 using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Inject
 {

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
 {
@@ -36,7 +33,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
         protected virtual bool IsDeviceOnPlayer => false;
 
         /// <summary>
-        /// If the device is currently active 
+        /// If the device is currently active
         /// </summary>
         protected DeviceState _deviceState = DeviceState.On;
 
@@ -82,10 +79,12 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
                     _deviceState = DeviceState.On;
                     DeviceOn();
                     break;
+
                 case EMPState.Off:
                     _deviceState = DeviceState.Off;
                     DeviceOff();
                     break;
+
                 default:
                     _deviceState = DeviceState.Unknown;
                     break;
@@ -119,6 +118,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
                     _deviceState = DeviceState.On;
                     if (IsDeviceOnPlayer) _isLocalPlayerDisabled = false;
                     break;
+
                 case EMPState.FlickerOff:
                     if (_delayTimer > Clock.Time) return;
                     if (Clock.Time < _stateTimer)
@@ -128,12 +128,14 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
                     }
                     _state = EMPState.Off;
                     break;
+
                 case EMPState.Off:
                     if (_deviceState == DeviceState.Off) return;
                     DeviceOff();
                     _deviceState = DeviceState.Off;
                     if (IsDeviceOnPlayer) _isLocalPlayerDisabled = true;
                     break;
+
                 case EMPState.FlickerOn:
                     if (_delayTimer > Clock.Time) return;
                     if (Clock.Time < _stateTimer)
@@ -143,6 +145,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
                     }
                     _state = EMPState.On;
                     break;
+
                 default:
                     break;
             }

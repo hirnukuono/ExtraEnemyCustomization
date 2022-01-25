@@ -8,7 +8,9 @@ namespace EECustom.Events
     public static class LocalPlayerDamageEvents
     {
         public static event PlayerTakeDamageHandler Damage;
+
         public static event PlayerTakeDamageHandler MeleeDamage;
+
         public static event PlayerTakeDamageHandler TentacleDamage;
 
         internal static void OnDamage(PlayerAgent playerAgent, Agent inflictor, float damage)

@@ -1,7 +1,6 @@
 ﻿using EECustom.Attributes;
 using EECustom.Events;
 using Enemies;
-using System;
 using UnityEngine;
 using UnityEngine.Rendering;
 

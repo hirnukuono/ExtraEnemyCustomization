@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 using System.Text.Json.Serialization;
 
 namespace EECustom.Configs
@@ -58,12 +56,10 @@ namespace EECustom.Configs
 
         public virtual void Loaded()
         {
-
         }
 
         public virtual void Unloaded()
         {
-
         }
     }
 }

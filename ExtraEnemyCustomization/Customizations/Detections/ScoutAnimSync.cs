@@ -3,8 +3,6 @@ using EECustom.Utils;
 using Enemies;
 using SNetwork;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EECustom.Customizations.Detections
 {
@@ -34,7 +32,7 @@ namespace EECustom.Customizations.Detections
             {
                 nextAnim = (_rand.NextDouble() <= data.ChanceToBend) ?
                     ScoutAnimType.Bending :
-                    ScoutAnimType.Standing; 
+                    ScoutAnimType.Standing;
             }
 
             var packet = new ScoutAnimPacket()

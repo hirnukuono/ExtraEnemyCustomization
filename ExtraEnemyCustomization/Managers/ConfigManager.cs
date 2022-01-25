@@ -1,6 +1,5 @@
 ﻿using EECustom.Configs;
 using EECustom.Configs.Customizations;
-using EECustom.CustomSettings;
 using EECustom.Events;
 using EECustom.Utils;
 using EECustom.Utils.Integrations;
@@ -76,7 +75,7 @@ namespace EECustom.Managers
                 watcher.Changed += new FileSystemEventHandler(OnConfigFileEdited);
                 watcher.EnableRaisingEvents = true;
             }
-            
+
             LevelEvents.LevelCleanup += ClearTargetLookup;
         }
 

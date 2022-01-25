@@ -2,10 +2,8 @@
 using EECustom.Configs.Customizations;
 using EECustom.Customizations;
 using Enemies;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace EECustom.Managers
 {
@@ -20,7 +18,6 @@ namespace EECustom.Managers
         public DetectionCustomConfig DetectionCustom => GetConfig<DetectionCustomConfig>();
         public SpawnCostCustomConfig SpawnCostCustom => GetConfig<SpawnCostCustomConfig>();
         public EnemyAbilityCustomConfig EnemyAbilityCustom => GetConfig<EnemyAbilityCustomConfig>();
-
 
         private readonly List<EnemyCustomBase> _customizationBuffer = new();
 

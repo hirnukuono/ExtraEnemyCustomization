@@ -3,10 +3,6 @@ using AIGraph;
 using EECustom.Utils;
 using EECustom.Utils.JsonElements;
 using LevelGeneration;
-using Player;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
 namespace EECustom.Customizations.Shared

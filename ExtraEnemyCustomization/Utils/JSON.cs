@@ -9,7 +9,7 @@ namespace EECustom.Utils
 {
     public static class JSON
     {
-        private readonly static JsonSerializerOptions _setting = new()
+        private static readonly JsonSerializerOptions _setting = new()
         {
             ReadCommentHandling = JsonCommentHandling.Skip,
             IncludeFields = false,

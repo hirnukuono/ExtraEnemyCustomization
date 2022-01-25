@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using HarmonyLib;
+﻿using AK;
 using Gear;
-using AK;
+using HarmonyLib;
 
 namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Inject
 {
@@ -22,7 +19,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Inject
         [HarmonyWrapSafe]
         [HarmonyPatch(nameof(EnemyScanner.UpdateTagProgress))]
         public static bool Pre_UpdateTagProgress(EnemyScanner __instance)
-        { 
+        {
             if (EMPHandlerBase.IsLocalPlayerDisabled)
             {
                 __instance.Sound.Post(EVENTS.BIOTRACKER_TOOL_LOOP_STOP, true);

@@ -8,7 +8,6 @@ namespace EECustom.Customizations.EnemyAbilities
 {
     public sealed class DeathAbilityCustom : EnemyAbilityCustomBase<DeathAbilitySetting>, IEnemySpawnedEvent
     {
-
         public override string GetProcessName()
         {
             return "DeathAbility";

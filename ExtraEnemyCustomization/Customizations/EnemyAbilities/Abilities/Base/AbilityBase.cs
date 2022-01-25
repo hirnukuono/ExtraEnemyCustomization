@@ -132,7 +132,6 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
         public virtual void OnBehaviourAssigned(EnemyAgent agent, T behaviour)
         {
-
         }
 
         public bool TryGetBehaviour(ushort enemyID, out AbilityBehaviour behaviour)
@@ -175,6 +174,6 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
                 Logger.Debug($"[{Name}] {str}");
         }
 
-        #endregion
+        #endregion LOGGING
     }
 }

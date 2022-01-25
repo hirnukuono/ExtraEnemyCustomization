@@ -1,6 +1,5 @@
 ﻿using EECustom.Attributes;
 using Enemies;
-using System;
 using UnityEngine;
 
 namespace EECustom.Patches.Handlers
@@ -17,7 +16,8 @@ namespace EECustom.Patches.Handlers
         private int _tryCount = -1;
 
 #pragma warning disable IDE0051 // Remove unused private members
-        void Update()
+
+        private void Update()
         {
             if (_timer > Clock.Time)
                 return;
@@ -46,6 +46,7 @@ namespace EECustom.Patches.Handlers
                 enabled = false;
             }
         }
+
 #pragma warning restore IDE0051 // Remove unused private members
     }
 }

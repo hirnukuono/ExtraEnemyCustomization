@@ -1,10 +1,6 @@
-﻿using EECustom.Networking.Events;
-using EECustom.Utils;
+﻿using EECustom.Utils;
 using HarmonyLib;
 using SNetwork;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EECustom.Customizations.Detections.Inject
 {
@@ -19,7 +15,7 @@ namespace EECustom.Customizations.Detections.Inject
 
             if (SNet.IsMaster)
                 ScoutAnimCustom._animSync.DoRandom(__instance.m_owner);
-            
+
             if (data.AnimDetermined)
             {
                 data.DoAnim(data.NextAnim);

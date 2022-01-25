@@ -5,7 +5,9 @@
     public static class LevelEvents
     {
         public static event LevelEventHandler BuildStart;
+
         public static event LevelEventHandler BuildDone;
+
         public static event LevelEventHandler LevelCleanup;
 
         internal static void OnBuildStart()

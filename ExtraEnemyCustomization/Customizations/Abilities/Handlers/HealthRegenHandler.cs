@@ -4,7 +4,6 @@ using EECustom.Events;
 using EECustom.Extensions;
 using Enemies;
 using SNetwork;
-using System;
 using UnityEngine;
 
 namespace EECustom.Customizations.Abilities.Handlers

@@ -1,6 +1,5 @@
 ﻿using BepInEx;
 using BepInEx.IL2CPP;
-using EECustom.Managers;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -22,8 +21,6 @@ namespace EECustom.Utils.Integrations
         public static FieldInfo HotReloaderField { get; private set; } = null;
 
         public static event Action HotReloaded;
-
-
 
         static MTFOUtil()
         {

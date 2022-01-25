@@ -26,7 +26,6 @@ namespace EECustom.Customizations.EnemyAbilities
 
         public override void OnSpawnedPost(EnemyAgent agent)
         {
-
         }
 
         public override void OnBehaviourAssigned(EnemyAgent agent, AbilityBehaviour behaviour, BehaviourAbilitySetting setting)
@@ -171,6 +170,7 @@ namespace EECustom.Customizations.EnemyAbilities
             {
                 case DistanceCheckingBehaviour.AlwaysAllow:
                     return true;
+
                 case DistanceCheckingBehaviour.AlwaysDisallow:
                     return false;
             }

@@ -19,12 +19,10 @@ namespace EECustom.Customizations
 
         public virtual void OnConfigLoaded()
         {
-
         }
 
         public virtual void OnConfigUnloaded()
         {
-
         }
 
         public EnemyCustomBase Base => this;

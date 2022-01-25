@@ -1,5 +1,4 @@
 ﻿using EECustom.Attributes;
-using System;
 using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 
@@ -12,10 +11,13 @@ namespace EECustom.Events
     {
         [HideFromIl2Cpp]
         public event UnityEventHandler OnUpdate;
+
         [HideFromIl2Cpp]
         public event UnityEventHandler OnFixedUpdate;
+
         [HideFromIl2Cpp]
         public event UnityEventHandler OnDestroyed;
+
         [HideFromIl2Cpp]
         public event UnityEventHandler OnLateUpdate;
 
@@ -36,6 +38,7 @@ namespace EECustom.Events
         }
 
 #pragma warning disable IDE0051 // Remove unused private members
+
         private void Update()
         {
             OnUpdate?.Invoke(gameObject);
@@ -46,7 +49,6 @@ namespace EECustom.Events
             OnLateUpdate?.Invoke(gameObject);
         }
 
-
         private void FixedUpdate()
         {
             OnFixedUpdate?.Invoke(gameObject);
@@ -56,6 +58,7 @@ namespace EECustom.Events
         {
             OnDestroyed?.Invoke(gameObject);
         }
+
 #pragma warning restore IDE0051 // Remove unused private members
     }
 }

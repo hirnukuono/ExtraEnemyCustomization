@@ -1,9 +1,6 @@
 ﻿using Agents;
-using AK;
-using EECustom.Events;
 using Enemies;
 using SNetwork;
-using System.Collections.Generic;
 
 namespace EECustom.Customizations.EnemyAbilities.Abilities
 {
@@ -99,7 +96,6 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
                 case State.DoneSpawning:
                     DoExit();
                     break;
-
             }
         }
 

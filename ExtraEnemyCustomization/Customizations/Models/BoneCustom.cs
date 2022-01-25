@@ -38,7 +38,7 @@ namespace EECustom.Customizations.Models
                         }
                     });
                 }
-                
+
                 if (boneTransform.UsingRelativeScale)
                 {
                     var newScale = new Vector3()
@@ -53,7 +53,7 @@ namespace EECustom.Customizations.Models
                 {
                     transform.localScale = boneTransform.Scale;
                 }
-                
+
                 LogVerbose($"Applied Bone Setting: {transform.name}, offset: {boneTransform.Offset}, scale: {boneTransform.Scale} rotationOffset: {boneTransform.RotationOffset}");
             }
             catch (Exception e)
