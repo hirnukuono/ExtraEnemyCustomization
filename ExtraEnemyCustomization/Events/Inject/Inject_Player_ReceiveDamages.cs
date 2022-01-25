@@ -3,12 +3,12 @@
 namespace EECustom.Events.Inject
 {
     [HarmonyPatch(typeof(Dam_PlayerDamageLocal))]
-    internal class Inject_Player_ReceiveDamages
+    internal static class Inject_Player_ReceiveDamages
     {
         [HarmonyPostfix]
         [HarmonyWrapSafe]
         [HarmonyPatch(nameof(Dam_PlayerDamageLocal.ReceiveMeleeDamage))]
-        public static void Post_Melee(pFullDamageData data, Dam_PlayerDamageBase __instance)
+        internal static void Post_Melee(pFullDamageData data, Dam_PlayerDamageBase __instance)
         {
             if (data.source.TryGet(out var inflictor))
             {
@@ -21,7 +21,7 @@ namespace EECustom.Events.Inject
         [HarmonyPostfix]
         [HarmonyWrapSafe]
         [HarmonyPatch(nameof(Dam_PlayerDamageLocal.ReceiveTentacleAttackDamage))]
-        public static void Post_Tentacle(pMediumDamageData data, Dam_PlayerDamageLocal __instance)
+        internal static void Post_Tentacle(pMediumDamageData data, Dam_PlayerDamageLocal __instance)
         {
             if (data.source.TryGet(out var inflictor))
             {

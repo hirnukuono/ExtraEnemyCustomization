@@ -9,7 +9,8 @@ namespace EECustom.Patches.Inject
     [HarmonyPatch(typeof(EnemyAgent), nameof(EnemyAgent.Setup))]
     internal static class Inject_Patch_FlyerStuck
     {
-        public static void Postfix(EnemyAgent __instance)
+        [HarmonyWrapSafe]
+        internal static void Postfix(EnemyAgent __instance)
         {
             if (!ConfigManager.Current.Global.UsingFlyerStuckCheck)
                 return;

@@ -4,12 +4,12 @@ using HarmonyLib;
 namespace EECustom.Events.Inject
 {
     [HarmonyPatch(typeof(PlayerInventoryBase))]
-    internal class Inject_PlayerInventoryBase
+    internal static class Inject_PlayerInventoryBase
     {
         [HarmonyPostfix]
         [HarmonyWrapSafe]
         [HarmonyPatch(nameof(PlayerInventoryBase.OnItemEquippableFlashlightWielded))]
-        public static void Post_DoWieldItem(GearPartFlashlight flashlight)
+        internal static void Post_DoWieldItem(GearPartFlashlight flashlight)
         {
             InventoryEvents.OnWieldItem(flashlight);
         }

@@ -4,12 +4,12 @@ using Player;
 namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Inject
 {
     [HarmonyPatch(typeof(PlayerSync))]
-    internal class Inject_PlayerSync
+    internal static class Inject_PlayerSync
     {
         [HarmonyPrefix]
         [HarmonyWrapSafe]
         [HarmonyPatch(nameof(PlayerSync.WantsToSetFlashlightEnabled))]
-        public static bool Pre_WantsToSetFlashlightEnabled(PlayerSync __instance, bool enable)
+        internal static bool Pre_WantsToSetFlashlightEnabled(PlayerSync __instance, bool enable)
         {
             if (EMPHandlerBase.IsLocalPlayerDisabled)
             {

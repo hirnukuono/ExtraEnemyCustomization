@@ -4,12 +4,12 @@ using HarmonyLib;
 namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Inject
 {
     [HarmonyPatch(typeof(PlayerGuiLayer))]
-    internal class Inject_PlayerGuiLayer
+    internal static class Inject_PlayerGuiLayer
     {
         [HarmonyPrefix]
         [HarmonyWrapSafe]
         [HarmonyPatch(nameof(PlayerGuiLayer.UpdateGUIElementsVisibility))]
-        public static bool Pre_UpdateGUIElementsVisibility()
+        internal static bool Pre_UpdateGUIElementsVisibility()
         {
             if (EMPHandlerBase.IsLocalPlayerDisabled)
             {

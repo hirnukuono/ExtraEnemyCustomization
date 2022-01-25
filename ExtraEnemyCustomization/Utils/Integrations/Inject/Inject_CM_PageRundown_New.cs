@@ -10,7 +10,8 @@ namespace EECustom.Utils.Integrations.Inject
     {
         private static bool _isInjected = false;
 
-        public static void Postfix()
+        [HarmonyWrapSafe]
+        internal static void Postfix()
         {
             if (_isInjected)
                 return;

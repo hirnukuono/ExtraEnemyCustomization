@@ -8,13 +8,13 @@ namespace EECustom.Inject
     internal static class Inject_EnemyAgent_DeSpawn
     {
         [HarmonyWrapSafe]
-        public static void Prefix(EnemyAgent __instance)
+        internal static void Prefix(EnemyAgent __instance)
         {
             EnemyEvents.OnDespawn(__instance);
         }
 
         [HarmonyWrapSafe]
-        public static void Postfix(EnemyAgent __instance)
+        internal static void Postfix(EnemyAgent __instance)
         {
             EnemyEvents.OnDespawned(__instance);
         }

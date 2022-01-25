@@ -7,7 +7,7 @@ namespace EECustom.Events.Inject
     internal class Inject_Enemy_Marked
     {
         [HarmonyWrapSafe]
-        public static void Postfix(EnemyAgent __instance)
+        internal static void Postfix(EnemyAgent __instance)
         {
             EnemyMarkerEvents.OnMarked(__instance, __instance.m_tagMarker);
         }

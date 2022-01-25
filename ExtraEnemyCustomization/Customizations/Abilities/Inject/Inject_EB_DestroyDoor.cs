@@ -19,7 +19,7 @@ namespace EECustom.Customizations.Abilities.Inject
         private static readonly Random _random = new();
 
         [HarmonyWrapSafe]
-        public static void Postfix(EB_InCombat_MoveToNextNode_DestroyDoor __instance)
+        internal static void Postfix(EB_InCombat_MoveToNextNode_DestroyDoor __instance)
         {
             if (!ShouldOverride)
                 return;

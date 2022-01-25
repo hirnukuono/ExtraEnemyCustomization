@@ -8,7 +8,7 @@ namespace EECustom.Inject
     internal class Inject_PlayerAgent_Setup
     {
         [HarmonyWrapSafe]
-        public static void Postfix(PlayerAgent __instance)
+        internal static void Postfix(PlayerAgent __instance)
         {
             PlayerData.MaxHealth = __instance.PlayerData.health;
         }

@@ -7,7 +7,7 @@ namespace EECustom.Events.Inject
     internal class Inject_ScoutAntennaDetection
     {
         [HarmonyWrapSafe]
-        public static void Prefix(pScoutAntennaDetectionSpawnData spawnData, ScoutAntennaDetection __instance)
+        internal static void Prefix(pScoutAntennaDetectionSpawnData spawnData, ScoutAntennaDetection __instance)
         {
             if (spawnData.owner.TryGet(out var owner))
             {

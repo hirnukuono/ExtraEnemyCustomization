@@ -5,12 +5,12 @@ using UnityEngine;
 namespace EECustom.CustomSettings.Inject
 {
     [HarmonyPatch(typeof(ProjectileBase))]
-    internal class Inject_ProjectileBase
+    internal static class Inject_ProjectileBase
     {
         [HarmonyPrefix]
         [HarmonyWrapSafe]
         [HarmonyPatch(nameof(ProjectileBase.Collision))]
-        public static void Pre_Collision(ProjectileBase __instance, RaycastHit hit)
+        internal static void Pre_Collision(ProjectileBase __instance, RaycastHit hit)
         {
             var instanceID = __instance.gameObject.GetInstanceID();
             var data = CustomProjectileManager.GetInstanceData(instanceID);

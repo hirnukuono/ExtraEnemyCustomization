@@ -8,7 +8,7 @@ namespace EECustom.Inject
     internal static class Inject_EnemyLocomotion
     {
         [HarmonyWrapSafe]
-        public static void Postfix()
+        internal static void Postfix()
         {
             EnemyAnimUtil.Initialize();
         }

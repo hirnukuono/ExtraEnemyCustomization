@@ -5,12 +5,12 @@ using System;
 namespace EECustom.CustomSettings.Inject
 {
     [HarmonyPatch(typeof(GPUCurvyManager))]
-    internal class Inject_GPUCurvyManager
+    internal static class Inject_GPUCurvyManager
     {
         [HarmonyPostfix]
         [HarmonyWrapSafe]
         [HarmonyPatch(nameof(GPUCurvyManager.Setup))]
-        public static void Post_Setup()
+        internal static void Post_Setup()
         {
             foreach (var tentDef in ConfigManager.Current.TentacleCustom.TentacleDefinitions)
             {
@@ -21,7 +21,7 @@ namespace EECustom.CustomSettings.Inject
         [HarmonyPrefix]
         [HarmonyWrapSafe]
         [HarmonyPatch(nameof(GPUCurvyManager.TryAllocateGPUCurvy))]
-        public static bool Pre_Allocate(GPUCurvyType type, ref GPUCurvy gpuCurvy)
+        internal static bool Pre_Allocate(GPUCurvyType type, ref GPUCurvy gpuCurvy)
         {
             var id = (int)type;
             if (Enum.IsDefined(typeof(GPUCurvyType), id))

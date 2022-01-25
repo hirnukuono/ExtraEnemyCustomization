@@ -5,12 +5,12 @@ using HarmonyLib;
 namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Inject
 {
     [HarmonyPatch(typeof(EnemyScanner))]
-    internal class Inject_EnemyScanner
+    internal static class Inject_EnemyScanner
     {
         [HarmonyPrefix]
         [HarmonyWrapSafe]
         [HarmonyPatch(nameof(EnemyScanner.UpdateDetectedEnemies))]
-        public static bool Pre_UpdateDetectedEnemies()
+        internal static bool Pre_UpdateDetectedEnemies()
         {
             return !EMPHandlerBase.IsLocalPlayerDisabled;
         }
@@ -18,7 +18,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Inject
         [HarmonyPrefix]
         [HarmonyWrapSafe]
         [HarmonyPatch(nameof(EnemyScanner.UpdateTagProgress))]
-        public static bool Pre_UpdateTagProgress(EnemyScanner __instance)
+        internal static bool Pre_UpdateTagProgress(EnemyScanner __instance)
         {
             if (EMPHandlerBase.IsLocalPlayerDisabled)
             {

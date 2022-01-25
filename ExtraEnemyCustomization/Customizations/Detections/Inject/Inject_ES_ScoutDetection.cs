@@ -7,7 +7,8 @@ namespace EECustom.Customizations.Detections.Inject
     [HarmonyPatch(typeof(ES_ScoutDetection), nameof(ES_ScoutDetection.CommonEnter))]
     internal static class Inject_ES_ScoutDetection
     {
-        public static void Postfix(ES_ScoutDetection __instance)
+        [HarmonyWrapSafe]
+        internal static void Postfix(ES_ScoutDetection __instance)
         {
             var data = EnemyProperty<ScoutAnimOverrideData>.Get(__instance.m_enemyAgent);
             if (data == null)
