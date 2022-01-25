@@ -55,6 +55,8 @@ namespace EECustom.Customizations.Models.Handlers
                 _ => EnemyState.Hibernate,
             };
             _lastState = _currentState;
+
+            OwnerAgent.ScannerColor = GetStateColor(_currentState);
         }
 
         internal void Update()
