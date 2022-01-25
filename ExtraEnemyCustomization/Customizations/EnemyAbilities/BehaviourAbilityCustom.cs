@@ -95,8 +95,11 @@ namespace EECustom.Customizations.EnemyAbilities
                 return;
             }
 
-            if (setting.Cooldown.Enabled && setting.Cooldown.CanUseAbility(data.CooldownTimer))
+            if (setting.Cooldown.Enabled)
             {
+                if (!setting.Cooldown.CanUseAbility(data.CooldownTimer))
+                    return;
+
                 if (!data.HasInitialTimerDone)
                 {
                     data.CooldownTimer = Clock.Time + setting.Cooldown.InitCooldown;
@@ -105,9 +108,9 @@ namespace EECustom.Customizations.EnemyAbilities
                 }
                 else
                     data.CooldownTimer = Clock.Time + setting.Cooldown.Cooldown;
-
-                behaviour.DoTriggerSync();
             }
+
+            behaviour.DoTriggerSync();
         }
     }
 
