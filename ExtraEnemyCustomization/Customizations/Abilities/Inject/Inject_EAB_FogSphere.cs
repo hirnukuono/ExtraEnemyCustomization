@@ -5,7 +5,7 @@ using HarmonyLib;
 namespace EECustom.Customizations.Abilities.Inject
 {
     [HarmonyPatch(typeof(EAB_FogSphere), nameof(EAB_FogSphere.DoTrigger))]
-    internal class Inject_EAB_FogSphere
+    internal static class Inject_EAB_FogSphere
     {
         [HarmonyWrapSafe]
         internal static void Prefix(EAB_FogSphere __instance)

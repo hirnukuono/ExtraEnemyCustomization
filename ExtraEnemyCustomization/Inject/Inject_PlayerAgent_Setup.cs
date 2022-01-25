@@ -5,7 +5,7 @@ using Player;
 namespace EECustom.Inject
 {
     [HarmonyPatch(typeof(PlayerAgent), nameof(PlayerAgent.Setup))]
-    internal class Inject_PlayerAgent_Setup
+    internal static class Inject_PlayerAgent_Setup
     {
         [HarmonyWrapSafe]
         internal static void Postfix(PlayerAgent __instance)
