@@ -2,6 +2,7 @@
 using EECustom.Extensions;
 using Enemies;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace EECustom.Utils
 {
@@ -40,7 +41,7 @@ namespace EECustom.Utils
             var newProp = new T();
             _properties.Add(id, newProp);
 
-            agent.AddOnDeadOnce(() =>
+            MonoBehaviourEventHandler.AttatchToObject(agent.gameObject, onDestroyed: (GameObject _) =>
             {
                 _properties.Remove(id);
             });
