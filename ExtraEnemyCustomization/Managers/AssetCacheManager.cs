@@ -56,7 +56,7 @@ namespace EECustom.Managers
                     if (string.IsNullOrEmpty(objName))
                         continue;
 
-                    if (!(shouldCache?.Invoke(castedObj) ?? false))
+                    if (!(shouldCache?.Invoke(castedObj) ?? true))
                         continue;
 
                     _lookup[objName] = castedObj;
@@ -84,7 +84,7 @@ namespace EECustom.Managers
                         break;
 
                     case OutputType.File:
-                        _fileStream = new StreamWriter(File.OpenWrite(Path.Combine(ConfigManager.BasePath, $"Dumped_{Name}.txt")));
+                        _fileStream = new StreamWriter(File.OpenWrite(Path.Combine(ConfigManager.BasePath, $"_dump.{Name.ToLower()}.txt")));
                         break;
                 }
             }
