@@ -31,17 +31,17 @@ namespace EECustom.Customizations.Models
         public override void OnConfigLoaded()
         {
             //TODO: Implement it someday
-            if (string.IsNullOrEmpty(MarkerText))
-                return;
-
-            /*
-            _HasText = true;
-
-            if (MarkerText.ContainsAnyIgnoreCase("[HP_MAX]", "[HP]", "[HP_PERCENT]", "[HP_PERCENT_INT]"))
+            if (!string.IsNullOrEmpty(MarkerText))
             {
-                _TextRequiresAutoUpdate = true;
+                /*
+                _HasText = true;
+
+                if (MarkerText.ContainsAnyIgnoreCase("[HP_MAX]", "[HP]", "[HP_PERCENT]", "[HP_PERCENT_INT]"))
+                {
+                    _TextRequiresAutoUpdate = true;
+                }
+                */
             }
-            */
 
             if (!_loadedOnce)
             {
