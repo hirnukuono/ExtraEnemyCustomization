@@ -105,6 +105,11 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         {
             var id = agent.GlobalID;
 
+            if (_behaviourLookup.ContainsKey(id))
+            {
+                return _behaviourLookup[id];
+            }
+
             var behaviour = new T();
             behaviour.Setup(this, agent);
             _behaviours.Add(behaviour);

@@ -1,4 +1,5 @@
-﻿using Enemies;
+﻿using EECustom.Managers;
+using Enemies;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,21 +8,6 @@ namespace EECustom.Customizations.Models
 {
     public sealed class MaterialCustom : RevertableEnemyCustomBase, IEnemyPrefabBuiltEvent
     {
-        private static readonly Dictionary<string, Material> _matDict = new();
-        private static readonly Dictionary<string, Texture3D> _tex3DDict = new();
-
-        public static void AddToCache(string matName, Material mat)
-        {
-            if (!_matDict.ContainsKey(matName))
-                _matDict.Add(matName, mat);
-        }
-
-        public static void AddToCacheTexture3D(string texName, Texture3D texture3D)
-        {
-            if (!_tex3DDict.ContainsKey(texName))
-                _tex3DDict.Add(texName, texture3D);
-        }
-
         public MaterialSwapSet[] MaterialSets { get; set; } = new MaterialSwapSet[0];
 
         public override string GetProcessName()
@@ -41,7 +27,7 @@ namespace EECustom.Customizations.Models
                 if (swapSet == null)
                     continue;
 
-                if (!_matDict.TryGetValue(swapSet.To, out var newMat))
+                if (!AssetCacheManager.Materials.TryGet(swapSet.To, out var newMat))
                 {
                     LogError($"MATERIAL WAS NOT CACHED!: {swapSet.To}");
                     continue;
@@ -71,7 +57,7 @@ namespace EECustom.Customizations.Models
 
                 if (!string.IsNullOrEmpty(swapSet.SkinNoiseTexture))
                 {
-                    if (_tex3DDict.TryGetValue(swapSet.SkinNoiseTexture, out var tex3D))
+                    if (AssetCacheManager.Texture3Ds.TryGet(swapSet.SkinNoiseTexture, out var tex3D))
                     {
                         newMaterial.SetTexture("_VolumeNoise", tex3D);
                     }

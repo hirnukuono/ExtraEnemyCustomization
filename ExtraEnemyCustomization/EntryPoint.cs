@@ -2,6 +2,7 @@
 using BepInEx.Configuration;
 using BepInEx.IL2CPP;
 using EECustom.Attributes;
+using EECustom.Events;
 using EECustom.Managers;
 using EECustom.Networking;
 using EECustom.Utils.Integrations;
@@ -38,17 +39,17 @@ namespace EECustom
             var useLiveEdit = Config.Bind(new ConfigDefinition("General", "Live Edit"), false, new ConfigDescription("Reload Config when they are edited while in-game"));
             var linkMTFOHotReload = Config.Bind(new ConfigDefinition("General", "Reload on MTFO HotReload"), true, new ConfigDescription("Reload Configs when MTFO's HotReload button has pressed?"));
             var useDevMsg = Config.Bind(new ConfigDefinition("Logging", "UseDevMessage"), false, new ConfigDescription("Using Dev Message for Debugging your config?"));
+            var cacheBehaviour = Config.Bind(new ConfigDefinition("Logging", "Cached Result Output"), AssetCacheManager.OutputType.None, new ConfigDescription("How does your cached material/texture result be returned?"));
             var useVerbose = Config.Bind(new ConfigDefinition("Logging", "Verbose"), false, new ConfigDescription("Using Much more detailed Message for Debugging?"));
             var dumpConfig = Config.Bind(new ConfigDefinition("Developer", "DumpConfig"), false, new ConfigDescription("Dump Empty Config file?"));
+
+            
 
             Logger.UsingDevMessage = useDevMsg.Value;
             Logger.UsingVerbose = useVerbose.Value;
 
             HarmonyInstance = new Harmony("EECustomization.Harmony");
             HarmonyInstance.PatchAll();
-
-            NetworkManager.Initialize();
-            SpriteManager.Initialize();
 
             ConfigManager.UseLiveEdit = useLiveEdit.Value;
             ConfigManager.LinkMTFOHotReload = linkMTFOHotReload.Value;
@@ -57,6 +58,12 @@ namespace EECustom
             {
                 ConfigManager.DumpDefault();
             }
+
+            NetworkManager.Initialize();
+            SpriteManager.Initialize();
+
+            AssetEvents.AllAssetLoaded += AssetCacheManager.AssetLoaded;
+            AssetCacheManager.OutputMethod = cacheBehaviour.Value;
         }
 
         public override bool Unload()

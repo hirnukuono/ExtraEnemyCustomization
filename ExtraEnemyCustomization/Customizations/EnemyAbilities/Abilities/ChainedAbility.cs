@@ -61,7 +61,6 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         {
             foreach (var abSetting in Ability.Abilities)
             {
-                abSetting.Ability.TriggerSync(Agent);
                 abSetting.TriggerTimer = abSetting.Delay + Clock.Time;
                 abSetting.Triggered = false;
             }
