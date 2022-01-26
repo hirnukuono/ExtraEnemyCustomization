@@ -38,8 +38,8 @@ namespace EECustom
 
             var useLiveEdit = Config.Bind(new ConfigDefinition("General", "Live Edit"), false, new ConfigDescription("Reload Config when they are edited while in-game"));
             var linkMTFOHotReload = Config.Bind(new ConfigDefinition("General", "Reload on MTFO HotReload"), true, new ConfigDescription("Reload Configs when MTFO's HotReload button has pressed?"));
+            var cacheBehaviour = Config.Bind(new ConfigDefinition("Logging", "Cached Asset Result Output"), AssetCacheManager.OutputType.None, new ConfigDescription("How does your cached material/texture result be returned?"));
             var useDevMsg = Config.Bind(new ConfigDefinition("Logging", "UseDevMessage"), false, new ConfigDescription("Using Dev Message for Debugging your config?"));
-            var cacheBehaviour = Config.Bind(new ConfigDefinition("Logging", "Cached Result Output"), AssetCacheManager.OutputType.None, new ConfigDescription("How does your cached material/texture result be returned?"));
             var useVerbose = Config.Bind(new ConfigDefinition("Logging", "Verbose"), false, new ConfigDescription("Using Much more detailed Message for Debugging?"));
             var dumpConfig = Config.Bind(new ConfigDefinition("Developer", "DumpConfig"), false, new ConfigDescription("Dump Empty Config file?"));
 
@@ -63,7 +63,13 @@ namespace EECustom
             SpriteManager.Initialize();
 
             AssetEvents.AllAssetLoaded += AssetCacheManager.AssetLoaded;
+            AssetEvents.AllAssetLoaded += FirePrefabBuiltEvent;
             AssetCacheManager.OutputMethod = cacheBehaviour.Value;
+        }
+
+        private void FirePrefabBuiltEvent()
+        {
+            ConfigManager.Current.FirePrefabBuildEventAll();
         }
 
         public override bool Unload()

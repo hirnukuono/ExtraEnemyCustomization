@@ -108,6 +108,17 @@ namespace EECustom.Managers
             }
         }
 
+        internal void FirePrefabBuildEventAll()
+        {
+            EnemyDataBlock[] allBlocks = GameDataBlockBase<EnemyDataBlock>.GetAllBlocks();
+            foreach (var block in allBlocks)
+            {
+                var prefab = EnemyPrefabManager.GetEnemyPrefab(block.persistentID);
+                var enemyAgentComp = prefab.GetComponentInChildren<EnemyAgent>(true);
+                FirePrefabBuiltEvent(enemyAgentComp);
+            }
+        }
+
         internal void FirePrefabBuiltEvent(EnemyAgent agent)
         {
             _enemyPrefabBuiltHolder.FireEventPreSpawn(agent, (e) =>

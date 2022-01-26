@@ -25,27 +25,23 @@ namespace EECustom.Events
             IsStartupAssetLoaded = AssetShardManager.StartupAssetsIsLoaded;
             IsEnemyAssetLoaded = AssetShardManager.EnemyAssetsIsLoaded;
             IsShardAssetLoaded = AssetShardManager.SharedAssetsIsLoaded;
-
-            AssetShardManager.add_OnStartupAssetsLoaded((Action)OnStartupAssetLoaded);
-            AssetShardManager.add_OnEnemyAssetsLoaded((Action)OnEnemyAssetLoaded);
-            AssetShardManager.add_OnSharedAsssetLoaded((Action)OnShardAssetLoaded);
         }
 
-        private static void OnStartupAssetLoaded()
+        internal static void OnStartupAssetLoaded()
         {
             IsStartupAssetLoaded = true;
             StartupAssetLoaded?.Invoke();
             CheckLoadedStatus();
         }
 
-        private static void OnEnemyAssetLoaded()
+        internal static void OnEnemyAssetLoaded()
         {
             IsEnemyAssetLoaded = true;
             EnemyAssetLoaded?.Invoke();
             CheckLoadedStatus();
         }
 
-        private static void OnShardAssetLoaded()
+        internal static void OnShardAssetLoaded()
         {
             IsShardAssetLoaded = true;
             ShardAssetLoaded?.Invoke();
