@@ -25,9 +25,6 @@ namespace EECustom.Customizations.Shared.Handlers
             if (!_bleeding)
                 return;
 
-            if (!Agent.Alive)
-                return;
-
             if (_bleedingTimer <= Clock.Time)
             {
                 StopBleed();
@@ -36,6 +33,9 @@ namespace EECustom.Customizations.Shared.Handlers
 
             if (_bleedingIntervalTimer <= Clock.Time)
             {
+                if (!Agent.Alive)
+                    return;
+
                 if (_hasLiquid)
                 {
                     ScreenLiquidManager.DirectApply(_liquid, new Vector2(UnityEngine.Random.Range(0.3f, 0.7f), UnityEngine.Random.Range(0.3f, 0.7f)), Vector2.down);
@@ -44,6 +44,11 @@ namespace EECustom.Customizations.Shared.Handlers
                 Agent.Damage.FireDamage(_damage, Agent);
                 _bleedingIntervalTimer = Clock.Time + _interval;
             }
+        }
+
+        internal void OnDestroy()
+        {
+            StopBleed();
         }
 
         [HideFromIl2Cpp]
