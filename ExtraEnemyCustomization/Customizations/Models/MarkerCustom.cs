@@ -43,6 +43,12 @@ namespace EECustom.Customizations.Models
                 */
             }
 
+            EnemyMarkerEvents.Marked += OnMarked;
+            CacheSprite();
+        }
+
+        private void CacheSprite()
+        {
             if (!_loadedOnce)
             {
                 _loadedOnce = true;
@@ -53,8 +59,6 @@ namespace EECustom.Customizations.Models
                 if (!SpriteManager.TryGetSpriteCache(SpriteName, 64.0f, out _sprite))
                     _sprite = SpriteManager.GenerateSprite(SpriteName);
             }
-
-            EnemyMarkerEvents.Marked += OnMarked;
         }
 
         public override void OnConfigUnloaded()
