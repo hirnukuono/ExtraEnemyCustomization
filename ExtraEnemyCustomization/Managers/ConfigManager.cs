@@ -140,19 +140,7 @@ namespace EECustom.Managers
             UnloadAllConfig(doClear: true);
             LoadAllConfig();
             Current.GenerateBuffer();
-
-            foreach (var block in GameDataBlockBase<EnemyDataBlock>.GetAllBlocks())
-            {
-                var prefab = EnemyPrefabManager.GetEnemyPrefab(block.persistentID);
-                if (prefab == null)
-                    continue;
-
-                var agent = prefab.GetComponent<EnemyAgent>();
-                if (agent == null)
-                    continue;
-
-                Current.FirePrefabBuiltEvent(agent);
-            }
+            Current.FirePrefabBuildEventAll();
         }
 
         internal static void UnloadAllConfig(bool doClear)

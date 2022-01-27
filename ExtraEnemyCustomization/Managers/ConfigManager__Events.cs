@@ -114,7 +114,19 @@ namespace EECustom.Managers
             foreach (var block in allBlocks)
             {
                 var prefab = EnemyPrefabManager.GetEnemyPrefab(block.persistentID);
+                if (prefab is null)
+                {
+                    Logger.Error($"EnemyData id: {block.persistentID} doesn't have EnemyPrefab!");
+                    continue;
+                }
+
                 var enemyAgentComp = prefab.GetComponentInChildren<EnemyAgent>(true);
+                if (enemyAgentComp)
+                {
+                    Logger.Error($"EnemyData id: {block.persistentID} prefab doesn't have EnemyAgent!");
+                    continue;
+                }
+
                 FirePrefabBuiltEvent(enemyAgentComp);
             }
         }
