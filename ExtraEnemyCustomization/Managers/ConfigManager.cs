@@ -80,31 +80,34 @@ namespace EECustom.Managers
 
         private static void OnConfigFileEdited(object sender, FileSystemEventArgs e)
         {
-            var filename = Path.GetFileNameWithoutExtension(e.Name);
-            if (_configFileNameToType.TryGetValue(filename.ToUpper(), out var type))
+            ThreadDispatcher.Queue(()=>
             {
-                filename = _configTypeToFileName[type];
-
-                Logger.Log($"Config File Changed: {filename}");
-
-                ReloadConfig();
-
-                //TODO: Implement Reload Individual File
-
-                /*
-                _configInstances[filename].Unloaded();
-                if (_configInstances[filename] is CustomizationConfig custom)
+                var filename = Path.GetFileNameWithoutExtension(e.Name);
+                if (_configFileNameToType.TryGetValue(filename.ToUpper(), out var type))
                 {
-                    var settings = custom.GetAllSettings();
-                    foreach (var setting in settings)
+                    filename = _configTypeToFileName[type];
+
+                    Logger.Log($"Config File Changed: {filename}");
+
+                    ReloadConfig();
+
+                    //TODO: Implement Reload Individual File
+
+                    /*
+                    _configInstances[filename].Unloaded();
+                    if (_configInstances[filename] is CustomizationConfig custom)
                     {
-                        setting.OnConfigUnloaded();
+                        var settings = custom.GetAllSettings();
+                        foreach (var setting in settings)
+                        {
+                            setting.OnConfigUnloaded();
+                        }
                     }
+                    LoadConfig(type);
+                    Current.GenerateBuffer();
+                    */
                 }
-                LoadConfig(type);
-                Current.GenerateBuffer();
-                */
-            }
+            });
         }
 
         internal static void DumpDefault()

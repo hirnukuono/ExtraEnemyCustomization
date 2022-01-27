@@ -5,6 +5,7 @@ using EECustom.Attributes;
 using EECustom.Events;
 using EECustom.Managers;
 using EECustom.Networking;
+using EECustom.Utils;
 using EECustom.Utils.Integrations;
 using HarmonyLib;
 using System;
@@ -63,6 +64,7 @@ namespace EECustom
                 ConfigManager.DumpDefault();
             }
 
+            AssetEvents.AllAssetLoaded += ThreadDispatcher.Initialize;
             AssetEvents.AllAssetLoaded += AssetCacheManager.AssetLoaded;
             AssetEvents.AllAssetLoaded += FirePrefabBuiltEvent;
             AssetCacheManager.OutputMethod = cacheBehaviour.Value;
