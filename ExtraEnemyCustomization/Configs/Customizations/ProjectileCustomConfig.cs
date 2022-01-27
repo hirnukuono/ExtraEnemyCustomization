@@ -16,9 +16,6 @@ namespace EECustom.Configs.Customizations
 
         public override void Loaded()
         {
-#warning Regenerating Projectiles Somehow Crash the Game
-            return;
-
             if (!CustomProjectileManager.AssetLoaded)
                 return;
 
@@ -30,9 +27,6 @@ namespace EECustom.Configs.Customizations
 
         public override void Unloaded()
         {
-#warning Regenerating Projectiles Somehow Crash the Game
-            return;
-
             CustomProjectileManager.DestroyAllProjectile();
         }
 
