@@ -16,7 +16,7 @@ namespace EECustom.Managers
     {
         public static bool UseLiveEdit { get; set; }
         public static bool LinkMTFOHotReload { get; set; }
-        public static string BasePath { get; private set; }
+        public static string BasePath => EntryPoint.BasePath;
         public static ConfigManager Current { get; private set; }
 
         private static readonly Type[] _configTypes = new Type[]
@@ -52,7 +52,6 @@ namespace EECustom.Managers
                 _configInstances[fileName] = instance;
             }
 
-            BasePath = Path.Combine(MTFOUtil.CustomPath, "ExtraEnemyCustomization");
             Current = new();
 
             LoadAllConfig();

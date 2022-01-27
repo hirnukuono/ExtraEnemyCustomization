@@ -9,6 +9,7 @@ using EECustom.Utils.Integrations;
 using HarmonyLib;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnhollowerRuntimeLib;
 
@@ -29,12 +30,11 @@ namespace EECustom
     public class EntryPoint : BasePlugin
     {
         public static Harmony HarmonyInstance { get; private set; }
+        public static string BasePath { get; private set; }
 
         public override void Load()
         {
             InjectAllIl2CppType();
-
-            Logger.LogInstance = Log;
 
             var useLiveEdit = Config.Bind(new ConfigDefinition("General", "Live Edit"), false, new ConfigDescription("Reload Config when they are edited while in-game"));
             var linkMTFOHotReload = Config.Bind(new ConfigDefinition("General", "Reload on MTFO HotReload"), true, new ConfigDescription("Reload Configs when MTFO's HotReload button has pressed?"));
@@ -43,13 +43,17 @@ namespace EECustom
             var useVerbose = Config.Bind(new ConfigDefinition("Logging", "Verbose"), false, new ConfigDescription("Using Much more detailed Message for Debugging?"));
             var dumpConfig = Config.Bind(new ConfigDefinition("Developer", "DumpConfig"), false, new ConfigDescription("Dump Empty Config file?"));
 
-            
-
+            Logger.LogInstance = Log;
             Logger.UsingDevMessage = useDevMsg.Value;
             Logger.UsingVerbose = useVerbose.Value;
 
+            BasePath = Path.Combine(MTFOUtil.CustomPath, "ExtraEnemyCustomization");
+
             HarmonyInstance = new Harmony("EECustomization.Harmony");
             HarmonyInstance.PatchAll();
+
+            NetworkManager.Initialize();
+            SpriteManager.Initialize();
 
             ConfigManager.UseLiveEdit = useLiveEdit.Value;
             ConfigManager.LinkMTFOHotReload = linkMTFOHotReload.Value;
@@ -58,9 +62,6 @@ namespace EECustom
             {
                 ConfigManager.DumpDefault();
             }
-
-            NetworkManager.Initialize();
-            SpriteManager.Initialize();
 
             AssetEvents.AllAssetLoaded += AssetCacheManager.AssetLoaded;
             AssetEvents.AllAssetLoaded += FirePrefabBuiltEvent;
