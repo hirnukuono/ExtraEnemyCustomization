@@ -37,21 +37,14 @@ namespace EECustom.Customizations.Models.Handlers
         private bool _interpDone = true;
         private float _interpTimer = 0.0f;
         private float _interpStartTime = 0.0f;
+        private Color _previousColor = Color.white;
 
         internal void Start()
         {
-            _currentState = OwnerAgent.AI.Mode switch
-            {
-                AgentMode.Off => EnemyState.Hibernate,
-                AgentMode.Agressive => EnemyState.Wakeup,
-                AgentMode.Patrolling => EnemyState.Wakeup,
-                AgentMode.Scout => EnemyState.Wakeup,
-                AgentMode.Hibernate => EnemyState.Hibernate,
-                _ => EnemyState.Hibernate,
-            };
+            UpdateState(out _currentState);
             _lastState = _currentState;
-
-            OwnerAgent.ScannerColor = GetStateColor(_currentState);
+            _previousColor = GetStateColor(_currentState);
+            OwnerAgent.ScannerColor = _previousColor;
         }
 
         internal void Update()
@@ -65,6 +58,7 @@ namespace EECustom.Customizations.Models.Handlers
                 _interpDone = false;
                 _interpTimer = Clock.Time + InterpDuration;
                 _interpStartTime = Clock.Time;
+                _previousColor = OwnerAgent.m_scannerColor;
             }
 
             if (!_interpDone)
@@ -77,7 +71,7 @@ namespace EECustom.Customizations.Models.Handlers
                 }
 
                 var progress = Mathf.InverseLerp(_interpStartTime, _interpTimer, Clock.Time);
-                var color1 = GetStateColor(_lastState);
+                var color1 = _previousColor;
                 var color2 = GetStateColor(_currentState);
                 var newColor = Color.Lerp(color1, color2, progress);
                 OwnerAgent.ScannerColor = newColor;
