@@ -7,29 +7,44 @@ namespace EECustom.Networking.Events
     public class BleedingEvent : SyncedEvent<BleedingPacket>
     {
         private static readonly Random _random = new();
+        private static PlayerAgent _localAgent = null;
+        private static BleedingHandler _handler = null;
 
         public override void Receive(BleedingPacket packet)
         {
             if (!PlayerManager.HasLocalPlayerAgent())
                 return;
 
-            var localAgent = PlayerManager.GetLocalPlayerAgent();
-            if (localAgent.PlayerSlotIndex != packet.playerSlot)
+            _localAgent = PlayerManager.GetLocalPlayerAgent();
+            if (_localAgent.PlayerSlotIndex != packet.playerSlot)
                 return;
 
             Logger.Verbose($"Bleed Received: [{packet.playerSlot}] {packet.damage} {packet.interval} {packet.duration}");
 
-            if (packet.chanceToBleed <= _random.NextDouble())
-                return;
-
-            var handler = localAgent.gameObject.GetComponent<BleedingHandler>();
-
-            if (handler == null)
+            if (packet.duration >= 0.0f)
             {
-                handler = localAgent.gameObject.AddComponent<BleedingHandler>();
+                if (packet.chanceToBleed <= _random.NextDouble())
+                    return;
+
+                UpdateHandler();
+                _handler.DoBleed(packet.damage, packet.interval, packet.duration, packet.liquid);
             }
-            handler.Agent = localAgent;
-            handler.DoBleed(packet.damage, packet.interval, packet.duration, packet.liquid);
+            else
+            {
+                UpdateHandler();
+                _handler.StopBleed();
+            }
+        }
+
+        private void UpdateHandler()
+        {
+            _handler = _localAgent.gameObject.GetComponent<BleedingHandler>();
+
+            if (_handler == null)
+            {
+                _handler = _localAgent.gameObject.AddComponent<BleedingHandler>();
+            }
+            _handler.Agent = _localAgent;
         }
     }
 
