@@ -121,7 +121,7 @@ namespace EECustom.Managers
                 }
 
                 var enemyAgentComp = prefab.GetComponentInChildren<EnemyAgent>(true);
-                if (enemyAgentComp)
+                if (enemyAgentComp is null)
                 {
                     Logger.Error($"EnemyData id: {block.persistentID} prefab doesn't have EnemyAgent!");
                     continue;
