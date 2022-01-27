@@ -58,7 +58,6 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
                     totalDurationForPosition += active.RemainingTime;
                 }
             }
-            Logger.Debug("Duration of effect: {0}", totalDurationForPosition);
             return totalDurationForPosition;
         }
 
