@@ -32,7 +32,6 @@ namespace EECustom.Customizations.Models.Handlers
 
         public float InterpDuration = 0.5f;
 
-        private EnemyState _lastState = EnemyState.Hibernate;
         private EnemyState _currentState = EnemyState.Hibernate;
         private bool _interpDone = true;
         private float _interpTimer = 0.0f;
@@ -42,7 +41,6 @@ namespace EECustom.Customizations.Models.Handlers
         internal void Start()
         {
             UpdateState(out _currentState);
-            _lastState = _currentState;
             _previousColor = GetStateColor(_currentState);
             OwnerAgent.ScannerColor = _previousColor;
         }
@@ -53,7 +51,7 @@ namespace EECustom.Customizations.Models.Handlers
 
             if (_currentState != state)
             {
-                _lastState = _currentState;
+                Logger.Warning($"State Changed to {_currentState}->{state} / {OwnerAgent.AI.Mode}");
                 _currentState = state;
                 _interpDone = false;
                 _interpTimer = Clock.Time + InterpDuration;
@@ -102,6 +100,11 @@ namespace EECustom.Customizations.Models.Handlers
                             state = EnemyState.Detect;
                             return;
                         }
+                    }
+                    else if (OwnerAgent.Locomotion.CurrentStateEnum == ES_StateEnum.HibernateWakeUp)
+                    {
+                        state = EnemyState.Wakeup;
+                        return;
                     }
                     else
                     {

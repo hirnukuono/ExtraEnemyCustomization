@@ -13,7 +13,7 @@ namespace EECustom.Inject
         [HarmonyWrapSafe]
         internal static void Postfix(EnemySync __instance)
         {
-            ConfigManager.Current.FirePrefabBuiltEvent(__instance.m_agent);
+            ConfigManager.Current.FireSyncSpawnedEvent(__instance.m_agent);
         }
     }
 }

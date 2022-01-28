@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace EECustom.Customizations.Models
 {
-    public sealed class ScannerCustom : EnemyCustomBase, IEnemySpawnedEvent
+    public sealed class ScannerCustom : EnemyCustomBase, IEnemySyncSpawnedEvent
     {
         public static readonly Color DefaultDetectionColor = new(1f, 0.1f, 0.1f, 1f);
 
@@ -86,7 +86,7 @@ namespace EECustom.Customizations.Models
             }
         }
 
-        public void OnSpawned(EnemyAgent agent)
+        public void OnSyncSpawned(EnemyAgent agent)
         {
             var scannerManager = agent.gameObject.GetComponent<ScannerHandler>();
             if (scannerManager == null)
@@ -103,6 +103,8 @@ namespace EECustom.Customizations.Models
             scannerManager.UsingDetectionColor = UsingDetectionColor;
             scannerManager.UsingScoutColor = UsingScoutColor;
             scannerManager.InterpDuration = LerpingDuration;
+
+            LogError($"Start off mode was : {agent.AI.Mode}");
         }
     }
 }

@@ -151,7 +151,7 @@ namespace EECustom.Managers
 
         internal void FireSyncSpawnedEvent(EnemyAgent agent)
         {
-            _enemySyncSpawnedHolder.FireEvent(agent, (e) =>
+            _enemySyncSpawnedHolder.FireEventPreSpawn(agent, (e) =>
             {
                 e.OnSyncSpawned(agent);
             });
