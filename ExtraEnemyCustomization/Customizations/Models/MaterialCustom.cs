@@ -67,6 +67,26 @@ namespace EECustom.Customizations.Models
                     }
                 }
 
+                foreach (var colorProp in swapSet.ColorProperties)
+                {
+                    if (!newMaterial.HasProperty(colorProp.Name))
+                    {
+                        LogError($"Color Property is missing: {colorProp.Name}");
+                        continue;
+                    }
+                    newMaterial.SetColor(colorProp.Name, colorProp.Value);
+                }
+
+                foreach (var floatProp in swapSet.FloatProperties)
+                {
+                    if (!newMaterial.HasProperty(floatProp.Name))
+                    {
+                        LogError($"Float Property is missing: {floatProp.Name}");
+                        continue;
+                    }
+                    newMaterial.SetFloat(floatProp.Name, floatProp.Value);
+                }
+
                 mat.m_material = newMaterial;
                 LogVerbose(" - Replaced!");
             }
@@ -79,7 +99,24 @@ namespace EECustom.Customizations.Models
         public string To { get; set; } = "";
         public SkinNoiseType SkinNoise { get; set; } = SkinNoiseType.KeepOriginal;
         public string SkinNoiseTexture { get; set; } = string.Empty;
+        public ColorSetting[] ColorProperties { get; set; } = new ColorSetting[0];
+        public FloatSetting[] FloatProperties { get; set; } = new FloatSetting[0];
+
+
+        public struct ColorSetting
+        {
+            public string Name { get; set; }
+            public Color Value { get; set; }
+        }
+
+        public struct FloatSetting
+        {
+            public string Name { get; set; }
+            public float Value { get; set; }
+        }
     }
+
+
 
     public enum SkinNoiseType
     {
