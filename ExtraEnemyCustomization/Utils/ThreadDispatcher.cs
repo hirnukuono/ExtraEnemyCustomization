@@ -21,11 +21,11 @@ namespace EECustom.Utils
                 var dispatcher = new GameObject();
                 DontDestroyOnLoad(dispatcher);
 
-                dispatcher.AddComponent<ThreadDispatcher>();
+                Current = dispatcher.AddComponent<ThreadDispatcher>();
             }
         }
 
-        public static void Queue(Action action)
+        public static void Enqueue(Action action)
         {
             lock (_actionQueue)
             {

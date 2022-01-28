@@ -80,7 +80,7 @@ namespace EECustom.Managers
 
         private static void OnConfigFileEdited(object sender, FileSystemEventArgs e)
         {
-            ThreadDispatcher.Queue(()=>
+            ThreadDispatcher.Enqueue(()=>
             {
                 var filename = Path.GetFileNameWithoutExtension(e.Name);
                 if (_configFileNameToType.TryGetValue(filename.ToUpper(), out var type))

@@ -1,4 +1,5 @@
 ﻿using EECustom.Customizations.EnemyAbilities.Abilities;
+using EECustom.Utils;
 using EECustom.Utils.JsonElements;
 using Enemies;
 using System;
@@ -27,7 +28,10 @@ namespace EECustom.Customizations.EnemyAbilities
         public async Task DoTriggerDelayed(IAbility ability, EnemyAgent agent, float delay)
         {
             await Task.Delay((int)Math.Round(delay * 1000.0f));
-            ability?.TriggerSync(agent);
+            ThreadDispatcher.Enqueue(() =>
+            {
+                ability?.TriggerSync(agent);
+            });
         }
     }
 
