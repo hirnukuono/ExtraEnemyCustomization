@@ -21,7 +21,7 @@ namespace EECustom.Customizations.Abilities.Handlers
         private bool _isRegening = false;
         private bool _isInitialTimerDone = false;
         private bool _alwaysRegen = false;
-        private bool _isDecay = false;
+        private bool _isRegenMode = false;
         private float _regenCapAbsValue = 0.0f;
         private float _regenAmountAbsValue = 0.0f;
 
@@ -42,12 +42,12 @@ namespace EECustom.Customizations.Abilities.Handlers
             _regenCapAbsValue = RegenData.RegenCap.GetAbsValue(DamageBase.HealthMax);
             _regenAmountAbsValue = RegenData.RegenAmount.GetAbsValue(DamageBase.HealthMax);
 
-            if (_regenAmountAbsValue <= 0.0f)
-                _isDecay = true;
+            if (_regenAmountAbsValue >= 0.0f)
+                _isRegenMode = true;
 
-            if (_alwaysRegen || _isDecay)
+            if (_alwaysRegen || !_isRegenMode)
             {
-                OnTakeDamage(DamageBase.Owner, null, 0.0f);
+                StartRegen();
             }
         }
 
@@ -65,38 +65,78 @@ namespace EECustom.Customizations.Abilities.Handlers
             }
             else if (_isInitialTimerDone && _regenIntervalTimer <= Clock.Time)
             {
-                if (!_isDecay && DamageBase.Health >= _regenCapAbsValue)
-                    return;
-
-                if (_isDecay && DamageBase.Health <= _regenCapAbsValue)
-                    return;
-
-                var newHealth = DamageBase.Health + _regenAmountAbsValue;
-                if (!_isDecay && newHealth >= _regenCapAbsValue)
+                if (_isRegenMode)
                 {
-                    newHealth = _regenCapAbsValue;
-                    if (!_alwaysRegen)
-                    {
-                        _isRegening = false;
-                    }
+                    DoRegen();
                 }
-                else if (_isDecay && newHealth <= _regenCapAbsValue)
+                else
                 {
-                    newHealth = _regenCapAbsValue;
-                    if (!_alwaysRegen)
-                    {
-                        _isRegening = false;
-                    }
+                    DoDecay();
                 }
-
-                DamageBase.SendSetHealth(newHealth);
-
-                if (newHealth <= 0.0f)
-                {
-                    DamageBase.MeleeDamage(DamageBase.HealthMax, null, base.transform.position, Vector3.up, 0);
-                }
-
                 _regenIntervalTimer = Clock.Time + RegenData.RegenInterval;
+            }
+        }
+
+        [HideFromIl2Cpp]
+        private void StartRegen()
+        {
+            _regenInitialTimer = Clock.Time + RegenData.DelayUntilRegenStart;
+            _isRegening = true;
+            _isInitialTimerDone = false;
+        }
+
+        [HideFromIl2Cpp]
+        private void DoRegen()
+        {
+            if (DamageBase.Health >= _regenCapAbsValue)
+            {
+                if (!_alwaysRegen)
+                {
+                    _isRegening = false;
+                }
+                return;
+            }
+
+            var newHealth = DamageBase.Health + _regenAmountAbsValue;
+            if (newHealth >= _regenCapAbsValue)
+            {
+                newHealth = _regenCapAbsValue;
+                if (!_alwaysRegen)
+                {
+                    _isRegening = false;
+                }
+            }
+
+            DamageBase.SendSetHealth(newHealth);
+        }
+
+        [HideFromIl2Cpp]
+        private void DoDecay()
+        {
+            if (DamageBase.Health <= _regenCapAbsValue)
+            {
+                if (!_alwaysRegen)
+                {
+                    _isRegening = false;
+                }
+                return;
+            }
+
+            var newHealth = DamageBase.Health + _regenAmountAbsValue;
+            if (newHealth <= _regenCapAbsValue)
+            {
+                newHealth = _regenCapAbsValue;
+                if (!_alwaysRegen)
+                {
+                    _isRegening = false;
+                }
+            }
+
+            DamageBase.SendSetHealth(newHealth);
+
+            if (newHealth <= 0.0f)
+            {
+                DamageBase.MeleeDamage(DamageBase.HealthMax, null, base.transform.position, Vector3.up, 0);
             }
         }
 
@@ -106,9 +146,7 @@ namespace EECustom.Customizations.Abilities.Handlers
             if (enemy.GlobalID != DamageBase.Owner.GlobalID)
                 return;
 
-            _regenInitialTimer = Clock.Time + RegenData.DelayUntilRegenStart;
-            _isRegening = true;
-            _isInitialTimerDone = false;
+            StartRegen();
         }
     }
 }
