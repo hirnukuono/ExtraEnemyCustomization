@@ -26,6 +26,12 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
         protected override void OnEnter()
         {
+            if (Agent.WasCollected)
+            {
+                DoExit();
+                return;
+            }
+
             if (Ability.UseExplosionCounter)
             {
                 var counter = EnemyProperty<ExplosionCounter>.RegisterOrGet(Agent);
@@ -38,18 +44,24 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
                 counter.Count++;
             }
 
-            if (Ability.KillInflictor)
+            if (Ability.KillInflictor && Agent.Alive)
             {
                 Agent.Damage.ExplosionDamage(Agent.Damage.HealthMax, Vector3.zero, Vector3.zero);
             }
 
             var damage = Ability.Damage.GetAbsValue(PlayerData.MaxHealth);
-            ExplosionUtil.MakeExplosion(Agent.EyePosition, damage, Ability.EnemyDamageMulti, Ability.MinRange, Ability.MaxRange);
+
+            var position = Agent.EyePosition;
+            if (!Agent.Alive && Agent.RagdollInstance != null)
+            {
+                position = Agent.RagdollInstance.transform.position;
+            }
+            ExplosionUtil.MakeExplosion(position, damage, Ability.EnemyDamageMulti, Ability.MinRange, Ability.MaxRange);
 
             var noise = new NM_NoiseData()
             {
                 noiseMaker = null,
-                position = Agent.EyePosition,
+                position = position,
                 radiusMin = Ability.NoiseMinRange,
                 radiusMax = Ability.NoiseMaxRange,
                 yScale = 1,
