@@ -103,8 +103,6 @@ namespace EECustom.Customizations.Models
             scannerManager.UsingDetectionColor = UsingDetectionColor;
             scannerManager.UsingScoutColor = UsingScoutColor;
             scannerManager.InterpDuration = LerpingDuration;
-
-            LogError($"Start off mode was : {agent.AI.Mode}");
         }
     }
 }
