@@ -52,10 +52,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
             var damage = Ability.Damage.GetAbsValue(PlayerData.MaxHealth);
 
             var position = Agent.EyePosition;
-            if (!Agent.Alive && Agent.RagdollInstance != null)
-            {
-                position = Agent.RagdollInstance.transform.position;
-            }
+            GetRagdollPosition(ref position);
             ExplosionUtil.MakeExplosion(position, damage, Ability.EnemyDamageMulti, Ability.MinRange, Ability.MaxRange);
 
             var noise = new NM_NoiseData()
@@ -73,6 +70,24 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
             NoiseManager.MakeNoise(noise);
 
             DoExit();
+        }
+
+        private void GetRagdollPosition(ref Vector3 position)
+        {
+            if (Agent.Alive)
+                return;
+
+            if (Agent.RagdollInstance is null)
+                return;
+
+            if (Agent.EnemyMovementData.LocomotionDead != Enemies.ES_StateEnum.Dead)
+                return;
+
+            var bodyData = Agent.RagdollInstance.GetComponentInChildren<EnemyRagdollBodyData>();
+            if (bodyData is null)
+                return;
+
+            position = bodyData.transform.position;
         }
     }
 
