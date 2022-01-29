@@ -65,24 +65,37 @@ namespace EECustom.Customizations.EnemyAbilities
             canUseAbility &= data.Setting.AllowWhileAttack || (!data.Agent.Locomotion.IsAttacking());
 
             var hasLos = false;
-            var sqrDistance = float.MaxValue;
-            for (int i = 0; i < PlayerManager.PlayerAgentsInLevel.Count; i++)
+            float distance;
+            float sqrDistance = float.MaxValue;
+            if (agent.AI.IsTargetValid)
             {
-                var playerAgent = PlayerManager.PlayerAgentsInLevel[i];
-                var tempDistance = (agent.EyePosition - playerAgent.EyePosition).sqrMagnitude;
-                if (sqrDistance >= tempDistance)
+                distance = agent.AI.Target.m_distance;
+                hasLos = agent.AI.Target.m_hasLineOfSight;
+            }
+            else
+            {
+                for (int i = 0; i < PlayerManager.PlayerAgentsInLevel.Count; i++)
                 {
-                    sqrDistance = tempDistance;
-                    hasLos = !Physics.Linecast(agent.EyePosition, playerAgent.EyePosition, LayerManager.MASK_WORLD);
+                    var playerAgent = PlayerManager.PlayerAgentsInLevel[i];
+                    var tempDistance = (agent.EyePosition - playerAgent.EyePosition).sqrMagnitude;
+                    if (sqrDistance >= tempDistance)
+                    {
+                        sqrDistance = tempDistance;
+                        hasLos = !Physics.Linecast(agent.EyePosition, playerAgent.EyePosition, LayerManager.MASK_WORLD);
+                    }
+                }
+
+                if (sqrDistance == float.MaxValue)
+                {
+                    hasLos = false;
+                    distance = float.MaxValue;
+                }
+                else
+                {
+                    distance = Mathf.Sqrt(sqrDistance);
                 }
             }
-
-            if (sqrDistance == float.MaxValue)
-            {
-                hasLos = false;
-            }
-
-            var distance = Mathf.Sqrt(sqrDistance);
+            
             var distSettingToUse = hasLos ? setting.DistanceWithLOS : setting.DistanceWithoutLOS;
             canUseAbility &= distSettingToUse.CanUseAbility(hasLos, distance);
 
