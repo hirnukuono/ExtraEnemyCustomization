@@ -1,5 +1,6 @@
 ﻿using EECustom.Extensions;
 using System;
+using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -67,7 +68,7 @@ namespace EECustom.Utils.JsonElements
 
                     if (strValue.EndsWith("%"))
                     {
-                        if (float.TryParse(strValue[0..^1].TrimEnd(), out var parsedPercent))
+                        if (float.TryParse(strValue[0..^1].TrimEnd(), NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var parsedPercent))
                         {
                             return new ValueBase(parsedPercent / 100.0f, ValueMode.Rel, fromDefaultFlag);
                         }
@@ -76,7 +77,7 @@ namespace EECustom.Utils.JsonElements
                     {
                         return new ValueBase(1.0f, ValueMode.Rel, false);
                     }
-                    else if (float.TryParse(strValue, out var parsedValue))
+                    else if (float.TryParse(strValue, NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var parsedValue))
                     {
                         return new ValueBase(parsedValue, ValueMode.Abs);
                     }

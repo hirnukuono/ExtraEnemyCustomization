@@ -10,7 +10,6 @@ using EECustom.Utils.Integrations;
 using HarmonyLib;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using UnhollowerRuntimeLib;
@@ -36,8 +35,6 @@ namespace EECustom
 
         public override void Load()
         {
-            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
-
             InjectAllIl2CppType();
 
             var useLiveEdit = Config.Bind(new ConfigDefinition("General", "Live Edit"), false, new ConfigDescription("Reload Config when they are edited while in-game"));

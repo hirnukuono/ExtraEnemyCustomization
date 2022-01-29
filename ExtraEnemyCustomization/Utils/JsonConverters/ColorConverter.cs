@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using UnityEngine;
@@ -72,7 +73,7 @@ namespace EECustom.Utils.JsonConverters
                             break;
 
                         case 2:
-                            if (!float.TryParse(strValues[1].Trim(), out multiplier))
+                            if (!float.TryParse(strValues[1].Trim(), NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out multiplier))
                                 throw new JsonException($"Color multiplier is not valid number! (*): {strValue}");
                             formatString = strValues[0].Trim();
                             break;
