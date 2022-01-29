@@ -1,6 +1,8 @@
 ﻿using Agents;
 using EECustom.Attributes;
+using EECustom.Utils;
 using Enemies;
+using SNetwork;
 using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 
@@ -20,6 +22,7 @@ namespace EECustom.Customizations.Models.Handlers
     public class ScannerHandler : MonoBehaviour
     {
         public EnemyAgent OwnerAgent;
+        public EnemyScannerStatus ScannerStatus;
         public Color DefaultColor;
         public Color WakeupColor;
         public Color DetectionColor;
@@ -32,6 +35,7 @@ namespace EECustom.Customizations.Models.Handlers
 
         public float InterpDuration = 0.5f;
 
+        private AgentMode _previousMode = AgentMode.Off;
         private EnemyState _currentState = EnemyState.Hibernate;
         private bool _interpDone = true;
         private float _interpTimer = 0.0f;
@@ -40,18 +44,36 @@ namespace EECustom.Customizations.Models.Handlers
 
         internal void Start()
         {
+            ScannerStatus = EnemyProperty<EnemyScannerStatus>.RegisterOrGet(OwnerAgent);
+
             UpdateState(out _currentState);
             _previousColor = GetStateColor(_currentState);
+            _previousMode = OwnerAgent.AI.Mode;
+
             OwnerAgent.ScannerColor = _previousColor;
         }
 
         internal void Update()
         {
+            if (SNet.IsMaster)
+            {
+                var currentMode = OwnerAgent.AI.Mode;
+                if (_previousMode != currentMode)
+                {
+                    ScannerCustom._sync.Send(new ScannerStatusPacket()
+                    {
+                        enemyID = OwnerAgent.GlobalID,
+                        mode = currentMode
+                    });
+
+                    _previousMode = currentMode;
+                }
+            }
+
             UpdateState(out var state);
 
             if (_currentState != state)
             {
-                Logger.Warning($"State Changed to {_currentState}->{state} / {OwnerAgent.AI.Mode}");
                 _currentState = state;
                 _interpDone = false;
                 _interpTimer = Clock.Time + InterpDuration;
@@ -79,7 +101,7 @@ namespace EECustom.Customizations.Models.Handlers
         [HideFromIl2Cpp]
         private void UpdateState(out EnemyState state)
         {
-            switch (OwnerAgent.AI.Mode)
+            switch (ScannerStatus.Mode)
             {
                 case AgentMode.Hibernate:
                     if (!UsingDetectionColor)
@@ -118,6 +140,12 @@ namespace EECustom.Customizations.Models.Handlers
 
                 case AgentMode.Scout:
                     if (!UsingScoutColor)
+                    {
+                        state = EnemyState.Wakeup;
+                        return;
+                    }
+
+                    if (OwnerAgent.Locomotion.CurrentStateEnum == ES_StateEnum.ScoutScream)
                     {
                         state = EnemyState.Wakeup;
                         return;
