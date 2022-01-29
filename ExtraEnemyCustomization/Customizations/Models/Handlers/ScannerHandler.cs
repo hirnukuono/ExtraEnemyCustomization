@@ -10,6 +10,7 @@ namespace EECustom.Customizations.Models.Handlers
 {
     public enum EnemyState
     {
+        Initial,
         Hibernate,
         Detect,
         Heartbeat,
@@ -22,7 +23,6 @@ namespace EECustom.Customizations.Models.Handlers
     public class ScannerHandler : MonoBehaviour
     {
         public EnemyAgent OwnerAgent;
-        public EnemyScannerStatus ScannerStatus;
         public Color DefaultColor;
         public Color WakeupColor;
         public Color DetectionColor;
@@ -35,7 +35,7 @@ namespace EECustom.Customizations.Models.Handlers
 
         public float InterpDuration = 0.5f;
 
-        private AgentMode _previousMode = AgentMode.Off;
+        private AgentMode _agentMode = AgentMode.Off;
         private EnemyState _currentState = EnemyState.Hibernate;
         private bool _interpDone = true;
         private float _interpTimer = 0.0f;
@@ -44,12 +44,10 @@ namespace EECustom.Customizations.Models.Handlers
 
         internal void Start()
         {
-            ScannerStatus = EnemyProperty<EnemyScannerStatus>.RegisterOrGet(OwnerAgent);
-
+            SetAgentMode_Master(OwnerAgent.AI.Mode);
             UpdateState(out _currentState);
+            
             _previousColor = GetStateColor(_currentState);
-            _previousMode = OwnerAgent.AI.Mode;
-
             OwnerAgent.ScannerColor = _previousColor;
         }
 
@@ -58,15 +56,9 @@ namespace EECustom.Customizations.Models.Handlers
             if (SNet.IsMaster)
             {
                 var currentMode = OwnerAgent.AI.Mode;
-                if (_previousMode != currentMode)
+                if (_agentMode != currentMode)
                 {
-                    ScannerCustom._sync.Send(new ScannerStatusPacket()
-                    {
-                        enemyID = OwnerAgent.GlobalID,
-                        mode = currentMode
-                    });
-
-                    _previousMode = currentMode;
+                    SetAgentMode_Master(currentMode);
                 }
             }
 
@@ -99,9 +91,29 @@ namespace EECustom.Customizations.Models.Handlers
         }
 
         [HideFromIl2Cpp]
+        internal void SetAgentMode_Master(AgentMode mode)
+        {
+            if (SNet.IsMaster)
+            {
+                ScannerCustom._sync.SetState(OwnerAgent.GlobalID, new ScannerStatusPacket()
+                {
+                    mode = mode
+                });
+
+                _agentMode = mode;
+            }
+        }
+
+        [HideFromIl2Cpp]
+        internal void UpdateAgentMode(AgentMode mode)
+        {
+            _agentMode = mode;
+        }
+
+        [HideFromIl2Cpp]
         private void UpdateState(out EnemyState state)
         {
-            switch (ScannerStatus.Mode)
+            switch (_agentMode)
             {
                 case AgentMode.Hibernate:
                     if (!UsingDetectionColor)

@@ -8,19 +8,13 @@ using System.Text;
 
 namespace EECustom.Customizations.Models
 {
-    public class ScannerSync : SyncedEvent<ScannerStatusPacket>
+    public class ScannerSync : StateReplicator<ScannerStatusPacket>
     {
-        public override void Receive(ScannerStatusPacket packet)
-        {
-            var status = EnemyProperty<EnemyScannerStatus>.Get(packet.enemyID);
-            if (status != null)
-                status.Mode = packet.mode;
-        }
+        public override bool ClearOnLevelCleanup => true;
     }
 
     public struct ScannerStatusPacket
     {
-        public ushort enemyID;
         public AgentMode mode;
     }
 }

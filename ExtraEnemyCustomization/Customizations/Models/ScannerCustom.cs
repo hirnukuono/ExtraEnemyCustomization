@@ -1,5 +1,6 @@
 ﻿using Agents;
 using EECustom.Customizations.Models.Handlers;
+using EECustom.Extensions;
 using EECustom.Utils;
 using Enemies;
 using System.Text.Json.Serialization;
@@ -63,7 +64,7 @@ namespace EECustom.Customizations.Models
 
         static ScannerCustom()
         {
-            _sync.Setup();
+            _sync.Initialize();
         }
 
         public override string GetProcessName()
@@ -96,9 +97,6 @@ namespace EECustom.Customizations.Models
 
         public void OnSyncSpawned(EnemyAgent agent)
         {
-            var status = EnemyProperty<EnemyScannerStatus>.RegisterOrGet(agent);
-            status.Mode = agent.AI.Mode;
-
             var scannerManager = agent.gameObject.GetComponent<ScannerHandler>();
             if (scannerManager == null)
             {
@@ -114,11 +112,17 @@ namespace EECustom.Customizations.Models
             scannerManager.UsingDetectionColor = UsingDetectionColor;
             scannerManager.UsingScoutColor = UsingScoutColor;
             scannerManager.InterpDuration = LerpingDuration;
-        }
-    }
 
-    public class EnemyScannerStatus
-    {
-        public AgentMode Mode;
+            var key = agent.GlobalID;
+            _sync.Register(key, default, (packet) =>
+            {
+                scannerManager.UpdateAgentMode(packet.mode);
+            });
+
+            agent.AddOnDeadOnce(() =>
+            {
+                _sync.Deregister(key);
+            });
+        }
     }
 }
