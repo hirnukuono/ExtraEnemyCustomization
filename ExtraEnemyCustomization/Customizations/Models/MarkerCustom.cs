@@ -18,8 +18,9 @@ namespace EECustom.Customizations.Models
         public float BlinkMaxDelay { get; set; } = 5.0f;
         public bool AllowMarkingOnHibernate { get; set; } = false;
 
+        private bool _hasSprite = false;
+        private bool _spriteCached = false;
         private Sprite _sprite = null;
-        private bool _loadedOnce = false;
         //private bool _HasText = false;
         //private bool _TextRequiresAutoUpdate = false;
 
@@ -43,22 +44,8 @@ namespace EECustom.Customizations.Models
                 */
             }
 
+            _hasSprite = !string.IsNullOrEmpty(SpriteName);
             EnemyMarkerEvents.Marked += OnMarked;
-            CacheSprite();
-        }
-
-        private void CacheSprite()
-        {
-            if (!_loadedOnce)
-            {
-                _loadedOnce = true;
-
-                if (string.IsNullOrEmpty(SpriteName))
-                    return;
-
-                if (!SpriteManager.TryGetSpriteCache(SpriteName, 64.0f, out _sprite))
-                    _sprite = SpriteManager.GenerateSprite(SpriteName);
-            }
         }
 
         public override void OnConfigUnloaded()
@@ -68,6 +55,12 @@ namespace EECustom.Customizations.Models
 
         public void OnSpawned(EnemyAgent agent)
         {
+            if (_hasSprite && !_spriteCached)
+            {
+                if (!SpriteManager.TryGetSpriteCache(SpriteName, 64.0f, out _sprite))
+                    _sprite = SpriteManager.GenerateSprite(SpriteName);
+            }
+
             if (AllowMarkingOnHibernate)
                 agent.ScannerData.m_soundIndex = 0; //I know... this is such a weird way to do it...
         }

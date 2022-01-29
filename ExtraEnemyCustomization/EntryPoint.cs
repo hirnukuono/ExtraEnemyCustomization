@@ -28,7 +28,7 @@ namespace EECustom
     [BepInDependency(MTFOUtil.PLUGIN_GUID, BepInDependency.DependencyFlags.HardDependency)]
     [BepInDependency("dev.gtfomodding.gtfo-api", BepInDependency.DependencyFlags.HardDependency)]
     [BepInDependency(MTFOPartialDataUtil.PLUGIN_GUID, BepInDependency.DependencyFlags.SoftDependency)]
-    public class EntryPoint : BasePlugin
+    internal class EntryPoint : BasePlugin
     {
         public static Harmony HarmonyInstance { get; private set; }
         public static string BasePath { get; private set; }
@@ -54,7 +54,6 @@ namespace EECustom
             HarmonyInstance.PatchAll();
 
             NetworkManager.Initialize();
-            SpriteManager.Initialize();
 
             ConfigManager.UseLiveEdit = useLiveEdit.Value;
             ConfigManager.LinkMTFOHotReload = linkMTFOHotReload.Value;
@@ -64,14 +63,15 @@ namespace EECustom
                 ConfigManager.DumpDefault();
             }
 
-            AssetEvents.AllAssetLoaded += ThreadDispatcher.Initialize;
-            AssetEvents.AllAssetLoaded += AssetCacheManager.AssetLoaded;
-            AssetEvents.AllAssetLoaded += FirePrefabBuiltEvent;
+            AssetEvents.AllAssetLoaded += AllAssetLoaded;
             AssetCacheManager.OutputMethod = cacheBehaviour.Value;
         }
 
-        private void FirePrefabBuiltEvent()
+        private void AllAssetLoaded()
         {
+            SpriteManager.Initialize();
+            ThreadDispatcher.Initialize();
+            AssetCacheManager.AssetLoaded();
             ConfigManager.Current.FirePrefabBuildEventAll();
         }
 
