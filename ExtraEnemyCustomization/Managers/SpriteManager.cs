@@ -40,6 +40,7 @@ namespace EECustom.Managers
                 if (!ImageConversion.LoadImage(texture2D, fileData))
                     return;
 
+                Object.DontDestroyOnLoad(texture2D);
                 _textureCache.Add(fileNameWOExt, texture2D);
             }
         }
@@ -61,7 +62,7 @@ namespace EECustom.Managers
             var antiDestroy = new GameObject();
             var spriteRenderer = antiDestroy.AddComponent<SpriteRenderer>();
             spriteRenderer.sprite = newSprite;
-            UnityEngine.Object.DontDestroyOnLoad(antiDestroy);
+            Object.DontDestroyOnLoad(antiDestroy);
             antiDestroy.name = "PluginGenerated_CustomSpriteHolder_" + spriteKey;
             antiDestroy.SetActive(false);
             _spriteCache.Add(spriteKey, newSprite);
