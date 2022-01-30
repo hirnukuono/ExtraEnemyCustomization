@@ -3,8 +3,6 @@ using EECustom.Configs.Customizations;
 using EECustom.Events;
 using EECustom.Utils;
 using EECustom.Utils.Integrations;
-using Enemies;
-using GameData;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -80,7 +78,7 @@ namespace EECustom.Managers
 
         private static void OnConfigFileEdited(object sender, FileSystemEventArgs e)
         {
-            ThreadDispatcher.Enqueue(()=>
+            ThreadDispatcher.Enqueue(() =>
             {
                 var filename = Path.GetFileNameWithoutExtension(e.Name);
                 if (_configFileNameToType.TryGetValue(filename.ToUpper(), out var type))

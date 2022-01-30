@@ -95,7 +95,7 @@ namespace EECustom.Customizations.EnemyAbilities
                     distance = Mathf.Sqrt(sqrDistance);
                 }
             }
-            
+
             var distSettingToUse = hasLos ? setting.DistanceWithLOS : setting.DistanceWithoutLOS;
             canUseAbility &= distSettingToUse.CanUseAbility(hasLos, distance);
 

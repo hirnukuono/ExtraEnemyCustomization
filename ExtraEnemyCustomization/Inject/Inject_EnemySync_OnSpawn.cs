@@ -1,9 +1,6 @@
 ﻿using EECustom.Managers;
 using Enemies;
 using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EECustom.Inject
 {

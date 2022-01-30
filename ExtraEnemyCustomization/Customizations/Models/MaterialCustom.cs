@@ -1,6 +1,5 @@
 ﻿using EECustom.Managers;
 using Enemies;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -102,7 +101,6 @@ namespace EECustom.Customizations.Models
         public ColorSetting[] ColorProperties { get; set; } = new ColorSetting[0];
         public FloatSetting[] FloatProperties { get; set; } = new FloatSetting[0];
 
-
         public struct ColorSetting
         {
             public string Name { get; set; }
@@ -115,8 +113,6 @@ namespace EECustom.Customizations.Models
             public float Value { get; set; }
         }
     }
-
-
 
     public enum SkinNoiseType
     {

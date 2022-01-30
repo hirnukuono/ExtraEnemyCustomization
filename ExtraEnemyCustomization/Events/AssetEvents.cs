@@ -1,5 +1,4 @@
 ﻿using AssetShards;
-using System;
 
 namespace EECustom.Events
 {

@@ -172,7 +172,6 @@ namespace EECustom.Networking
 
         public virtual void OnStateChange(ushort id, S newState)
         {
-
         }
     }
 }

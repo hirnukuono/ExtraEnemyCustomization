@@ -1,10 +1,5 @@
 ﻿using Agents;
-using EECustom.Customizations.Detections;
 using EECustom.Networking;
-using EECustom.Utils;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EECustom.Customizations.Models
 {

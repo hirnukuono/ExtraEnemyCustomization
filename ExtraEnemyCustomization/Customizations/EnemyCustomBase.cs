@@ -19,7 +19,6 @@ namespace EECustom.Customizations
 
         public virtual void OnAssetLoaded()
         {
-
         }
 
         public virtual void OnConfigLoaded()

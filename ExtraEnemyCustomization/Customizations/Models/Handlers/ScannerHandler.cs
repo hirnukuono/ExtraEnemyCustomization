@@ -1,6 +1,5 @@
 ﻿using Agents;
 using EECustom.Attributes;
-using EECustom.Utils;
 using Enemies;
 using SNetwork;
 using UnhollowerBaseLib.Attributes;
@@ -46,7 +45,7 @@ namespace EECustom.Customizations.Models.Handlers
         {
             SetAgentMode_Master(OwnerAgent.AI.Mode);
             UpdateState(out _currentState);
-            
+
             _previousColor = GetStateColor(_currentState);
             OwnerAgent.ScannerColor = _previousColor;
         }

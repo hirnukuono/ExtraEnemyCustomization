@@ -1,9 +1,5 @@
-﻿using EECustom.Customizations.Models;
-using EECustom.Utils.Integrations;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using UnhollowerRuntimeLib;
 using UnityEngine;
 
@@ -51,7 +47,6 @@ namespace EECustom.Managers
                 return true;
             }
         }
-
 
         public class Assets<T> where T : UnityEngine.Object
         {
