@@ -31,6 +31,7 @@ namespace EECustom.Networking
             if (_isInitialized)
                 return;
 
+            SNetEvents.AgentSpawned += SNetEvents_AgentSpawned;
             if (ClearOnLevelCleanup)
             {
                 LevelEvents.LevelCleanup += Clear;
@@ -41,6 +42,23 @@ namespace EECustom.Networking
             NetworkAPI.RegisterEvent<ReplicatorPayload<S>>(SetStateName, ReceiveSetState_FromMaster);
             NetworkAPI.RegisterEvent<ReplicatorPayload<S>>(ChangeRequestName, ReceiveStateChangeRequest);
             _isInitialized = true;
+        }
+
+        private void SNetEvents_AgentSpawned(SNet_Player player)
+        {
+            if (SNet.IsMaster)
+            {
+                foreach (var state in _stateDataLookup)
+                {
+                    var newState = new ReplicatorPayload<S>()
+                    {
+                        key = state.Key,
+                        state = state.Value
+                    };
+
+                    NetworkAPI.InvokeEvent(SetStateName, newState, player, SNet_ChannelType.GameOrderCritical);
+                }
+            }
         }
 
         public void Register(ushort id, S startState, Action<S> onChanged = null)
@@ -96,9 +114,9 @@ namespace EECustom.Networking
                 NetworkAPI.InvokeEvent(SetStateName, newState, SNet_ChannelType.GameOrderCritical);
                 _stateDataLookup[id] = state;
             }
-            else
+            else if (SNet.HasMaster)
             {
-                NetworkAPI.InvokeEvent(ChangeRequestName, newState, SNet_ChannelType.GameOrderCritical);
+                NetworkAPI.InvokeEvent(ChangeRequestName, newState, SNet.Master, SNet_ChannelType.GameOrderCritical);
                 _stateDataLookup[id] = state;
             }
         }
