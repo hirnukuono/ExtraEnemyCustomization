@@ -28,7 +28,7 @@ namespace EECustom.Customizations.Models
             return "Silhouette";
         }
 
-        public void OnPrefabBuilt(EnemyAgent agent)
+        public override void OnAssetLoaded()
         {
             if (!_materialCached)
             {
@@ -38,7 +38,10 @@ namespace EECustom.Customizations.Models
                 _silhouetteMaterial = playerGhostRenderer.material;
                 _materialCached = true;
             }
+        }
 
+        public void OnPrefabBuilt(EnemyAgent agent)
+        {
             var renderers = agent.GetComponentsInChildren<Renderer>(true);
             var rendererList = new List<Renderer>();
             foreach (var renderer in renderers)

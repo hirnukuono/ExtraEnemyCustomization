@@ -17,6 +17,11 @@ namespace EECustom.Customizations
 
         private readonly Dictionary<ushort, bool> _isTargetLookup = new();
 
+        public virtual void OnAssetLoaded()
+        {
+
+        }
+
         public virtual void OnConfigLoaded()
         {
         }

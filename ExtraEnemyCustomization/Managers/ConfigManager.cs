@@ -140,7 +140,17 @@ namespace EECustom.Managers
             UnloadAllConfig(doClear: true);
             LoadAllConfig();
             Current.GenerateBuffer();
+
+            AssetLoaded();
             Current.FirePrefabBuildEventAll();
+        }
+
+        internal static void AssetLoaded()
+        {
+            foreach (var config in Current._customizationBuffer)
+            {
+                config.OnAssetLoaded();
+            }
         }
 
         internal static void UnloadAllConfig(bool doClear)

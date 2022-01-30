@@ -72,6 +72,8 @@ namespace EECustom
             SpriteManager.Initialize();
             ThreadDispatcher.Initialize();
             AssetCacheManager.AssetLoaded();
+
+            ConfigManager.AssetLoaded();
             ConfigManager.Current.FirePrefabBuildEventAll();
         }
 
