@@ -51,7 +51,23 @@
           "From": "shooter_RapidFire", //Material Name that enemy originally have
           "To": "mtr_StrikerChild", //Material Name that will be changed to
           "SkinNoise": "KeepOriginal", //Skin Noise (Bullrush-like Materials) Mode: KeepOriginal, ForceOn, ForceOff
-          "SkinNoiseTexture": "" //Which Texture you want to use it for Skin Noise?
+          "SkinNoiseTexture": "", //Which Texture you want to use it for Skin Noise?
+          "ColorProperties": [ //ADVANCED::Directly Edit Shader Property values, NOT recommened to edit this if you not sure what you doing!
+            /*
+            {
+              "Name": "_Color",
+              "Value": "red"
+            }
+            */
+          ],
+          "FloatProperties": [
+            /*
+            {
+              "Name": "_Blend",
+              "Value": "5.0"
+            }
+            */
+          ]
         },
         {
           //Body Part
