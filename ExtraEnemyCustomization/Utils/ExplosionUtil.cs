@@ -1,4 +1,5 @@
 ﻿using AK;
+using EECustom.Attributes;
 using EECustom.Networking;
 using FX_EffectSystem;
 using SNetwork;
@@ -24,7 +25,7 @@ namespace EECustom.Utils
         internal static void Internal_TriggerExplosion(Vector3 position, float damage, float enemyMulti, float minRange, float maxRange)
         {
             CellSound.Post(EVENTS.STICKYMINEEXPLODE, position);
-            _ = LightFlash(position);
+            LightFlash(position);
 
             if (!SNet.IsMaster)
                 return;
@@ -83,19 +84,62 @@ namespace EECustom.Utils
             return newDamage;
         }
 
-        public static async Task LightFlash(Vector3 pos)
+        public static void LightFlash(Vector3 pos)
         {
-            if (FX_Manager.TryAllocateFXLight(out var light, important: false))
+            var newHandler = new ExplosionEffectHandler();
+            newHandler.transform.position = pos;
+            newHandler.FlashColor = new Color(1, 0.2f, 0, 1);
+            newHandler.Intensity = 5.0f;
+            newHandler.Range = 50.0f;
+            newHandler.EffectDuration = 0.05f;
+        }
+
+        [InjectToIl2Cpp]
+        public class ExplosionEffectHandler : MonoBehaviour
+        {
+            public Color FlashColor;
+            public float Range;
+            public float Intensity;
+            public float EffectDuration;
+
+            private bool _lightAllocated = false;
+            private FX_PointLight _light;
+            private float _timer;
+
+            internal void Start()
             {
-                light.SetColor(new Color(1, 0.2f, 0, 1));
-                light.SetRange(50);
-                light.m_intensity = 5;
-                light.m_position = pos;
-                light.m_isOn = true;
-                light.UpdateData();
-                light.UpdateTransform();
-                await Task.Delay(50);
-                FX_Manager.DeallocateFXLight(light);
+                if (FX_Manager.TryAllocateFXLight(out _light, important: false))
+                {
+                    _light.SetColor(FlashColor);
+                    _light.SetRange(Range);
+                    _light.m_intensity = Intensity;
+                    _light.m_position = transform.position;
+                    _light.m_isOn = true;
+                    _light.UpdateData();
+                    _light.UpdateTransform();
+                    _lightAllocated = true;
+                    _timer = Clock.Time + EffectDuration;
+                }
+                else
+                {
+                    Destroy(this);
+                }
+            }
+
+            internal void Update()
+            {
+                if (_timer <= Clock.Time)
+                {
+                    Destroy(this);
+                }
+            }
+
+            internal void OnDestroy()
+            {
+                if (_lightAllocated)
+                {
+                    FX_Manager.DeallocateFXLight(_light);
+                }
             }
         }
     }
