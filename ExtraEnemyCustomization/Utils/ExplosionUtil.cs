@@ -86,12 +86,12 @@ namespace EECustom.Utils
 
         public static void LightFlash(Vector3 pos)
         {
-            var newHandler = new ExplosionEffectHandler();
-            newHandler.transform.position = pos;
-            newHandler.FlashColor = new Color(1, 0.2f, 0, 1);
-            newHandler.Intensity = 5.0f;
-            newHandler.Range = 50.0f;
-            newHandler.EffectDuration = 0.05f;
+            var effectHandler = new GameObject().AddComponent<ExplosionEffectHandler>();
+            effectHandler.transform.position = pos;
+            effectHandler.FlashColor = new Color(1, 0.2f, 0, 1);
+            effectHandler.Intensity = 5.0f;
+            effectHandler.Range = 50.0f;
+            effectHandler.EffectDuration = 0.05f;
         }
 
         [InjectToIl2Cpp]
