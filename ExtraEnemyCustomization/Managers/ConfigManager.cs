@@ -12,8 +12,8 @@ namespace EECustom.Managers
 {
     public partial class ConfigManager
     {
-        public static bool UseLiveEdit { get; set; }
-        public static bool LinkMTFOHotReload { get; set; }
+        public static bool UseLiveEdit { get; private set; }
+        public static bool LinkMTFOHotReload { get; private set; }
         public static string BasePath => EntryPoint.BasePath;
         public static ConfigManager Current { get; private set; }
 
@@ -50,6 +50,9 @@ namespace EECustom.Managers
 
         internal static void Initialize()
         {
+            UseLiveEdit = Configuration.UseLiveEdit.Value;
+            LinkMTFOHotReload = Configuration.LinkMTFOHotReload.Value;
+
             foreach (var configType in _configTypes)
             {
                 var instance = Activator.CreateInstance(configType) as Config;

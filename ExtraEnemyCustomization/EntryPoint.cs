@@ -1,6 +1,7 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.IL2CPP;
+using BepInEx.Logging;
 using EECustom.Attributes;
 using EECustom.Events;
 using EECustom.Managers;
@@ -35,18 +36,10 @@ namespace EECustom
 
         public override void Load()
         {
+            Configuration.BindAll(Config);
+            Logger.Initialize();
+
             InjectAllIl2CppType();
-
-            var useLiveEdit = Config.Bind(new ConfigDefinition("General", "Live Edit"), false, new ConfigDescription("Reload Config when they are edited while in-game"));
-            var linkMTFOHotReload = Config.Bind(new ConfigDefinition("General", "Reload on MTFO HotReload"), true, new ConfigDescription("Reload Configs when MTFO's HotReload button has pressed?"));
-            var cacheBehaviour = Config.Bind(new ConfigDefinition("Logging", "Cached Asset Result Output"), AssetCacheManager.OutputType.None, new ConfigDescription("How does your cached material/texture result be returned?"));
-            var useDevMsg = Config.Bind(new ConfigDefinition("Logging", "UseDevMessage"), false, new ConfigDescription("Using Dev Message for Debugging your config?"));
-            var useVerbose = Config.Bind(new ConfigDefinition("Logging", "Verbose"), false, new ConfigDescription("Using Much more detailed Message for Debugging?"));
-            var dumpConfig = Config.Bind(new ConfigDefinition("Developer", "DumpConfig"), false, new ConfigDescription("Dump Empty Config file?"));
-
-            Logger.LogInstance = Log;
-            Logger.UsingDevMessage = useDevMsg.Value;
-            Logger.UsingVerbose = useVerbose.Value;
 
             BasePath = Path.Combine(MTFOUtil.CustomPath, "ExtraEnemyCustomization");
 
@@ -54,17 +47,14 @@ namespace EECustom
             HarmonyInstance.PatchAll();
 
             NetworkManager.Initialize();
-
-            ConfigManager.UseLiveEdit = useLiveEdit.Value;
-            ConfigManager.LinkMTFOHotReload = linkMTFOHotReload.Value;
             ConfigManager.Initialize();
-            if (dumpConfig.Value == true)
+            if (Configuration.DumpConfig.Value == true)
             {
                 ConfigManager.DumpDefault();
             }
 
             AssetEvents.AllAssetLoaded += AllAssetLoaded;
-            AssetCacheManager.OutputMethod = cacheBehaviour.Value;
+            AssetCacheManager.OutputMethod = Configuration.AssetCacheBehaviour.Value;
         }
 
         private void AllAssetLoaded()
@@ -88,10 +78,10 @@ namespace EECustom
 
         private void InjectAllIl2CppType()
         {
-            Log.LogDebug($"Injecting IL2CPP Types");
+            Logger.Debug($"Injecting IL2CPP Types");
             var types = GetAllHandlers();
 
-            Log.LogDebug($" - Count: {types.Count()}");
+            Logger.Debug($" - Count: {types.Count()}");
             foreach (var type in types)
             {
                 //Log.LogDebug($" - {type.Name}"); Class Injector already shows their type names
@@ -104,10 +94,10 @@ namespace EECustom
 
         private void UninjectAllIl2CppType()
         {
-            Log.LogDebug($"Uninjecting IL2CPP Types");
+            Logger.Debug($"Uninjecting IL2CPP Types");
             var types = GetAllHandlers();
 
-            Log.LogDebug($" - Count: {types.Count()}");
+            Logger.Debug($" - Count: {types.Count()}");
             foreach (var type in types)
             {
                 if (!ClassInjector.IsTypeRegisteredInIl2Cpp(type))
