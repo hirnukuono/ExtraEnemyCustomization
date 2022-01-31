@@ -23,7 +23,7 @@ namespace EECustom.Customizations.Abilities
             LocalPlayerDamageEvents.MeleeDamage += OnMelee;
             LocalPlayerDamageEvents.TentacleDamage += OnTentacle;
 
-            if (ConfigManager.Current.Global.CanMediStopBleeding)
+            if (ConfigManager.Global.CanMediStopBleeding)
                 ResourcePackEvents.ReceiveMedi += RecieveMedi;
         }
 
@@ -32,7 +32,7 @@ namespace EECustom.Customizations.Abilities
             LocalPlayerDamageEvents.MeleeDamage -= OnMelee;
             LocalPlayerDamageEvents.TentacleDamage -= OnTentacle;
 
-            if (ConfigManager.Current.Global.CanMediStopBleeding)
+            if (ConfigManager.Global.CanMediStopBleeding)
                 ResourcePackEvents.ReceiveMedi -= RecieveMedi;
         }
 
@@ -56,7 +56,7 @@ namespace EECustom.Customizations.Abilities
             }
         }
 
-        public void RecieveMedi(iResourcePackReceiver receiver, float _)
+        private static void RecieveMedi(iResourcePackReceiver receiver, float _)
         {
             var player = receiver.TryCast<PlayerAgent>();
             if (player != null && player.IsLocallyOwned)

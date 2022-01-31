@@ -73,7 +73,7 @@ namespace EECustom
             ThreadDispatcher.Initialize();
             AssetCacheManager.AssetLoaded();
 
-            ConfigManager.AssetLoaded();
+            ConfigManager.FireAssetLoaded();
             ConfigManager.Current.FirePrefabBuildEventAll();
         }
 

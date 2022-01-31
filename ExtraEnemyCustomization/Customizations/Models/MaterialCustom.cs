@@ -1,5 +1,6 @@
 ﻿using EECustom.Managers;
 using Enemies;
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ namespace EECustom.Customizations.Models
 {
     public sealed class MaterialCustom : RevertableEnemyCustomBase, IEnemyPrefabBuiltEvent
     {
-        public MaterialSwapSet[] MaterialSets { get; set; } = new MaterialSwapSet[0];
+        public MaterialSwapSet[] MaterialSets { get; set; } = Array.Empty<MaterialSwapSet>();
 
         public override string GetProcessName()
         {
@@ -98,8 +99,8 @@ namespace EECustom.Customizations.Models
         public string To { get; set; } = "";
         public SkinNoiseType SkinNoise { get; set; } = SkinNoiseType.KeepOriginal;
         public string SkinNoiseTexture { get; set; } = string.Empty;
-        public ColorSetting[] ColorProperties { get; set; } = new ColorSetting[0];
-        public FloatSetting[] FloatProperties { get; set; } = new FloatSetting[0];
+        public ColorSetting[] ColorProperties { get; set; } = Array.Empty<ColorSetting>();
+        public FloatSetting[] FloatProperties { get; set; } = Array.Empty<FloatSetting>();
 
         public struct ColorSetting
         {

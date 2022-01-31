@@ -15,7 +15,7 @@ namespace EECustom.CustomSettings.Inject
         {
             CustomProjectileManager.AssetLoaded = true;
 
-            foreach (var proj in ConfigManager.Current.ProjectileCustom.ProjectileDefinitions)
+            foreach (var proj in ConfigManager.ProjectileCustom.ProjectileDefinitions)
             {
                 CustomProjectileManager.GenerateProjectile(proj);
             }

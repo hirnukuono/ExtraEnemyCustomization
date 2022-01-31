@@ -39,7 +39,7 @@ namespace EECustom.Managers
             {
                 var shaderName = mat?.shader?.name ?? string.Empty;
 
-                if (!ConfigManager.Current.Global.CacheAllMaterials)
+                if (!ConfigManager.Global.CacheAllMaterials)
                 {
                     if (!shaderName.Contains("EnemyFlesh"))
                         return false;
@@ -48,7 +48,7 @@ namespace EECustom.Managers
             }
         }
 
-        public class Assets<T> where T : UnityEngine.Object
+        public class Assets<T> where T : Object
         {
             public string Name => typeof(T).Name;
 

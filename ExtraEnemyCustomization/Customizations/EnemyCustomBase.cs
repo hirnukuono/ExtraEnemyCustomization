@@ -114,7 +114,7 @@ namespace EECustom.Customizations
         public uint[] PersistentIDs { get; set; } = new uint[1] { 0 };
         public string NameParam { get; set; } = string.Empty;
         public bool NameIgnoreCase { get; set; } = false;
-        public string[] Categories { get; set; } = new string[0];
+        public string[] Categories { get; set; } = Array.Empty<string>();
 
         public bool IsMatch(uint enemyID)
         {
@@ -135,8 +135,8 @@ namespace EECustom.Customizations
                 TargetMode.NameEquals => enemyBlock.name?.Equals(NameParam, comparisonMode) ?? false,
                 TargetMode.NameContains => enemyBlock.name?.Contains(NameParam, comparisonMode) ?? false,
                 TargetMode.Everything => true,
-                TargetMode.CategoryAny => ConfigManager.Current.Categories.Any(Categories, enemyBlock.persistentID),
-                TargetMode.CategoryAll => ConfigManager.Current.Categories.All(Categories, enemyBlock.persistentID),
+                TargetMode.CategoryAny => ConfigManager.Categories.Any(Categories, enemyBlock.persistentID),
+                TargetMode.CategoryAll => ConfigManager.Categories.All(Categories, enemyBlock.persistentID),
                 _ => false,
             };
         }

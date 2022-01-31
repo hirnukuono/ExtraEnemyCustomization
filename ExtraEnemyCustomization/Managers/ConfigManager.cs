@@ -17,6 +17,16 @@ namespace EECustom.Managers
         public static string BasePath => EntryPoint.BasePath;
         public static ConfigManager Current { get; private set; }
 
+        public static GlobalConfig Global => GetConfig<GlobalConfig>();
+        public static CategoryConfig Categories => GetConfig<CategoryConfig>();
+        public static ModelCustomConfig ModelCustom => GetConfig<ModelCustomConfig>();
+        public static AbilityCustomConfig AbilityCustom => GetConfig<AbilityCustomConfig>();
+        public static ProjectileCustomConfig ProjectileCustom => GetConfig<ProjectileCustomConfig>();
+        public static TentacleCustomConfig TentacleCustom => GetConfig<TentacleCustomConfig>();
+        public static DetectionCustomConfig DetectionCustom => GetConfig<DetectionCustomConfig>();
+        public static SpawnCostCustomConfig SpawnCostCustom => GetConfig<SpawnCostCustomConfig>();
+        public static EnemyAbilityCustomConfig EnemyAbilityCustom => GetConfig<EnemyAbilityCustomConfig>();
+
         private static readonly Type[] _configTypes = new Type[]
         {
             //Normal Configs
@@ -69,43 +79,11 @@ namespace EECustom.Managers
                     NotifyFilter = NotifyFilters.LastWrite,
                     Filter = "*.json"
                 };
-                watcher.Changed += new FileSystemEventHandler(OnConfigFileEdited);
+                watcher.Changed += new FileSystemEventHandler(OnConfigFileEdited_ReloadConfig);
                 watcher.EnableRaisingEvents = true;
             }
 
-            LevelEvents.LevelCleanup += ClearTargetLookup;
-        }
-
-        private static void OnConfigFileEdited(object sender, FileSystemEventArgs e)
-        {
-            ThreadDispatcher.Enqueue(() =>
-            {
-                var filename = Path.GetFileNameWithoutExtension(e.Name);
-                if (_configFileNameToType.TryGetValue(filename.ToUpper(), out var type))
-                {
-                    filename = _configTypeToFileName[type];
-
-                    Logger.Log($"Config File Changed: {filename}");
-
-                    ReloadConfig();
-
-                    //TODO: Implement Reload Individual File
-
-                    /*
-                    _configInstances[filename].Unloaded();
-                    if (_configInstances[filename] is CustomizationConfig custom)
-                    {
-                        var settings = custom.GetAllSettings();
-                        foreach (var setting in settings)
-                        {
-                            setting.OnConfigUnloaded();
-                        }
-                    }
-                    LoadConfig(type);
-                    Current.GenerateBuffer();
-                    */
-                }
-            });
+            LevelEvents.LevelCleanup += OnLevelCleanup_ClearLookup;
         }
 
         internal static void DumpDefault()
@@ -120,17 +98,6 @@ namespace EECustom.Managers
             }
         }
 
-        private static void ClearTargetLookup()
-        {
-            if (Current == null)
-                return;
-
-            foreach (var custom in Current._customizationBuffer)
-            {
-                custom.ClearTargetLookup();
-            }
-        }
-
         internal static void ReloadConfig()
         {
             Logger.Log("HOT RELOADING CONFIG!");
@@ -139,11 +106,11 @@ namespace EECustom.Managers
             LoadAllConfig();
             Current.GenerateBuffer();
 
-            AssetLoaded();
+            FireAssetLoaded();
             Current.FirePrefabBuildEventAll();
         }
 
-        internal static void AssetLoaded()
+        internal static void FireAssetLoaded()
         {
             foreach (var config in Current._customizationBuffer)
             {
@@ -221,6 +188,19 @@ namespace EECustom.Managers
             {
                 Logger.Error($"Error Occured While reading Config from type: {configType.Name}\n{e}");
             }
+        }
+
+        private static T GetConfig<T>() where T : Config
+        {
+            if (_configTypeToFileName.TryGetValue(typeof(T), out var filename))
+            {
+                if (_configInstances.TryGetValue(filename, out var config))
+                {
+                    if (config is T castedConfig)
+                        return castedConfig;
+                }
+            }
+            return null;
         }
 
         private static bool TryLoadConfigData(string filePath, Type type, out Config config)

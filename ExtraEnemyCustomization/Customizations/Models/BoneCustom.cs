@@ -7,7 +7,7 @@ namespace EECustom.Customizations.Models
 {
     public sealed class BoneCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
-        public BoneTransform[] Bones { get; set; } = new BoneTransform[0];
+        public BoneTransform[] Bones { get; set; } = Array.Empty<BoneTransform>();
 
         public override string GetProcessName()
         {

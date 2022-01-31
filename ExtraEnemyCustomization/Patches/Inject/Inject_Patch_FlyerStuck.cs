@@ -12,7 +12,7 @@ namespace EECustom.Patches.Inject
         [HarmonyWrapSafe]
         internal static void Postfix(EnemyAgent __instance)
         {
-            if (!ConfigManager.Current.Global.UsingFlyerStuckCheck)
+            if (!ConfigManager.Global.UsingFlyerStuckCheck)
                 return;
 
             if (!SNet.IsMaster)
@@ -23,8 +23,8 @@ namespace EECustom.Patches.Inject
 
             var flyerHandler = __instance.gameObject.AddComponent<FlyerStuckHandler>();
             flyerHandler.Agent = __instance;
-            flyerHandler.UpdateInterval = ConfigManager.Current.Global.FlyerStuck_Interval;
-            flyerHandler.RetryCount = ConfigManager.Current.Global.FlyerStuck_Retry;
+            flyerHandler.UpdateInterval = ConfigManager.Global.FlyerStuck_Interval;
+            flyerHandler.RetryCount = ConfigManager.Global.FlyerStuck_Retry;
         }
     }
 }

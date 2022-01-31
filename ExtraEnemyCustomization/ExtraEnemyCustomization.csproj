@@ -17,6 +17,8 @@
     <RootNamespace>EECustom</RootNamespace>
     <Configurations>Debug;Release</Configurations>
     <Platforms>x64</Platforms>
+    <AnalysisLevel>5.0</AnalysisLevel>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>
 
   <ItemGroup>

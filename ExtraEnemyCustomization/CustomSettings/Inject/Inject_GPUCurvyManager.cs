@@ -12,7 +12,7 @@ namespace EECustom.CustomSettings.Inject
         [HarmonyPatch(nameof(GPUCurvyManager.Setup))]
         internal static void Post_Setup()
         {
-            foreach (var tentDef in ConfigManager.Current.TentacleCustom.TentacleDefinitions)
+            foreach (var tentDef in ConfigManager.TentacleCustom.TentacleDefinitions)
             {
                 CustomTentacleManager.GenerateTentacle(tentDef);
             }

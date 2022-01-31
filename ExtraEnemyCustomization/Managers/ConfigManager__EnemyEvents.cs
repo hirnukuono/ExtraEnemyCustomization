@@ -8,7 +8,7 @@ namespace EECustom.Managers
 {
     public partial class ConfigManager
     {
-        public class EventHolder<T> where T : class, IEnemyEvent
+        public class EnemyEventHolder<T> where T : class, IEnemyEvent
         {
             public string EventName { get; set; } = string.Empty;
             public bool IgnoreLogs { get; set; } = false;
@@ -28,10 +28,10 @@ namespace EECustom.Managers
             }
 
             private readonly List<T> _eventList = new();
-            private T[] _events = new T[0];
+            private T[] _events = Array.Empty<T>();
             private bool _hasDirty = false;
 
-            public EventHolder(string eventName, bool ignoreLogs = false)
+            public EnemyEventHolder(string eventName, bool ignoreLogs = false)
             {
                 EventName = eventName;
                 IgnoreLogs = ignoreLogs;
@@ -94,10 +94,10 @@ namespace EECustom.Managers
             }
         }
 
-        private readonly EventHolder<IEnemyPrefabBuiltEvent> _enemyPrefabBuiltHolder = new("PrefabBuilt");
-        private readonly EventHolder<IEnemySpawnedEvent> _enemySpawnedHolder = new("Spawned");
-        private readonly EventHolder<IEnemySyncSpawnedEvent> _enemySyncSpawnedHolder = new("SyncSpawned");
-        private readonly EventHolder<IEnemyGlowEvent> _enemyGlowHolder = new("Glow", ignoreLogs: true);
+        private readonly EnemyEventHolder<IEnemyPrefabBuiltEvent> _enemyPrefabBuiltHolder = new("PrefabBuilt");
+        private readonly EnemyEventHolder<IEnemySpawnedEvent> _enemySpawnedHolder = new("Spawned");
+        private readonly EnemyEventHolder<IEnemySyncSpawnedEvent> _enemySyncSpawnedHolder = new("SyncSpawned");
+        private readonly EnemyEventHolder<IEnemyGlowEvent> _enemyGlowHolder = new("Glow", ignoreLogs: true);
 
         private void GenerateEventBuffer()
         {

@@ -97,7 +97,7 @@ namespace EECustom.Utils.JsonConverters
             }
         }
 
-        private bool TryParseColor(string input, out Color color)
+        private static bool TryParseColor(string input, out Color color)
         {
             if (!RegexUtil.TryParseVectorString(input, out var array))
             {

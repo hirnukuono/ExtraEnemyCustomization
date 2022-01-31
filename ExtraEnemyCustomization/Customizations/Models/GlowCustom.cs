@@ -24,7 +24,7 @@ namespace EECustom.Customizations.Models
         public Color TentacleAttackColor { get; set; } = new Vector4(1.5f, 0.1f, 0.1f, 1f) * 1.75f;
         public Color ShooterFireColor { get; set; } = new Vector4(1f, 0.5f, 0.45f, 1f) * 2.15f;
 
-        public PulseEffectData[] PulseEffects { get; set; } = new PulseEffectData[0];
+        public PulseEffectData[] PulseEffects { get; set; } = Array.Empty<PulseEffectData>();
 
         public override string GetProcessName()
         {
