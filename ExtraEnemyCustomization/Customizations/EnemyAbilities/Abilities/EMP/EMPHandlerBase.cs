@@ -181,7 +181,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
         /// <returns></returns>
         protected static float GetRandomDelay(float min, float max)
         {
-            return min + (float)(_rand.Next() * max);
+            return min + (float)(_rand.Next() * (max - min));
         }
 
         protected static bool FlickerUtil(int oneInX = 2)
