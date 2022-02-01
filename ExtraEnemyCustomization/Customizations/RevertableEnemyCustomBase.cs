@@ -7,7 +7,7 @@ namespace EECustom.Customizations
     {
         private static readonly Stack<Action> _revertDelegates = new();
 
-        public void PushRevertJob(Action revertAction)
+        public static void PushRevertJob(Action revertAction)
         {
             _revertDelegates.Push(revertAction);
         }

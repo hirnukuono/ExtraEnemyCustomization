@@ -36,7 +36,7 @@ namespace EECustom.Networking.Events
             }
         }
 
-        private void UpdateHandler()
+        private static void UpdateHandler()
         {
             _handler = _localAgent.gameObject.GetComponent<BleedingHandler>();
 

@@ -8,8 +8,8 @@ namespace EECustom.Customizations.Strikers
 
     public sealed class StrikerTentacleCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
-        public GPUCurvyType[] TentacleTypes { get; set; } = new GPUCurvyType[0];
-        public TentacleSettingData[] TentacleSettings { get; set; } = new TentacleSettingData[0];
+        public GPUCurvyType[] TentacleTypes { get; set; } = Array.Empty<GPUCurvyType>();
+        public TentacleSettingData[] TentacleSettings { get; set; } = Array.Empty<TentacleSettingData>();
 
         public override string GetProcessName()
         {

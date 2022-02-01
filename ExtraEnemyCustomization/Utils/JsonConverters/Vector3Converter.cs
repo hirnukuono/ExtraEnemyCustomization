@@ -57,7 +57,7 @@ namespace EECustom.Utils.JsonConverters
             }
         }
 
-        private bool TryParseVector3(string input, out Vector3 vector)
+        private static bool TryParseVector3(string input, out Vector3 vector)
         {
             if (!RegexUtil.TryParseVectorString(input, out var array))
             {

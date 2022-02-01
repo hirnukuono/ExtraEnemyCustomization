@@ -1,13 +1,14 @@
 ﻿using EECustom.Customizations.EnemyAbilities.Abilities;
 using EECustom.Extensions;
 using Enemies;
+using System;
 using System.Collections.Generic;
 
 namespace EECustom.Customizations.EnemyAbilities
 {
     public abstract class EnemyAbilityCustomBase<T> : EnemyCustomBase, IEnemySpawnedEvent where T : AbilitySettingBase
     {
-        public T[] Abilities { get; set; } = new T[0];
+        public T[] Abilities { get; set; } = Array.Empty<T>();
 
         public override sealed void OnConfigLoaded()
         {

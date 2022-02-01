@@ -44,7 +44,7 @@ namespace EECustom.Customizations.Abilities
             }
         }
 
-        public void ApplyInfection(InfectionAttackData data, PlayerAgent player, Agent _)
+        private static void ApplyInfection(InfectionAttackData data, PlayerAgent player, Agent _)
         {
             var infectionAbs = data.Infection.GetAbsValue(PlayerData.MaxInfection);
             if (infectionAbs == 0.0f)

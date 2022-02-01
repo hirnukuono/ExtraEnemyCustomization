@@ -1,11 +1,12 @@
 ﻿using Enemies;
+using System;
 using UnityEngine;
 
 namespace EECustom.Customizations.Models
 {
     public sealed class ModelRefCustom : RevertableEnemyCustomBase, IEnemyPrefabBuiltEvent
     {
-        public ModelRefData[] ModelRefs { get; set; } = new ModelRefData[0];
+        public ModelRefData[] ModelRefs { get; set; } = Array.Empty<ModelRefData>();
 
         public override string GetProcessName()
         {

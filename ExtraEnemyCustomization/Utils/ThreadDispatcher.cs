@@ -31,6 +31,7 @@ namespace EECustom.Utils
             }
         }
 
+#pragma warning disable CA1822 // Mark members as static
         internal void Update()
         {
             lock (_actionQueue)
@@ -41,5 +42,6 @@ namespace EECustom.Utils
                 }
             }
         }
+#pragma warning restore CA1822 // Mark members as static
     }
 }

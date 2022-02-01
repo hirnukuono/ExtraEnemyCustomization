@@ -59,6 +59,8 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
 
         private bool _destroyed = false;
 
+        private static readonly System.Random _rand = new();
+
         public abstract void Setup(GameObject gameObject, EMPController controller);
 
         public static void Cleanup()
@@ -177,14 +179,14 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
         /// <param name="min">The minimum value</param>
         /// <param name="max">The maximum value</param>
         /// <returns></returns>
-        protected float GetRandomDelay(float min, float max)
+        protected static float GetRandomDelay(float min, float max)
         {
-            return UnityEngine.Random.RandomRange(min, max);
+            return min + (float)(_rand.Next() * max);
         }
 
-        protected bool FlickerUtil(int oneInX = 2)
+        protected static bool FlickerUtil(int oneInX = 2)
         {
-            return UnityEngine.Random.RandomRange(0, oneInX) == 0;
+            return _rand.Next(0, oneInX) == 0;
         }
 
         protected enum DeviceState

@@ -1,14 +1,15 @@
 ﻿using EECustom.Customizations;
 using EECustom.Customizations.EnemyAbilities;
 using EECustom.Customizations.EnemyAbilities.Abilities;
+using System;
 using System.Collections.Generic;
 
 namespace EECustom.Configs.Customizations
 {
     public sealed class EnemyAbilityCustomConfig : CustomizationConfig
     {
-        public BehaviourAbilityCustom[] BehaviourAbilityCustom { get; set; } = new BehaviourAbilityCustom[0];
-        public DeathAbilityCustom[] DeathAbilityCustom { get; set; } = new DeathAbilityCustom[0];
+        public BehaviourAbilityCustom[] BehaviourAbilityCustom { get; set; } = Array.Empty<BehaviourAbilityCustom>();
+        public DeathAbilityCustom[] DeathAbilityCustom { get; set; } = Array.Empty<DeathAbilityCustom>();
         public EnemyAbilitiesSetting Abilities { get; set; } = new EnemyAbilitiesSetting();
 
         public override string FileName => "EnemyAbility";
@@ -36,12 +37,12 @@ namespace EECustom.Configs.Customizations
 
     public class EnemyAbilitiesSetting
     {
-        public ChainedAbility[] Chain { get; set; } = new ChainedAbility[0];
-        public FogSphereAbility[] FogSphere { get; set; } = new FogSphereAbility[0];
-        public ExplosionAbility[] Explosion { get; set; } = new ExplosionAbility[0];
-        public SpawnEnemyAbility[] SpawnEnemy { get; set; } = new SpawnEnemyAbility[0];
-        public DoAnimAbility[] DoAnim { get; set; } = new DoAnimAbility[0];
-        public EMPAbility[] EMP { get; set; } = new EMPAbility[0];
+        public ChainedAbility[] Chain { get; set; } = Array.Empty<ChainedAbility>();
+        public FogSphereAbility[] FogSphere { get; set; } = Array.Empty<FogSphereAbility>();
+        public ExplosionAbility[] Explosion { get; set; } = Array.Empty<ExplosionAbility>();
+        public SpawnEnemyAbility[] SpawnEnemy { get; set; } = Array.Empty<SpawnEnemyAbility>();
+        public DoAnimAbility[] DoAnim { get; set; } = Array.Empty<DoAnimAbility>();
+        public EMPAbility[] EMP { get; set; } = Array.Empty<EMPAbility>();
 
         public void RegisterAll()
         {

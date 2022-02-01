@@ -1,6 +1,7 @@
 ﻿using EECustom.Customizations.Shooters.Handlers;
 using EECustom.Utils.JsonElements;
 using Enemies;
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace EECustom.Customizations.Shooters
 {
     public sealed class ShooterFireCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
-        public FireSetting[] FireSettings { get; set; } = new FireSetting[0];
+        public FireSetting[] FireSettings { get; set; } = Array.Empty<FireSetting>();
 
         public override string GetProcessName()
         {
