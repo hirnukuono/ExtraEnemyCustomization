@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace EECustom.Customizations.EnemyAbilities.Abilities
 {
     public class ChainedAbility : AbilityBase<ExplosionBehaviour>
     {
-        public EventBlock[] Abilities { get; set; } = new EventBlock[0];
+        public EventBlock[] Abilities { get; set; } = Array.Empty<EventBlock>();
 
         public float ExitDelay { get; set; } = 0.0f;
         public bool ExitAllInForceExit { get; set; } = true;

@@ -1,9 +1,13 @@
-﻿using EECustom.Customizations.EnemyAbilities.Abilities;
+﻿using Agents;
+using EECustom.Customizations.EnemyAbilities.Abilities;
+using EECustom.Customizations.EnemyAbilities.Handlers;
 using EECustom.Events;
 using EECustom.Utils.JsonElements;
 using Enemies;
 using Player;
 using SNetwork;
+using System;
+using System.Linq;
 using UnityEngine;
 
 namespace EECustom.Customizations.EnemyAbilities
@@ -30,111 +34,11 @@ namespace EECustom.Customizations.EnemyAbilities
 
         public override void OnBehaviourAssigned(EnemyAgent agent, AbilityBehaviour behaviour, BehaviourAbilitySetting setting)
         {
-            var data = new BehaviourEnemyData()
-            {
-                Agent = agent,
-                Behaviour = behaviour,
-                Setting = setting,
-                UpdateTimer = 0.0f,
-                CooldownTimer = 0.0f
-            };
-
-            MonoBehaviourEventHandler.AttatchToObject(agent.gameObject, onUpdate: (GameObject _) =>
-            {
-                OnUpdate(data);
-            });
+            var updater = agent.gameObject.AddComponent<BehaviourUpdateHandler>();
+            updater.Agent = agent;
+            updater.Behaviour = behaviour;
+            updater.Setting = setting;
         }
-
-        private void OnUpdate(BehaviourEnemyData data)
-        {
-            if (Clock.Time < data.UpdateTimer)
-                return;
-
-            if (!SNet.IsMaster)
-                return;
-
-            var agent = data.Agent;
-            var setting = data.Setting;
-            var behaviour = data.Behaviour;
-
-            data.UpdateTimer = Clock.Time + setting.UpdateInterval;
-
-            var canUseAbility = true;
-            canUseAbility &= data.Setting.KeepOnDead || data.Agent.Alive;
-            canUseAbility &= data.Setting.AllowedMode.IsMatch(agent);
-            canUseAbility &= data.Setting.AllowWhileAttack || (!data.Agent.Locomotion.IsAttacking());
-
-            var hasLos = false;
-            float distance;
-            float sqrDistance = float.MaxValue;
-            if (agent.AI.IsTargetValid)
-            {
-                distance = agent.AI.Target.m_distance;
-                hasLos = agent.AI.Target.m_hasLineOfSight;
-            }
-            else
-            {
-                for (int i = 0; i < PlayerManager.PlayerAgentsInLevel.Count; i++)
-                {
-                    var playerAgent = PlayerManager.PlayerAgentsInLevel[i];
-                    var tempDistance = (agent.EyePosition - playerAgent.EyePosition).sqrMagnitude;
-                    if (sqrDistance >= tempDistance)
-                    {
-                        sqrDistance = tempDistance;
-                        hasLos = !Physics.Linecast(agent.EyePosition, playerAgent.EyePosition, LayerManager.MASK_WORLD);
-                    }
-                }
-
-                if (sqrDistance == float.MaxValue)
-                {
-                    hasLos = false;
-                    distance = float.MaxValue;
-                }
-                else
-                {
-                    distance = Mathf.Sqrt(sqrDistance);
-                }
-            }
-
-            var distSettingToUse = hasLos ? setting.DistanceWithLOS : setting.DistanceWithoutLOS;
-            canUseAbility &= distSettingToUse.CanUseAbility(hasLos, distance);
-
-            if (!canUseAbility)
-            {
-                if (setting.ForceExitOnConditionMismatch && behaviour.Executing)
-                {
-                    behaviour.DoExitSync();
-                }
-                return;
-            }
-
-            if (setting.Cooldown.Enabled)
-            {
-                if (!setting.Cooldown.CanUseAbility(data.CooldownTimer))
-                    return;
-
-                if (!data.HasInitialTimerDone)
-                {
-                    data.CooldownTimer = Clock.Time + setting.Cooldown.InitCooldown;
-                    data.HasInitialTimerDone = true;
-                    return;
-                }
-                else
-                    data.CooldownTimer = Clock.Time + setting.Cooldown.Cooldown;
-            }
-
-            behaviour.DoTriggerSync();
-        }
-    }
-
-    public class BehaviourEnemyData
-    {
-        public EnemyAgent Agent;
-        public AbilityBehaviour Behaviour;
-        public BehaviourAbilitySetting Setting;
-        public float UpdateTimer = 0.0f;
-        public float CooldownTimer = 0.0f;
-        public bool HasInitialTimerDone = false;
     }
 
     public class BehaviourAbilitySetting : AbilitySettingBase
@@ -142,19 +46,36 @@ namespace EECustom.Customizations.EnemyAbilities
         public float UpdateInterval { get; set; } = 0.15f;
         public bool ForceExitOnConditionMismatch { get; set; } = false;
         public AgentModeTarget AllowedMode { get; set; } = AgentModeTarget.Agressive;
+        public float AllowedModeTransitionTime { get; set; } = 0.0f;
         public bool KeepOnDead { get; set; } = false;
         public bool AllowWhileAttack { get; set; } = false;
+        public EnemyStateSetting State { get; set; } = new();
         public DistanceSetting DistanceWithLOS { get; set; } = new();
         public DistanceSetting DistanceWithoutLOS { get; set; } = new();
         public CooldownSetting Cooldown { get; set; } = new();
     }
 
-    public enum AbilityActiveType
+    public class EnemyStateSetting
     {
-        Hibernate,
-        Scout,
-        Combat,
-        All
+        public StateCheckingBehaviour Mode { get; set; } = StateCheckingBehaviour.None;
+        public ES_StateEnum[] States { get; set; } = Array.Empty<ES_StateEnum>();
+
+        public bool CanUseAbility(ES_StateEnum currentState)
+        {
+            return Mode switch
+            {
+                StateCheckingBehaviour.AllowStates => States.Contains(currentState),
+                StateCheckingBehaviour.DisallowStates => !States.Contains(currentState),
+                _ => true,
+            };
+        }
+
+        public enum StateCheckingBehaviour
+        {
+            None,
+            AllowStates,
+            DisallowStates
+        }
     }
 
     public class CooldownSetting
@@ -202,12 +123,12 @@ namespace EECustom.Customizations.EnemyAbilities
 
             return true;
         }
-    }
 
-    public enum DistanceCheckingBehaviour
-    {
-        AlwaysAllow,
-        AlwaysDisallow,
-        UsingDistance
+        public enum DistanceCheckingBehaviour
+        {
+            AlwaysAllow,
+            AlwaysDisallow,
+            UsingDistance
+        }
     }
 }
