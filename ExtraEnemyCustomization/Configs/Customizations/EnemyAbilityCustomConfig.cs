@@ -37,22 +37,24 @@ namespace EECustom.Configs.Customizations
 
     public class EnemyAbilitiesSetting
     {
-        public ChainedAbility[] Chain { get; set; } = Array.Empty<ChainedAbility>();
         public FogSphereAbility[] FogSphere { get; set; } = Array.Empty<FogSphereAbility>();
         public ExplosionAbility[] Explosion { get; set; } = Array.Empty<ExplosionAbility>();
         public SpawnEnemyAbility[] SpawnEnemy { get; set; } = Array.Empty<SpawnEnemyAbility>();
+        public SpawnWaveAbility[] SpawnWave { get; set; } = Array.Empty<SpawnWaveAbility>();
         public DoAnimAbility[] DoAnim { get; set; } = Array.Empty<DoAnimAbility>();
         public EMPAbility[] EMP { get; set; } = Array.Empty<EMPAbility>();
+        public ChainedAbility[] Chain { get; set; } = Array.Empty<ChainedAbility>();
 
         public void RegisterAll()
         {
             var list = new List<IAbility>();
-            list.AddRange(Chain);
             list.AddRange(FogSphere);
             list.AddRange(Explosion);
             list.AddRange(SpawnEnemy);
+            list.AddRange(SpawnWave);
             list.AddRange(DoAnim);
             list.AddRange(EMP);
+            list.AddRange(Chain);
 
             foreach (var ab in list)
             {
