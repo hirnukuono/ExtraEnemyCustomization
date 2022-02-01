@@ -171,6 +171,26 @@
         "Name": "SpawnEnemy"
       }
     ],
+    "SpawnWave": [
+      {
+        "WaveSettingID": 3,
+        "WavePopulationID": 1,
+        "SpawnType": "InRelationToClosestAlivePlayer",
+        /*
+        Possible SpawnType Value:
+          InRelationToClosestAlivePlayer = 0,
+          InSuppliedCourseNodeZone = 1,
+          InSuppliedCourseNode = 2,
+          InSuppliedCourseNode_OnPosition = 3,
+          ClosestToSuppliedNodeButNoBetweenPlayers = 4,
+          OnSpawnPoints = 5,
+          FromElevatorDirection = 6
+        */
+        "SpawnDelay": 0.0,
+        "PlayDistantRoar": true,
+        "Name": "Spawn ScoutWave"
+      }
+    ],
     "DoAnim": [
       {
         "Animation": "Screams",
