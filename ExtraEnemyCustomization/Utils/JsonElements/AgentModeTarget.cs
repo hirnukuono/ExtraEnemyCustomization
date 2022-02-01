@@ -6,6 +6,7 @@ namespace EECustom.Utils.JsonElements
 {
     public struct AgentModeTarget
     {
+        public static readonly AgentModeTarget All = new(AgentModeType.Off | AgentModeType.Hibernate | AgentModeType.Agressive | AgentModeType.Scout | AgentModeType.Patrolling);
         public static readonly AgentModeTarget Scout = new(AgentModeType.Scout);
         public static readonly AgentModeTarget Hibernate = new(AgentModeType.Hibernate);
         public static readonly AgentModeTarget Agressive = new(AgentModeType.Agressive);
