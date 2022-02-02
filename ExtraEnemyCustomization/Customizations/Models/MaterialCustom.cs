@@ -18,30 +18,30 @@ namespace EECustom.Customizations.Models
         public void OnPrefabBuilt(EnemyAgent agent)
         {
             var charMats = agent.GetComponentInChildren<CharacterMaterialHandler>().m_materialRefs;
-            foreach (var mat in charMats)
+            foreach (var matRef in charMats)
             {
-                var matName = mat.m_material.name;
+                var matName = matRef.m_material.name;
                 LogVerbose($" - Debug Info, Material Found: {matName}");
 
                 var swapSet = MaterialSets.FirstOrDefault(x => x.From.Equals(matName));
                 if (swapSet == null)
                     continue;
 
-                if (!AssetCacheManager.Materials.TryGet(swapSet.To, out var newMat))
+                if (!AssetCacheManager.Materials.TryGet(swapSet.To, out var toMat))
                 {
                     LogError($"MATERIAL WAS NOT CACHED!: {swapSet.To}");
                     continue;
                 }
 
-                LogDev($" - Trying to Replace Material, Before: {matName} After: {newMat.name}");
+                LogDev($" - Trying to Replace Material, Before: {matName} After: {toMat.name}");
 
-                var originalMat = mat.m_material;
+                var originalMat = matRef.m_material;
                 PushRevertJob(() =>
                 {
-                    mat.m_material = originalMat;
+                    matRef.m_material = originalMat;
                 });
 
-                var newMaterial = new Material(newMat);
+                var newMaterial = new Material(toMat);
                 switch (swapSet.SkinNoise)
                 {
                     case SkinNoiseType.ForceOn:
@@ -87,7 +87,7 @@ namespace EECustom.Customizations.Models
                     newMaterial.SetFloat(floatProp.Name, floatProp.Value);
                 }
 
-                mat.m_material = newMaterial;
+                matRef.m_material = newMaterial;
                 LogVerbose(" - Replaced!");
             }
         }
