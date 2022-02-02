@@ -1,6 +1,7 @@
 ﻿using EECustom.Managers;
 using Enemies;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -15,6 +16,23 @@ namespace EECustom.Customizations.Models
             return "Material";
         }
 
+        public override void OnConfigLoaded()
+        {
+            var list = new List<MaterialSwapSet>();
+            foreach(var group in MaterialSets.GroupBy(x => x.From))
+            {
+                var firstItem = group.First();
+                if (group.Count() > 1)
+                {
+                    LogWarning($"Duplicate Material Swap Setting: '{firstItem.From}' will use first occurrence");
+                }
+
+                list.Add(firstItem);
+            }
+
+            MaterialSets = list.ToArray();
+        }
+
         public void OnPrefabBuilt(EnemyAgent agent)
         {
             var charMats = agent.GetComponentInChildren<CharacterMaterialHandler>().m_materialRefs;
@@ -23,7 +41,7 @@ namespace EECustom.Customizations.Models
                 var matName = matRef.m_material.name;
                 LogVerbose($" - Debug Info, Material Found: {matName}");
 
-                var swapSet = MaterialSets.FirstOrDefault(x => x.From.Equals(matName));
+                var swapSet = MaterialSets.SingleOrDefault(x => x.From.Equals(matName));
                 if (swapSet == null)
                     continue;
 
