@@ -29,8 +29,8 @@ namespace EECustom.CustomSettings
 
         static CustomScoutWaveManager()
         {
-            LevelEvents.OnBuildStart += OnLevelStateUpdate;
-            LevelEvents.OnLevelCleanup += OnLevelStateUpdate;
+            LevelEvents.BuildStart += OnLevelStateUpdate;
+            LevelEvents.LevelCleanup += OnLevelStateUpdate;
         }
 
         private static void OnLevelStateUpdate()
@@ -181,6 +181,13 @@ namespace EECustom.CustomSettings
                 return null;
         }
 
+        public static void ClearAll()
+        {
+            _scoutSettings.Clear();
+            _waveSettingDict.Clear();
+            _targetSettingDict.Clear();
+        }
+
         public static void TriggerScoutWave(EnemyAgent scoutAgent)
         {
             if (!_isDefaultSettingBlocked)
@@ -309,7 +316,7 @@ namespace EECustom.CustomSettings
                 switch (wave.SpawnSetting.NodeType)
                 {
                     case SpawnNodeType.FromArea:
-                        if (Builder.CurrentFloor.TryGetZoneByLocalIndex(wave.SpawnSetting.Layer, wave.SpawnSetting.LocalIndex, out var zone))
+                        if (Builder.CurrentFloor.TryGetZoneByLocalIndex(node.m_dimension.DimensionIndex, wave.SpawnSetting.Layer, wave.SpawnSetting.LocalIndex, out var zone))
                         {
                             if (wave.SpawnSetting.AreaIndex < zone.m_areas.Count)
                             {

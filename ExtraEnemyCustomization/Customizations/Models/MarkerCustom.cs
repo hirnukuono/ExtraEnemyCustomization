@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace EECustom.Customizations.Models
 {
-    public class MarkerCustom : EnemyCustomBase, IEnemyPrefabBuiltEvent, IEnemySpawnedEvent
+    public sealed class MarkerCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
         public string SpriteName { get; set; } = string.Empty;
         public Color MarkerColor { get; set; } = new Color(0.8235f, 0.1843f, 0.1176f);
@@ -19,7 +19,6 @@ namespace EECustom.Customizations.Models
         public bool AllowMarkingOnHibernate { get; set; } = false;
 
         private Sprite _sprite = null;
-        private bool _prespawnOnce = false;
         //private bool _HasText = false;
         //private bool _TextRequiresAutoUpdate = false;
 
@@ -28,46 +27,49 @@ namespace EECustom.Customizations.Models
             return "Marker";
         }
 
+        public override void OnAssetLoaded()
+        {
+            if (string.IsNullOrEmpty(SpriteName))
+                return;
+
+            if (!SpriteManager.TryGetSpriteCache(SpriteName, 64.0f, out _sprite))
+                _sprite = SpriteManager.GenerateSprite(SpriteName);
+        }
+
         public override void OnConfigLoaded()
         {
             //TODO: Implement it someday
-            if (string.IsNullOrEmpty(MarkerText))
-                return;
-
-            /*
-            _HasText = true;
-
-            if (MarkerText.ContainsAnyIgnoreCase("[HP_MAX]", "[HP]", "[HP_PERCENT]", "[HP_PERCENT_INT]"))
+            if (!string.IsNullOrEmpty(MarkerText))
             {
-                _TextRequiresAutoUpdate = true;
+                /*
+                _HasText = true;
+
+                if (MarkerText.ContainsAnyIgnoreCase("[HP_MAX]", "[HP]", "[HP_PERCENT]", "[HP_PERCENT_INT]"))
+                {
+                    _TextRequiresAutoUpdate = true;
+                }
+                */
             }
-            */
+
+            EnemyMarkerEvents.Marked += OnMarked;
         }
 
-        public void OnPrefabBuilt(EnemyAgent agent)
+        public override void OnConfigUnloaded()
         {
-            if (!_prespawnOnce)
-            {
-                _prespawnOnce = true;
-
-                if (string.IsNullOrEmpty(SpriteName))
-                    return;
-
-                if (!SpriteManager.TryGetSpriteCache(SpriteName, 64.0f, out _sprite))
-                    _sprite = SpriteManager.GenerateSprite(SpriteName);
-            }
+            EnemyMarkerEvents.Marked -= OnMarked;
         }
 
         public void OnSpawned(EnemyAgent agent)
         {
             if (AllowMarkingOnHibernate)
                 agent.ScannerData.m_soundIndex = 0; //I know... this is such a weird way to do it...
-
-            EnemyMarkerEvents.RegisterOnMarked(agent, OnMarked);
         }
 
         private void OnMarked(EnemyAgent agent, NavMarker marker)
         {
+            if (!IsTarget(agent))
+                return;
+
             marker.m_enemySubObj.SetColor(MarkerColor);
             //marker.SetTitle("wew");
             //marker.SetVisualStates(NavMarkerOption.Enemy | NavMarkerOption.Title, NavMarkerOption.Enemy | NavMarkerOption.Title, NavMarkerOption.Empty, NavMarkerOption.Empty);

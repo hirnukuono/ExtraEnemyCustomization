@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Text.RegularExpressions;
+using UnityEngine;
 
 namespace EECustom.Extensions
 {
@@ -10,6 +11,17 @@ namespace EECustom.Extensions
             foreach (var comp in comps)
             {
                 if (comp.gameObject.name != name) continue;
+                return comp.gameObject;
+            }
+            return null;
+        }
+
+        public static GameObject RegexFindChild(this GameObject obj, Regex rx, bool includeInactive = false)
+        {
+            var comps = obj.GetComponentsInChildren<Transform>(includeInactive);
+            foreach (var comp in comps)
+            {
+                if (!rx.IsMatch(comp.name)) continue;
                 return comp.gameObject;
             }
             return null;

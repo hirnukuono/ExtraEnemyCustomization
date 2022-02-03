@@ -1,4 +1,5 @@
 ﻿using EECustom.Customizations.Models.Handlers;
+using EECustom.Utils.JsonElements;
 using Enemies;
 using System;
 using System.Collections.Generic;
@@ -7,11 +8,11 @@ using UnityEngine;
 
 namespace EECustom.Customizations.Models
 {
-    public class GlowCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyGlowEvent
+    public sealed class GlowCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyGlowEvent
     {
-        public readonly static Color DefaultPropaWakeColor = ES_HibernateWakeUp.m_propagatedWakeupColor;
+        public static readonly Color DefaultPropaWakeColor = ES_HibernateWakeUp.m_propagatedWakeupColor;
 
-        private readonly static System.Random _random = new();
+        private static readonly System.Random _random = new();
 
         public Color DefaultColor { get; set; } = Color.black;
 
@@ -23,7 +24,7 @@ namespace EECustom.Customizations.Models
         public Color TentacleAttackColor { get; set; } = new Vector4(1.5f, 0.1f, 0.1f, 1f) * 1.75f;
         public Color ShooterFireColor { get; set; } = new Vector4(1f, 0.5f, 0.45f, 1f) * 2.15f;
 
-        public PulseEffectData[] PulseEffects { get; set; } = new PulseEffectData[0];
+        public PulseEffectData[] PulseEffects { get; set; } = Array.Empty<PulseEffectData>();
 
         public override string GetProcessName()
         {
@@ -93,7 +94,7 @@ namespace EECustom.Customizations.Models
 
     public struct PulseEffectData
     {
-        public PulseEffectTarget Target { get; set; }
+        public AgentModeTarget Target { get; set; }
         public float Duration { get; set; }
 
         [JsonPropertyName("GlowPattern")]
@@ -106,7 +107,7 @@ namespace EECustom.Customizations.Models
 
         public PatternDataCache[] PatternData;
 
-        public PulseEffectData(PulseEffectTarget target = PulseEffectTarget.None, float interval = 1.0f, string pattern = "0")
+        public PulseEffectData(AgentModeTarget target, float interval, string pattern)
         {
             Target = target;
             Duration = interval;
@@ -195,14 +196,6 @@ namespace EECustom.Customizations.Models
             PatternData = cacheList.ToArray();
             return PatternData;
         }
-    }
-
-    public enum PulseEffectTarget
-    {
-        None,
-        Hibernate,
-        Combat,
-        Scout
     }
 
     public struct PatternDataCache

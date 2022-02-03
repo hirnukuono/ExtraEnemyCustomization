@@ -57,7 +57,7 @@ namespace EECustom.Utils.JsonConverters
             }
         }
 
-        private bool TryParseVector3(string input, out Vector3 vector)
+        private static bool TryParseVector3(string input, out Vector3 vector)
         {
             if (!RegexUtil.TryParseVectorString(input, out var array))
             {
@@ -77,7 +77,7 @@ namespace EECustom.Utils.JsonConverters
 
         public override void Write(Utf8JsonWriter writer, Vector3 value, JsonSerializerOptions options)
         {
-            throw new NotImplementedException();
+            writer.WriteStringValue(string.Format("({0} {1} {2})", value.x, value.y, value.z));
         }
     }
 }

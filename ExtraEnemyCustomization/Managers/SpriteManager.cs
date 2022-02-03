@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace EECustom.Managers
 {
-    public class SpriteManager
+    public static class SpriteManager
     {
         public static string BaseSpritePath { get; private set; }
 
@@ -39,7 +39,11 @@ namespace EECustom.Managers
                 var texture2D = new Texture2D(2, 2);
                 if (!ImageConversion.LoadImage(texture2D, fileData))
                     return;
+                
+                texture2D.name = fileNameWOExt;
+                texture2D.hideFlags = HideFlags.HideAndDontSave;
 
+                Logger.Debug($"GeneratedTexture: {fileNameWOExt}");
                 _textureCache.Add(fileNameWOExt, texture2D);
             }
         }
@@ -57,15 +61,10 @@ namespace EECustom.Managers
 
             var newSprite = Sprite.Create(texture2D, new Rect(0, 0, texture2D.width, texture2D.height), new Vector2(0.5f, 0.5f), pixelsPerUnit);
             newSprite.name = spriteKey;
+            newSprite.hideFlags = HideFlags.HideAndDontSave;
 
-            var antiDestroy = new GameObject();
-            var spriteRenderer = antiDestroy.AddComponent<SpriteRenderer>();
-            spriteRenderer.sprite = newSprite;
-            UnityEngine.Object.DontDestroyOnLoad(antiDestroy);
-            antiDestroy.name = "PluginGenerated_CustomSpriteHolder_" + spriteKey;
-            antiDestroy.SetActive(false);
-            _spriteCache.Add(spriteKey, newSprite);
             Logger.Debug($"GeneratedSprite: {spriteKey}");
+            _spriteCache.Add(spriteKey, newSprite);
 
             return newSprite;
         }

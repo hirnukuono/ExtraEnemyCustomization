@@ -4,7 +4,7 @@ using EECustom.Events;
 using EECustom.Extensions;
 using Enemies;
 using SNetwork;
-using System;
+using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 
 namespace EECustom.Customizations.Abilities.Handlers
@@ -21,15 +21,9 @@ namespace EECustom.Customizations.Abilities.Handlers
         private bool _isRegening = false;
         private bool _isInitialTimerDone = false;
         private bool _alwaysRegen = false;
-        private bool _isDecay = false;
+        private bool _isRegenMode = false;
         private float _regenCapAbsValue = 0.0f;
         private float _regenAmountAbsValue = 0.0f;
-
-        private Action<EnemyAgent, Agent> _onDamageDel;
-
-        public HealthRegenHandler(IntPtr ptr) : base(ptr)
-        {
-        }
 
         internal void Start()
         {
@@ -38,31 +32,22 @@ namespace EECustom.Customizations.Abilities.Handlers
 
             if (!_alwaysRegen)
             {
-                //DamageBase.add_CallOnTakeDamage(new Action<float>(OnTakeDamage)); This doesn't work for some reason rofl
-                _onDamageDel = new Action<EnemyAgent, Agent>((EnemyAgent a1, Agent a2) =>
-                {
-                    if (a1.GlobalID == DamageBase.Owner.GlobalID)
-                    {
-                        OnTakeDamage();
-                    }
-                });
-
-                EnemyDamageEvents.OnDamage += _onDamageDel;
+                EnemyDamageEvents.Damage += OnTakeDamage;
                 DamageBase.Owner.AddOnDeadOnce(() =>
                 {
-                    EnemyDamageEvents.OnDamage -= _onDamageDel;
+                    EnemyDamageEvents.Damage -= OnTakeDamage;
                 });
             }
 
             _regenCapAbsValue = RegenData.RegenCap.GetAbsValue(DamageBase.HealthMax);
             _regenAmountAbsValue = RegenData.RegenAmount.GetAbsValue(DamageBase.HealthMax);
 
-            if (_regenAmountAbsValue <= 0.0f)
-                _isDecay = true;
+            if (_regenAmountAbsValue >= 0.0f)
+                _isRegenMode = true;
 
-            if (_alwaysRegen || _isDecay)
+            if (_alwaysRegen || !_isRegenMode)
             {
-                OnTakeDamage();
+                StartRegen();
             }
         }
 
@@ -80,46 +65,88 @@ namespace EECustom.Customizations.Abilities.Handlers
             }
             else if (_isInitialTimerDone && _regenIntervalTimer <= Clock.Time)
             {
-                if (!_isDecay && DamageBase.Health >= _regenCapAbsValue)
-                    return;
-
-                if (_isDecay && DamageBase.Health <= _regenCapAbsValue)
-                    return;
-
-                var newHealth = DamageBase.Health + _regenAmountAbsValue;
-                if (!_isDecay && newHealth >= _regenCapAbsValue)
+                if (_isRegenMode)
                 {
-                    newHealth = _regenCapAbsValue;
-                    if (!_alwaysRegen)
-                    {
-                        _isRegening = false;
-                    }
+                    DoRegen();
                 }
-                else if (_isDecay && newHealth <= _regenCapAbsValue)
+                else
                 {
-                    newHealth = _regenCapAbsValue;
-                    if (!_alwaysRegen)
-                    {
-                        _isRegening = false;
-                    }
+                    DoDecay();
                 }
-
-                DamageBase.SendSetHealth(newHealth);
-
-                if (newHealth <= 0.0f)
-                {
-                    DamageBase.MeleeDamage(DamageBase.HealthMax, null, base.transform.position, Vector3.up, 0);
-                }
-
                 _regenIntervalTimer = Clock.Time + RegenData.RegenInterval;
             }
         }
 
-        private void OnTakeDamage()
+        [HideFromIl2Cpp]
+        private void StartRegen()
         {
             _regenInitialTimer = Clock.Time + RegenData.DelayUntilRegenStart;
             _isRegening = true;
             _isInitialTimerDone = false;
+        }
+
+        [HideFromIl2Cpp]
+        private void DoRegen()
+        {
+            if (DamageBase.Health >= _regenCapAbsValue)
+            {
+                if (!_alwaysRegen)
+                {
+                    _isRegening = false;
+                }
+                return;
+            }
+
+            var newHealth = DamageBase.Health + _regenAmountAbsValue;
+            if (newHealth >= _regenCapAbsValue)
+            {
+                newHealth = _regenCapAbsValue;
+                if (!_alwaysRegen)
+                {
+                    _isRegening = false;
+                }
+            }
+
+            DamageBase.SendSetHealth(newHealth);
+        }
+
+        [HideFromIl2Cpp]
+        private void DoDecay()
+        {
+            if (DamageBase.Health <= _regenCapAbsValue)
+            {
+                if (!_alwaysRegen)
+                {
+                    _isRegening = false;
+                }
+                return;
+            }
+
+            var newHealth = DamageBase.Health + _regenAmountAbsValue;
+            if (newHealth <= _regenCapAbsValue)
+            {
+                newHealth = _regenCapAbsValue;
+                if (!_alwaysRegen)
+                {
+                    _isRegening = false;
+                }
+            }
+
+            DamageBase.SendSetHealth(newHealth);
+
+            if (newHealth <= 0.0f)
+            {
+                DamageBase.MeleeDamage(DamageBase.HealthMax, null, base.transform.position, Vector3.up, 0);
+            }
+        }
+
+        [HideFromIl2Cpp]
+        private void OnTakeDamage(EnemyAgent enemy, Agent inflictor, float damage)
+        {
+            if (enemy.GlobalID != DamageBase.Owner.GlobalID)
+                return;
+
+            StartRegen();
         }
     }
 }

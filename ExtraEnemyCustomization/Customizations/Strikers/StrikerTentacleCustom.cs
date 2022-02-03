@@ -1,4 +1,4 @@
-﻿using EECustom.Utils;
+﻿using EECustom.Utils.JsonElements;
 using Enemies;
 using System;
 
@@ -6,10 +6,10 @@ namespace EECustom.Customizations.Strikers
 {
     using EaseFunc = Func<float, float, float, float, float>;
 
-    public class StrikerTentacleCustom : EnemyCustomBase, IEnemySpawnedEvent
+    public sealed class StrikerTentacleCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
-        public GPUCurvyType[] TentacleTypes { get; set; } = new GPUCurvyType[0];
-        public TentacleSettingData[] TentacleSettings { get; set; } = new TentacleSettingData[0];
+        public GPUCurvyType[] TentacleTypes { get; set; } = Array.Empty<GPUCurvyType>();
+        public TentacleSettingData[] TentacleSettings { get; set; } = Array.Empty<TentacleSettingData>();
 
         public override string GetProcessName()
         {
@@ -41,6 +41,11 @@ namespace EECustom.Customizations.Strikers
                     tentacle.m_attackInDuration = setting.InDuration.GetAbsValue(tentacle.m_attackInDuration);
                     tentacle.m_attackOutDuration = setting.OutDuration.GetAbsValue(tentacle.m_attackOutDuration);
                     tentacle.m_attackHangDuration = setting.HangDuration.GetAbsValue(tentacle.m_attackHangDuration);
+                    tentacle.m_splineWidthSafe = setting.SplineWidthSafe.GetAbsValue(tentacle.m_splineWidthSafe);
+                    tentacle.m_splineWidthPos1 = setting.SplineWidthPos1.GetAbsValue(tentacle.m_splineWidthPos1);
+                    tentacle.m_splineWidthPos2 = setting.SplineWidthPos2.GetAbsValue(tentacle.m_splineWidthPos2);
+                    tentacle.m_splineHeightPos1 = setting.SplineHeightPos1.GetAbsValue(tentacle.m_splineHeightPos1);
+                    tentacle.m_splineHeightPos2 = setting.SplineHeightPos2.GetAbsValue(tentacle.m_splineHeightPos2);
                     LogVerbose($" - Applied Tentacle Setting!, index: {i}");
                 }
             }
@@ -49,12 +54,17 @@ namespace EECustom.Customizations.Strikers
 
     public class TentacleSettingData
     {
-        public eEasingType InEaseType { get; set; } = eEasingType.EaseInExpo;
-        public eEasingType OutEaseType { get; set; } = eEasingType.EaseOutCirc;
+        public eEasingType InEaseType { get; set; } = eEasingType.EaseOutCirc;
+        public eEasingType OutEaseType { get; set; } = eEasingType.EaseInExpo;
 
         public ValueBase InDuration { get; set; } = ValueBase.Unchanged;
         public ValueBase OutDuration { get; set; } = ValueBase.Unchanged;
         public ValueBase HangDuration { get; set; } = ValueBase.Unchanged;
+        public ValueBase SplineWidthSafe { get; set; } = ValueBase.Unchanged;
+        public ValueBase SplineWidthPos1 { get; set; } = ValueBase.Unchanged;
+        public ValueBase SplineWidthPos2 { get; set; } = ValueBase.Unchanged;
+        public ValueBase SplineHeightPos1 { get; set; } = ValueBase.Unchanged;
+        public ValueBase SplineHeightPos2 { get; set; } = ValueBase.Unchanged;
 
         public EaseFunc GetInEaseFunction()
         {

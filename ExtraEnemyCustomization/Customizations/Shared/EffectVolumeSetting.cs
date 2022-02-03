@@ -2,7 +2,7 @@
 
 namespace EECustom.Customizations.Shared
 {
-    public class EffectVolumeSetting
+    public sealed class EffectVolumeSetting
     {
         public bool Enabled { get; set; } = false;
         public eEffectVolumeContents Contents { get; set; } = eEffectVolumeContents.Infection;

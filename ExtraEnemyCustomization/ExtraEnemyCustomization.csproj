@@ -8,11 +8,17 @@
   <PropertyGroup>
     <BIELibsFolder>$(GameFolder)/BepInEx/core</BIELibsFolder>
     <UnhollowedLibsFolder>$(GameFolder)/BepInEx/unhollowed</UnhollowedLibsFolder>
+    <PluginsFolder>$(GameFolder)/BepInEx/plugins</PluginsFolder>
+    <MonoManagedFolder>$(GameFolder)/mono/Managed</MonoManagedFolder>
     <TargetFramework>netstandard2.1</TargetFramework>
     <LangVersion>Latest</LangVersion>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <Version>0.8.1</Version>
     <RootNamespace>EECustom</RootNamespace>
+    <Configurations>Debug;Release</Configurations>
+    <Platforms>x64</Platforms>
+    <AnalysisLevel>5.0</AnalysisLevel>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,7 +26,10 @@
     <Reference Include="$(BIELibsFolder)/0Harmony.dll" Private="false" />
     <Reference Include="$(BIELibsFolder)/UnhollowerBaseLib.dll" Private="false" />
     <Reference Include="$(BIELibsFolder)/UnhollowerRuntimeLib.dll" Private="false" />
+    <Reference Include="$(BIELibsFolder)/SemanticVersioning.dll" Private="false" />
+    <Reference Include="$(MonoManagedFolder)/Microsoft.CSharp.dll" Private="false" />
     <Reference Include="$(UnhollowedLibsFolder)/*.dll" Private="false" />
+    <Reference Include="$(PluginsFolder)/GTFO-API.dll" Private="false" />
     <Reference Remove="$(UnhollowedLibsFolder)/Newtonsoft.Json.dll" />
     <Reference Remove="$(UnhollowedLibsFolder)/netstandard.dll" />
   </ItemGroup>

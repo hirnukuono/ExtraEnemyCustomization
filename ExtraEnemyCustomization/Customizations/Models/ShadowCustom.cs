@@ -4,7 +4,7 @@ using UnityEngine.Rendering;
 
 namespace EECustom.Customizations.Models
 {
-    public class ShadowCustom : EnemyCustomBase, IEnemySpawnedEvent
+    public sealed class ShadowCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
         public bool IncludeEggSack { get; set; } = false;
         public bool RequireTagForDetection { get; set; } = true;

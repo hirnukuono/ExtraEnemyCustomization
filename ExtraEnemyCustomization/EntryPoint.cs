@@ -1,10 +1,17 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.IL2CPP;
+using BepInEx.Logging;
 using EECustom.Attributes;
+using EECustom.Events;
 using EECustom.Managers;
+using EECustom.Networking;
+using EECustom.Utils;
 using EECustom.Utils.Integrations;
 using HarmonyLib;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnhollowerRuntimeLib;
 
@@ -17,37 +24,64 @@ namespace EECustom
     //TODO: - Patrolling Hibernation : Too many works to do with this one, this is one of the long term goal
     //TODO: Refactor the CustomBase to support Phase Setting
 
-    [BepInPlugin("GTFO.EECustomization", "EECustom", "0.8.1")]
+    [BepInPlugin("GTFO.EECustomization", "EECustom", "1.0.0-rc3")]
     [BepInProcess("GTFO.exe")]
     [BepInDependency(MTFOUtil.PLUGIN_GUID, BepInDependency.DependencyFlags.HardDependency)]
+    [BepInDependency("dev.gtfomodding.gtfo-api", BepInDependency.DependencyFlags.HardDependency)]
     [BepInDependency(MTFOPartialDataUtil.PLUGIN_GUID, BepInDependency.DependencyFlags.SoftDependency)]
-    public class EntryPoint : BasePlugin
+    internal class EntryPoint : BasePlugin
     {
+        public static Harmony HarmonyInstance { get; private set; }
+        public static string BasePath { get; private set; }
+
         public override void Load()
         {
+            Configuration.BindAll(Config);
+            Logger.Initialize();
+
             InjectAllIl2CppType();
 
-            Logger.LogInstance = Log;
+            BasePath = Path.Combine(MTFOUtil.CustomPath, "ExtraEnemyCustomization");
 
-            var useDevMsg = Config.Bind(new ConfigDefinition("Logging", "UseDevMessage"), false, new ConfigDescription("Using Dev Message for Debugging your config?"));
-            var useVerbose = Config.Bind(new ConfigDefinition("Logging", "Verbose"), false, new ConfigDescription("Using Much more detailed Message for Debugging?"));
+            HarmonyInstance = new Harmony("EECustomization.Harmony");
+            HarmonyInstance.PatchAll();
 
-            Logger.UsingDevMessage = useDevMsg.Value;
-            Logger.UsingVerbose = useVerbose.Value;
-
-            var harmony = new Harmony("EECustomization.Harmony");
-            harmony.PatchAll();
-
+            NetworkManager.Initialize();
             ConfigManager.Initialize();
+            if (Configuration.DumpConfig.Value == true)
+            {
+                ConfigManager.DumpDefault();
+            }
+
+            AssetEvents.AllAssetLoaded += AllAssetLoaded;
+            AssetCacheManager.OutputMethod = Configuration.AssetCacheBehaviour.Value;
+        }
+
+        private void AllAssetLoaded()
+        {
             SpriteManager.Initialize();
+            ThreadDispatcher.Initialize();
+            AssetCacheManager.AssetLoaded();
+
+            ConfigManager.FireAssetLoaded();
+            ConfigManager.Current.FirePrefabBuildEventAll();
+        }
+
+        public override bool Unload()
+        {
+            UninjectAllIl2CppType();
+
+            HarmonyInstance.UnpatchSelf();
+            ConfigManager.UnloadAllConfig(doClear: true);
+            return base.Unload();
         }
 
         private void InjectAllIl2CppType()
         {
-            Log.LogDebug($"Injecting IL2CPP Types");
-            var types = GetType().Assembly.GetTypes().Where(type => type != null && type.GetCustomAttributes(typeof(InjectToIl2CppAttribute), false).FirstOrDefault() != null);
+            Logger.Debug($"Injecting IL2CPP Types");
+            var types = GetAllHandlers();
 
-            Log.LogDebug($" - Count: {types.Count()}");
+            Logger.Debug($" - Count: {types.Count()}");
             foreach (var type in types)
             {
                 //Log.LogDebug($" - {type.Name}"); Class Injector already shows their type names
@@ -56,6 +90,26 @@ namespace EECustom
 
                 ClassInjector.RegisterTypeInIl2Cpp(type);
             }
+        }
+
+        private void UninjectAllIl2CppType()
+        {
+            Logger.Debug($"Uninjecting IL2CPP Types");
+            var types = GetAllHandlers();
+
+            Logger.Debug($" - Count: {types.Count()}");
+            foreach (var type in types)
+            {
+                if (!ClassInjector.IsTypeRegisteredInIl2Cpp(type))
+                    continue;
+
+                //ClassInjector.UnregisterTypeInIl2Cpp(type);
+            }
+        }
+
+        private IEnumerable<Type> GetAllHandlers()
+        {
+            return GetType().Assembly.GetTypes().Where(type => type != null && type.GetCustomAttributes(typeof(InjectToIl2CppAttribute), false).FirstOrDefault() != null);
         }
     }
 }

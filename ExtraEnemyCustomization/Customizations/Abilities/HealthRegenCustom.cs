@@ -1,12 +1,13 @@
 ﻿using EECustom.Customizations.Abilities.Handlers;
-using EECustom.Utils;
+using EECustom.Utils.JsonElements;
 using Enemies;
+using System;
 
 namespace EECustom.Customizations.Abilities
 {
-    public class HealthRegenCustom : EnemyCustomBase, IEnemySpawnedEvent
+    public sealed class HealthRegenCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
-        public HealthRegenData[] RegenDatas { get; set; } = new HealthRegenData[0];
+        public HealthRegenData[] RegenDatas { get; set; } = Array.Empty<HealthRegenData>();
 
         public override string GetProcessName()
         {

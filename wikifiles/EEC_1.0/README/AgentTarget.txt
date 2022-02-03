@@ -1,0 +1,14 @@
+AgentTarget is value that able to filter out enemy state easily
+
+there are five different mode (with few alias) you could use for this value
+Off (Alias: Dead)
+Agressive (Alias: Combat)
+Hibernate (Alias: Hibernate, Hibernation, Hibernating, Sleeping)
+Scout (Alias: ScoutPatrolling)
+Patrolling
+
+Also by using | or , you could merge multiple state to be checked!
+
+"Target": "Combat" //Only Select enemy that in agressive state
+"Target": "Hibernate, Scout" //Select Scout patrolling state and hibernating state
+"Target": "Off | Agressive | Hibernate | Scout | Patrolling" //Basically everything!

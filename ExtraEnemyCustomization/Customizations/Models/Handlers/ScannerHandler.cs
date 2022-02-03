@@ -1,7 +1,7 @@
 ﻿using Agents;
 using EECustom.Attributes;
 using Enemies;
-using System;
+using SNetwork;
 using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 
@@ -9,6 +9,7 @@ namespace EECustom.Customizations.Models.Handlers
 {
     public enum EnemyState
     {
+        Initial,
         Hibernate,
         Detect,
         Heartbeat,
@@ -33,31 +34,42 @@ namespace EECustom.Customizations.Models.Handlers
 
         public float InterpDuration = 0.5f;
 
-        private EnemyState _lastState = EnemyState.Hibernate;
+        private AgentMode _agentMode = AgentMode.Off;
         private EnemyState _currentState = EnemyState.Hibernate;
         private bool _interpDone = true;
         private float _interpTimer = 0.0f;
         private float _interpStartTime = 0.0f;
-
-        public ScannerHandler(IntPtr ptr) : base(ptr)
-        {
-        }
+        private Color _previousColor = Color.white;
 
         internal void Start()
         {
+            SetAgentMode_Master(OwnerAgent.AI.Mode);
+            UpdateState(out _currentState);
+
+            _previousColor = GetStateColor(_currentState);
+            OwnerAgent.ScannerColor = _previousColor;
         }
 
         internal void Update()
         {
+            if (SNet.IsMaster)
+            {
+                var currentMode = OwnerAgent.AI.Mode;
+                if (_agentMode != currentMode)
+                {
+                    SetAgentMode_Master(currentMode);
+                }
+            }
+
             UpdateState(out var state);
 
             if (_currentState != state)
             {
-                _lastState = _currentState;
                 _currentState = state;
                 _interpDone = false;
                 _interpTimer = Clock.Time + InterpDuration;
                 _interpStartTime = Clock.Time;
+                _previousColor = OwnerAgent.m_scannerColor;
             }
 
             if (!_interpDone)
@@ -70,7 +82,7 @@ namespace EECustom.Customizations.Models.Handlers
                 }
 
                 var progress = Mathf.InverseLerp(_interpStartTime, _interpTimer, Clock.Time);
-                var color1 = GetStateColor(_lastState);
+                var color1 = _previousColor;
                 var color2 = GetStateColor(_currentState);
                 var newColor = Color.Lerp(color1, color2, progress);
                 OwnerAgent.ScannerColor = newColor;
@@ -78,9 +90,29 @@ namespace EECustom.Customizations.Models.Handlers
         }
 
         [HideFromIl2Cpp]
+        internal void SetAgentMode_Master(AgentMode mode)
+        {
+            if (SNet.IsMaster)
+            {
+                ScannerCustom._sync.SetState(OwnerAgent.GlobalID, new ScannerStatusPacket()
+                {
+                    mode = mode
+                });
+
+                _agentMode = mode;
+            }
+        }
+
+        [HideFromIl2Cpp]
+        internal void UpdateAgentMode(AgentMode mode)
+        {
+            _agentMode = mode;
+        }
+
+        [HideFromIl2Cpp]
         private void UpdateState(out EnemyState state)
         {
-            switch (OwnerAgent.AI.Mode)
+            switch (_agentMode)
             {
                 case AgentMode.Hibernate:
                     if (!UsingDetectionColor)
@@ -102,6 +134,11 @@ namespace EECustom.Customizations.Models.Handlers
                             return;
                         }
                     }
+                    else if (OwnerAgent.Locomotion.CurrentStateEnum == ES_StateEnum.HibernateWakeUp)
+                    {
+                        state = EnemyState.Wakeup;
+                        return;
+                    }
                     else
                     {
                         state = EnemyState.Hibernate;
@@ -114,6 +151,12 @@ namespace EECustom.Customizations.Models.Handlers
 
                 case AgentMode.Scout:
                     if (!UsingScoutColor)
+                    {
+                        state = EnemyState.Wakeup;
+                        return;
+                    }
+
+                    if (OwnerAgent.Locomotion.CurrentStateEnum == ES_StateEnum.ScoutScream)
                     {
                         state = EnemyState.Wakeup;
                         return;

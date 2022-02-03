@@ -1,10 +1,10 @@
-﻿using EECustom.Utils;
+﻿using EECustom.Utils.JsonElements;
 using Enemies;
 using GameData;
 
 namespace EECustom.Customizations.Abilities
 {
-    public class BirthingCustom : EnemyCustomBase, IEnemySpawnedEvent
+    public sealed class BirthingCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
         public uint EnemyGroupToSpawn { get; set; }
         public ValueBase ChildrenCost { get; set; } = ValueBase.Unchanged;

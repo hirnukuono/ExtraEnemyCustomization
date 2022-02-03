@@ -1,0 +1,220 @@
+{
+  "BehaviourAbilityCustom": [
+    {
+      "Enabled": true,
+      "DebugName": "EMP Shooter",
+      "Target": {
+        "Mode": "NameContains",
+        "persistentIDs": [],
+        "nameParam": "Shooter",
+        "nameIgnoreCase": true
+      },
+      "Abilities": [
+        {
+          "UpdateInterval": 0.15,
+          "ForceExitOnConditionMismatch": false, //Abort Ability when Condition Mismatch
+          "AllowedMode": "Combat", //AgentTarget: Allowed AgentModes
+          "AllowedModeTransitionTime": 0.0, //Wait for this time to use ability after their AgentMode has changed
+          "KeepOnDead": false,
+          "AllowWhileAttack": false,
+          "State": {
+            "Mode": "DisallowStates", //None, AllowStates, DisallowStates
+            "States": [
+              "StuckInGlue",
+              "Scream",
+              "ScoutScream"
+            ]
+            /*
+            Allowed State Values
+              None = 0,
+              StandStill = 1,
+              PathMove = 2,
+              Knockdown = 3,
+              JumpDissolve = 4,
+              LiquidSnake = 5,
+              KnockdownRecover = 6,
+              Hitreact = 7,
+              ShortcutJump = 8,
+              FloaterFly = 9,
+              FloaterHitReact = 10,
+              Dead = 11,
+              ScoutDetection = 12,
+              ScoutScream = 13,
+              Hibernate = 14,
+              HibernateWakeUp = 15,
+              Scream = 16,
+              StuckInGlue = 17,
+              ShooterAttack = 18,
+              StrikerAttack = 19,
+              TankAttack = 20,
+              TankMultiTargetAttack = 21,
+              TentacleDragMove = 22,
+              StrikerMelee = 23,
+              ClimbLadder = 24,
+              Jump = 25,
+              BirtherGiveBirth = 26,
+              TriggerFogSphere = 27,
+              PathMoveFlyer = 28,
+              HitReactFlyer = 29,
+              ShooterAttackFlyer = 30,
+              DeadFlyer = 31,
+              DeadSquidBoss = 32
+            */
+          },
+          "DistanceWithLOS": { //Can trigger Ability with having Line-of-sight for target
+            "Mode": "UsingDistance", //AlwaysAllow, AlwaysDisallow, UsingDistance
+            "Min": 0.0,
+            "Max": 20.0
+          },
+          "DistanceWithoutLOS": { //Can Trigger Ability without having Line-of-sight for target
+            "Mode": "AlwaysDisallow",
+            "Min": -1.0,
+            "Max": -1.0
+          },
+          "Cooldown": {
+            "Enabled": false, //Using Cooldown?
+            "InitCooldown": 0, //Can not use ability for time after spawned
+            "Cooldown": 5 //Have to wait for this time after ability has used
+          },
+          "AbilityName": "EMP 30sec" //Each Ability uses different Updater, Use Chain to ensure Activate Multiple Ability at once
+        }
+      ]
+    }
+  ],
+  "DeathAbilityCustom": [
+    {
+      "Enabled": true,
+      "DebugName": "Exploder!",
+      "Target": {
+        "Mode": "NameContains",
+        "persistentIDs": [],
+        "nameParam": "Explode",
+        "nameIgnoreCase": true
+      },
+      "Abilities": [
+        {
+          "AllowedMode": "Combat", //AgentTarget: Allowed AgentModes
+          "Delay": 0.0, //Delay
+          "AbilityName": "Explosion-Small"
+        }
+      ]
+    }
+  ],
+  "Abilities": { //List of Ability
+    "Chain": [
+      {
+        "Abilities": [
+          {
+            "Delay": 0,
+            "AbilityName": "EMP 30sec"
+          },
+          {
+            "Delay": 2.0,
+            "AbilityName": "EMP 30sec"
+          }
+        ],
+        "ExitDelay": 0.0,
+        "ExitAllInForceExit": true,
+        "ForceExitOnHitreact": false,
+        "ForceExitOnDead": false,
+        "ForceExitOnLimbDestroy": false,
+        "Name": "Chained EMP"
+      }
+    ],
+    "FogSphere": [
+      {
+        "SoundEventID": 0,
+        "ColorMin": "#FFFFFFFF",
+        "ColorMax": "#00000000",
+        "IntensityMin": 1,
+        "IntensityMax": 5,
+        "RangeMin": 1,
+        "RangeMax": 3,
+        "DensityMin": 1,
+        "DensityMax": 5,
+        "DensityAmountMin": 0,
+        "DensityAmountMax": 5,
+        "Duration": 30,
+        "EffectVolume": {
+          "Enabled": false,
+          "Contents": "Infection",
+          "Modification": "Inflict",
+          "Scale": 1
+        },
+        "Name": "Fog 1"
+      }
+    ],
+    "Explosion": [
+      {
+        "Damage": "15%",
+        "KillInflictor": true, //Kill Inflictor (Exploder)
+        "UseExplosionCounter": true, //Using Counter, Can limit the Explosion count for each enemy
+        "AllowedExplosionCount": 1, //Allowed Explosion count
+        "EnemyDamageMulti": 1.0,
+        "MinRange": 2,
+        "MaxRange": 5,
+        "NoiseMinRange": 5,
+        "NoiseMaxRange": 10,
+        "NoiseType": "Detectable",
+        "Name": "Explosion-Small"
+      }
+    ],
+    "SpawnEnemy": [
+      {
+        "StopAgent": false,
+        "Delay": 0,
+        "EnemyID": 0,
+        "AgentMode": "Agressive",
+        "TotalCount": 0,
+        "CountPerSpawn": 0,
+        "DelayPerSpawn": 0,
+        "Name": "SpawnEnemy"
+      }
+    ],
+    "SpawnWave": [
+      {
+        "WaveSettingID": 3,
+        "WavePopulationID": 1,
+        "SpawnType": "InRelationToClosestAlivePlayer",
+        /*
+        Possible SpawnType Value:
+          InRelationToClosestAlivePlayer = 0,
+          InSuppliedCourseNodeZone = 1,
+          InSuppliedCourseNode = 2,
+          InSuppliedCourseNode_OnPosition = 3,
+          ClosestToSuppliedNodeButNoBetweenPlayers = 4,
+          OnSpawnPoints = 5,
+          FromElevatorDirection = 6
+        */
+        "SpawnDelay": 0.0,
+        "PlayDistantRoar": true,
+        "Name": "Spawn ScoutWave"
+      }
+    ],
+    "DoAnim": [
+      {
+        "Animation": "Screams",
+        "SoundEvent": 0,
+        "VoiceEvent": 0,
+        "Duration": 1.0,
+        "CrossFadeTime": 0.15,
+        "Name": "AnimScream"
+      }
+    ],
+    "EMP": [
+      {
+        "ChargeUpSoundId": 0, //SoundID when Chargeup
+        "ActivateSoundId": 0, //SoundID when Activate
+        "ChargeUpAnimation": "AbilityUse",
+        "ActivateAnimation": "AbilityUseOut",
+        "ChargeUpDuration": 3, //Chargeup Animation Duration
+        "EffectDuration": 30.0, //EMP Effect Duration
+        "EffectRange": 20.0, //EMP Effect Range
+        "InvincibleWhileCharging": true, //Literally
+        "BuildupColor": "#FFFFFFFF", //Chargeup Color
+        "ScreamColor": "#FFFFFFFF", //Screaming Color
+        "Name": "EMP 30sec"
+      }
+    ]
+  }
+}

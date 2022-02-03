@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace EECustom.Utils
@@ -21,7 +22,7 @@ namespace EECustom.Utils
                 for (int i = 0; i < count; i++)
                 {
                     var match = matches[i];
-                    vectorArray[i] = float.Parse(match.Value);
+                    vectorArray[i] = float.Parse(match.Value, CultureInfo.InvariantCulture);
                 }
 
                 return true;

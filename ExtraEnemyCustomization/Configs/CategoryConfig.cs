@@ -4,15 +4,17 @@ using System.Linq;
 
 namespace EECustom.Configs
 {
-    public class CategoryConfig
+    public sealed class CategoryConfig : Config
     {
-        public string[] Categories { get; set; } = new string[0];
-        public IdWithCategories[] CategoryPair { get; set; } = new IdWithCategories[0];
-        public CategoryWithIds[] IdPair { get; set; } = new CategoryWithIds[0];
+        public string[] Categories { get; set; } = Array.Empty<string>();
+        public IdWithCategories[] CategoryPair { get; set; } = Array.Empty<IdWithCategories>();
+        public CategoryWithIds[] IdPair { get; set; } = Array.Empty<CategoryWithIds>();
 
         private readonly Dictionary<string, CategoryDefinition> _categoryCache = new();
 
-        internal void Cache()
+        public override string FileName => "Category";
+
+        public override void Loaded()
         {
             //Assign Category
             foreach (var category in Categories)
@@ -114,19 +116,19 @@ namespace EECustom.Configs
     public class IdWithCategories
     {
         public uint PersistentID { get; set; }
-        public string[] Categories { get; set; } = new string[0];
+        public string[] Categories { get; set; } = Array.Empty<string>();
     }
 
     public class CategoryWithIds
     {
-        public string Category { get; set; }
-        public uint[] PersistentIDs { get; set; } = new uint[0];
+        public string Category { get; set; } = string.Empty;
+        public uint[] PersistentIDs { get; set; } = Array.Empty<uint>();
     }
 
     public class CategoryDefinition
     {
         public string Name { get; set; }
-        public uint[] PersistentIDs { get; private set; } = new uint[0];
+        public uint[] PersistentIDs { get; private set; } = Array.Empty<uint>();
 
         public readonly List<uint> _PersistentIDs = new();
 

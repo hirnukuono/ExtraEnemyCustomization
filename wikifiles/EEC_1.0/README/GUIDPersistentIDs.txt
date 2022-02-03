@@ -1,0 +1,17 @@
+ExtraEnemyCustomization do supports PartialDataBlock's GUID PersistentID reading!
+
+You can use it on various config that requires you to write persistentID.
+
+Example)
+
+"Target": {
+	"Mode": "PersistentID",
+	"persistentIDs": [
+		"Enemy_Shooter_Infection_Big"
+	],
+	"nameParam": "",
+	"nameIgnoreCase": true
+},
+
+
+"EnemyGroupToSpawn": "EnemyGroup_Hunter_ShadowChilds",

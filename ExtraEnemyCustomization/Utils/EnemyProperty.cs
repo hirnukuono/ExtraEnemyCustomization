@@ -1,17 +1,17 @@
 ﻿using EECustom.Events;
-using EECustom.Extensions;
 using Enemies;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace EECustom.Utils
 {
     public static class EnemyProperty<T> where T : class, new()
     {
-        private readonly static Dictionary<ushort, T> _properties = new();
+        private static readonly Dictionary<ushort, T> _properties = new();
 
         static EnemyProperty()
         {
-            LevelEvents.OnLevelCleanup += OnLevelCleanup;
+            LevelEvents.LevelCleanup += OnLevelCleanup;
         }
 
         private static void OnLevelCleanup()
@@ -40,7 +40,7 @@ namespace EECustom.Utils
             var newProp = new T();
             _properties.Add(id, newProp);
 
-            agent.AddOnDeadOnce(() =>
+            MonoBehaviourEventHandler.AttatchToObject(agent.gameObject, onDestroyed: (GameObject _) =>
             {
                 _properties.Remove(id);
             });

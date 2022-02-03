@@ -4,9 +4,18 @@ namespace EECustom
 {
     public static class Logger
     {
-        public static ManualLogSource LogInstance;
-        public static bool UsingDevMessage = true;
-        public static bool UsingVerbose = false;
+        public static ManualLogSource LogInstance { get; private set; }
+        public static bool UsingDevMessage { get; private set; } = false;
+        public static bool UsingVerbose { get; private set; } = false;
+
+        internal static void Initialize()
+        {
+            LogInstance = new ManualLogSource("EEC");
+            BepInEx.Logging.Logger.Sources.Add(LogInstance);
+
+            UsingDevMessage = Configuration.UseDebugLog.Value;
+            UsingVerbose = Configuration.UseVerboseLog.Value;
+        }
 
         public static void Log(string format, params object[] args) => Log(string.Format(format, args));
 

@@ -1,0 +1,55 @@
+{
+	"BehaviourAbilityCustom": [
+		{
+			"Enabled": true,
+			"DebugName": "EMPEnemy",
+			"Target": {
+				"Mode": "PersistentID",
+				"persistentIDs": [
+					36
+				],
+				"nameParam": "",
+				"nameIgnoreCase": true,
+				"categories": []
+			},
+			"UpdateInterval": 0.15,
+			"AllowedMode": "Agressive",
+			"KeepOnDead": false,
+			"DistanceWithLOS": {
+				"Mode": "UsingDistance",
+				"Min": 0.0,
+				"Max": 10.0
+			},
+			"DistanceWithoutLOS": {
+				"Mode": "AlwaysDisallow",
+				"Min": -1.0,
+				"Max": -1.0
+			},
+			"ForceExitOnConditionMismatch": false,
+			"Cooldown": {
+				"Enabled": true,
+				"InitCooldown": 0.0,
+				"Cooldown": 60.0
+			},
+			"Abilities": [
+				{
+					"AbilityName": "EMP_Birther"
+				}
+			]
+		}
+	],
+	"DeathAbilityCustom": [],
+	"Abilities": {
+		"Chain": [],
+		"FogSphere": [],
+		"Explosion": [],
+		"SpawnEnemy": [],
+		"EMP": [
+			{
+				"Name": "EMP_Birther",
+				"FogColor": "blue * 20.0",
+				"AnyOtherPripertiesYouAddedToEMPAbility": ""
+			}
+		]
+	}
+}

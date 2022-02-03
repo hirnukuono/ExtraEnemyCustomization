@@ -3,7 +3,7 @@ using Enemies;
 
 namespace EECustom.Customizations.SpawnCost
 {
-    public class SpawnCostCustom : EnemyCustomBase, IEnemySpawnedEvent
+    public sealed class SpawnCostCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
         public float SpawnCost { get; set; } = 0.0f;
 
@@ -18,7 +18,7 @@ namespace EECustom.Customizations.SpawnCost
             if (agent.AI.Mode == AgentMode.Agressive)
             {
                 float delta = EnemyCostManager.Current.m_enemyTypeCosts[(int)agent.EnemyData.EnemyType] - SpawnCost;
-                EnemyCostManager.AddCost(-delta);
+                EnemyCostManager.AddCost(agent.DimensionIndex, -delta);
                 LogDev($"Decremented cost by {delta}!");
             }
             else

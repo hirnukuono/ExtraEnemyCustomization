@@ -22,8 +22,7 @@ namespace EECustom.Utils.Integrations
             {
                 try
                 {
-                    var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-                    var ddAsm = assemblies.First(a => !a.IsDynamic && a.Location == info.Location);
+                    var ddAsm = info?.Instance?.GetType()?.Assembly ?? null;
 
                     if (ddAsm is null)
                         throw new Exception("Assembly is Missing!");
@@ -59,7 +58,7 @@ namespace EECustom.Utils.Integrations
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine($"Exception thrown while reading data from MTFO_Extension_PartialData:\n{e}");
+                    Logger.Error($"Exception thrown while reading data from MTFO_Extension_PartialData:\n{e}");
                 }
             }
         }

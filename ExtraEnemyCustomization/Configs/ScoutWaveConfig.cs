@@ -1,11 +1,27 @@
-﻿using EECustom.CustomSettings.DTO;
+﻿using EECustom.CustomSettings;
+using EECustom.CustomSettings.DTO;
+using System;
 
 namespace EECustom.Configs
 {
-    public class ScoutWaveConfig
+    public sealed class ScoutWaveConfig : Config
     {
-        public ExpeditionScoutSetting[] Expeditions { get; set; } = new ExpeditionScoutSetting[0];
-        public ScoutTargetSetting[] TargetSettings { get; set; } = new ScoutTargetSetting[0];
-        public ScoutWaveSetting[] WaveSettings { get; set; } = new ScoutWaveSetting[0];
+        public ExpeditionScoutSetting[] Expeditions { get; set; } = Array.Empty<ExpeditionScoutSetting>();
+        public ScoutTargetSetting[] TargetSettings { get; set; } = Array.Empty<ScoutTargetSetting>();
+        public ScoutWaveSetting[] WaveSettings { get; set; } = Array.Empty<ScoutWaveSetting>();
+
+        public override string FileName => "ScoutWave";
+
+        public override void Loaded()
+        {
+            CustomScoutWaveManager.AddScoutSetting(Expeditions);
+            CustomScoutWaveManager.AddTargetSetting(TargetSettings);
+            CustomScoutWaveManager.AddWaveSetting(WaveSettings);
+        }
+
+        public override void Unloaded()
+        {
+            CustomScoutWaveManager.ClearAll();
+        }
     }
 }

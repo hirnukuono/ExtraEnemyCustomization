@@ -1,14 +1,16 @@
 ﻿using Agents;
+using EECustom.Customizations.Shared;
 using EECustom.Events;
-using EECustom.Utils;
+using Enemies;
 using Player;
+using UnityEngine;
 
 namespace EECustom.Customizations.Abilities
 {
-    public class ExplosiveAttackCustom : EnemyCustomBase
+    public sealed class ExplosiveAttackCustom : EnemyCustomBase
     {
-        public ExplosiveAttackData MeleeData { get; set; } = new();
-        public ExplosiveAttackData TentacleData { get; set; } = new();
+        public ExplosionSetting MeleeData { get; set; } = new();
+        public ExplosionSetting TentacleData { get; set; } = new();
 
         public override string GetProcessName()
         {
@@ -17,15 +19,30 @@ namespace EECustom.Customizations.Abilities
 
         public override void OnConfigLoaded()
         {
-            LocalPlayerDamageEvents.OnMeleeDamage += OnMelee;
-            LocalPlayerDamageEvents.OnTentacleDamage += OnTentacle;
+            LocalPlayerDamageEvents.MeleeDamage += OnMelee;
+            LocalPlayerDamageEvents.TentacleDamage += OnTentacle;
+        }
+
+        public override void OnConfigUnloaded()
+        {
+            LocalPlayerDamageEvents.MeleeDamage -= OnMelee;
+            LocalPlayerDamageEvents.TentacleDamage -= OnTentacle;
         }
 
         public void OnMelee(PlayerAgent player, Agent inflictor, float damage)
         {
             if (IsTarget(inflictor.GlobalID))
             {
-                DoExplode(MeleeData, player, inflictor);
+                MeleeData.DoExplode(player);
+
+                if (!MeleeData.KillInflictor)
+                    return;
+
+                if (inflictor.Type != AgentType.Enemy)
+                    return;
+
+                var enemyAgent = inflictor as EnemyAgent;
+                enemyAgent.Damage.ExplosionDamage(enemyAgent.Damage.HealthMax, Vector3.zero, Vector3.zero);
             }
         }
 
@@ -33,41 +50,17 @@ namespace EECustom.Customizations.Abilities
         {
             if (IsTarget(inflictor.GlobalID))
             {
-                DoExplode(TentacleData, player, inflictor);
+                TentacleData.DoExplode(player);
+
+                if (!TentacleData.KillInflictor)
+                    return;
+
+                if (inflictor.Type != AgentType.Enemy)
+                    return;
+
+                var enemyAgent = inflictor as EnemyAgent;
+                enemyAgent.Damage.ExplosionDamage(enemyAgent.Damage.HealthMax, Vector3.zero, Vector3.zero);
             }
         }
-
-        private void DoExplode(ExplosiveAttackData data, PlayerAgent player, Agent _)
-        {
-            var maxDamage = data.Damage.GetAbsValue(PlayerData.MaxHealth);
-            if (maxDamage > 0.0f)
-            {
-                ExplosionUtil.TriggerExplodion(player.Position, maxDamage, data.EnemyDamageMulti, data.MinRange, data.MaxRange);
-
-                var noise = new NM_NoiseData()
-                {
-                    noiseMaker = null,
-                    position = player.Position,
-                    radiusMin = data.NoiseMinRange,
-                    radiusMax = data.NoiseMaxRange,
-                    yScale = 1,
-                    node = player.CourseNode,
-                    type = NM_NoiseType.Detectable,
-                    includeToNeightbourAreas = true,
-                    raycastFirstNode = false
-                };
-                NoiseManager.MakeNoise(noise);
-            }
-        }
-    }
-
-    public class ExplosiveAttackData
-    {
-        public ValueBase Damage { get; set; } = ValueBase.Zero;
-        public float EnemyDamageMulti { get; set; } = 1.0f;
-        public float MinRange { get; set; } = 2.0f;
-        public float MaxRange { get; set; } = 5.0f;
-        public float NoiseMinRange { get; set; } = 5.0f;
-        public float NoiseMaxRange { get; set; } = 10.0f;
     }
 }

@@ -12,17 +12,12 @@ namespace EECustom.Customizations.Models.Handlers
         public PulseEffectData PulseData;
         public float StartDelay = 0.0f;
 
-        private AgentMode _targetAgentMode;
         private EnemyAgent _ownerAgent;
         private float _timer = 0.0f;
         private float _updateTimerDelay = 0.0f;
         private Color _defaultColor;
         private int _currentPatternIndex = 0;
         private int _patternLength = 0;
-
-        public PulseHandler(IntPtr ptr) : base(ptr)
-        {
-        }
 
         internal void Start()
         {
@@ -41,20 +36,6 @@ namespace EECustom.Customizations.Models.Handlers
 
             _ownerAgent = GetComponentInParent<EnemyAgent>();
             _defaultColor = _ownerAgent.MaterialHandler.m_defaultGlowColor;
-            _targetAgentMode = PulseData.Target switch
-            {
-                PulseEffectTarget.Hibernate => AgentMode.Hibernate,
-                PulseEffectTarget.Combat => AgentMode.Agressive,
-                PulseEffectTarget.Scout => AgentMode.Scout,
-                PulseEffectTarget.None => AgentMode.Off,
-                _ => AgentMode.Hibernate
-            };
-
-            if (_targetAgentMode == AgentMode.Off)
-            {
-                enabled = false;
-                return;
-            }
 
             var interval = Math.Max(0.0f, PulseData.Duration);
             _updateTimerDelay = interval / _patternLength;
@@ -66,7 +47,7 @@ namespace EECustom.Customizations.Models.Handlers
             if (_timer > Clock.Time)
                 return;
 
-            if (_ownerAgent.AI.Mode != _targetAgentMode)
+            if (!PulseData.Target.IsMatch(_ownerAgent))
                 return;
 
             if (!_ownerAgent.Alive && !PulseData.KeepOnDead)
@@ -74,7 +55,7 @@ namespace EECustom.Customizations.Models.Handlers
 
             if (!PulseData.AlwaysPulse)
             {
-                switch (_targetAgentMode)
+                switch (_ownerAgent.AI.Mode)
                 {
                     case AgentMode.Hibernate:
                         if (_ownerAgent.IsHibernationDetecting)
@@ -82,6 +63,9 @@ namespace EECustom.Customizations.Models.Handlers
                         break;
 
                     case AgentMode.Agressive:
+                        if (_ownerAgent.Locomotion.IsAttacking())
+                            return;
+
                         switch (_ownerAgent.Locomotion.CurrentStateEnum)
                         {
                             case ES_StateEnum.ShooterAttack:
@@ -90,6 +74,7 @@ namespace EECustom.Customizations.Models.Handlers
                             case ES_StateEnum.ScoutScream:
                                 return;
                         }
+
                         break;
 
                     case AgentMode.Scout:

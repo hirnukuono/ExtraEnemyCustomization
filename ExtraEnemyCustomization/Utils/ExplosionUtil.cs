@@ -1,8 +1,8 @@
-﻿using Agents;
-using AK;
+﻿using AK;
+using EECustom.Attributes;
+using EECustom.Networking;
 using FX_EffectSystem;
 using SNetwork;
-using System;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -10,10 +10,22 @@ namespace EECustom.Utils
 {
     public static class ExplosionUtil
     {
-        public static void TriggerExplodion(Vector3 position, float damage, float enemyMulti, float minRange, float maxRange)
+        public static void MakeExplosion(Vector3 position, float damage, float enemyMulti, float minRange, float maxRange)
+        {
+            NetworkManager.Explosion.Send(new Networking.Events.ExplosionPacket()
+            {
+                position = position,
+                damage = damage,
+                enemyMulti = enemyMulti,
+                minRange = minRange,
+                maxRange = maxRange
+            });
+        }
+
+        internal static void Internal_TriggerExplosion(Vector3 position, float damage, float enemyMulti, float minRange, float maxRange)
         {
             CellSound.Post(EVENTS.STICKYMINEEXPLODE, position);
-            //_ = LightFlash(position);
+            LightFlash(position);
 
             if (!SNet.IsMaster)
                 return;
@@ -27,65 +39,108 @@ namespace EECustom.Utils
 
             foreach (var target in targets)
             {
-                Vector3 targetPosition = target.transform.position;
+                var targetDamagable = target.GetComponent<IDamageable>();
+                if (targetDamagable == null)
+                    continue;
 
-                Agent agent = target.GetComponent<Agent>();
-                if (agent != null)
+                targetDamagable = targetDamagable.GetBaseDamagable();
+                var targetPosition = targetDamagable.GetBaseAgent()?.EyePosition ?? target.transform.position;
+
+                if (targetDamagable.TempSearchID == searchID)
                 {
-                    targetPosition = agent.EyePosition;
+                    continue;
                 }
-                Vector3 direction = (targetPosition - position).normalized;
+                targetDamagable.TempSearchID = searchID;
 
-                if (!Physics.Raycast(position, direction.normalized, out RaycastHit _, maxRange, LayerManager.MASK_EXPLOSION_BLOCKERS))
+                var distance = Vector3.Distance(position, targetPosition);
+                if (Physics.Linecast(position, targetPosition, out RaycastHit _, LayerManager.MASK_WORLD))
                 {
-                    var comp = target.GetComponent<IDamageable>();
-
-                    if (comp == null)
-                        continue;
-
-                    if (comp.GetBaseDamagable().TempSearchID == searchID)
-                        continue;
-
-                    comp.GetBaseDamagable().TempSearchID = searchID;
-
-                    var distance = Vector3.Distance(position, targetPosition);
-                    var newDamage = 0.0f;
-                    if (distance <= minRange)
-                    {
-                        newDamage = damage;
-                    }
-                    else if (distance <= maxRange)
-                    {
-                        newDamage = Mathf.Lerp(damage, 0.0f, (distance - minRange) / (maxRange - minRange));
-                    }
-                    Logger.Verbose($"Explosive damage: {newDamage} out of max: {damage}, Dist: {distance}, min: {minRange}, max: {maxRange}");
-
-                    var enemyLimb = comp.TryCast<Dam_EnemyDamageLimb>();
-                    if (enemyLimb != null)
-                    {
-                        comp.GetBaseDamagable().ExplosionDamage(newDamage * enemyMulti, position, Vector3.up * 1000);
-                    }
-                    else
-                    {
-                        comp.ExplosionDamage(newDamage, position, Vector3.up * 1000);
-                    }
+                    continue;
                 }
+
+                var newDamage = CalcRangeDamage(damage, distance, minRange, maxRange);
+                var enemyBase = targetDamagable.TryCast<Dam_EnemyDamageBase>();
+                if (enemyBase != null)
+                {
+                    newDamage *= enemyMulti;
+                }
+                Logger.Verbose($"Explosive damage: {newDamage} out of max: {damage}, Dist: {distance}, min: {minRange}, max: {maxRange}");
+
+                targetDamagable.ExplosionDamage(newDamage, position, Vector3.up * 1000);
             }
         }
 
-        [Obsolete("FX_Light has issue with level Lighting", true)]
-        public static async Task LightFlash(Vector3 pos)
+        private static float CalcRangeDamage(float damage, float distance, float minRange, float maxRange)
         {
-            FX_Manager.TryAllocateFXLight(out FX_PointLight light);
-            light.SetColor(new Color(1, 0.2f, 0, 1));
-            light.SetRange(50);
-            light.m_intensity = 5;
-            light.m_position = pos;
-            light.m_isOn = true;
-            light.UpdateData();
-            light.UpdateTransform();
-            await Task.Delay(50);
-            FX_Manager.DeallocateFXLight(light);
+            var newDamage = 0.0f;
+            if (distance <= minRange)
+            {
+                newDamage = damage;
+            }
+            else if (distance <= maxRange)
+            {
+                newDamage = Mathf.Lerp(damage, 0.0f, (distance - minRange) / (maxRange - minRange));
+            }
+            return newDamage;
+        }
+
+        public static void LightFlash(Vector3 pos)
+        {
+            var effectHandler = new GameObject().AddComponent<ExplosionEffectHandler>();
+            effectHandler.transform.position = pos;
+            effectHandler.FlashColor = new Color(1, 0.2f, 0, 1);
+            effectHandler.Intensity = 5.0f;
+            effectHandler.Range = 50.0f;
+            effectHandler.EffectDuration = 0.05f;
+        }
+
+        [InjectToIl2Cpp]
+        public class ExplosionEffectHandler : MonoBehaviour
+        {
+            public Color FlashColor;
+            public float Range;
+            public float Intensity;
+            public float EffectDuration;
+
+            private bool _lightAllocated = false;
+            private FX_PointLight _light;
+            private float _timer;
+
+            internal void Start()
+            {
+                if (FX_Manager.TryAllocateFXLight(out _light, important: false))
+                {
+                    _light.SetColor(FlashColor);
+                    _light.SetRange(Range);
+                    _light.m_intensity = Intensity;
+                    _light.m_position = transform.position;
+                    _light.m_isOn = true;
+                    _light.UpdateData();
+                    _light.UpdateTransform();
+                    _lightAllocated = true;
+                    _timer = Clock.Time + EffectDuration;
+                }
+                else
+                {
+                    Destroy(this);
+                }
+            }
+
+            internal void Update()
+            {
+                if (_timer <= Clock.Time)
+                {
+                    Destroy(this);
+                }
+            }
+
+            internal void OnDestroy()
+            {
+                if (_lightAllocated)
+                {
+                    FX_Manager.DeallocateFXLight(_light);
+                }
+            }
         }
     }
 }

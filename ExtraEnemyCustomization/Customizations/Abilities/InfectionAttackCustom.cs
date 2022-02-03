@@ -1,11 +1,12 @@
 ﻿using Agents;
 using EECustom.Events;
 using EECustom.Utils;
+using EECustom.Utils.JsonElements;
 using Player;
 
 namespace EECustom.Customizations.Abilities
 {
-    public class InfectionAttackCustom : EnemyCustomBase
+    public sealed class InfectionAttackCustom : EnemyCustomBase
     {
         public InfectionAttackData MeleeData { get; set; } = new();
         public InfectionAttackData TentacleData { get; set; } = new();
@@ -17,8 +18,14 @@ namespace EECustom.Customizations.Abilities
 
         public override void OnConfigLoaded()
         {
-            LocalPlayerDamageEvents.OnMeleeDamage += OnMelee;
-            LocalPlayerDamageEvents.OnTentacleDamage += OnTentacle;
+            LocalPlayerDamageEvents.MeleeDamage += OnMelee;
+            LocalPlayerDamageEvents.TentacleDamage += OnTentacle;
+        }
+
+        public override void OnConfigUnloaded()
+        {
+            LocalPlayerDamageEvents.MeleeDamage -= OnMelee;
+            LocalPlayerDamageEvents.TentacleDamage -= OnTentacle;
         }
 
         public void OnMelee(PlayerAgent player, Agent inflictor, float damage)
@@ -37,7 +44,7 @@ namespace EECustom.Customizations.Abilities
             }
         }
 
-        public void ApplyInfection(InfectionAttackData data, PlayerAgent player, Agent _)
+        private static void ApplyInfection(InfectionAttackData data, PlayerAgent player, Agent _)
         {
             var infectionAbs = data.Infection.GetAbsValue(PlayerData.MaxInfection);
             if (infectionAbs == 0.0f)

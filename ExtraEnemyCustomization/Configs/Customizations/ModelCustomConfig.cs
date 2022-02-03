@@ -1,22 +1,24 @@
 ﻿using EECustom.Customizations;
 using EECustom.Customizations.Models;
+using System;
 using System.Collections.Generic;
 
 namespace EECustom.Configs.Customizations
 {
-    public class ModelCustomConfig : CustomizationConfig
+    public sealed class ModelCustomConfig : CustomizationConfig
     {
-        public bool CacheAllMaterials { get; set; } = false;
+        public ShadowCustom[] ShadowCustom { get; set; } = Array.Empty<ShadowCustom>();
+        public MaterialCustom[] MaterialCustom { get; set; } = Array.Empty<MaterialCustom>();
+        public GlowCustom[] GlowCustom { get; set; } = Array.Empty<GlowCustom>();
+        public LimbCustom[] LimbCustom { get; set; } = Array.Empty<LimbCustom>();
+        public ModelRefCustom[] ModelRefCustom { get; set; } = Array.Empty<ModelRefCustom>();
+        public MarkerCustom[] MarkerCustom { get; set; } = Array.Empty<MarkerCustom>();
+        public ScannerCustom[] ScannerCustom { get; set; } = Array.Empty<ScannerCustom>();
+        public SilhouetteCustom[] SilhouetteCustom { get; set; } = Array.Empty<SilhouetteCustom>();
+        public BoneCustom[] BoneCustom { get; set; } = Array.Empty<BoneCustom>();
 
-        public ShadowCustom[] ShadowCustom { get; set; } = new ShadowCustom[0];
-        public MaterialCustom[] MaterialCustom { get; set; } = new MaterialCustom[0];
-        public GlowCustom[] GlowCustom { get; set; } = new GlowCustom[0];
-        public LimbCustom[] LimbCustom { get; set; } = new LimbCustom[0];
-        public ModelRefCustom[] ModelRefCustom { get; set; } = new ModelRefCustom[0];
-        public MarkerCustom[] MarkerCustom { get; set; } = new MarkerCustom[0];
-        public ScannerCustom[] ScannerCustom { get; set; } = new ScannerCustom[0];
-        public SilhouetteCustom[] SilhouetteCustom { get; set; } = new SilhouetteCustom[0];
-        public BoneCustom[] BoneCustom { get; set; } = new BoneCustom[0];
+        public override string FileName => "Model";
+        public override CustomizationConfigType Type => CustomizationConfigType.Model;
 
         public override EnemyCustomBase[] GetAllSettings()
         {

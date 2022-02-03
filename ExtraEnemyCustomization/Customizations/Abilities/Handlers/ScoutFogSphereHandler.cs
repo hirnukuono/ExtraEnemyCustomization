@@ -1,6 +1,5 @@
 ﻿using EECustom.Attributes;
 using Enemies;
-using System;
 using UnityEngine;
 
 namespace EECustom.Customizations.Abilities.Handlers
@@ -16,11 +15,7 @@ namespace EECustom.Customizations.Abilities.Handlers
         private float _updateTimer = 0.0f;
         private bool _isColorSet = false;
 
-        public ScoutFogSphereHandler(IntPtr ptr) : base(ptr)
-        {
-        }
-
-        public void Update()
+        internal void Update()
         {
             if (ScoutScream.m_fogSphereAdd == null)
                 return;
@@ -36,10 +31,10 @@ namespace EECustom.Customizations.Abilities.Handlers
                 if (ScoutScream.m_fogSphereAdd.IsAllocated)
                 {
                     var sphere = ScoutScream.m_fogSphereAdd.m_sphere;
-                    var range = Mathf.Sqrt(1.0f / sphere.m_data.invRangeSqr);
+                    var range = Mathf.Sqrt(1.0f / sphere.m_data.InvRangeSqr);
                     EVSphere.minRadius = range * 0.8f;
                     EVSphere.maxRadius = range;
-                    EVSphere.position = ScoutScream.m_fogSphereAdd.m_sphere.m_data.position;
+                    EVSphere.position = ScoutScream.m_fogSphereAdd.m_sphere.m_data.Position;
                     _updateTimer = Clock.Time + 0.1f;
                 }
                 else
@@ -50,7 +45,7 @@ namespace EECustom.Customizations.Abilities.Handlers
             }
         }
 
-        public void OnDestroy()
+        internal void OnDestroy()
         {
             if (EVSphere != null)
                 EffectVolumeManager.UnregisterVolume(EVSphere);

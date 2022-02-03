@@ -5,10 +5,10 @@ using Player;
 namespace EECustom.Inject
 {
     [HarmonyPatch(typeof(PlayerAgent), nameof(PlayerAgent.Setup))]
-    internal class Inject_PlayerAgent_Setup
+    internal static class Inject_PlayerAgent_Setup
     {
         [HarmonyWrapSafe]
-        public static void Postfix(PlayerAgent __instance)
+        internal static void Postfix(PlayerAgent __instance)
         {
             PlayerData.MaxHealth = __instance.PlayerData.health;
         }

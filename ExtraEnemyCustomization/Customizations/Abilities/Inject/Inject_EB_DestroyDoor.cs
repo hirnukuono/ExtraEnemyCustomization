@@ -7,7 +7,7 @@ using System;
 namespace EECustom.Customizations.Abilities.Inject
 {
     [HarmonyPatch(typeof(EB_InCombat_MoveToNextNode_DestroyDoor), nameof(EB_InCombat_MoveToNextNode_DestroyDoor.UpdateBehaviour))]
-    internal class Inject_EB_DestroyDoor
+    internal static class Inject_EB_DestroyDoor
     {
         public static bool ShouldOverride = false;
         public static float GlobalTimer = 0.0f;
@@ -19,7 +19,7 @@ namespace EECustom.Customizations.Abilities.Inject
         private static readonly Random _random = new();
 
         [HarmonyWrapSafe]
-        public static void Postfix(EB_InCombat_MoveToNextNode_DestroyDoor __instance)
+        internal static void Postfix(EB_InCombat_MoveToNextNode_DestroyDoor __instance)
         {
             if (!ShouldOverride)
                 return;

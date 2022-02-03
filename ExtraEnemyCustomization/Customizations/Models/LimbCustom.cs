@@ -1,13 +1,13 @@
-﻿using EECustom.Utils;
+﻿using EECustom.Utils.JsonElements;
 using Enemies;
 using System;
 using System.Linq;
 
 namespace EECustom.Customizations.Models
 {
-    public class LimbCustom : EnemyCustomBase, IEnemySpawnedEvent
+    public sealed class LimbCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
-        public LimbData[] Limbs { get; set; } = new LimbData[0];
+        public LimbData[] Limbs { get; set; } = Array.Empty<LimbData>();
 
         public override string GetProcessName()
         {

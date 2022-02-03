@@ -1,19 +1,25 @@
 ﻿using EECustom.Customizations;
 using EECustom.Customizations.Detections;
+using System;
 using System.Collections.Generic;
 
 namespace EECustom.Configs.Customizations
 {
-    public class DetectionCustomConfig : CustomizationConfig
+    public sealed class DetectionCustomConfig : CustomizationConfig
     {
-        public ScreamingCustom[] ScreamingCustom { get; set; } = new ScreamingCustom[0];
-        public FeelerCustom[] FeelerCustom { get; set; } = new FeelerCustom[0];
+        public ScreamingCustom[] ScreamingCustom { get; set; } = Array.Empty<ScreamingCustom>();
+        public FeelerCustom[] FeelerCustom { get; set; } = Array.Empty<FeelerCustom>();
+        public ScoutAnimCustom[] ScoutAnimCustom { get; set; } = Array.Empty<ScoutAnimCustom>();
+
+        public override string FileName => "Detection";
+        public override CustomizationConfigType Type => CustomizationConfigType.Detection;
 
         public override EnemyCustomBase[] GetAllSettings()
         {
             var list = new List<EnemyCustomBase>();
             list.AddRange(ScreamingCustom);
             list.AddRange(FeelerCustom);
+            list.AddRange(ScoutAnimCustom);
             return list.ToArray();
         }
     }

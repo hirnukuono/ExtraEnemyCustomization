@@ -5,10 +5,10 @@ using UnityEngine;
 
 namespace EECustom.Customizations.Abilities
 {
-    public class ScoutScreamingCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyGlowEvent
+    public sealed class ScoutScreamingCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyGlowEvent
     {
-        public readonly static Color DefaultChargeupColor = ES_ScoutScream.s_screamChargeupColor;
-        public readonly static Color DefaultScreamColor = ES_ScoutScream.s_screamPopColor;
+        public static readonly Color DefaultChargeupColor = ES_ScoutScream.s_screamChargeupColor;
+        public static readonly Color DefaultScreamColor = ES_ScoutScream.s_screamPopColor;
 
         public Color ChargeupColor { get; set; } = new Color(0f, 1f, 0.8f, 1f) * 2f;
         public Color ScreamColor { get; set; } = new Color(0f, 1f, 0.8f, 1f) * 20f;

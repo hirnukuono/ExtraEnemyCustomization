@@ -1,7 +1,7 @@
 ﻿using EECustom.Attributes;
 using EECustom.Events;
 using Enemies;
-using System;
+using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -14,25 +14,25 @@ namespace EECustom.Customizations.Models.Handlers
 
         private Color _latestColorB = Color.clear;
 
-        public EnemySilhouette(IntPtr ptr) : base(ptr)
-        {
-        }
-
+        [HideFromIl2Cpp]
         public void EnableSilhouette()
         {
             SetColorB(_latestColorB);
         }
 
+        [HideFromIl2Cpp]
         public void DisableSilhouette()
         {
             SetColorB(Color.clear);
         }
 
+        [HideFromIl2Cpp]
         public void SetColorA(Color color)
         {
             SilhouetteMaterial.SetVector("_ColorA", color);
         }
 
+        [HideFromIl2Cpp]
         public void SetColorB(Color color)
         {
             SilhouetteMaterial.SetVector("_ColorB", color);
@@ -53,10 +53,7 @@ namespace EECustom.Customizations.Models.Handlers
         private bool _tagUpdateDone = true;
         private NavMarker _enemyMarker = null;
         private EnemySilhouette[] _silhouettes = null;
-
-        public SilhouetteHandler(IntPtr ptr) : base(ptr)
-        {
-        }
+        private bool _eventRegistered = false;
 
         internal void Start()
         {
@@ -79,7 +76,8 @@ namespace EECustom.Customizations.Models.Handlers
 
             if (RequireTag || ReplaceColorWithMarker)
             {
-                EnemyMarkerEvents.RegisterOnMarked(OwnerAgent, OnMarked);
+                EnemyMarkerEvents.Marked += OnMarked;
+                _eventRegistered = true;
             }
 
             if (!RequireTag)
@@ -87,6 +85,12 @@ namespace EECustom.Customizations.Models.Handlers
                 SetColorB(DefaultColor);
                 Show();
             }
+        }
+
+        internal void OnDestroy()
+        {
+            if (_eventRegistered)
+                EnemyMarkerEvents.Marked -= OnMarked;
         }
 
         internal void Update()
@@ -127,8 +131,12 @@ namespace EECustom.Customizations.Models.Handlers
             }
         }
 
-        public void OnMarked(EnemyAgent agent, NavMarker marker)
+        [HideFromIl2Cpp]
+        private void OnMarked(EnemyAgent agent, NavMarker marker)
         {
+            if (agent.GlobalID != OwnerAgent.GlobalID)
+                return;
+
             _enemyMarker = marker;
             _tagUpdateDone = false;
 
@@ -138,6 +146,7 @@ namespace EECustom.Customizations.Models.Handlers
             }
         }
 
+        [HideFromIl2Cpp]
         public void KillSilhouette(float delay)
         {
             for (int i = 0; i < _silhouettes.Length; i++)
@@ -146,6 +155,7 @@ namespace EECustom.Customizations.Models.Handlers
             }
         }
 
+        [HideFromIl2Cpp]
         public void Show()
         {
             for (int i = 0; i < _silhouettes.Length; i++)
@@ -154,6 +164,7 @@ namespace EECustom.Customizations.Models.Handlers
             }
         }
 
+        [HideFromIl2Cpp]
         public void Hide()
         {
             for (int i = 0; i < _silhouettes.Length; i++)
@@ -162,6 +173,7 @@ namespace EECustom.Customizations.Models.Handlers
             }
         }
 
+        [HideFromIl2Cpp]
         public void SetColorA(Color color)
         {
             for (int i = 0; i < _silhouettes.Length; i++)
@@ -170,6 +182,7 @@ namespace EECustom.Customizations.Models.Handlers
             }
         }
 
+        [HideFromIl2Cpp]
         public void SetColorB(Color color)
         {
             for (int i = 0; i < _silhouettes.Length; i++)

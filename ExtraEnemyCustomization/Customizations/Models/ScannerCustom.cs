@@ -1,13 +1,15 @@
 ﻿using EECustom.Customizations.Models.Handlers;
+using EECustom.Extensions;
 using Enemies;
 using System.Text.Json.Serialization;
 using UnityEngine;
 
 namespace EECustom.Customizations.Models
 {
-    public class ScannerCustom : EnemyCustomBase, IEnemySpawnedEvent
+    public sealed class ScannerCustom : EnemyCustomBase, IEnemySyncSpawnedEvent
     {
         public static readonly Color DefaultDetectionColor = new(1f, 0.1f, 0.1f, 1f);
+        internal static readonly ScannerSync _sync = new();
 
         [JsonPropertyName("DefaultColor")]
         public Color Internal_DefaultColor { get; set; } = new(0.7f, 0.7f, 0.7f);
@@ -58,6 +60,11 @@ namespace EECustom.Customizations.Models
         public Color PatrolColor;
         public Color FeelerOutColor;
 
+        static ScannerCustom()
+        {
+            _sync.Initialize();
+        }
+
         public override string GetProcessName()
         {
             return "Scanner";
@@ -86,7 +93,7 @@ namespace EECustom.Customizations.Models
             }
         }
 
-        public void OnSpawned(EnemyAgent agent)
+        public void OnSyncSpawned(EnemyAgent agent)
         {
             var scannerManager = agent.gameObject.GetComponent<ScannerHandler>();
             if (scannerManager == null)
@@ -103,6 +110,17 @@ namespace EECustom.Customizations.Models
             scannerManager.UsingDetectionColor = UsingDetectionColor;
             scannerManager.UsingScoutColor = UsingScoutColor;
             scannerManager.InterpDuration = LerpingDuration;
+
+            var key = agent.GlobalID;
+            _sync.Register(key, default, (packet) =>
+            {
+                scannerManager.UpdateAgentMode(packet.mode);
+            });
+
+            agent.AddOnDeadOnce(() =>
+            {
+                _sync.Deregister(key);
+            });
         }
     }
 }

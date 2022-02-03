@@ -1,13 +1,14 @@
-﻿using EECustom.Customizations.Abilities.Handlers;
+﻿using EECustom.Customizations.Shared.Handlers;
 using EECustom.Utils;
 using HarmonyLib;
 
 namespace EECustom.Customizations.Abilities.Inject
 {
     [HarmonyPatch(typeof(EAB_FogSphere), nameof(EAB_FogSphere.DoTrigger))]
-    internal class Inject_EAB_FogSphere
+    internal static class Inject_EAB_FogSphere
     {
-        private static void Prefix(EAB_FogSphere __instance)
+        [HarmonyWrapSafe]
+        internal static void Prefix(EAB_FogSphere __instance)
         {
             var effectSetting = EnemyProperty<SphereEffectSetting>.Get(__instance.m_owner);
             if (effectSetting == null)
@@ -16,7 +17,8 @@ namespace EECustom.Customizations.Abilities.Inject
             effectSetting.HandlerCount = __instance.m_activeFogSpheres.Count;
         }
 
-        private static void Postfix(EAB_FogSphere __instance)
+        [HarmonyWrapSafe]
+        internal static void Postfix(EAB_FogSphere __instance)
         {
             var effectSetting = EnemyProperty<SphereEffectSetting>.Get(__instance.m_owner);
             if (effectSetting == null)
