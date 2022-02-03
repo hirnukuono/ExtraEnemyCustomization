@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EECustom.Customizations.EnemyAbilities.Abilities
 {
-    public class ChainedAbility : AbilityBase<ExplosionBehaviour>
+    public class ChainedAbility : AbilityBase<ChainedBehaviour>
     {
         public EventBlock[] Abilities { get; set; } = Array.Empty<EventBlock>();
 
