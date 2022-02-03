@@ -15,8 +15,7 @@ namespace EECustom.Customizations.Detections
             if (!SNet.IsMaster)
                 return;
 
-            var data = EnemyProperty<ScoutAnimOverrideData>.Get(agent);
-            if (data == null)
+            if (!EnemyProperty<ScoutAnimOverrideData>.TryGet(agent, out var data))
                 return;
 
             ScoutAnimType nextAnim;
@@ -46,8 +45,7 @@ namespace EECustom.Customizations.Detections
 
         public override void Receive(ScoutAnimPacket packet)
         {
-            var data = EnemyProperty<ScoutAnimOverrideData>.Get(packet.enemyID);
-            if (data == null)
+            if (!EnemyProperty<ScoutAnimOverrideData>.TryGet(packet.enemyID, out var data))
                 return;
 
             if (data.Agent.WasCollected)

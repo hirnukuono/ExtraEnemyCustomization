@@ -57,5 +57,12 @@ namespace EECustom.Utils
             else
                 return null;
         }
+
+        public static bool TryGet(EnemyAgent agent, out T property) => TryGet(agent.GlobalID, out property);
+
+        public static bool TryGet(ushort id, out T property)
+        {
+            return _properties.TryGetValue(id, out property);
+        }
     }
 }

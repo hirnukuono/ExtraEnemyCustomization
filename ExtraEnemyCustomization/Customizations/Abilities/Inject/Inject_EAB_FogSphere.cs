@@ -10,8 +10,7 @@ namespace EECustom.Customizations.Abilities.Inject
         [HarmonyWrapSafe]
         internal static void Prefix(EAB_FogSphere __instance)
         {
-            var effectSetting = EnemyProperty<SphereEffectSetting>.Get(__instance.m_owner);
-            if (effectSetting == null)
+            if (!EnemyProperty<SphereEffectSetting>.TryGet(__instance.m_owner, out var effectSetting))
                 return;
 
             effectSetting.HandlerCount = __instance.m_activeFogSpheres.Count;
@@ -20,8 +19,7 @@ namespace EECustom.Customizations.Abilities.Inject
         [HarmonyWrapSafe]
         internal static void Postfix(EAB_FogSphere __instance)
         {
-            var effectSetting = EnemyProperty<SphereEffectSetting>.Get(__instance.m_owner);
-            if (effectSetting == null)
+            if (!EnemyProperty<SphereEffectSetting>.TryGet(__instance.m_owner, out var effectSetting))
                 return;
 
             if (effectSetting.HandlerCount == __instance.m_activeFogSpheres.Count)
