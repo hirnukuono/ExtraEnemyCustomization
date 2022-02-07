@@ -1,4 +1,5 @@
-﻿using EECustom.Attributes;
+﻿using Agents;
+using EECustom.Attributes;
 using Enemies;
 using UnityEngine;
 
@@ -22,6 +23,9 @@ namespace EECustom.Patches.Handlers
             if (!_shouldCheck)
                 return;
 
+            if (Agent.AI.Mode != AgentMode.Agressive)
+                return;
+
             if (_timer > Clock.Time)
                 return;
 
@@ -41,7 +45,7 @@ namespace EECustom.Patches.Handlers
                 if (_tryCount >= RetryCount)
                 {
                     Logger.Debug("Flyer was stuck in Place!");
-                    Agent.Damage.BulletDamage(10000.0f, null, Vector3.zero, Vector3.zero, Vector3.zero, false, 0, 1.0f, 1.0f);
+                    Agent.m_replicator.Despawn();
                 }
             }
             else
