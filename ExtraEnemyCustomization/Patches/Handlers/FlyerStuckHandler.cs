@@ -12,11 +12,16 @@ namespace EECustom.Patches.Handlers
         public int RetryCount = 4;
 
         private Vector3 _firstPosition;
+        private Vector2 _lastGoalXZ;
         private float _timer;
         private int _tryCount = -1;
+        private bool _shouldCheck = true;
 
         internal void Update()
         {
+            if (!_shouldCheck)
+                return;
+
             if (_timer > Clock.Time)
                 return;
 
@@ -41,8 +46,34 @@ namespace EECustom.Patches.Handlers
             }
             else
             {
-                enabled = false;
+                _shouldCheck = false;
             }
+        }
+
+        internal void FixedUpdate()
+        {
+            if (_shouldCheck)
+                return;
+
+            var goal = Agent.AI.NavmeshAgentGoal;
+            var goalXZ = new Vector2(goal.x, goal.z);
+            var goalDeltaSqr = (goalXZ - _lastGoalXZ).sqrMagnitude;
+            if (goalDeltaSqr < 0.1f)
+            {
+                var state = (EB_States)Agent.AI.m_behaviour.CurrentState.ENUM_ID;
+                if (state == EB_States.InCombat) //Possibly Stuck
+                {
+                    _tryCount = -1;
+                    _shouldCheck = true;
+                }
+            }
+            else
+            {
+                _tryCount = -1;
+                _shouldCheck = false;
+            }
+
+            _lastGoalXZ = goalXZ;
         }
     }
 }
