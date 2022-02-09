@@ -31,6 +31,9 @@ namespace EECustom.Customizations.Shared.Handlers
         internal void OnDestroy()
         {
             EffectVolumeManager.UnregisterVolume(EVSphere);
+
+            Handler = null;
+            EVSphere = null;
         }
     }
 }

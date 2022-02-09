@@ -55,6 +55,10 @@ namespace EECustom.Events
         internal void OnDestroy()
         {
             OnDestroyed?.Invoke(gameObject);
+
+            OnUpdate = null;
+            OnLateUpdate = null;
+            OnFixedUpdate = null;
         }
     }
 }

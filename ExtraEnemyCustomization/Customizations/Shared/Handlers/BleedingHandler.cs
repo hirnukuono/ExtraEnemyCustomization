@@ -49,6 +49,8 @@ namespace EECustom.Customizations.Shared.Handlers
         internal void OnDestroy()
         {
             StopBleed();
+
+            Agent = null;
         }
 
         [HideFromIl2Cpp]

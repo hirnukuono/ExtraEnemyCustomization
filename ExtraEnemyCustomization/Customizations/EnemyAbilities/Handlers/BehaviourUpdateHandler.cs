@@ -74,6 +74,13 @@ namespace EECustom.Customizations.EnemyAbilities.Handlers
             Behaviour.DoTriggerSync();
         }
 
+        internal void OnDestroy()
+        {
+            Agent = null;
+            Behaviour = null;
+            Setting = null;
+        }
+
         [HideFromIl2Cpp]
         private bool CheckAllowedModeCondition()
         {

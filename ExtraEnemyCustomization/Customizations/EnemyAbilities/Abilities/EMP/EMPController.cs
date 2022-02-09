@@ -27,6 +27,8 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
         {
             EMPManager.RemoveTarget(this);
             _handler.OnDespawn();
+
+            _handler = null;
         }
 
         internal void OnEnable()

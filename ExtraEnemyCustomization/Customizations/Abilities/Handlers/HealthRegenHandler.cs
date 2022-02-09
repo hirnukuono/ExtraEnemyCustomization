@@ -77,6 +77,12 @@ namespace EECustom.Customizations.Abilities.Handlers
             }
         }
 
+        internal void OnDestroy()
+        {
+            DamageBase = null;
+            RegenData = null;
+        }
+
         [HideFromIl2Cpp]
         private void StartRegen()
         {

@@ -49,6 +49,9 @@ namespace EECustom.Customizations.Abilities.Handlers
         {
             if (EVSphere != null)
                 EffectVolumeManager.UnregisterVolume(EVSphere);
+
+            ScoutScream = null;
+            EVSphere = null;
         }
     }
 }

@@ -14,6 +14,11 @@ namespace EECustom.Customizations.Models.Handlers
 
         private Color _latestColorB = Color.clear;
 
+        internal void OnDestroy()
+        {
+            SilhouetteMaterial = null;
+        }
+
         [HideFromIl2Cpp]
         public void EnableSilhouette()
         {
@@ -91,6 +96,10 @@ namespace EECustom.Customizations.Models.Handlers
         {
             if (_eventRegistered)
                 EnemyMarkerEvents.Marked -= OnMarked;
+
+            OwnerAgent = null;
+            _enemyMarker = null;
+            _silhouettes = null;
         }
 
         internal void Update()

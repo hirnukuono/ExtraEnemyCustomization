@@ -89,6 +89,11 @@ namespace EECustom.Customizations.Models.Handlers
             }
         }
 
+        internal void OnDestroy()
+        {
+            OwnerAgent = null;
+        }
+
         [HideFromIl2Cpp]
         internal void SetAgentMode_Master(AgentMode mode)
         {

@@ -140,6 +140,8 @@ namespace EECustom.Utils
                 {
                     FX_Manager.DeallocateFXLight(_light);
                 }
+
+                _light = null;
             }
         }
     }

@@ -103,5 +103,10 @@ namespace EECustom.Customizations.Models.Handlers
             }
             _timer = Clock.Time + duration;
         }
+
+        internal void OnDestroy()
+        {
+            _ownerAgent = null;
+        }
     }
 }

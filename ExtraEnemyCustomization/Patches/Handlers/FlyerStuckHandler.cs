@@ -79,5 +79,10 @@ namespace EECustom.Patches.Handlers
 
             _lastGoalXZ = goalXZ;
         }
+
+        internal void OnDestroy()
+        {
+            Agent = null;
+        }
     }
 }

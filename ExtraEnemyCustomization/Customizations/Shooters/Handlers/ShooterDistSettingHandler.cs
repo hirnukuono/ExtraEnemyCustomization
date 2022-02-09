@@ -35,5 +35,15 @@ namespace EECustom.Customizations.Shooters.Handlers
                 _currentSetting = newSetting;
             }
         }
+
+        internal void OnDestroy()
+        {
+            Destroy(DefaultValue);
+            DefaultValue = null;
+
+            EAB_Shooter = null;
+            FireSettings = null;
+            _currentSetting = null;
+        }
     }
 }
