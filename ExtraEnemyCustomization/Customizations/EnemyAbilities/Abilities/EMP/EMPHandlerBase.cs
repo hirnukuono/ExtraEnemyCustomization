@@ -184,6 +184,16 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
             return min + ((float)_rand.NextDouble() * (max - min));
         }
 
+        protected static float GetRandom01()
+        {
+            return (float)_rand.NextDouble();
+        }
+
+        protected static int GetRandomRange(int min, int maxPlusOne)
+        {
+            return _rand.Next(min, maxPlusOne);
+        }
+
         protected static bool FlickerUtil(int oneInX = 2)
         {
             return _rand.Next(0, oneInX) == 0;

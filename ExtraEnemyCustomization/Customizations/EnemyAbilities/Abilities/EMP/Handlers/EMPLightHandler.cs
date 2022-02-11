@@ -30,7 +30,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Handlers
 
         protected override void FlickerDevice()
         {
-            _light?.ChangeIntensity(UnityEngine.Random.value * _originalIntensity);
+            _light?.ChangeIntensity(GetRandom01() * _originalIntensity);
         }
 
         protected override void DeviceOn()

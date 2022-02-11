@@ -50,7 +50,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Handlers
         protected override void FlickerDevice()
         {
             if (!FlashlightEnabled) return;
-            _inventory.m_flashlight.intensity = UnityEngine.Random.value * _originalIntensity;
+            _inventory.m_flashlight.intensity = GetRandom01() * _originalIntensity;
         }
     }
 }

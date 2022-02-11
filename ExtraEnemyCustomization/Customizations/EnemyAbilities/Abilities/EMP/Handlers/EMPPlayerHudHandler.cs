@@ -44,12 +44,10 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Handlers
         {
             foreach (var target in _targets)
             {
-                int isEnabled = UnityEngine.Random.RandomRangeInt(0, 2);
-
-                target.SetVisible(isEnabled == 1);
+                target.SetVisible(FlickerUtil(2));
             }
 
-            GuiManager.NavMarkerLayer.SetVisible(UnityEngine.Random.RandomRangeInt(0, 2) == 0);
+            GuiManager.NavMarkerLayer.SetVisible(FlickerUtil(2));
         }
     }
 }

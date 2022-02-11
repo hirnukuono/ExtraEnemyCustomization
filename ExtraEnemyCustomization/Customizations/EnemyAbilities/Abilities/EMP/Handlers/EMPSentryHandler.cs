@@ -40,7 +40,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Handlers
 
         protected override void FlickerDevice()
         {
-            int state = UnityEngine.Random.RandomRangeInt(0, 3);
+            int state = GetRandomRange(0, 3);
             _sentry.StopFiring();
 
             switch (state)
