@@ -10,7 +10,7 @@ using UnityEngine;
 namespace EECustom.Customizations.Abilities.Handlers
 {
     [InjectToIl2Cpp]
-    public class HealthRegenHandler : MonoBehaviour
+    public sealed class HealthRegenHandler : MonoBehaviour
     {
         public Dam_EnemyDamageBase DamageBase;
 

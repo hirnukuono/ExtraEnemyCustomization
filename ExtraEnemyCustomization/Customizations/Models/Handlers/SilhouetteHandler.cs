@@ -8,7 +8,7 @@ using UnityEngine.Rendering;
 namespace EECustom.Customizations.Models.Handlers
 {
     [InjectToIl2Cpp]
-    public class EnemySilhouette : MonoBehaviour
+    public sealed class EnemySilhouette : MonoBehaviour
     {
         public Material SilhouetteMaterial;
 
@@ -46,7 +46,7 @@ namespace EECustom.Customizations.Models.Handlers
     }
 
     [InjectToIl2Cpp]
-    public class SilhouetteHandler : MonoBehaviour
+    public sealed class SilhouetteHandler : MonoBehaviour
     {
         public EnemyAgent OwnerAgent;
         public Color DefaultColor;

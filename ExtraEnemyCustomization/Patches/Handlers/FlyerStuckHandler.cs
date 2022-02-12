@@ -6,7 +6,7 @@ using UnityEngine;
 namespace EECustom.Patches.Handlers
 {
     [InjectToIl2Cpp]
-    public class FlyerStuckHandler : MonoBehaviour
+    public sealed class FlyerStuckHandler : MonoBehaviour
     {
         public EnemyAgent Agent;
         public float UpdateInterval = 2.0f;

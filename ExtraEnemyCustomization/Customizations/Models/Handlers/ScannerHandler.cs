@@ -19,7 +19,7 @@ namespace EECustom.Customizations.Models.Handlers
     }
 
     [InjectToIl2Cpp]
-    public class ScannerHandler : MonoBehaviour
+    public sealed class ScannerHandler : MonoBehaviour
     {
         public EnemyAgent OwnerAgent;
         public Color DefaultColor;

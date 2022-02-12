@@ -4,7 +4,7 @@ using UnityEngine;
 namespace EECustom.Customizations.Shared.Handlers
 {
     [InjectToIl2Cpp]
-    internal class EffectFogSphereHandler : MonoBehaviour
+    internal sealed class EffectFogSphereHandler : MonoBehaviour
     {
         public FogSphereHandler Handler;
         public EV_Sphere EVSphere;

@@ -8,7 +8,7 @@ using UnityEngine;
 namespace EECustom.CustomAbilities.Explosion.Handlers
 {
     [InjectToIl2Cpp]
-    public class ExplosionEffectHandler : MonoBehaviour
+    public sealed class ExplosionEffectHandler : MonoBehaviour
     {
         public Color FlashColor;
         public float Range;

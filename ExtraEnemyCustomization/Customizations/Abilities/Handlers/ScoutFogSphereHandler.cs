@@ -5,7 +5,7 @@ using UnityEngine;
 namespace EECustom.Customizations.Abilities.Handlers
 {
     [InjectToIl2Cpp]
-    internal class ScoutFogSphereHandler : MonoBehaviour
+    internal sealed class ScoutFogSphereHandler : MonoBehaviour
     {
         public Color FogColor;
         public float FogIntensity;

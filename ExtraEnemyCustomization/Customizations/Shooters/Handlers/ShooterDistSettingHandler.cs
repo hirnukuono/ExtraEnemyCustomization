@@ -5,7 +5,7 @@ using UnityEngine;
 namespace EECustom.Customizations.Shooters.Handlers
 {
     [InjectToIl2Cpp]
-    public class ShooterDistSettingHandler : MonoBehaviour
+    public sealed class ShooterDistSettingHandler : MonoBehaviour
     {
         public EAB_ProjectileShooter DefaultValue;
         public EAB_ProjectileShooter EAB_Shooter;

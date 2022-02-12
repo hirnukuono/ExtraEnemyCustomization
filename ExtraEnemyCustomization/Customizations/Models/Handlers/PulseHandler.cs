@@ -7,7 +7,7 @@ using UnityEngine;
 namespace EECustom.Customizations.Models.Handlers
 {
     [InjectToIl2Cpp]
-    public class PulseHandler : MonoBehaviour
+    public sealed class PulseHandler : MonoBehaviour
     {
         public PulseEffectData PulseData;
         public float StartDelay = 0.0f;

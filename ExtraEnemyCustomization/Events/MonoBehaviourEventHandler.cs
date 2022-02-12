@@ -7,7 +7,7 @@ namespace EECustom.Events
     public delegate void UnityEventHandler(GameObject caller);
 
     [InjectToIl2Cpp]
-    public class MonoBehaviourEventHandler : MonoBehaviour
+    public sealed class MonoBehaviourEventHandler : MonoBehaviour
     {
         [HideFromIl2Cpp]
         public event UnityEventHandler OnUpdate;

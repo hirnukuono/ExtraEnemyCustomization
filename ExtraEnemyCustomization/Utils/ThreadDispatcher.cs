@@ -6,7 +6,7 @@ using UnityEngine;
 namespace EECustom.Utils
 {
     [InjectToIl2Cpp]
-    public class ThreadDispatcher : MonoBehaviour
+    public sealed class ThreadDispatcher : MonoBehaviour
     {
         public static ThreadDispatcher Current { get; private set; } = null;
 

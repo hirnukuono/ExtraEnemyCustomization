@@ -5,7 +5,7 @@ using UnityEngine;
 namespace EECustom.CustomAbilities.EMP
 {
     [InjectToIl2Cpp]
-    public class EMPController : MonoBehaviour
+    public sealed class EMPController : MonoBehaviour
     {
         private IEMPHandler _handler = null;
         private bool _hasHandler = false;
