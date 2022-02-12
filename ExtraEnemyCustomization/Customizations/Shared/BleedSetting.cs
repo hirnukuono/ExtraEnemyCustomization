@@ -1,4 +1,5 @@
-﻿using EECustom.Networking;
+﻿using EECustom.CustomAbilities.Bleed;
+using EECustom.Networking;
 using EECustom.Utils;
 using EECustom.Utils.JsonElements;
 using Player;
@@ -15,9 +16,9 @@ namespace EECustom.Customizations.Shared
         public bool HasLiquid { get; set; } = true;
         public ScreenLiquidSettingName LiquidSetting { get; set; } = ScreenLiquidSettingName.enemyBlood_Squirt;
 
-        public void TryBleed(PlayerAgent agent)
+        public void DoBleed(PlayerAgent agent)
         {
-            NetworkManager.Bleeding.Send(new Networking.Events.BleedingPacket()
+            BleedManager.DoBleed(new BleedingData()
             {
                 playerSlot = agent.PlayerSlotIndex,
                 interval = Interval,
@@ -28,28 +29,9 @@ namespace EECustom.Customizations.Shared
             });
         }
 
-        public void DoBleed(PlayerAgent agent)
-        {
-            NetworkManager.Bleeding.Send(new Networking.Events.BleedingPacket()
-            {
-                playerSlot = agent.PlayerSlotIndex,
-                interval = Interval,
-                duration = Duration,
-                damage = Damage.GetAbsValue(PlayerData.MaxHealth),
-                chanceToBleed = 1.0f,
-                liquid = HasLiquid ? LiquidSetting : (ScreenLiquidSettingName)(-1)
-            });
-        }
-
         public static void StopBleed(PlayerAgent agent)
         {
-            NetworkManager.Bleeding.Send(new Networking.Events.BleedingPacket()
-            {
-                playerSlot = agent.PlayerSlotIndex,
-                interval = 10.0f,
-                duration = -1.0f,
-                damage = 0
-            });
+            BleedManager.StopBleed(agent.PlayerSlotIndex);
         }
     }
 }

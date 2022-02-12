@@ -1,5 +1,6 @@
 ﻿using Agents;
 using AIGraph;
+using EECustom.CustomAbilities.Explosion;
 using EECustom.Utils;
 using EECustom.Utils.JsonElements;
 using LevelGeneration;
@@ -24,7 +25,14 @@ namespace EECustom.Customizations.Shared
             var maxDamage = Damage.GetAbsValue(PlayerData.MaxHealth);
             if (maxDamage > 0.0f)
             {
-                ExplosionUtil.MakeExplosion(from.EyePosition, maxDamage, EnemyDamageMulti, MinRange, MaxRange);
+                ExplosionManager.DoExplosion(new ExplosionData()
+                {
+                    position = from.EyePosition,
+                    damage = maxDamage,
+                    enemyMulti = EnemyDamageMulti,
+                    minRange = MinRange,
+                    maxRange = MaxRange
+                });
 
                 var noise = new NM_NoiseData()
                 {
@@ -47,7 +55,14 @@ namespace EECustom.Customizations.Shared
             var maxDamage = Damage.GetAbsValue(PlayerData.MaxHealth);
             if (maxDamage > 0.0f)
             {
-                ExplosionUtil.MakeExplosion(position, maxDamage, EnemyDamageMulti, MinRange, MaxRange);
+                ExplosionManager.DoExplosion(new ExplosionData()
+                {
+                    position = position,
+                    damage = maxDamage,
+                    enemyMulti = EnemyDamageMulti,
+                    minRange = MinRange,
+                    maxRange = MaxRange
+                });
 
                 var newPos = position;
                 if (!PhysicsUtil.SlamPos(ref newPos, Vector3.down, 64.0f, LayerManager.MASK_LEVELGEN, false, 0.0f, 0.0f))

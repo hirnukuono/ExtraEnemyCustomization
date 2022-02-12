@@ -1,4 +1,5 @@
-﻿using EECustom.Utils;
+﻿using EECustom.CustomAbilities.Explosion;
+using EECustom.Utils;
 using EECustom.Utils.JsonElements;
 using UnityEngine;
 
@@ -53,7 +54,14 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
             var position = Agent.EyePosition;
             GetRagdollPosition(ref position);
-            ExplosionUtil.MakeExplosion(position, damage, Ability.EnemyDamageMulti, Ability.MinRange, Ability.MaxRange);
+            ExplosionManager.DoExplosion(new ExplosionData()
+            {
+                position = position,
+                damage = damage,
+                enemyMulti = Ability.EnemyDamageMulti,
+                minRange = Ability.MinRange,
+                maxRange = Ability.MaxRange
+            });
 
             var noise = new NM_NoiseData()
             {

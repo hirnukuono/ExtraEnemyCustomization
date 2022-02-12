@@ -11,12 +11,12 @@ namespace EECustom.Networking
 
         private bool _isSetup = false;
 
-        public void Setup(ushort replicatorID = 0)
+        public void Setup()
         {
             if (_isSetup)
                 return;
 
-            EventName = $"EEC_Networking_{typeof(T).Name}_{replicatorID}";
+            EventName = $"EEC_Networking_{typeof(T).Name}";
             NetworkAPI.RegisterEvent<T>(EventName, ReceiveClient_Callback);
             _isSetup = true;
         }

@@ -1,14 +1,14 @@
 ﻿using EECustom.Attributes;
-using EECustom.Customizations.Shared.Inject;
+using EECustom.CustomAbilities.Bleed.Inject;
 using Player;
 using System;
 using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 
-namespace EECustom.Customizations.Shared.Handlers
+namespace EECustom.CustomAbilities.Bleed.Handlers
 {
     [InjectToIl2Cpp]
-    public class BleedingHandler : MonoBehaviour
+    public class BleedHandler : MonoBehaviour
     {
         public PlayerAgent Agent;
 

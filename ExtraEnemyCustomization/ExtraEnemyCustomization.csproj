@@ -37,4 +37,8 @@
   <ItemGroup>
     <PackageReference Include="System.Text.Json" Version="6.0.0-preview.1.21102.12" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Customizations\Shared\Inject\" />
+  </ItemGroup>
 </Project>

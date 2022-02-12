@@ -1,16 +1,17 @@
-﻿using EECustom.Customizations.Shared.Handlers;
+﻿using EECustom.CustomAbilities.Bleed.Handlers;
+using EECustom.Networking;
 using Player;
 using System;
 
-namespace EECustom.Networking.Events
+namespace EECustom.CustomAbilities.Bleed
 {
-    public class BleedingEvent : SyncedEvent<BleedingPacket>
+    internal sealed class BleedSync : SyncedEvent<BleedingData>
     {
         private static readonly Random _random = new();
         private static PlayerAgent _localAgent = null;
-        private static BleedingHandler _handler = null;
+        private static BleedHandler _handler = null;
 
-        public override void Receive(BleedingPacket packet)
+        public override void Receive(BleedingData packet)
         {
             if (!PlayerManager.HasLocalPlayerAgent())
                 return;
@@ -38,23 +39,13 @@ namespace EECustom.Networking.Events
 
         private static void UpdateHandler()
         {
-            _handler = _localAgent.gameObject.GetComponent<BleedingHandler>();
+            _handler = _localAgent.gameObject.GetComponent<BleedHandler>();
 
             if (_handler == null)
             {
-                _handler = _localAgent.gameObject.AddComponent<BleedingHandler>();
+                _handler = _localAgent.gameObject.AddComponent<BleedHandler>();
             }
             _handler.Agent = _localAgent;
         }
-    }
-
-    public struct BleedingPacket
-    {
-        public int playerSlot;
-        public float interval;
-        public float duration;
-        public float damage;
-        public float chanceToBleed;
-        public ScreenLiquidSettingName liquid;
     }
 }

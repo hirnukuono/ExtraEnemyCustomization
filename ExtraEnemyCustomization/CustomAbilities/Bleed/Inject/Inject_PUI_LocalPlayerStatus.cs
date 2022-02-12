@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 
-namespace EECustom.Customizations.Shared.Inject
+namespace EECustom.CustomAbilities.Bleed.Inject
 {
     [HarmonyPatch(typeof(PUI_LocalPlayerStatus), nameof(PUI_LocalPlayerStatus.UpdateHealth))]
     internal static class Inject_PUI_LocalPlayerStatus

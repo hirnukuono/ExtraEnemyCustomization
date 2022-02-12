@@ -42,7 +42,7 @@ namespace EECustom.Customizations.Abilities
             {
                 var enemyAgent = inflictor.TryCast<EnemyAgent>();
                 if (enemyAgent != null)
-                    MeleeData.TryBleed(player);
+                    MeleeData.DoBleed(player);
             }
         }
 
@@ -52,7 +52,7 @@ namespace EECustom.Customizations.Abilities
             {
                 var enemyAgent = inflictor.TryCast<EnemyAgent>();
                 if (enemyAgent != null)
-                    TentacleData.TryBleed(player);
+                    TentacleData.DoBleed(player);
             }
         }
 
