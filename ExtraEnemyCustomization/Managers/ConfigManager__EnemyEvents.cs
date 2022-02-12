@@ -14,7 +14,6 @@ namespace EECustom.Managers
         {
             public string EventName { get; set; } = string.Empty;
             public bool IgnoreLogs { get; set; } = false;
-            public bool AllowAsync { get; set; } = false;
 
             public T[] Events
             {
@@ -34,11 +33,10 @@ namespace EECustom.Managers
             private T[] _events = Array.Empty<T>();
             private bool _hasDirty = false;
 
-            public EnemyEventHolder(string eventName, bool ignoreLogs = false, bool allowAsync = false)
+            public EnemyEventHolder(string eventName, bool ignoreLogs = false)
             {
                 EventName = eventName;
                 IgnoreLogs = ignoreLogs;
-                AllowAsync = allowAsync;
             }
 
             public void TryAdd(EnemyCustomBase custom)
@@ -63,7 +61,8 @@ namespace EECustom.Managers
 
                 for (int i = 0; i < handlers.Length; i++)
                 {
-                    var custom = handlers[i].Base;
+                    var handler = handlers[i];
+                    var custom = handler.Base;
 
                     if (!custom.Enabled)
                         return;
@@ -71,7 +70,7 @@ namespace EECustom.Managers
                     if (custom.Target.IsMatch(enemyBlock))
                     {
                         if (!IgnoreLogs) custom.LogDev($"Apply {EventName} Event: {agent.name}");
-                        doAction?.Invoke(custom as T);
+                        doAction?.Invoke(handler);
                         if (!IgnoreLogs) custom.LogVerbose($"Finished!");
                     }
                 }
@@ -84,50 +83,23 @@ namespace EECustom.Managers
                 for (int i = 0; i < handlers.Length; i++)
                 {
                     var handler = handlers[i];
+                    var custom = handler.Base;
 
-                    if (AllowAsync)
+                    if (!custom.Enabled)
+                        return;
+
+                    if (custom.IsTarget(agent))
                     {
-                        ThreadDispatcher.Enqueue(JobComplexity.Medium, () =>
-                        {
-                            var custom = handler.Base;
-
-                            if (!custom.Enabled)
-                                return;
-
-                            if (agent is null)
-                                return;
-
-                            if (agent.WasCollected)
-                                return;
-
-                            if (custom.IsTarget(agent))
-                            {
-                                if (!IgnoreLogs) custom.LogDev($"Apply {EventName} Event: {agent.name}");
-                                doAction?.Invoke(handler);
-                                if (!IgnoreLogs) custom.LogVerbose($"Finished!");
-                            }
-                        });
-                    }
-                    else
-                    {
-                        var custom = handler.Base;
-
-                        if (!custom.Enabled)
-                            return;
-
-                        if (custom.IsTarget(agent))
-                        {
-                            if (!IgnoreLogs) custom.LogDev($"Apply {EventName} Event: {agent.name}");
-                            doAction?.Invoke(handler);
-                            if (!IgnoreLogs) custom.LogVerbose($"Finished!");
-                        }
+                        if (!IgnoreLogs) custom.LogDev($"Apply {EventName} Event: {agent.name}");
+                        doAction?.Invoke(handler);
+                        if (!IgnoreLogs) custom.LogVerbose($"Finished!");
                     }
                 }
             }
         }
 
         private readonly EnemyEventHolder<IEnemyPrefabBuiltEvent> _enemyPrefabBuiltHolder = new("PrefabBuilt");
-        private readonly EnemyEventHolder<IEnemySpawnedEvent> _enemySpawnedHolder = new("Spawned", allowAsync: false);
+        private readonly EnemyEventHolder<IEnemySpawnedEvent> _enemySpawnedHolder = new("Spawned");
         private readonly EnemyEventHolder<IEnemyGlowEvent> _enemyGlowHolder = new("Glow", ignoreLogs: true);
 
         private void GenerateEventBuffer()
