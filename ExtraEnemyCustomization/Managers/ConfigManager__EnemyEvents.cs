@@ -1,8 +1,10 @@
 ﻿using EECustom.Customizations;
+using EECustom.Utils;
 using Enemies;
 using GameData;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EECustom.Managers
 {
@@ -12,6 +14,7 @@ namespace EECustom.Managers
         {
             public string EventName { get; set; } = string.Empty;
             public bool IgnoreLogs { get; set; } = false;
+            public bool AllowAsync { get; set; } = false;
 
             public T[] Events
             {
@@ -31,10 +34,11 @@ namespace EECustom.Managers
             private T[] _events = Array.Empty<T>();
             private bool _hasDirty = false;
 
-            public EnemyEventHolder(string eventName, bool ignoreLogs = false)
+            public EnemyEventHolder(string eventName, bool ignoreLogs = false, bool allowAsync = false)
             {
                 EventName = eventName;
                 IgnoreLogs = ignoreLogs;
+                AllowAsync = allowAsync;
             }
 
             public void TryAdd(EnemyCustomBase custom)
@@ -62,7 +66,7 @@ namespace EECustom.Managers
                     var custom = handlers[i].Base;
 
                     if (!custom.Enabled)
-                        continue;
+                        return;
 
                     if (custom.Target.IsMatch(enemyBlock))
                     {
@@ -79,23 +83,51 @@ namespace EECustom.Managers
 
                 for (int i = 0; i < handlers.Length; i++)
                 {
-                    var custom = handlers[i].Base;
+                    var handler = handlers[i];
 
-                    if (!custom.Enabled)
-                        continue;
-
-                    if (custom.IsTarget(agent))
+                    if (AllowAsync)
                     {
-                        if (!IgnoreLogs) custom.LogDev($"Apply {EventName} Event: {agent.name}");
-                        doAction?.Invoke(custom as T);
-                        if (!IgnoreLogs) custom.LogVerbose($"Finished!");
+                        ThreadDispatcher.Enqueue(JobComplexity.Heavy, () =>
+                        {
+                            var custom = handler.Base;
+
+                            if (!custom.Enabled)
+                                return;
+
+                            if (agent is null)
+                                return;
+
+                            if (agent.WasCollected)
+                                return;
+
+                            if (custom.IsTarget(agent))
+                            {
+                                if (!IgnoreLogs) custom.LogDev($"Apply {EventName} Event: {agent.name}");
+                                doAction?.Invoke(handler);
+                                if (!IgnoreLogs) custom.LogVerbose($"Finished!");
+                            }
+                        });
+                    }
+                    else
+                    {
+                        var custom = handler.Base;
+
+                        if (!custom.Enabled)
+                            return;
+
+                        if (custom.IsTarget(agent))
+                        {
+                            if (!IgnoreLogs) custom.LogDev($"Apply {EventName} Event: {agent.name}");
+                            doAction?.Invoke(handler);
+                            if (!IgnoreLogs) custom.LogVerbose($"Finished!");
+                        }
                     }
                 }
             }
         }
 
         private readonly EnemyEventHolder<IEnemyPrefabBuiltEvent> _enemyPrefabBuiltHolder = new("PrefabBuilt");
-        private readonly EnemyEventHolder<IEnemySpawnedEvent> _enemySpawnedHolder = new("Spawned");
+        private readonly EnemyEventHolder<IEnemySpawnedEvent> _enemySpawnedHolder = new("Spawned", allowAsync: true);
         private readonly EnemyEventHolder<IEnemySyncSpawnedEvent> _enemySyncSpawnedHolder = new("SyncSpawned");
         private readonly EnemyEventHolder<IEnemyGlowEvent> _enemyGlowHolder = new("Glow", ignoreLogs: true);
 

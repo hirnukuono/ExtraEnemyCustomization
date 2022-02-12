@@ -21,7 +21,7 @@ namespace EECustom.Managers
 
         private static void OnConfigFileEdited_ReloadConfig(object sender, FileSystemEventArgs e)
         {
-            ThreadDispatcher.Enqueue(() =>
+            ThreadDispatcher.Enqueue(JobComplexity.Heavy, () =>
             {
                 var filename = Path.GetFileNameWithoutExtension(e.Name);
                 if (_configFileNameToType.TryGetValue(filename.ToUpper(), out var type))
