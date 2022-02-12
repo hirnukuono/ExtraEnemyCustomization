@@ -87,7 +87,7 @@ namespace EECustom.Managers
 
                     if (AllowAsync)
                     {
-                        ThreadDispatcher.Enqueue(JobComplexity.Heavy, () =>
+                        ThreadDispatcher.Enqueue(JobComplexity.Medium, () =>
                         {
                             var custom = handler.Base;
 
@@ -128,7 +128,6 @@ namespace EECustom.Managers
 
         private readonly EnemyEventHolder<IEnemyPrefabBuiltEvent> _enemyPrefabBuiltHolder = new("PrefabBuilt");
         private readonly EnemyEventHolder<IEnemySpawnedEvent> _enemySpawnedHolder = new("Spawned", allowAsync: true);
-        private readonly EnemyEventHolder<IEnemySyncSpawnedEvent> _enemySyncSpawnedHolder = new("SyncSpawned");
         private readonly EnemyEventHolder<IEnemyGlowEvent> _enemyGlowHolder = new("Glow", ignoreLogs: true);
 
         private void GenerateEventBuffer()
@@ -137,7 +136,6 @@ namespace EECustom.Managers
             {
                 _enemyPrefabBuiltHolder.TryAdd(custom);
                 _enemySpawnedHolder.TryAdd(custom);
-                _enemySyncSpawnedHolder.TryAdd(custom);
                 _enemyGlowHolder.TryAdd(custom);
             }
         }
@@ -178,14 +176,6 @@ namespace EECustom.Managers
             _enemySpawnedHolder.FireEvent(agent, (e) =>
             {
                 e.OnSpawned(agent);
-            });
-        }
-
-        internal void FireSyncSpawnedEvent(EnemyAgent agent)
-        {
-            _enemySyncSpawnedHolder.FireEventPreSpawn(agent, (e) =>
-            {
-                e.OnSyncSpawned(agent);
             });
         }
 

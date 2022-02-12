@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace EECustom.Customizations.Models
 {
-    public sealed class ScannerCustom : EnemyCustomBase, IEnemySyncSpawnedEvent
+    public sealed class ScannerCustom : EnemyCustomBase, IEnemyPrefabBuiltEvent, IEnemySpawnedEvent
     {
         public static readonly Color DefaultDetectionColor = new(1f, 0.1f, 0.1f, 1f);
         internal static readonly ScannerSync _sync = new();
@@ -93,34 +93,43 @@ namespace EECustom.Customizations.Models
             }
         }
 
-        public void OnSyncSpawned(EnemyAgent agent)
+        public void OnPrefabBuilt(EnemyAgent agent)
+        {
+            var handler = agent.gameObject.GetComponent<ScannerHandler>();
+            if (handler == null)
+            {
+                agent.gameObject.AddComponent<ScannerHandler>();
+            }
+        }
+
+        public void OnSpawned(EnemyAgent agent)
         {
             var scannerManager = agent.gameObject.GetComponent<ScannerHandler>();
-            if (scannerManager == null)
+            if (scannerManager != null)
             {
-                scannerManager = agent.gameObject.AddComponent<ScannerHandler>();
+                scannerManager.OwnerAgent = agent;
+                scannerManager.DefaultColor = DefaultColor;
+                scannerManager.WakeupColor = WakeupColor;
+                scannerManager.DetectionColor = DetectionColor;
+                scannerManager.HeartbeatColor = HeartbeatColor;
+                scannerManager.PatrolColor = PatrolColor;
+                scannerManager.FeelerColor = FeelerOutColor;
+                scannerManager.UsingDetectionColor = UsingDetectionColor;
+                scannerManager.UsingScoutColor = UsingScoutColor;
+                scannerManager.InterpDuration = LerpingDuration;
+                scannerManager.Setup();
+
+                var key = agent.GlobalID;
+                _sync.Register(key, default, (packet) =>
+                {
+                    scannerManager.UpdateAgentMode(packet.mode);
+                });
+
+                agent.AddOnDeadOnce(() =>
+                {
+                    _sync.Deregister(key);
+                });
             }
-            scannerManager.OwnerAgent = agent;
-            scannerManager.DefaultColor = DefaultColor;
-            scannerManager.WakeupColor = WakeupColor;
-            scannerManager.DetectionColor = DetectionColor;
-            scannerManager.HeartbeatColor = HeartbeatColor;
-            scannerManager.PatrolColor = PatrolColor;
-            scannerManager.FeelerColor = FeelerOutColor;
-            scannerManager.UsingDetectionColor = UsingDetectionColor;
-            scannerManager.UsingScoutColor = UsingScoutColor;
-            scannerManager.InterpDuration = LerpingDuration;
-
-            var key = agent.GlobalID;
-            _sync.Register(key, default, (packet) =>
-            {
-                scannerManager.UpdateAgentMode(packet.mode);
-            });
-
-            agent.AddOnDeadOnce(() =>
-            {
-                _sync.Deregister(key);
-            });
         }
     }
 }

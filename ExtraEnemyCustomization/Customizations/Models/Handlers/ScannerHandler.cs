@@ -41,7 +41,7 @@ namespace EECustom.Customizations.Models.Handlers
         private float _interpStartTime = 0.0f;
         private Color _previousColor = Color.white;
 
-        internal void Start()
+        internal void Setup()
         {
             SetAgentMode_Master(OwnerAgent.AI.Mode);
             UpdateState(out _currentState);
@@ -52,6 +52,9 @@ namespace EECustom.Customizations.Models.Handlers
 
         internal void Update()
         {
+            if (OwnerAgent is null)
+                return;
+
             if (SNet.IsMaster)
             {
                 var currentMode = OwnerAgent.AI.Mode;

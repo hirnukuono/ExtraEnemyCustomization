@@ -1,5 +1,6 @@
 ﻿using EECustom.Events;
 using EECustom.Managers;
+using EECustom.Utils;
 using Enemies;
 using HarmonyLib;
 
@@ -21,9 +22,10 @@ namespace EECustom.Inject
             {
                 return;
             }
+
+            EnemyEvents.OnSpawned(__instance);
             ConfigManager.Current.RegisterTargetLookup(__instance);
             ConfigManager.Current.FireSpawnedEvent(__instance);
-            EnemyEvents.OnSpawned(__instance);
         }
     }
 }

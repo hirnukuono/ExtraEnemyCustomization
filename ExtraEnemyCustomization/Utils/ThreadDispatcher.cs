@@ -1,5 +1,6 @@
 ﻿using EECustom.Attributes;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,10 +11,10 @@ namespace EECustom.Utils
     {
         public static ThreadDispatcher Current { get; private set; } = null;
 
-        private static readonly Queue<Action> _immediateQueue = new();
-        private static readonly Queue<Action> _lightQueue = new();
-        private static readonly Queue<Action> _mediumQueue = new();
-        private static readonly Queue<Action> _heavyQueue = new();
+        private static readonly ConcurrentQueue<Action> _immediateQueue = new();
+        private static readonly ConcurrentQueue<Action> _lightQueue = new();
+        private static readonly ConcurrentQueue<Action> _mediumQueue = new();
+        private static readonly ConcurrentQueue<Action> _heavyQueue = new();
 
         internal static void Initialize()
         {
@@ -31,31 +32,19 @@ namespace EECustom.Utils
             switch (complexity)
             {
                 case JobComplexity.None:
-                    lock (_immediateQueue)
-                    {
-                        _immediateQueue.Enqueue(action);
-                    }
+                    _immediateQueue.Enqueue(action);
                     break;
 
                 case JobComplexity.Light:
-                    lock (_lightQueue)
-                    {
-                        _lightQueue.Enqueue(action);
-                    }
+                    _lightQueue.Enqueue(action);
                     break;
 
                 case JobComplexity.Medium:
-                    lock (_mediumQueue)
-                    {
-                        _mediumQueue.Enqueue(action);
-                    }
+                    _mediumQueue.Enqueue(action);
                     break;
 
                 case JobComplexity.Heavy:
-                    lock (_heavyQueue)
-                    {
-                        _heavyQueue.Enqueue(action);
-                    }
+                    _heavyQueue.Enqueue(action);
                     break;
             }
             
@@ -64,42 +53,32 @@ namespace EECustom.Utils
 #pragma warning disable CA1822 // Mark members as static
         internal void FixedUpdate()
         {
-            lock (_immediateQueue)
+            Action action;
+
+            while (_immediateQueue.TryDequeue(out action))
             {
-                while (_immediateQueue.Count > 0)
-                {
-                    _immediateQueue.Dequeue()?.Invoke();
-                }
+                action?.Invoke();
             }
 
-            lock (_lightQueue)
+            int counter = 0;
+            while (_lightQueue.TryDequeue(out action) && counter < 10)
             {
-                int counter = 0;
-                while (_lightQueue.Count > 0 && counter < 10)
-                {
-                    _lightQueue.Dequeue()?.Invoke();
-                    counter++;
-                }
+                action?.Invoke();
+                counter++;
             }
 
-            lock (_mediumQueue)
+            counter = 0;
+            while (_mediumQueue.TryDequeue(out action) && counter < 5)
             {
-                int counter = 0;
-                while (_mediumQueue.Count > 0 && counter < 5)
-                {
-                    _mediumQueue.Dequeue()?.Invoke();
-                    counter++;
-                }
+                action?.Invoke();
+                counter++;
             }
 
-            lock (_heavyQueue)
+            counter = 0;
+            while (_heavyQueue.TryDequeue(out action) && counter < 2)
             {
-                int counter = 0;
-                while (_heavyQueue.Count > 0 && counter < 2)
-                {
-                    _heavyQueue.Dequeue()?.Invoke();
-                    counter++;
-                }
+                action?.Invoke();
+                counter++;
             }
         }
 #pragma warning restore CA1822 // Mark members as static
