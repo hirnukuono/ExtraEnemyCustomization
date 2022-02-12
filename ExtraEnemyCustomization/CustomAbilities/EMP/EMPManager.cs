@@ -1,10 +1,12 @@
-﻿using EECustom.CustomAbilities.EMP.Inject;
+﻿using EECustom.Attributes;
+using EECustom.CustomAbilities.EMP.Inject;
 using EECustom.Events;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace EECustom.CustomAbilities.EMP
 {
+    [CallConstructorOnLoad]
     public static class EMPManager
     {
         private static readonly List<EMPController> _empTargets = new();

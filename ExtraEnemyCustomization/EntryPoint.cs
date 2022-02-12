@@ -1,7 +1,5 @@
 ﻿using BepInEx;
-using BepInEx.Configuration;
 using BepInEx.IL2CPP;
-using BepInEx.Logging;
 using EECustom.Attributes;
 using EECustom.Events;
 using EECustom.Managers;
@@ -13,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnhollowerRuntimeLib;
 
 namespace EECustom
@@ -40,6 +39,7 @@ namespace EECustom
             Logger.Initialize();
 
             InjectAllIl2CppType();
+            CallAllAutoConstructor();
 
             BasePath = Path.Combine(MTFOUtil.CustomPath, "ExtraEnemyCustomization");
 
@@ -92,6 +92,19 @@ namespace EECustom
             }
         }
 
+        private void CallAllAutoConstructor()
+        {
+            Logger.Debug($"Calling Necessary Static .ctors");
+            var ctorsTypes = GetAllAutoConstructor();
+
+            Logger.Debug($" - Count: {ctorsTypes.Count()}");
+            foreach (var ctor in ctorsTypes)
+            {
+                Logger.Debug($"calling ctor of: {ctor.Name}");
+                RuntimeHelpers.RunClassConstructor(ctor.TypeHandle);
+            }
+        }
+
         private void UninjectAllIl2CppType()
         {
             Logger.Debug($"Uninjecting IL2CPP Types");
@@ -105,6 +118,11 @@ namespace EECustom
 
                 //ClassInjector.UnregisterTypeInIl2Cpp(type);
             }
+        }
+
+        private IEnumerable<Type> GetAllAutoConstructor()
+        {
+            return GetType().Assembly.GetTypes().Where(type => type != null && type.GetCustomAttributes(typeof(CallConstructorOnLoadAttribute), false).FirstOrDefault() != null);
         }
 
         private IEnumerable<Type> GetAllHandlers()

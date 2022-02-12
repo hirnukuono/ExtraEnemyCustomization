@@ -3,7 +3,7 @@
 namespace EECustom.Attributes
 {
     [AttributeUsage(AttributeTargets.Class, Inherited = true)]
-    public class InjectToIl2CppAttribute : Attribute
+    internal sealed class InjectToIl2CppAttribute : Attribute
     {
     }
 }

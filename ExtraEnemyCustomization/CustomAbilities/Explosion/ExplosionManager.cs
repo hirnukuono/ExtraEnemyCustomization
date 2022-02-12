@@ -1,4 +1,5 @@
 ﻿using AK;
+using EECustom.Attributes;
 using EECustom.CustomAbilities.Explosion.Handlers;
 using SNetwork;
 using System;
@@ -8,6 +9,7 @@ using UnityEngine;
 
 namespace EECustom.CustomAbilities.Explosion
 {
+    [CallConstructorOnLoad]
     public static class ExplosionManager
     {
         internal static ExplosionSync Sync { get; private set; } = new();

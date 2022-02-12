@@ -1,9 +1,11 @@
-﻿using System;
+﻿using EECustom.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace EECustom.CustomAbilities.Bleed
 {
+    [CallConstructorOnLoad]
     public static class BleedManager
     {
         internal static BleedSync Sync { get; private set; } = new();
