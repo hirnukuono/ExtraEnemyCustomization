@@ -3,7 +3,7 @@ using GameData;
 using Player;
 using UnityEngine;
 
-namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Handlers
+namespace EECustom.CustomAbilities.EMP.Handlers
 {
     public class EMPPlayerFlashLightHandler : EMPHandlerBase
     {

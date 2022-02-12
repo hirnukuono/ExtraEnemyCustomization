@@ -1,7 +1,7 @@
 ﻿using AK;
 using UnityEngine;
 
-namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Handlers
+namespace EECustom.CustomAbilities.EMP.Handlers
 {
     public class EMPSentryHandler : EMPHandlerBase
     {

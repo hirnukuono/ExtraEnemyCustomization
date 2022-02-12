@@ -1,7 +1,7 @@
 ﻿using LevelGeneration;
 using UnityEngine;
 
-namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Handlers
+namespace EECustom.CustomAbilities.EMP.Handlers
 {
     // TODO: Check if the level has a reactor and if that reactor affects the lights, if it does we'll have to a late update to stop it from flickering EMP'd lights
     public class EMPLightHandler : EMPHandlerBase

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Handlers
+namespace EECustom.CustomAbilities.EMP.Handlers
 {
     public class EMPPlayerHudHandler : EMPHandlerBase
     {

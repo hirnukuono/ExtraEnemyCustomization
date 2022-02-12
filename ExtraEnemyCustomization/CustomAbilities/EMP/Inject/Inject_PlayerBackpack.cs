@@ -1,8 +1,8 @@
-﻿using EECustom.Customizations.EnemyAbilities.Abilities.EMP.Handlers;
+﻿using EECustom.CustomAbilities.EMP.Handlers;
 using Gear;
 using Player;
 
-namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Inject
+namespace EECustom.CustomAbilities.EMP.Inject
 {
     internal class Inject_PlayerBackpack
     {

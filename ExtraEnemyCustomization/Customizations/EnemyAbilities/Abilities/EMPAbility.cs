@@ -1,4 +1,4 @@
-﻿using EECustom.Customizations.EnemyAbilities.Abilities.EMP;
+﻿using EECustom.CustomAbilities.EMP;
 using EECustom.Utils;
 using UnityEngine;
 

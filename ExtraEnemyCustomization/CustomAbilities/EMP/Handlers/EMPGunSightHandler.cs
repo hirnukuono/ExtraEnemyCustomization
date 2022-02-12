@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
-namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Handlers
+namespace EECustom.CustomAbilities.EMP.Handlers
 {
     public class EMPGunSightHandler : EMPHandlerBase
     {

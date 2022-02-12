@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 
-namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP.Inject
+namespace EECustom.CustomAbilities.EMP.Inject
 {
     [HarmonyPatch(typeof(SentryGunFirstPerson))]
     internal static class Inject_SentryGunFirstPerson

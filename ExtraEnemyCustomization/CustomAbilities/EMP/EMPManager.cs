@@ -1,9 +1,9 @@
-﻿using EECustom.Customizations.EnemyAbilities.Abilities.EMP.Inject;
+﻿using EECustom.CustomAbilities.EMP.Inject;
 using EECustom.Events;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
+namespace EECustom.CustomAbilities.EMP
 {
     public static class EMPManager
     {

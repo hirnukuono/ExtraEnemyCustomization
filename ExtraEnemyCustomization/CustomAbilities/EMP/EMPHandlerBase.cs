@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace EECustom.Customizations.EnemyAbilities.Abilities.EMP
+namespace EECustom.CustomAbilities.EMP
 {
     /// <summary>
     /// Contains utility methods and variables useful to EMPHandler's
