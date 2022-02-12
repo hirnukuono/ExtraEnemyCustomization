@@ -2,6 +2,7 @@
 using EECustom.Configs.Customizations;
 using EECustom.Customizations;
 using Enemies;
+using GameData;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -34,11 +35,11 @@ namespace EECustom.Managers
             GenerateEventBuffer();
         }
 
-        internal void RegisterTargetLookup(EnemyAgent agent)
+        internal void RegisterTargetEnemyLookup(EnemyDataBlock enemy)
         {
             foreach (var custom in _customizationBuffer)
             {
-                custom.RegisterTargetLookup(agent);
+                custom.RegisterTargetEnemyLookup(enemy);
             }
         }
     }

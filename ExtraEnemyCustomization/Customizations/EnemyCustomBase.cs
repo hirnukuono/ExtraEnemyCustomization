@@ -15,7 +15,7 @@ namespace EECustom.Customizations
         public bool Enabled { get; set; } = true;
         public TargetSetting Target { get; set; } = new TargetSetting();
 
-        private readonly Dictionary<ushort, bool> _isTargetLookup = new();
+        private readonly Dictionary<uint, bool> _isTargetLookup = new();
 
         public virtual void OnAssetLoaded()
         {
@@ -33,20 +33,15 @@ namespace EECustom.Customizations
 
         public abstract string GetProcessName();
 
-        internal void RegisterTargetLookup(EnemyAgent enemyAgent)
+        internal void RegisterTargetEnemyLookup(EnemyDataBlock enemyData)
         {
             if (!Enabled)
                 return;
 
-            var id = enemyAgent.GlobalID;
+            var id = enemyData.persistentID;
             if (!_isTargetLookup.ContainsKey(id))
             {
-                _isTargetLookup.Add(id, Target.IsMatch(enemyAgent.EnemyDataID));
-
-                enemyAgent.AddOnDeadOnce(() =>
-                {
-                    _isTargetLookup.Remove(id);
-                });
+                _isTargetLookup.Add(id, Target.IsMatch(enemyData));
             }
         }
 
@@ -55,9 +50,9 @@ namespace EECustom.Customizations
             _isTargetLookup.Clear();
         }
 
-        public bool IsTarget(EnemyAgent enemyAgent) => IsTarget(enemyAgent.GlobalID);
+        public bool IsTarget(EnemyAgent enemyAgent) => IsTarget(enemyAgent.EnemyDataID);
 
-        public bool IsTarget(ushort id)
+        public bool IsTarget(uint id)
         {
             if (_isTargetLookup.TryGetValue(id, out var isTarget))
                 return isTarget;

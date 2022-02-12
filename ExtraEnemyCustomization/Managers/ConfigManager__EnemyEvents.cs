@@ -127,7 +127,7 @@ namespace EECustom.Managers
         }
 
         private readonly EnemyEventHolder<IEnemyPrefabBuiltEvent> _enemyPrefabBuiltHolder = new("PrefabBuilt");
-        private readonly EnemyEventHolder<IEnemySpawnedEvent> _enemySpawnedHolder = new("Spawned", allowAsync: true);
+        private readonly EnemyEventHolder<IEnemySpawnedEvent> _enemySpawnedHolder = new("Spawned", allowAsync: false);
         private readonly EnemyEventHolder<IEnemyGlowEvent> _enemyGlowHolder = new("Glow", ignoreLogs: true);
 
         private void GenerateEventBuffer()
@@ -159,13 +159,14 @@ namespace EECustom.Managers
                     continue;
                 }
 
+                RegisterTargetEnemyLookup(block);
                 FirePrefabBuiltEvent(enemyAgentComp);
             }
         }
 
         internal void FirePrefabBuiltEvent(EnemyAgent agent)
         {
-            _enemyPrefabBuiltHolder.FireEventPreSpawn(agent, (e) =>
+            _enemyPrefabBuiltHolder.FireEvent(agent, (e) =>
             {
                 e.OnPrefabBuilt(agent);
             });

@@ -30,21 +30,25 @@ namespace EECustom.Customizations.Abilities
 
         public void OnMelee(PlayerAgent player, Agent inflictor, float damage)
         {
-            if (IsTarget(inflictor.GlobalID))
+            if (inflictor is not null && inflictor.Type == AgentType.Enemy)
             {
-                var enemyAgent = inflictor.TryCast<EnemyAgent>();
-                if (enemyAgent != null)
-                    MeleeData.DoKnockback(enemyAgent, player);
+                var enemy = inflictor.Cast<EnemyAgent>();
+                if (IsTarget(enemy))
+                {
+                    MeleeData.DoKnockback(enemy, player);
+                }
             }
         }
 
         public void OnTentacle(PlayerAgent player, Agent inflictor, float damage)
         {
-            if (IsTarget(inflictor.GlobalID))
+            if (inflictor is not null && inflictor.Type == AgentType.Enemy)
             {
-                var enemyAgent = inflictor.TryCast<EnemyAgent>();
-                if (enemyAgent != null)
-                    TentacleData.DoKnockback(enemyAgent, player);
+                var enemy = inflictor.Cast<EnemyAgent>();
+                if (IsTarget(enemy))
+                {
+                    TentacleData.DoKnockback(enemy, player);
+                }
             }
         }
     }

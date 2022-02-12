@@ -2,6 +2,7 @@
 using EECustom.Events;
 using EECustom.Utils;
 using EECustom.Utils.JsonElements;
+using Enemies;
 using Player;
 
 namespace EECustom.Customizations.Abilities
@@ -30,21 +31,29 @@ namespace EECustom.Customizations.Abilities
 
         public void OnMelee(PlayerAgent player, Agent inflictor, float damage)
         {
-            if (IsTarget(inflictor.GlobalID))
+            if (inflictor is not null && inflictor.Type == AgentType.Enemy)
             {
-                ApplyInfection(MeleeData, player, inflictor);
+                var enemy = inflictor.Cast<EnemyAgent>();
+                if (IsTarget(enemy))
+                {
+                    ApplyInfection(MeleeData, player);
+                }
             }
         }
 
         public void OnTentacle(PlayerAgent player, Agent inflictor, float damage)
         {
-            if (IsTarget(inflictor.GlobalID))
+            if (inflictor is not null && inflictor.Type == AgentType.Enemy)
             {
-                ApplyInfection(TentacleData, player, inflictor);
+                var enemy = inflictor.Cast<EnemyAgent>();
+                if (IsTarget(enemy))
+                {
+                    ApplyInfection(TentacleData, player);
+                }
             }
         }
 
-        private static void ApplyInfection(InfectionAttackData data, PlayerAgent player, Agent _)
+        private static void ApplyInfection(InfectionAttackData data, PlayerAgent player)
         {
             var infectionAbs = data.Infection.GetAbsValue(PlayerData.MaxInfection);
             if (infectionAbs == 0.0f)

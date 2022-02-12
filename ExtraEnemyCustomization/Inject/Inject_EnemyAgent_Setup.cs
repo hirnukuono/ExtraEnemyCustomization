@@ -24,7 +24,6 @@ namespace EECustom.Inject
             }
 
             EnemyEvents.OnSpawned(__instance);
-            ConfigManager.Current.RegisterTargetLookup(__instance);
             ConfigManager.Current.FireSpawnedEvent(__instance);
         }
     }

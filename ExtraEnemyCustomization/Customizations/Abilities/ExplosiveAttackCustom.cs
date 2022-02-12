@@ -31,8 +31,12 @@ namespace EECustom.Customizations.Abilities
 
         public void OnMelee(PlayerAgent player, Agent inflictor, float damage)
         {
-            if (IsTarget(inflictor.GlobalID))
+            if (inflictor is not null && inflictor.Type == AgentType.Enemy)
             {
+                var enemy = inflictor.Cast<EnemyAgent>();
+                if (IsTarget(enemy))
+                    return;
+
                 MeleeData.DoExplode(player);
 
                 if (!MeleeData.KillInflictor)
@@ -41,15 +45,18 @@ namespace EECustom.Customizations.Abilities
                 if (inflictor.Type != AgentType.Enemy)
                     return;
 
-                var enemyAgent = inflictor as EnemyAgent;
-                enemyAgent.Damage.ExplosionDamage(enemyAgent.Damage.HealthMax, Vector3.zero, Vector3.zero);
+                enemy.Damage.ExplosionDamage(enemy.Damage.HealthMax, Vector3.zero, Vector3.zero);
             }
         }
 
         public void OnTentacle(PlayerAgent player, Agent inflictor, float damage)
         {
-            if (IsTarget(inflictor.GlobalID))
+            if (inflictor is not null && inflictor.Type == AgentType.Enemy)
             {
+                var enemy = inflictor.Cast<EnemyAgent>();
+                if (!IsTarget(enemy))
+                    return;
+
                 TentacleData.DoExplode(player);
 
                 if (!TentacleData.KillInflictor)
@@ -58,8 +65,7 @@ namespace EECustom.Customizations.Abilities
                 if (inflictor.Type != AgentType.Enemy)
                     return;
 
-                var enemyAgent = inflictor as EnemyAgent;
-                enemyAgent.Damage.ExplosionDamage(enemyAgent.Damage.HealthMax, Vector3.zero, Vector3.zero);
+                enemy.Damage.ExplosionDamage(enemy.Damage.HealthMax, Vector3.zero, Vector3.zero);
             }
         }
     }

@@ -38,21 +38,27 @@ namespace EECustom.Customizations.Abilities
 
         public void OnMelee(PlayerAgent player, Agent inflictor, float damage)
         {
-            if (IsTarget(inflictor.GlobalID))
+            if (inflictor is not null && inflictor.Type == AgentType.Enemy)
             {
-                var enemyAgent = inflictor.TryCast<EnemyAgent>();
-                if (enemyAgent != null)
+                var enemy = inflictor.Cast<EnemyAgent>();
+
+                if (IsTarget(enemy))
+                {
                     MeleeData.DoBleed(player);
+                }
             }
         }
 
         public void OnTentacle(PlayerAgent player, Agent inflictor, float damage)
         {
-            if (IsTarget(inflictor.GlobalID))
+            if (inflictor is not null && inflictor.Type == AgentType.Enemy)
             {
-                var enemyAgent = inflictor.TryCast<EnemyAgent>();
-                if (enemyAgent != null)
+                var enemy = inflictor.Cast<EnemyAgent>();
+
+                if (IsTarget(enemy))
+                {
                     TentacleData.DoBleed(player);
+                }
             }
         }
 
