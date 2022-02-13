@@ -8,17 +8,6 @@ namespace EECustom.Managers
 {
     public partial class ConfigManager
     {
-        private static void OnLevelCleanup_ClearLookup()
-        {
-            if (Current == null)
-                return;
-
-            foreach (var custom in Current._customizationBuffer)
-            {
-                custom.ClearTargetLookup();
-            }
-        }
-
         private static void OnConfigFileEdited_ReloadConfig(object sender, FileSystemEventArgs e)
         {
             ThreadDispatcher.Enqueue(JobComplexity.Heavy, () =>

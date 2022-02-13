@@ -85,8 +85,6 @@ namespace EECustom.Managers
                 watcher.Changed += new FileSystemEventHandler(OnConfigFileEdited_ReloadConfig);
                 watcher.EnableRaisingEvents = true;
             }
-
-            LevelEvents.LevelCleanup += OnLevelCleanup_ClearLookup;
         }
 
         internal static void DumpDefault()
@@ -126,6 +124,7 @@ namespace EECustom.Managers
             foreach (var config in Current._customizationBuffer)
             {
                 config.OnConfigUnloaded();
+                config.ClearTargetLookup();
             }
 
             foreach (var item in _configInstances)
