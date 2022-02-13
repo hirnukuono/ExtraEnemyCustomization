@@ -28,14 +28,11 @@
     <Reference Include="$(BIELibsFolder)/UnhollowerRuntimeLib.dll" Private="false" />
     <Reference Include="$(BIELibsFolder)/SemanticVersioning.dll" Private="false" />
     <Reference Include="$(MonoManagedFolder)/Microsoft.CSharp.dll" Private="false" />
+    <Reference Include="$(MonoManagedFolder)/System.Text.Json.dll" Private="false" />
     <Reference Include="$(UnhollowedLibsFolder)/*.dll" Private="false" />
     <Reference Include="$(PluginsFolder)/GTFO-API.dll" Private="false" />
     <Reference Remove="$(UnhollowedLibsFolder)/Newtonsoft.Json.dll" />
     <Reference Remove="$(UnhollowedLibsFolder)/netstandard.dll" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="System.Text.Json" Version="6.0.0-preview.1.21102.12" />
   </ItemGroup>
 
   <ItemGroup>
