@@ -9,24 +9,18 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 {
     public sealed class CloakAbility : AbilityBase<CloakBehaviour>
     {
-        public float CloakOpacity { get; set; } = 0.1f;
+        public float CloakOpacity { get; set; } = 0.0f;
         public float CloakDuration { get; set; } = 1.0f;
         public float DecloakDuration { get; set; } = 1.0f;
         public float DecloakAfterDelay { get; set; } = -1.0f;
+        public bool HideShadow { get; set; } = false;
         public bool RequireTagForDetectionWhileCloaking { get; set; } = true;
         public bool AllowEABAbilityWhileCloaking { get; set; } = true;
 
         public override void OnAbilityLoaded()
         {
-            if (CloakDuration < 0.0f)
-            {
-                CloakDuration = 0.0f;
-            }
-
-            if (DecloakDuration < 0.0f)
-            {
-                DecloakDuration = 0.0f;
-            }
+            CloakDuration = Mathf.Max(CloakDuration, 0.0f);
+            DecloakDuration = Mathf.Max(DecloakDuration, 0.0f);
         }
     }
 
@@ -67,6 +61,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
                     Agent.MovingCuller.Culler.AddRenderer(trsRenderer);
                     _handlers.Add(new Handler()
                     {
+                        hideShadowMode = Ability.HideShadow,
                         minOpacity = Ability.CloakOpacity,
                         originalRenderer = renderer,
                         transitionRenderer = trsRenderer
@@ -156,6 +151,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
         public struct Handler
         {
+            public bool hideShadowMode;
             public float minOpacity;
             public Renderer originalRenderer;
             public Renderer transitionRenderer;
@@ -164,21 +160,48 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
             {
                 if (p <= 0.0f)
                 {
-                    originalRenderer.shadowCastingMode = ShadowCastingMode.ShadowsOnly;
-                    transitionRenderer.forceRenderingOff = false;
-                    transitionRenderer.material.color = Color.white.AlphaMultiplied(minOpacity);
+                    DisableOriginalRenderer();
+                    if (minOpacity <= 0.0f)
+                    {
+                        transitionRenderer.forceRenderingOff = true;
+                    }
+                    else
+                    {
+                        transitionRenderer.forceRenderingOff = false;
+                        transitionRenderer.material.color = Color.white.AlphaMultiplied(minOpacity);
+                    }
                 }
                 else if (p >= 1.0f)
                 {
-                    originalRenderer.shadowCastingMode = ShadowCastingMode.On;
+                    EnableOriginalRenderer();
                     transitionRenderer.forceRenderingOff = true;
                     transitionRenderer.material.color = Color.white;
                 }
                 else
                 {
-                    originalRenderer.shadowCastingMode = ShadowCastingMode.ShadowsOnly;
+                    DisableOriginalRenderer();
                     transitionRenderer.forceRenderingOff = false;
                     transitionRenderer.material.color = Color.white.AlphaMultiplied(Mathf.Lerp(minOpacity, 1.0f, p));
+                }
+            }
+
+            private void EnableOriginalRenderer()
+            {
+                originalRenderer.shadowCastingMode = ShadowCastingMode.On;
+                originalRenderer.forceRenderingOff = false;
+            }
+
+            private void DisableOriginalRenderer()
+            {
+                if (hideShadowMode)
+                {
+                    originalRenderer.shadowCastingMode = ShadowCastingMode.Off;
+                    originalRenderer.forceRenderingOff = true;
+                }
+                else
+                {
+                    originalRenderer.shadowCastingMode = ShadowCastingMode.ShadowsOnly;
+                    originalRenderer.forceRenderingOff = false;
                 }
             }
         }
