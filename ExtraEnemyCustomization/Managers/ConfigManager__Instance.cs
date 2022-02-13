@@ -15,6 +15,7 @@ namespace EECustom.Managers
         private void GenerateBuffer()
         {
             _customizationBuffer.Clear();
+
             var settingLists = _configInstances.Values
                 .Where(x => x is CustomizationConfig)
                 .Select(x => ((CustomizationConfig)x).GetAllSettings());
