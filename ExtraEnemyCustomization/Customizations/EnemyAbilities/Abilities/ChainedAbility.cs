@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EECustom.Utils;
+using System;
 using System.Collections.Generic;
 
 namespace EECustom.Customizations.EnemyAbilities.Abilities
@@ -36,7 +37,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         public class EventBlock : AbilitySettingBase
         {
             public float Delay { get; set; } = 0.0f;
-            public float TriggerTimer = 0.0f;
+            public Timer TriggerTimer;
             public bool Triggered = false;
         }
     }
@@ -47,7 +48,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         public override bool AllowEABAbilityWhileExecuting => true;
         public override bool IsHostOnlyBehaviour => true;
 
-        private float _endTimer = 0.0f;
+        private Timer _endTimer;
         private bool _waitingEndTimer = false;
 
         protected override void OnSetup()
@@ -62,7 +63,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         {
             foreach (var abSetting in Ability.Abilities)
             {
-                abSetting.TriggerTimer = abSetting.Delay + Clock.Time;
+                abSetting.TriggerTimer.Reset(abSetting.Delay);
                 abSetting.Triggered = false;
             }
 
@@ -75,14 +76,17 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
             foreach (var abSetting in Ability.Abilities)
             {
-                if (abSetting.TriggerTimer <= Clock.Time)
+                if (!abSetting.Triggered)
                 {
-                    abSetting.Ability.TriggerSync(Agent);
-                    abSetting.Triggered = true;
-                }
-                else if (!abSetting.Triggered)
-                {
-                    isAllDone = false;
+                    if (abSetting.TriggerTimer.TickAndCheckDone())
+                    {
+                        abSetting.Ability.TriggerSync(Agent);
+                        abSetting.Triggered = true;
+                    }
+                    else
+                    {
+                        isAllDone = false;
+                    }
                 }
             }
 
@@ -90,10 +94,10 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
             {
                 if (!_waitingEndTimer)
                 {
-                    _endTimer = Ability.ExitDelay + Clock.Time;
+                    _endTimer.Reset(Ability.ExitDelay);
                     _waitingEndTimer = true;
                 }
-                else if (_waitingEndTimer && _endTimer <= Clock.Time)
+                else if (_waitingEndTimer && _endTimer.TickAndCheckDone())
                 {
                     DoExit();
                 }

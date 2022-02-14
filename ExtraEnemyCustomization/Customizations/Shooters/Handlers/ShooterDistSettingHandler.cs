@@ -1,4 +1,5 @@
 ﻿using EECustom.Attributes;
+using EECustom.Utils;
 using System.Linq;
 using UnityEngine;
 
@@ -12,17 +13,17 @@ namespace EECustom.Customizations.Shooters.Handlers
         public FireSetting[] FireSettings;
 
         private FireSetting _currentSetting = null;
-        private float _timerToUpdate = 0.0f;
+        private Timer _updateTimer = new(0.125f);
 
         internal void Update()
         {
-            if (Clock.Time < _timerToUpdate)
+            if (!_updateTimer.TickAndCheckDone())
                 return;
 
             if (EAB_Shooter.m_owner.Locomotion.CurrentStateEnum == Enemies.ES_StateEnum.ShooterAttack)
                 return;
 
-            _timerToUpdate = Clock.Time + 0.125f;
+            _updateTimer.Reset();
 
             if (!EAB_Shooter.m_owner.AI.IsTargetValid)
                 return;

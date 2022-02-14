@@ -21,7 +21,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
     public class EMPBehaviour : AbilityBehaviour<EMPAbility>
     {
         private EMPState _state = EMPState.None;
-        private float _stateTimer = 0.0f;
+        private Timer _stateTimer;
 
         public override bool RunUpdateOnlyWhileExecuting => true;
         public override bool AllowEABAbilityWhileExecuting => false;
@@ -32,7 +32,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
             StandStill = true;
 
             _state = EMPState.BuildUp;
-            _stateTimer = Clock.Time + Ability.ChargeUpDuration;
+            _stateTimer.Reset(Ability.ChargeUpDuration);
 
             if (Ability.ChargeUpSoundId != 0u)
             {
@@ -51,7 +51,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
             switch (_state)
             {
                 case EMPState.BuildUp:
-                    if (HasStateTimerFinished())
+                    if (_stateTimer.TickAndCheckDone())
                     {
                         Agent.Sound.Post(Ability.ActivateSoundId);
                         Agent.Appearance.InterpolateGlow(Ability.ScreamColor, 0.5f);
@@ -59,15 +59,15 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
                         EMPManager.Activate(Agent.Position, Ability.EffectRange, Ability.EffectDuration);
 
                         _state = EMPState.AbilityUsed;
-                        _stateTimer = Clock.Time + 5.0f;
+                        _stateTimer.Reset(5.0f);
                     }
                     break;
 
                 case EMPState.AbilityUsed:
-                    if (HasStateTimerFinished())
+                    if (_stateTimer.TickAndCheckDone())
                     {
                         _state = EMPState.Done;
-                        _stateTimer = 0.0f;
+                        _stateTimer.Reset(0.0f);
                     }
                     break;
 
@@ -86,17 +86,12 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
             Agent.Appearance.InterpolateGlow(Color.black, 0.5f);
 
             _state = EMPState.None;
-            _stateTimer = 0.0f;
+            _stateTimer.Reset(0.0f);
         }
 
         protected override void OnDead()
         {
             DoExit();
-        }
-
-        private bool HasStateTimerFinished()
-        {
-            return _stateTimer <= Clock.Time;
         }
 
         private enum EMPState

@@ -83,14 +83,6 @@ namespace EECustom.Customizations.EnemyAbilities
         public bool Enabled { get; set; } = false;
         public float InitCooldown { get; set; } = 0.0f;
         public float Cooldown { get; set; } = 5.0f;
-
-        public bool CanUseAbility(float cooldownTimer)
-        {
-            if (!Enabled)
-                return true;
-
-            return Clock.Time >= cooldownTimer;
-        }
     }
 
     public class DistanceSetting

@@ -1,4 +1,5 @@
 ﻿using EECustom.Attributes;
+using EECustom.Utils;
 using Enemies;
 using UnityEngine;
 
@@ -12,7 +13,7 @@ namespace EECustom.Customizations.Abilities.Handlers
         public ES_ScoutScream ScoutScream;
         public EV_Sphere EVSphere = null;
 
-        private float _updateTimer = 0.0f;
+        private Timer _updateTimer = new(0.1f);
         private bool _isColorSet = false;
 
         internal void Update()
@@ -26,7 +27,7 @@ namespace EECustom.Customizations.Abilities.Handlers
                 _isColorSet = true;
             }
 
-            if (EVSphere != null && _updateTimer < Clock.Time)
+            if (EVSphere != null && _updateTimer.TickAndCheckDone())
             {
                 if (ScoutScream.m_fogSphereAdd.IsAllocated)
                 {
@@ -35,7 +36,7 @@ namespace EECustom.Customizations.Abilities.Handlers
                     EVSphere.minRadius = range * 0.8f;
                     EVSphere.maxRadius = range;
                     EVSphere.position = ScoutScream.m_fogSphereAdd.m_sphere.m_data.Position;
-                    _updateTimer = Clock.Time + 0.1f;
+                    _updateTimer.Reset();
                 }
                 else
                 {

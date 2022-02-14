@@ -1,6 +1,7 @@
 ﻿using BepInEx.Logging;
 using EECustom.Customizations.EnemyAbilities.Events;
 using EECustom.Events;
+using EECustom.Utils;
 using Enemies;
 using SNetwork;
 using UnityEngine;
@@ -99,7 +100,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         public abstract bool AllowEABAbilityWhileExecuting { get; }
         public abstract bool IsHostOnlyBehaviour { get; }
 
-        private float _lazyUpdateTimer = 0.0f;
+        private Timer _lazyUpdateTimer = new(LAZYUPDATE_DELAY);
         private bool _executing = false;
         private bool _standStill = false;
         private ES_StateEnum _prevState;
@@ -225,9 +226,9 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
         private void DoAbilityLazyUpdate()
         {
-            if (_lazyUpdateTimer <= Clock.Time)
+            if (_lazyUpdateTimer.TickAndCheckDone())
             {
-                _lazyUpdateTimer = Clock.Time + LAZYUPDATE_DELAY;
+                _lazyUpdateTimer.Reset();
                 OnAbilityLazyUpdate();
             }
         }

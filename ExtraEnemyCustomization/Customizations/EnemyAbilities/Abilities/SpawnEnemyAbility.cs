@@ -1,4 +1,5 @@
 ﻿using Agents;
+using EECustom.Utils;
 using Enemies;
 using SNetwork;
 
@@ -36,7 +37,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
         private bool _shouldRevertNavMeshAgent = false;
         private State _state;
-        private float _stateTimer = 0.0f;
+        private Timer _stateTimer;
 
         public override bool RunUpdateOnlyWhileExecuting => true;
         public override bool AllowEABAbilityWhileExecuting => false;
@@ -60,7 +61,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
             }
 
             _state = State.StartDelay;
-            _stateTimer = Clock.Time + Ability.Delay;
+            _stateTimer.Reset(Ability.Delay);
         }
 
         protected override void OnUpdate()
@@ -68,27 +69,27 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
             switch (_state)
             {
                 case State.StartDelay:
-                    if (_stateTimer <= Clock.Time)
+                    if (_stateTimer.TickAndCheckDone())
                     {
                         _state = State.Spawning;
-                        _stateTimer = 0.0f;
+                        _stateTimer.Reset(0.0f);
                     }
                     break;
 
                 case State.Spawning:
-                    if (_stateTimer <= Clock.Time)
+                    if (_stateTimer.TickAndCheckDone())
                     {
                         if (_remainingSpawn > 0)
                         {
                             if (SNet.IsMaster)
                                 SpawnEnemy(Ability.CountPerSpawn);
 
-                            _stateTimer = Clock.Time + Ability.DelayPerSpawn;
+                            _stateTimer.Reset(Ability.DelayPerSpawn);
                         }
                         else
                         {
                             _state = State.DoneSpawning;
-                            _stateTimer = 0.0f;
+                            _stateTimer.Reset(0.0f);
                         }
                     }
                     break;

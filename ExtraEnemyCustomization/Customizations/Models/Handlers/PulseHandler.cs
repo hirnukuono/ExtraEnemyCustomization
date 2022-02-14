@@ -1,5 +1,6 @@
 ﻿using Agents;
 using EECustom.Attributes;
+using EECustom.Utils;
 using Enemies;
 using System;
 using UnityEngine;
@@ -13,7 +14,7 @@ namespace EECustom.Customizations.Models.Handlers
         public float StartDelay = 0.0f;
 
         private EnemyAgent _ownerAgent;
-        private float _timer = 0.0f;
+        private Timer _timer;
         private float _updateTimerDelay = 0.0f;
         private Color _defaultColor;
         private int _currentPatternIndex = 0;
@@ -39,12 +40,12 @@ namespace EECustom.Customizations.Models.Handlers
 
             var interval = Math.Max(0.0f, PulseData.Duration);
             _updateTimerDelay = interval / _patternLength;
-            _timer = Clock.Time + StartDelay;
+            _timer.Reset(StartDelay);
         }
 
         internal void Update()
         {
-            if (_timer > Clock.Time)
+            if (!_timer.TickAndCheckDone())
                 return;
 
             if (!PulseData.Target.IsMatch(_ownerAgent))
@@ -101,7 +102,7 @@ namespace EECustom.Customizations.Models.Handlers
                 var newColor = Color.Lerp(_defaultColor, PulseData.GlowColor, patternData.Progression);
                 _ownerAgent.Appearance.InterpolateGlow(newColor, duration);
             }
-            _timer = Clock.Time + duration;
+            _timer.Reset(duration);
         }
 
         internal void OnDestroy()

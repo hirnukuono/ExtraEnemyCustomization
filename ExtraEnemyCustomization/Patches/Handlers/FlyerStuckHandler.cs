@@ -1,5 +1,6 @@
 ﻿using Agents;
 using EECustom.Attributes;
+using EECustom.Utils;
 using Enemies;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ namespace EECustom.Patches.Handlers
 
         private Vector3 _firstPosition;
         private Vector2 _lastGoalXZ;
-        private float _timer;
+        private Timer _timer;
         private int _tryCount = -1;
         private bool _shouldCheck = true;
 
@@ -26,10 +27,10 @@ namespace EECustom.Patches.Handlers
             if (Agent.AI.Mode != AgentMode.Agressive)
                 return;
 
-            if (_timer > Clock.Time)
+            if (!_timer.TickAndCheckDone())
                 return;
 
-            _timer = Clock.Time + UpdateInterval;
+            _timer.Reset(UpdateInterval);
 
             if (_tryCount == -1)
             {

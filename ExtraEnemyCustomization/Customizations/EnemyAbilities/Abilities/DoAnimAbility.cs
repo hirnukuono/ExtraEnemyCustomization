@@ -23,7 +23,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
         private Animator _animator;
         private NavMeshAgent _navAgent;
-        private float _exitTimer = 0.0f;
+        private Timer _exitTimer;
 
         protected override void OnSetup()
         {
@@ -40,7 +40,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         {
             StandStill = Ability.StandStill;
 
-            _exitTimer = Clock.Time + Ability.Duration;
+            _exitTimer.Reset(Ability.Duration);
 
             EnemyAnimUtil.DoAnimationLocal(Agent, Ability.Animation, Ability.CrossFadeTime, true);
 
@@ -57,7 +57,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
         protected override void OnUpdate()
         {
-            if (Clock.Time >= _exitTimer)
+            if (_exitTimer.TickAndCheckDone())
             {
                 DoExit();
             }

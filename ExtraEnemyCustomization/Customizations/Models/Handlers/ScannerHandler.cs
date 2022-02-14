@@ -1,5 +1,6 @@
 ﻿using Agents;
 using EECustom.Attributes;
+using EECustom.Utils;
 using Enemies;
 using SNetwork;
 using UnhollowerBaseLib.Attributes;
@@ -37,8 +38,7 @@ namespace EECustom.Customizations.Models.Handlers
         private AgentMode _agentMode = AgentMode.Off;
         private EnemyState _currentState = EnemyState.Hibernate;
         private bool _interpDone = true;
-        private float _interpTimer = 0.0f;
-        private float _interpStartTime = 0.0f;
+        private Timer _interpTimer;
         private Color _previousColor = Color.white;
 
         internal void Setup()
@@ -70,21 +70,20 @@ namespace EECustom.Customizations.Models.Handlers
             {
                 _currentState = state;
                 _interpDone = false;
-                _interpTimer = Clock.Time + InterpDuration;
-                _interpStartTime = Clock.Time;
+                _interpTimer.Reset(InterpDuration);
                 _previousColor = OwnerAgent.m_scannerColor;
             }
 
             if (!_interpDone)
             {
-                if (Clock.Time >= _interpTimer)
+                if (_interpTimer.TickAndCheckDone())
                 {
                     OwnerAgent.ScannerColor = GetStateColor(_currentState);
                     _interpDone = true;
                     return;
                 }
 
-                var progress = Mathf.InverseLerp(_interpStartTime, _interpTimer, Clock.Time);
+                var progress = _interpTimer.Progress;
                 var color1 = _previousColor;
                 var color2 = GetStateColor(_currentState);
                 var newColor = Color.Lerp(color1, color2, progress);

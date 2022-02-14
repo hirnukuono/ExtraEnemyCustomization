@@ -2,6 +2,7 @@
 using EECustom.Attributes;
 using EECustom.Events;
 using EECustom.Extensions;
+using EECustom.Utils;
 using Enemies;
 using SNetwork;
 using UnhollowerBaseLib.Attributes;
@@ -16,8 +17,8 @@ namespace EECustom.Customizations.Abilities.Handlers
 
         public HealthRegenData RegenData;
 
-        private float _regenInitialTimer = 0.0f;
-        private float _regenIntervalTimer = 0.0f;
+        private Timer _regenInitialTimer;
+        private Timer _regenIntervalTimer;
         private bool _isRegening = false;
         private bool _isInitialTimerDone = false;
         private bool _alwaysRegen = false;
@@ -59,11 +60,11 @@ namespace EECustom.Customizations.Abilities.Handlers
             if (!_isRegening)
                 return;
 
-            if (!_isInitialTimerDone && _regenInitialTimer <= Clock.Time)
+            if (!_isInitialTimerDone && _regenInitialTimer.TickAndCheckDone())
             {
                 _isInitialTimerDone = true;
             }
-            else if (_isInitialTimerDone && _regenIntervalTimer <= Clock.Time)
+            else if (_isInitialTimerDone && _regenIntervalTimer.TickAndCheckDone())
             {
                 if (_isRegenMode)
                 {
@@ -73,7 +74,7 @@ namespace EECustom.Customizations.Abilities.Handlers
                 {
                     DoDecay();
                 }
-                _regenIntervalTimer = Clock.Time + RegenData.RegenInterval;
+                _regenIntervalTimer.Reset(RegenData.RegenInterval);
             }
         }
 
@@ -86,7 +87,7 @@ namespace EECustom.Customizations.Abilities.Handlers
         [HideFromIl2Cpp]
         private void StartRegen()
         {
-            _regenInitialTimer = Clock.Time + RegenData.DelayUntilRegenStart;
+            _regenInitialTimer.Reset(RegenData.DelayUntilRegenStart);
             _isRegening = true;
             _isInitialTimerDone = false;
         }

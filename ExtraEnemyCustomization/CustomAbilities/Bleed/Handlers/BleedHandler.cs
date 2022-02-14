@@ -1,5 +1,6 @@
 ﻿using EECustom.Attributes;
 using EECustom.CustomAbilities.Bleed.Inject;
+using EECustom.Utils;
 using Player;
 using System;
 using UnhollowerBaseLib.Attributes;
@@ -13,9 +14,8 @@ namespace EECustom.CustomAbilities.Bleed.Handlers
         public PlayerAgent Agent;
 
         private float _damage;
-        private float _interval;
-        private float _bleedingTimer;
-        private float _bleedingIntervalTimer;
+        private Timer _bleedingTimer;
+        private Timer _bleedingIntervalTimer;
         private bool _hasLiquid = false;
         private ScreenLiquidSettingName _liquid;
         private bool _bleeding = false;
@@ -25,13 +25,13 @@ namespace EECustom.CustomAbilities.Bleed.Handlers
             if (!_bleeding)
                 return;
 
-            if (_bleedingTimer <= Clock.Time)
+            if (_bleedingTimer.TickAndCheckDone())
             {
                 StopBleed();
                 return;
             }
 
-            if (_bleedingIntervalTimer <= Clock.Time)
+            if (_bleedingIntervalTimer.TickAndCheckDone())
             {
                 if (!Agent.Alive)
                     return;
@@ -42,7 +42,7 @@ namespace EECustom.CustomAbilities.Bleed.Handlers
                 }
 
                 Agent.Damage.FireDamage(_damage, Agent);
-                _bleedingIntervalTimer = Clock.Time + _interval;
+                _bleedingIntervalTimer.Reset();
             }
         }
 
@@ -60,8 +60,8 @@ namespace EECustom.CustomAbilities.Bleed.Handlers
                 return;
 
             _damage = damage;
-            _interval = interval;
-            _bleedingTimer = Clock.Time + duration;
+            _bleedingTimer.Reset(duration);
+            _bleedingIntervalTimer.Reset(interval);
             _liquid = liquid;
             _hasLiquid = Enum.IsDefined(typeof(ScreenLiquidSettingName), _liquid);
             _bleeding = true;

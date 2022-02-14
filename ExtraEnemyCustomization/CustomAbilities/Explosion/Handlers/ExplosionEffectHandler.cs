@@ -1,4 +1,5 @@
 ﻿using EECustom.Attributes;
+using EECustom.Utils;
 using FX_EffectSystem;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace EECustom.CustomAbilities.Explosion.Handlers
 
         private bool _lightAllocated = false;
         private FX_PointLight _light;
-        private float _timer;
+        private Timer _timer;
 
         internal void Start()
         {
@@ -31,7 +32,7 @@ namespace EECustom.CustomAbilities.Explosion.Handlers
                 _light.UpdateData();
                 _light.UpdateTransform();
                 _lightAllocated = true;
-                _timer = Clock.Time + EffectDuration;
+                _timer.Reset(EffectDuration);
             }
             else
             {
@@ -41,7 +42,7 @@ namespace EECustom.CustomAbilities.Explosion.Handlers
 
         internal void Update()
         {
-            if (_timer <= Clock.Time)
+            if (_timer.TickAndCheckDone())
             {
                 Destroy(this);
             }

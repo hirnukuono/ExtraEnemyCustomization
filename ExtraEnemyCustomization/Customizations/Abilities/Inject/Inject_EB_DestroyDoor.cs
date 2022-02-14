@@ -28,24 +28,24 @@ namespace EECustom.Customizations.Abilities.Inject
 
             if (EnemyProperty<DoorBreakerSetting>.TryGet(enemyAgent, out var breakerProp))
             {
-                if (breakerProp.UseGlobalTimer && breakerProp.Config._globalTimer < Clock.Time)
+                if (breakerProp.UseGlobalTimer && breakerProp.Config._globalTimer < Clock.ExpeditionProgressionTime)
                 {
                     if (DoDamageDoor(__instance, breakerProp.Damage))
-                        breakerProp.Config._globalTimer = Clock.Time + RandomRange(breakerProp.MinDelay, breakerProp.MaxDelay);
+                        breakerProp.Config._globalTimer = Clock.ExpeditionProgressionTime + RandomRange(breakerProp.MinDelay, breakerProp.MaxDelay);
                 }
-                else if (!breakerProp.UseGlobalTimer && breakerProp.Timer < Clock.Time)
+                else if (!breakerProp.UseGlobalTimer && breakerProp.Timer < Clock.ExpeditionProgressionTime)
                 {
                     if (DoDamageDoor(__instance, breakerProp.Damage))
-                        breakerProp.Timer = Clock.Time + RandomRange(breakerProp.MinDelay, breakerProp.MaxDelay);
+                        breakerProp.Timer = Clock.ExpeditionProgressionTime + RandomRange(breakerProp.MinDelay, breakerProp.MaxDelay);
                 }
             }
             else
             {
-                if (GlobalTimer >= Clock.Time)
+                if (GlobalTimer >= Clock.ExpeditionProgressionTime)
                     return;
 
                 if (DoDamageDoor(__instance, 1.0f))
-                    GlobalTimer = Clock.Time + ((float)_random.NextDouble() * Range) + MinTime;
+                    GlobalTimer = Clock.ExpeditionProgressionTime + ((float)_random.NextDouble() * Range) + MinTime;
             }
         }
 

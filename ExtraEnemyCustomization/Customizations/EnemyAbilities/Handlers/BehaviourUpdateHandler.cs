@@ -1,6 +1,7 @@
 ﻿using Agents;
 using EECustom.Attributes;
 using EECustom.Customizations.EnemyAbilities.Abilities;
+using EECustom.Utils;
 using Enemies;
 using Player;
 using SNetwork;
@@ -20,25 +21,26 @@ namespace EECustom.Customizations.EnemyAbilities.Handlers
         public BehaviourAbilitySetting Setting;
 
         private AgentMode _latestMode;
-        private float _modeTransitionTimer = 0.0f;
-        private float _updateTimer = 0.0f;
-        private float _cooldownTimer = 0.0f;
+        private LazyTimer _modeTransitionTimer;
+        private LazyTimer _cooldownTimer;
+        private Timer _updateTimer;
         private bool _hasInitialTimerDone = false;
 
         internal void Start()
         {
+            _updateTimer.Reset(Setting.UpdateInterval);
             _latestMode = Agent.AI.Mode;
         }
 
         internal void Update()
         {
-            if (Clock.Time < _updateTimer)
+            if (!_updateTimer.TickAndCheckDone())
                 return;
 
             if (!SNet.IsMaster)
                 return;
 
-            _updateTimer = Clock.Time + Setting.UpdateInterval;
+            _updateTimer.Reset();
 
             var canUseAbility = true;
             canUseAbility &= Setting.KeepOnDead || Agent.Alive;
@@ -58,17 +60,17 @@ namespace EECustom.Customizations.EnemyAbilities.Handlers
 
             if (Setting.Cooldown.Enabled)
             {
-                if (!Setting.Cooldown.CanUseAbility(_cooldownTimer))
+                if (!_cooldownTimer.TickAndCheckDone())
                     return;
 
                 if (!_hasInitialTimerDone)
                 {
-                    _cooldownTimer = Clock.Time + Setting.Cooldown.InitCooldown;
+                    _cooldownTimer.Reset(Setting.Cooldown.InitCooldown);
                     _hasInitialTimerDone = true;
                     return;
                 }
                 else
-                    _cooldownTimer = Clock.Time + Setting.Cooldown.Cooldown;
+                    _cooldownTimer.Reset(Setting.Cooldown.Cooldown);
             }
 
             Behaviour.DoTriggerSync();
@@ -87,10 +89,10 @@ namespace EECustom.Customizations.EnemyAbilities.Handlers
             if (_latestMode != Agent.AI.Mode)
             {
                 _latestMode = Agent.AI.Mode;
-                _modeTransitionTimer = Clock.Time + Setting.AllowedModeTransitionTime;
+                _modeTransitionTimer.Reset(Setting.AllowedModeTransitionTime);
             }
 
-            if (_modeTransitionTimer > Clock.Time)
+            if (!_modeTransitionTimer.TickAndCheckDone())
             {
                 return false;
             }
