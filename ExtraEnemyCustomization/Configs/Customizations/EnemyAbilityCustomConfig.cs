@@ -25,14 +25,6 @@ namespace EECustom.Configs.Customizations
         {
             EnemyAbilityManager.Clear();
         }
-
-        public override EnemyCustomBase[] GetAllSettings()
-        {
-            var list = new List<EnemyCustomBase>();
-            list.AddRange(BehaviourAbilityCustom);
-            list.AddRange(DeathAbilityCustom);
-            return list.ToArray();
-        }
     }
 
     public class EnemyAbilitiesSetting

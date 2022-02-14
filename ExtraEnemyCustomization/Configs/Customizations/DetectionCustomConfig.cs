@@ -13,14 +13,5 @@ namespace EECustom.Configs.Customizations
 
         public override string FileName => "Detection";
         public override CustomizationConfigType Type => CustomizationConfigType.Detection;
-
-        public override EnemyCustomBase[] GetAllSettings()
-        {
-            var list = new List<EnemyCustomBase>();
-            list.AddRange(ScreamingCustom);
-            list.AddRange(FeelerCustom);
-            list.AddRange(ScoutAnimCustom);
-            return list.ToArray();
-        }
     }
 }

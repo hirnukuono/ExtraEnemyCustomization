@@ -11,12 +11,5 @@ namespace EECustom.Configs.Customizations
 
         public override string FileName => "SpawnCost";
         public override CustomizationConfigType Type => CustomizationConfigType.SpawnCost;
-
-        public override EnemyCustomBase[] GetAllSettings()
-        {
-            var list = new List<EnemyCustomBase>();
-            list.AddRange(SpawnCostCustom);
-            return list.ToArray();
-        }
     }
 }

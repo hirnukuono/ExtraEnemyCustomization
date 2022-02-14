@@ -30,12 +30,5 @@ namespace EECustom.Configs.Customizations
         {
             CustomProjectileManager.DestroyAllProjectile();
         }
-
-        public override EnemyCustomBase[] GetAllSettings()
-        {
-            var list = new List<EnemyCustomBase>();
-            list.AddRange(ShooterFireCustom);
-            return list.ToArray();
-        }
     }
 }

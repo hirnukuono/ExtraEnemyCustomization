@@ -19,20 +19,5 @@ namespace EECustom.Configs.Customizations
 
         public override string FileName => "Model";
         public override CustomizationConfigType Type => CustomizationConfigType.Model;
-
-        public override EnemyCustomBase[] GetAllSettings()
-        {
-            var list = new List<EnemyCustomBase>();
-            list.AddRange(ShadowCustom);
-            list.AddRange(MaterialCustom);
-            list.AddRange(GlowCustom);
-            list.AddRange(LimbCustom);
-            list.AddRange(ModelRefCustom);
-            list.AddRange(MarkerCustom);
-            list.AddRange(ScannerCustom);
-            list.AddRange(SilhouetteCustom);
-            list.AddRange(BoneCustom);
-            return list.ToArray();
-        }
     }
 }

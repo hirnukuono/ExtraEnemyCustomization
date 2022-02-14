@@ -13,12 +13,5 @@ namespace EECustom.Configs.Customizations
 
         public override string FileName => "Tentacle";
         public override CustomizationConfigType Type => CustomizationConfigType.Tentacle;
-
-        public override EnemyCustomBase[] GetAllSettings()
-        {
-            var list = new List<EnemyCustomBase>();
-            list.AddRange(StrikerTentacleCustom);
-            return list.ToArray();
-        }
     }
 }

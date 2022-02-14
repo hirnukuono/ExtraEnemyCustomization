@@ -19,20 +19,5 @@ namespace EECustom.Configs.Customizations
 
         public override string FileName => "Ability";
         public override CustomizationConfigType Type => CustomizationConfigType.Ability;
-
-        public override EnemyCustomBase[] GetAllSettings()
-        {
-            var list = new List<EnemyCustomBase>();
-            list.AddRange(BirthingCustom);
-            list.AddRange(FogSphereCustom);
-            list.AddRange(HealthRegenCustom);
-            list.AddRange(InfectionAttackCustom);
-            list.AddRange(KnockbackAttackCustom);
-            list.AddRange(ExplosiveAttackCustom);
-            list.AddRange(BleedAttackCustom);
-            list.AddRange(DoorBreakerCustom);
-            list.AddRange(ScoutScreamingCustom);
-            return list.ToArray();
-        }
     }
 }
