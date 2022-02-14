@@ -4,6 +4,7 @@ using System.Text;
 using UnityEngine;
 using EECustom.Extensions;
 using UnityEngine.Rendering;
+using EECustom.Utils;
 
 namespace EECustom.Customizations.EnemyAbilities.Abilities
 {
@@ -32,10 +33,9 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
         private readonly List<Handler> _handlers = new();
         private State _cloakState = State.None;
-        private float _timer = 0.0f;
-        private float _duration = 0.0f;
-        private float _decloakTimer = 0.0f;
-        private float _decloakDelay = float.MaxValue;
+        private Timer _timer;
+        private Timer _decloakTimer;
+        private bool _hasDecloakTimer = false;
         private bool _reqTagOriginal = false;
 
         protected override void OnSetup()
@@ -74,13 +74,16 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
         protected override void OnEnter()
         {
             _cloakState = State.Cloaking;
-            _timer = 0.0f;
-            _duration = Ability.CloakDuration;
+            _timer.Reset(Ability.CloakDuration);
 
             if (Ability.DecloakAfterDelay >= 0.0f)
             {
-                _decloakTimer = 0.0f;
-                _decloakDelay = Ability.DecloakAfterDelay;
+                _hasDecloakTimer = true;
+                _decloakTimer.Reset(Ability.DecloakAfterDelay);
+            }
+            else
+            {
+                _hasDecloakTimer = false;
             }
 
             if (Ability.RequireTagForDetectionWhileCloaking)
@@ -91,17 +94,14 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
         protected override void OnExit()
         {
+            _hasDecloakTimer = false;
             _cloakState = State.Decloaking;
-            _timer = 0.0f;
-            _duration = Ability.DecloakDuration;
+            _timer.Reset(Ability.DecloakDuration);
             Agent.RequireTagForDetection = _reqTagOriginal;
         }
 
         protected override void OnUpdate()
         {
-            _timer += Clock.Delta;
-            _decloakTimer += Clock.Delta;
-
             float progress;
             switch (_cloakState)
             {
@@ -130,10 +130,8 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
                     break;
             }
 
-            if (_decloakTimer >= _decloakDelay && Executing)
+            if (_hasDecloakTimer && Executing && _decloakTimer.TickAndCheckDone())
             {
-                _decloakTimer = 0.0f;
-                _decloakDelay = float.MaxValue;
                 DoExit();
             }
         }
@@ -145,7 +143,8 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
         private float GetProgress()
         {
-            return Mathf.InverseLerp(0.0f, _duration, _timer);
+            _timer.Tick();
+            return _timer.Progress;
         }
 
         public enum State
