@@ -8,8 +8,6 @@ namespace EECustom.Customizations.Detections
 {
     public sealed class ScoutAnimSync : SyncedEvent<ScoutAnimPacket>
     {
-        private static readonly Random _rand = new();
-
         public void DoRandom(EnemyAgent agent)
         {
             if (!SNet.IsMaster)
@@ -29,7 +27,7 @@ namespace EECustom.Customizations.Detections
             }
             else
             {
-                nextAnim = (_rand.NextDouble() <= data.ChanceToBend) ?
+                nextAnim = Rand.CanDoBy(data.ChanceToBend) ?
                     ScoutAnimType.Bending :
                     ScoutAnimType.Standing;
             }

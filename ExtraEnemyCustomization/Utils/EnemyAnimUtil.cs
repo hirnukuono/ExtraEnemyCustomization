@@ -11,7 +11,6 @@ namespace EECustom.Utils
     public static class EnemyAnimUtil
     {
         private static readonly Dictionary<EnemyAnimType, int[]> _animHashsLookup = new();
-        private static readonly Random _random = new();
         private static bool _initialized = false;
 
         internal static void Initialize()
@@ -87,7 +86,7 @@ namespace EECustom.Utils
                 return;
             }
 
-            var index = hashes.Length > 1 ? (int)(_random.NextDouble() * hashes.Length) : 0;
+            var index = hashes.Length > 1 ? Rand.IndexOf(hashes) : 0;
             agent.Locomotion.m_animator.applyRootMotion = true;
             agent.Locomotion.m_animator.CrossFadeInFixedTime(hashes[index], crossfadeTime);
 
@@ -119,7 +118,7 @@ namespace EECustom.Utils
                 return;
             }
 
-            var index = hashes.Length > 1 ? (int)(_random.NextDouble() * hashes.Length) : 0;
+            var index = hashes.Length > 1 ? Rand.IndexOf(hashes) : 0;
             NetworkManager.EnemyAnim.Send(new EnemyAnimPacket()
             {
                 enemyID = agent.GlobalID,

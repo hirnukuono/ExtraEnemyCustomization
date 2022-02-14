@@ -2,6 +2,7 @@
 using EECustom.CustomSettings.DTO;
 using EECustom.Events;
 using EECustom.Extensions;
+using EECustom.Utils;
 using Enemies;
 using GameData;
 using LevelGeneration;
@@ -13,7 +14,6 @@ namespace EECustom.CustomSettings
 {
     public static class CustomScoutWaveManager
     {
-        private static readonly Random _random = new();
         private static readonly List<ExpeditionScoutSetting> _scoutSettings = new();
         private static readonly List<ScoutSettingCache> _activeScoutSettings = new();
         private static readonly Dictionary<string, ScoutTargetSetting> _targetSettingDict = new();
@@ -271,7 +271,7 @@ namespace EECustom.CustomSettings
             var weightsTotal = weightValues.Sum();
             if (weightsTotal <= 0.0f)
             {
-                return _random.Next(0, weights.Length);
+                return Rand.IndexOf(weights);
             }
 
             var accumulatedWeight = 0.0f;
@@ -287,7 +287,7 @@ namespace EECustom.CustomSettings
                 weightValues[i] = accumulatedWeight;
             }
 
-            var randValue = (float)_random.NextDouble() * weightsTotal;
+            var randValue = Rand.NextFloat() * weightsTotal;
             for (int i = 0; i < weightValues.Length; i++)
             {
                 if (weightValues[i] >= randValue)

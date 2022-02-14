@@ -1,5 +1,6 @@
 ﻿using EECustom.CustomAbilities.Bleed.Handlers;
 using EECustom.Networking;
+using EECustom.Utils;
 using Player;
 using System;
 
@@ -7,7 +8,6 @@ namespace EECustom.CustomAbilities.Bleed
 {
     internal sealed class BleedSync : SyncedEvent<BleedingData>
     {
-        private static readonly Random _random = new();
         private static PlayerAgent _localAgent = null;
         private static BleedHandler _handler = null;
 
@@ -24,7 +24,7 @@ namespace EECustom.CustomAbilities.Bleed
 
             if (packet.duration >= 0.0f)
             {
-                if (packet.chanceToBleed <= _random.NextDouble())
+                if (!Rand.CanDoBy(packet.chanceToBleed))
                     return;
 
                 UpdateHandler();

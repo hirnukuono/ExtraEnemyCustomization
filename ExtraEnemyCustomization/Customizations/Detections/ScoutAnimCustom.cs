@@ -7,7 +7,6 @@ namespace EECustom.Customizations.Detections
     public sealed class ScoutAnimCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
         internal static readonly ScoutAnimSync _animSync = new();
-        private static readonly Random _rand = new();
 
         public AnimationRandomType RandomType { get; set; } = AnimationRandomType.PerDetection;
         public EnemyAnimType BendAnimation { get; set; } = EnemyAnimType.AbilityUseOut;
@@ -34,7 +33,7 @@ namespace EECustom.Customizations.Detections
             switch (RandomType)
             {
                 case AnimationRandomType.PerEnemy:
-                    data.ChanceToBend = ((float)_rand.NextDouble() <= ChanceToBend) ? 1.0f : 0.0f;
+                    data.ChanceToBend = Rand.CanDoBy(ChanceToBend) ? 1.0f : 0.0f;
                     break;
 
                 case AnimationRandomType.PerDetection:

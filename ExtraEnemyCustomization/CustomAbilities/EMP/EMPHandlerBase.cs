@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using EECustom.Utils;
+using UnityEngine;
 
 namespace EECustom.CustomAbilities.EMP
 {
@@ -58,8 +59,6 @@ namespace EECustom.CustomAbilities.EMP
         private float _delayTimer;
 
         private bool _destroyed = false;
-
-        private static readonly System.Random _rand = new();
 
         public abstract void Setup(GameObject gameObject, EMPController controller);
 
@@ -181,22 +180,22 @@ namespace EECustom.CustomAbilities.EMP
         /// <returns></returns>
         protected static float GetRandomDelay(float min, float max)
         {
-            return min + ((float)_rand.NextDouble() * (max - min));
+            return Rand.Range(min, max);
         }
 
         protected static float GetRandom01()
         {
-            return (float)_rand.NextDouble();
+            return Rand.NextFloatInclusive();
         }
 
         protected static int GetRandomRange(int min, int maxPlusOne)
         {
-            return _rand.Next(min, maxPlusOne);
+            return Rand.Range(min, maxPlusOne);
         }
 
         protected static bool FlickerUtil(int oneInX = 2)
         {
-            return _rand.Next(0, oneInX) == 0;
+            return Rand.Index(oneInX) == 0;
         }
 
         protected enum DeviceState

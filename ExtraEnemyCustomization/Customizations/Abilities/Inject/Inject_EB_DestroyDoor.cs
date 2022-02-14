@@ -16,8 +16,6 @@ namespace EECustom.Customizations.Abilities.Inject
         public const float MaxTime = 1.0f;
         public const float Range = MaxTime - MinTime;
 
-        private static readonly Random _random = new();
-
         [HarmonyWrapSafe]
         internal static void Postfix(EB_InCombat_MoveToNextNode_DestroyDoor __instance)
         {
@@ -31,12 +29,12 @@ namespace EECustom.Customizations.Abilities.Inject
                 if (breakerProp.UseGlobalTimer && breakerProp.Config._globalTimer < Clock.ExpeditionProgressionTime)
                 {
                     if (DoDamageDoor(__instance, breakerProp.Damage))
-                        breakerProp.Config._globalTimer = Clock.ExpeditionProgressionTime + RandomRange(breakerProp.MinDelay, breakerProp.MaxDelay);
+                        breakerProp.Config._globalTimer = Clock.ExpeditionProgressionTime + Rand.Range(breakerProp.MinDelay, breakerProp.MaxDelay);
                 }
                 else if (!breakerProp.UseGlobalTimer && breakerProp.Timer < Clock.ExpeditionProgressionTime)
                 {
                     if (DoDamageDoor(__instance, breakerProp.Damage))
-                        breakerProp.Timer = Clock.ExpeditionProgressionTime + RandomRange(breakerProp.MinDelay, breakerProp.MaxDelay);
+                        breakerProp.Timer = Clock.ExpeditionProgressionTime + Rand.Range(breakerProp.MinDelay, breakerProp.MaxDelay);
                 }
             }
             else
@@ -45,7 +43,7 @@ namespace EECustom.Customizations.Abilities.Inject
                     return;
 
                 if (DoDamageDoor(__instance, 1.0f))
-                    GlobalTimer = Clock.ExpeditionProgressionTime + ((float)_random.NextDouble() * Range) + MinTime;
+                    GlobalTimer = Clock.ExpeditionProgressionTime + (Rand.NextFloat() * Range) + MinTime;
             }
         }
 
@@ -65,11 +63,6 @@ namespace EECustom.Customizations.Abilities.Inject
 
             weakdoor.m_sync.AttemptDoorInteraction(eDoorInteractionType.DoDamage, damage, 0f, enemyAgent.Position, null);
             return true;
-        }
-
-        private static float RandomRange(float min, float max)
-        {
-            return ((float)_random.NextDouble() * max - min) + min;
         }
     }
 }

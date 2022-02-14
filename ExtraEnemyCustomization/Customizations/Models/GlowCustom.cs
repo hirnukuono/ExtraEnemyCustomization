@@ -1,4 +1,5 @@
 ﻿using EECustom.Customizations.Models.Handlers;
+using EECustom.Utils;
 using EECustom.Utils.JsonElements;
 using Enemies;
 using System;
@@ -11,8 +12,6 @@ namespace EECustom.Customizations.Models
     public sealed class GlowCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyGlowEvent
     {
         public static readonly Color DefaultPropaWakeColor = ES_HibernateWakeUp.m_propagatedWakeupColor;
-
-        private static readonly System.Random _random = new();
 
         public Color DefaultColor { get; set; } = Color.black;
 
@@ -65,7 +64,7 @@ namespace EECustom.Customizations.Models
                 if (pulse.RandomizeTime)
                 {
                     var interval = Math.Max(0.0f, pulse.Duration);
-                    var rand = (float)_random.NextDouble() * interval;
+                    var rand = Rand.NextFloat() * interval;
                     manager.StartDelay = rand;
                 }
             }
