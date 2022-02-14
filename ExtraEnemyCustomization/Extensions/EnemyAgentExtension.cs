@@ -19,7 +19,7 @@ namespace EECustom
             }));
         }
 
-        public static T RegisterProperty<T>(this EnemyAgent agent) where T : class, new()
+        public static T RegisterOrGetProperty<T>(this EnemyAgent agent) where T : class, new()
         {
             return EnemyProperty<T>.RegisterOrGet(agent);
         }

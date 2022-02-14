@@ -35,7 +35,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
             if (Ability.UseExplosionCounter)
             {
-                var counter = EnemyProperty<ExplosionCounter>.RegisterOrGet(Agent);
+                var counter = Agent.RegisterOrGetProperty<ExplosionCounter>();
                 if (counter.Count >= Ability.AllowedExplosionCount)
                 {
                     DoExit();

@@ -13,7 +13,7 @@ namespace EECustom.Customizations.Detections
             if (!SNet.IsMaster)
                 return;
 
-            if (!EnemyProperty<ScoutAnimOverrideData>.TryGet(agent, out var data))
+            if (!agent.TryGetProperty<ScoutAnimOverrideData>(out var data))
                 return;
 
             ScoutAnimType nextAnim;

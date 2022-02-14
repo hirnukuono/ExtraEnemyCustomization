@@ -10,7 +10,7 @@ namespace EECustom.Customizations.Detections.Inject
         [HarmonyWrapSafe]
         internal static void Postfix(ES_ScoutDetection __instance)
         {
-            if (!EnemyProperty<ScoutAnimOverrideData>.TryGet(__instance.m_enemyAgent, out var data))
+            if (!__instance.m_enemyAgent.TryGetProperty<ScoutAnimOverrideData>(out var data))
                 return;
 
             if (SNet.IsMaster)

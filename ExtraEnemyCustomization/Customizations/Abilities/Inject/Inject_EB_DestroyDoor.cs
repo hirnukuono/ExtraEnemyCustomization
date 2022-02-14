@@ -24,7 +24,7 @@ namespace EECustom.Customizations.Abilities.Inject
 
             var enemyAgent = __instance.m_ai.Agent.Cast<EnemyAgent>();
 
-            if (EnemyProperty<DoorBreakerSetting>.TryGet(enemyAgent, out var breakerProp))
+            if (enemyAgent.TryGetProperty<DoorBreakerSetting>(out var breakerProp))
             {
                 if (breakerProp.UseGlobalTimer && breakerProp.Config._globalTimer < Clock.ExpeditionProgressionTime)
                 {

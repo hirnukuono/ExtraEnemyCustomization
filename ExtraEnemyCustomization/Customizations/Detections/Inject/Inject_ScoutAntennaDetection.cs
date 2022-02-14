@@ -10,7 +10,7 @@ namespace EECustom.Customizations.Detections.Inject
         [HarmonyWrapSafe]
         internal static void Postfix(ScoutAntennaDetection __instance)
         {
-            if (!EnemyProperty<ScoutAnimOverrideData>.TryGet(__instance.m_owner, out var data))
+            if (!__instance.m_owner.TryGetProperty<ScoutAnimOverrideData>(out var data))
                 return;
 
             if (data.OverridePullingAnimation)

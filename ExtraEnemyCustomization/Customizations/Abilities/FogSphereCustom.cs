@@ -63,7 +63,7 @@ namespace EECustom.Customizations.Abilities
         {
             if (EffectVolume.Enabled)
             {
-                var effectSetting = EnemyProperty<SphereEffectSetting>.RegisterOrGet(agent);
+                var effectSetting = agent.RegisterOrGetProperty<SphereEffectSetting>();
                 effectSetting.HandlerCount = 0;
                 effectSetting.Setting = EffectVolume;
             }
