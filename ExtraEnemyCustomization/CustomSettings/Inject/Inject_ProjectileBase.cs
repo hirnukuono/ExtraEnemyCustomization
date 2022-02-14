@@ -23,7 +23,7 @@ namespace EECustom.CustomSettings.Inject
                 if (baseAgent == null)
                     return;
 
-                if (baseAgent.TryCastToPlayerAgent(out var agent))
+                if (!baseAgent.TryCastToPlayerAgent(out var agent))
                     return;
 
                 if (data.Knockback.Enabled)
