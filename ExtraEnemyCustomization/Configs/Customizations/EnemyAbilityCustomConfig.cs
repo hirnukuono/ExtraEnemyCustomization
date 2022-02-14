@@ -43,6 +43,7 @@ namespace EECustom.Configs.Customizations
         public SpawnWaveAbility[] SpawnWave { get; set; } = Array.Empty<SpawnWaveAbility>();
         public DoAnimAbility[] DoAnim { get; set; } = Array.Empty<DoAnimAbility>();
         public EMPAbility[] EMP { get; set; } = Array.Empty<EMPAbility>();
+        public CloakAbility[] Cloak { get; set; } = Array.Empty<CloakAbility>();
         public ChainedAbility[] Chain { get; set; } = Array.Empty<ChainedAbility>();
 
         public void RegisterAll()
@@ -54,6 +55,7 @@ namespace EECustom.Configs.Customizations
             list.AddRange(SpawnWave);
             list.AddRange(DoAnim);
             list.AddRange(EMP);
+            list.AddRange(Cloak);
             list.AddRange(Chain);
 
             foreach (var ab in list)

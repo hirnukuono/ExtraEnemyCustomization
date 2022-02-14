@@ -104,6 +104,10 @@ namespace EECustom.Managers
 
         private void GenerateEventBuffer()
         {
+            _enemyPrefabBuiltHolder.Clear();
+            _enemySpawnedHolder.Clear();
+            _enemyGlowHolder.Clear();
+
             foreach (var custom in _customizationBuffer)
             {
                 _enemyPrefabBuiltHolder.TryAdd(custom);
