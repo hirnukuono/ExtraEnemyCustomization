@@ -164,6 +164,12 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
             public void SetProgress(float p)
             {
+                if (originalRenderer == null || transitionRenderer == null)
+                {
+                    Logger.Error($"Cloak Renderer is missing! : orig {originalRenderer == null}, trs { transitionRenderer == null}");
+                    return;
+                }
+            
                 if (p <= 0.0f)
                 {
                     DisableOriginalRenderer();
