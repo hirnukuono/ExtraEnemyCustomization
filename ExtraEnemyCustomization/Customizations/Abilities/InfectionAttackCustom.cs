@@ -31,24 +31,21 @@ namespace EECustom.Customizations.Abilities
 
         public void OnMelee(PlayerAgent player, Agent inflictor, float damage)
         {
-            if (inflictor is not null && inflictor.Type == AgentType.Enemy)
-            {
-                var enemy = inflictor.Cast<EnemyAgent>();
-                if (IsTarget(enemy))
-                {
-                    ApplyInfection(MeleeData, player);
-                }
-            }
+            DoInfection(player, inflictor, MeleeData);
         }
 
         public void OnTentacle(PlayerAgent player, Agent inflictor, float damage)
         {
-            if (inflictor is not null && inflictor.Type == AgentType.Enemy)
+            DoInfection(player, inflictor, TentacleData);
+        }
+
+        private void DoInfection(PlayerAgent player, Agent inflictor, InfectionAttackData setting)
+        {
+            if (inflictor.TryCastToEnemyAgent(out var enemy))
             {
-                var enemy = inflictor.Cast<EnemyAgent>();
                 if (IsTarget(enemy))
                 {
-                    ApplyInfection(TentacleData, player);
+                    ApplyInfection(setting, player);
                 }
             }
         }

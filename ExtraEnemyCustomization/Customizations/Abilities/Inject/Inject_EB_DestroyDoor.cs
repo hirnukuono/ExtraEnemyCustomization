@@ -22,7 +22,7 @@ namespace EECustom.Customizations.Abilities.Inject
             if (!ShouldOverride)
                 return;
 
-            var enemyAgent = __instance.m_ai.Agent.Cast<EnemyAgent>();
+            var enemyAgent = __instance.m_ai.m_enemyAgent;
 
             if (enemyAgent.TryGetProperty<DoorBreakerSetting>(out var breakerProp))
             {

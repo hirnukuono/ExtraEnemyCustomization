@@ -31,35 +31,24 @@ namespace EECustom.Customizations.Abilities
 
         public void OnMelee(PlayerAgent player, Agent inflictor, float damage)
         {
-            if (inflictor is not null && inflictor.Type == AgentType.Enemy)
-            {
-                var enemy = inflictor.Cast<EnemyAgent>();
-                if (IsTarget(enemy))
-                    return;
-
-                MeleeData.DoExplode(player);
-
-                if (!MeleeData.KillInflictor)
-                    return;
-
-                if (inflictor.Type != AgentType.Enemy)
-                    return;
-
-                enemy.Damage.ExplosionDamage(enemy.Damage.HealthMax, Vector3.zero, Vector3.zero);
-            }
+            DoExplosive(player, inflictor, MeleeData);
         }
 
         public void OnTentacle(PlayerAgent player, Agent inflictor, float damage)
         {
-            if (inflictor is not null && inflictor.Type == AgentType.Enemy)
+            DoExplosive(player, inflictor, TentacleData);
+        }
+
+        private void DoExplosive(PlayerAgent player, Agent inflictor, ExplosionSetting setting)
+        {
+            if (inflictor.TryCastToEnemyAgent(out var enemy))
             {
-                var enemy = inflictor.Cast<EnemyAgent>();
                 if (!IsTarget(enemy))
                     return;
 
-                TentacleData.DoExplode(player);
+                setting.DoExplode(player);
 
-                if (!TentacleData.KillInflictor)
+                if (!setting.KillInflictor)
                     return;
 
                 if (inflictor.Type != AgentType.Enemy)
