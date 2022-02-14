@@ -27,7 +27,7 @@ namespace EECustom.Customizations.Models
             var comps = agent.GetComponentsInChildren<Renderer>(true);
             foreach (var comp in comps)
             {
-                if (!IncludeEggSack && comp.gameObject.name.Contains("Egg"))
+                if (!IncludeEggSack && comp.gameObject.name.InvariantContains("Egg"))
                 {
                     LogVerbose(" - Ignored EggSack Object!");
                     comp.shadowCastingMode = ShadowCastingMode.On;

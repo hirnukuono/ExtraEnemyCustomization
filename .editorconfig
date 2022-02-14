@@ -244,3 +244,11 @@ dotnet_naming_style.private_field__camel____prefix_.required_prefix = _
 dotnet_naming_style.private_field__camel____prefix_.required_suffix = 
 dotnet_naming_style.private_field__camel____prefix_.word_separator = 
 dotnet_naming_style.private_field__camel____prefix_.capitalization = camel_case
+dotnet_diagnostic.CA1507.severity=warning
+dotnet_diagnostic.CA1805.severity=silent
+dotnet_diagnostic.CA1825.severity=warning
+dotnet_diagnostic.CA1841.severity=warning
+
+[*.{cs,vb}]
+dotnet_diagnostic.CA1307.severity=error
+dotnet_diagnostic.CA1806.severity=warning

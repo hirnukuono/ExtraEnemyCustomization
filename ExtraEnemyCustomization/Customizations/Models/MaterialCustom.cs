@@ -41,7 +41,7 @@ namespace EECustom.Customizations.Models
                 var matName = matRef.m_material.name;
                 LogVerbose($" - Debug Info, Material Found: {matName}");
 
-                var swapSet = MaterialSets.SingleOrDefault(x => x.From.Equals(matName));
+                var swapSet = MaterialSets.SingleOrDefault(x => x.From.InvariantEquals(matName));
                 if (swapSet == null)
                     continue;
 

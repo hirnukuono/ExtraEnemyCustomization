@@ -35,7 +35,7 @@ namespace EECustom.Utils.JsonConverters
                         var propName = reader.GetString();
                         reader.Read();
 
-                        switch (propName.ToLower())
+                        switch (propName.ToLowerInvariant())
                         {
                             case "r":
                                 color.r = reader.GetSingle();

@@ -32,7 +32,7 @@ namespace EECustom.Managers
             if (!File.Exists(file))
                 return;
 
-            var fileNameWOExt = Path.GetFileNameWithoutExtension(file).ToLower();
+            var fileNameWOExt = Path.GetFileNameWithoutExtension(file).ToLowerInvariant();
             if (!_textureCache.ContainsKey(fileNameWOExt))
             {
                 var fileData = File.ReadAllBytes(file);
@@ -83,7 +83,7 @@ namespace EECustom.Managers
 
         private static void SetFilenameFormat(ref string fileName)
         {
-            fileName = fileName.ToLower();
+            fileName = fileName.ToLowerInvariant();
 
             if (Path.HasExtension(fileName))
                 fileName = Path.GetFileNameWithoutExtension(fileName);

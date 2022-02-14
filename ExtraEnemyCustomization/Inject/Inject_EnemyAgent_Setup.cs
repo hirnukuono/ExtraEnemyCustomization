@@ -18,7 +18,7 @@ namespace EECustom.Inject
         [HarmonyWrapSafe]
         internal static void Postfix(EnemyAgent __instance)
         {
-            if (__instance.name.EndsWith(")")) //No Replicator Number = Fake call
+            if (__instance.name.InvariantEndsWith(")")) //No Replicator Number = Fake call
             {
                 return;
             }

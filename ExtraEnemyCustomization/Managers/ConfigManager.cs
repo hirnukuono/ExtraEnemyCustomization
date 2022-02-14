@@ -59,7 +59,7 @@ namespace EECustom.Managers
                 var fileName = instance.FileName;
                 _configTypeToFileName[configType] = fileName;
                 _configFileNameToType[fileName] = configType;
-                _configFileNameToType[fileName.ToUpper()] = configType; //For Easier Access
+                _configFileNameToType[fileName.ToLowerInvariant()] = configType; //For Easier Access
                 _configInstances[fileName] = instance;
             }
 

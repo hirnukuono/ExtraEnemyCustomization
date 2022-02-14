@@ -41,7 +41,7 @@ namespace EECustom.Managers
 
                 if (!ConfigManager.Global.CacheAllMaterials)
                 {
-                    if (!shaderName.Contains("EnemyFlesh"))
+                    if (!shaderName.InvariantContains("EnemyFlesh"))
                         return false;
                 }
                 return true;
@@ -118,7 +118,7 @@ namespace EECustom.Managers
                         break;
 
                     case OutputType.File:
-                        var fileStream = File.Open(Path.Combine(ConfigManager.BasePath, $"_dump.{Name.ToLower()}.txt"), FileMode.Create, FileAccess.Write);
+                        var fileStream = File.Open(Path.Combine(ConfigManager.BasePath, $"_dump.{Name.ToLowerInvariant()}.txt"), FileMode.Create, FileAccess.Write);
                         _streamWriter = new StreamWriter(fileStream);
                         break;
                 }

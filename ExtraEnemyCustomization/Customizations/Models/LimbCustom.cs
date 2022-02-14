@@ -16,13 +16,13 @@ namespace EECustom.Customizations.Models
 
         public void OnSpawned(EnemyAgent agent)
         {
-            var allLimbData = Limbs.SingleOrDefault(x => x.LimbName.Equals("All", StringComparison.OrdinalIgnoreCase));
+            var allLimbData = Limbs.SingleOrDefault(x => x.LimbName.InvariantEquals("All", ignoreCase: true));
 
             foreach (var limb in agent.Damage.DamageLimbs)
             {
                 LogVerbose($" - Found Limb: {limb.name}");
 
-                var limbCustomData = Limbs.SingleOrDefault(x => x.LimbName.Equals(limb.name));
+                var limbCustomData = Limbs.SingleOrDefault(x => x.LimbName.InvariantEquals(limb.name, ignoreCase: true));
                 if (limbCustomData == null)
                 {
                     if (allLimbData == null)

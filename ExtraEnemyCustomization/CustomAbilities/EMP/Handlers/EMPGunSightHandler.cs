@@ -1,7 +1,5 @@
-﻿using EECustom.Extensions;
-using System;
+﻿using System;
 using System.Linq;
-using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace EECustom.CustomAbilities.EMP.Handlers
@@ -16,7 +14,7 @@ namespace EECustom.CustomAbilities.EMP.Handlers
             if (renderers != null)
             {
                 _sightPictures = renderers
-                    .Where(x => x.material?.shader?.name?.Contains("HolographicSight", StringComparison.InvariantCultureIgnoreCase) ?? false)
+                    .Where(x => x.material?.shader?.name?.InvariantContains("HolographicSight") ?? false)
                     .Select(x => x.gameObject)
                     .ToArray();
             }

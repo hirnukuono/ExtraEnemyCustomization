@@ -1,7 +1,6 @@
 ﻿using AIGraph;
 using EECustom.CustomSettings.DTO;
 using EECustom.Events;
-using EECustom.Extensions;
 using EECustom.Utils;
 using Enemies;
 using GameData;
@@ -42,7 +41,7 @@ namespace EECustom.CustomSettings
                 return;
             }
 
-            if (rawKey.Equals(_previousExpKey))
+            if (rawKey.InvariantEquals(_previousExpKey))
             {
                 return;
             }
@@ -141,7 +140,7 @@ namespace EECustom.CustomSettings
 
         public static void AddWaveSetting(ScoutWaveSetting waveSetting)
         {
-            var key = waveSetting.Name.ToLower();
+            var key = waveSetting.Name.ToLowerInvariant();
             if (!_waveSettingDict.ContainsKey(key))
             {
                 _waveSettingDict.Add(key, waveSetting);
@@ -150,7 +149,7 @@ namespace EECustom.CustomSettings
 
         public static ScoutWaveSetting GetWaveSetting(string name)
         {
-            var key = name.ToLower();
+            var key = name.ToLowerInvariant();
             if (_waveSettingDict.ContainsKey(key))
                 return _waveSettingDict[key];
             else
@@ -165,7 +164,7 @@ namespace EECustom.CustomSettings
 
         public static void AddTargetSetting(ScoutTargetSetting targetSetting)
         {
-            var key = targetSetting.Name.ToLower();
+            var key = targetSetting.Name.ToLowerInvariant();
             if (!_targetSettingDict.ContainsKey(key))
             {
                 _targetSettingDict.Add(key, targetSetting);
@@ -174,7 +173,7 @@ namespace EECustom.CustomSettings
 
         public static ScoutTargetSetting GetTargetSetting(string name)
         {
-            var key = name.ToLower();
+            var key = name.ToLowerInvariant();
             if (_targetSettingDict.ContainsKey(key))
                 return _targetSettingDict[key];
             else

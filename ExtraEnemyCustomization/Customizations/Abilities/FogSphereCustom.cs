@@ -1,5 +1,4 @@
 ﻿using EECustom.Customizations.Shared;
-using EECustom.Extensions;
 using EECustom.Utils;
 using Enemies;
 using UnityEngine;

@@ -1,7 +1,8 @@
-﻿using Enemies;
+﻿using EECustom.Utils;
+using Enemies;
 using System;
 
-namespace EECustom.Extensions
+namespace EECustom
 {
     public static class EnemyAgentExtension
     {
@@ -16,6 +17,16 @@ namespace EECustom.Extensions
                 onDead?.Invoke();
                 called = true;
             }));
+        }
+
+        public static T RegisterProperty<T>(this EnemyAgent agent) where T : class, new()
+        {
+            return EnemyProperty<T>.RegisterOrGet(agent);
+        }
+
+        public static bool TryGetProperty<T>(this EnemyAgent agent, out T property) where T : class, new()
+        {
+            return EnemyProperty<T>.TryGet(agent, out property);
         }
     }
 }

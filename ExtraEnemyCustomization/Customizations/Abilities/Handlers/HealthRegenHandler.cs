@@ -1,7 +1,6 @@
 ﻿using Agents;
 using EECustom.Attributes;
 using EECustom.Events;
-using EECustom.Extensions;
 using EECustom.Utils;
 using Enemies;
 using SNetwork;

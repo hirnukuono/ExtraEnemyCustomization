@@ -21,7 +21,7 @@ namespace EECustom.Utils.JsonElements
                     var target = AgentModeType.None;
                     foreach (var str in splitValues)
                     {
-                        var input = str.ToLower().Trim();
+                        var input = str.ToLowerInvariant().Trim();
                         switch (input)
                         {
                             case "off":

@@ -13,7 +13,7 @@ namespace EECustom.Managers
             ThreadDispatcher.Enqueue(JobComplexity.Heavy, () =>
             {
                 var filename = Path.GetFileNameWithoutExtension(e.Name);
-                if (_configFileNameToType.TryGetValue(filename.ToUpper(), out var type))
+                if (_configFileNameToType.TryGetValue(filename.ToLowerInvariant(), out var type))
                 {
                     filename = _configTypeToFileName[type];
 

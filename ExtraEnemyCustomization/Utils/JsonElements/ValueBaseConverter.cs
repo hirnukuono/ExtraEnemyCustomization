@@ -1,5 +1,4 @@
-﻿using EECustom.Extensions;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -36,7 +35,7 @@ namespace EECustom.Utils.JsonElements
                         var propName = reader.GetString();
                         reader.Read();
 
-                        switch (propName.ToLower())
+                        switch (propName.ToLowerInvariant())
                         {
                             case "value":
                                 valueBase.Value = reader.GetSingle();
@@ -66,7 +65,7 @@ namespace EECustom.Utils.JsonElements
                         strValue = strValue[0..^10].TrimEnd();
                     }
 
-                    if (strValue.EndsWith("%"))
+                    if (strValue.InvariantEndsWith("%"))
                     {
                         if (float.TryParse(strValue[0..^1].TrimEnd(), NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var parsedPercent))
                         {

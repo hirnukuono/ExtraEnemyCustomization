@@ -1,5 +1,4 @@
 ﻿using BepInEx.Logging;
-using EECustom.Extensions;
 using EECustom.Managers;
 using Enemies;
 using GameData;
@@ -122,13 +121,11 @@ namespace EECustom.Customizations
             if (enemyBlock == null)
                 return false;
 
-            var comparisonMode = NameIgnoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
-
             return Mode switch
             {
                 TargetMode.PersistentID => PersistentIDs.Contains(enemyBlock.persistentID),
-                TargetMode.NameEquals => enemyBlock.name?.Equals(NameParam, comparisonMode) ?? false,
-                TargetMode.NameContains => enemyBlock.name?.Contains(NameParam, comparisonMode) ?? false,
+                TargetMode.NameEquals => enemyBlock.name?.InvariantEquals(NameParam, ignoreCase: NameIgnoreCase) ?? false,
+                TargetMode.NameContains => enemyBlock.name?.InvariantContains(NameParam, ignoreCase: NameIgnoreCase) ?? false,
                 TargetMode.Everything => true,
                 TargetMode.CategoryAny => ConfigManager.Categories.Any(Categories, enemyBlock.persistentID),
                 TargetMode.CategoryAll => ConfigManager.Categories.All(Categories, enemyBlock.persistentID),

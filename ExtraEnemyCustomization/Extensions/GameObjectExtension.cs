@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using UnityEngine;
 
-namespace EECustom.Extensions
+namespace EECustom
 {
     public static class GameObjectExtension
     {

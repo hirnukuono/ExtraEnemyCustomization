@@ -1,9 +1,29 @@
 ﻿using System;
 
-namespace EECustom.Extensions
+namespace EECustom
 {
     public static class StringExtension
     {
+        public static bool InvariantEquals(this string str, string strToCompare, bool ignoreCase = false)
+        {
+            return str.Equals(strToCompare, ignoreCase ? StringComparison.InvariantCultureIgnoreCase : StringComparison.InvariantCulture);
+        }
+
+        public static bool InvariantContains(this string str, string strToCompare, bool ignoreCase = false)
+        {
+            return str.Contains(strToCompare, ignoreCase ? StringComparison.InvariantCultureIgnoreCase : StringComparison.InvariantCulture);
+        }
+
+        public static bool InvariantStartsWith(this string str, string strToCompare, bool ignoreCase = false)
+        {
+            return str.StartsWith(strToCompare, ignoreCase ? StringComparison.InvariantCultureIgnoreCase : StringComparison.InvariantCulture);
+        }
+
+        public static bool InvariantEndsWith(this string str, string strToCompare, bool ignoreCase = false)
+        {
+            return str.EndsWith(strToCompare, ignoreCase ? StringComparison.InvariantCultureIgnoreCase : StringComparison.InvariantCulture);
+        }
+
         public static bool EqualsAnyIgnoreCase(this string input, params string[] args)
         {
             return EqualsAny(input, true, args);

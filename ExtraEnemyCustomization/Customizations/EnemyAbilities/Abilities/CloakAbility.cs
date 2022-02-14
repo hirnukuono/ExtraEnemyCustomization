@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using EECustom.Extensions;
 using UnityEngine.Rendering;
 using EECustom.Utils;
 
@@ -49,7 +46,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
 
                 foreach (var renderer in matRef.m_renderers)
                 {
-                    if (renderer.name.Equals("g_leg_l")) //MINOR: Shooter's left leg is always visible for some fucking reason
+                    if (renderer.name.InvariantEquals("g_leg_l")) //MINOR: Shooter's left leg is always visible for some fucking reason
                     {
                         continue;
                     }

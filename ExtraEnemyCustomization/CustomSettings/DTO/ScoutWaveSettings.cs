@@ -24,7 +24,7 @@ namespace EECustom.CustomSettings.DTO
 
             foreach (var target in Targets)
             {
-                if (target.Equals("*"))
+                if (target.InvariantEquals("*"))
                     return true;
 
                 var targetExpStr = target.Trim().ToUpper();
@@ -53,9 +53,9 @@ namespace EECustom.CustomSettings.DTO
                         continue;
                 }
 
-                if (string.IsNullOrEmpty(settingTierStr) || settingTierStr.Equals(tierStr))
+                if (string.IsNullOrEmpty(settingTierStr) || settingTierStr.InvariantEquals(tierStr, ignoreCase: true))
                 {
-                    if (settingNumStr.Equals("*"))
+                    if (settingNumStr.InvariantEquals("*"))
                         return true;
 
                     if (int.TryParse(settingNumStr, out num))

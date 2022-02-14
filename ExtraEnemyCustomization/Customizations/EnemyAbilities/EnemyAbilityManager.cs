@@ -31,7 +31,7 @@ namespace EECustom.Customizations.EnemyAbilities
 
         public static void AddAbility(IAbility ability)
         {
-            var key = ability.Name.ToLower();
+            var key = ability.Name.ToLowerInvariant();
 
             if (string.IsNullOrEmpty(key))
             {
@@ -50,14 +50,14 @@ namespace EECustom.Customizations.EnemyAbilities
 
         public static IAbility GetAbility(string key)
         {
-            key = key.ToLower();
+            key = key.ToLowerInvariant();
             _abilities.TryGetValue(key, out var ability);
             return ability;
         }
 
         public static bool TryGetAbility(string key, out IAbility ability)
         {
-            return _abilities.TryGetValue(key.ToLower(), out ability);
+            return _abilities.TryGetValue(key.ToLowerInvariant(), out ability);
         }
 
         public static void Setup()

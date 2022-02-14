@@ -1,6 +1,5 @@
 ﻿using AssetShards;
 using EECustom.Customizations.Models.Handlers;
-using EECustom.Extensions;
 using Enemies;
 using System.Collections.Generic;
 using UnityEngine;
@@ -65,7 +64,7 @@ namespace EECustom.Customizations.Models
 
                 foreach (var comp in matRef.m_renderers)
                 {
-                    if (comp.name.Equals("g_leg_l")) //MINOR: Shooter's left leg is always visible for some fucking reason
+                    if (comp.name.InvariantEquals("g_leg_l", ignoreCase: true)) //MINOR: Shooter's left leg is always visible for some fucking reason
                     {
                         RemoveFromRenderer(comp);
                     }

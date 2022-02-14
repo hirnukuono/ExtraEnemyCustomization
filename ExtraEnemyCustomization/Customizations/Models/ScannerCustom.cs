@@ -1,5 +1,4 @@
 ﻿using EECustom.Customizations.Models.Handlers;
-using EECustom.Extensions;
 using Enemies;
 using System.Text.Json.Serialization;
 using UnityEngine;
