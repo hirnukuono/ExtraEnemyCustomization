@@ -15,6 +15,7 @@ namespace EECustom.Utils
         private static readonly ConcurrentQueue<Action> _lightQueue = new();
         private static readonly ConcurrentQueue<Action> _mediumQueue = new();
         private static readonly ConcurrentQueue<Action> _heavyQueue = new();
+        private int _counter = 0;
 
         internal static void Initialize()
         {
@@ -50,7 +51,6 @@ namespace EECustom.Utils
             
         }
 
-#pragma warning disable CA1822 // Mark members as static
         internal void FixedUpdate()
         {
             Action action;
@@ -60,28 +60,27 @@ namespace EECustom.Utils
                 action?.Invoke();
             }
 
-            int counter = 0;
-            while (_lightQueue.TryDequeue(out action) && counter < 10)
+            _counter = 0;
+            while (_lightQueue.TryDequeue(out action) && _counter < 10)
             {
                 action?.Invoke();
-                counter++;
+                _counter++;
             }
 
-            counter = 0;
-            while (_mediumQueue.TryDequeue(out action) && counter < 5)
+            _counter = 0;
+            while (_mediumQueue.TryDequeue(out action) && _counter < 5)
             {
                 action?.Invoke();
-                counter++;
+                _counter++;
             }
 
-            counter = 0;
-            while (_heavyQueue.TryDequeue(out action) && counter < 2)
+            _counter = 0;
+            while (_heavyQueue.TryDequeue(out action) && _counter < 2)
             {
                 action?.Invoke();
-                counter++;
+                _counter++;
             }
         }
-#pragma warning restore CA1822 // Mark members as static
     }
 
     public enum JobComplexity
