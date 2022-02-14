@@ -79,6 +79,51 @@
           "AbilityName": "EMP 30sec" //Each Ability uses different Updater, Use Chain to ensure Activate Multiple Ability at once
         }
       ]
+    },
+    {
+      "Enabled": true,
+      "DebugName": "Small Cloaker",
+      "Target": {
+        "Mode": "PersistentID",
+        "PersistentIDs": [
+          6000
+        ],
+        "NameParam": "",
+        "NameIgnoreCase": false,
+        "Categories": []
+      },
+      "Abilities": [
+        {
+          "UpdateInterval": 0.15,
+          "ForceExitOnConditionMismatch": true, //This Allows to decloak when they out of min range!
+          "AllowedMode": "Combat",
+          "KeepOnDead": true,
+          "AllowWhileAttack": false,
+          "State": {
+            "Mode": "DisallowStates", //Decloak when they are stuck in glue or being hit reacted
+            "States": [
+              "StuckInGlue",
+              "Hitreact"
+            ]
+          },
+          "DistanceWithLOS": {
+            "Mode": "UsingDistance",
+            "Min": 4.0,
+            "Max": 20.0
+          },
+          "DistanceWithoutLOS": {
+            "Mode": "UsingDistance",
+            "Min": 4.0,
+            "Max": 20.0
+          },
+          "Cooldown": {
+            "Enabled": false,
+            "InitCooldown": 0,
+            "Cooldown": 0.0
+          },
+          "AbilityName": "Cloaking-Persistent"
+        }
+      ]
     }
   ],
   "DeathAbilityCustom": [
@@ -199,6 +244,18 @@
         "Duration": 1.0,
         "CrossFadeTime": 0.15,
         "Name": "AnimScream"
+      }
+    ],
+    "Cloak": [
+      {
+        "CloakOpacity": 0.0, //Opcaity when fully cloaked (0.0 = full invisible / 1.0 = full visible)
+        "CloakDuration": 1.5, //How long it takes to fully cloak?
+        "DecloakDuration": 0.5, //How long it takes to fully decloak
+        "DecloakAfterDelay": -1.0, //Automatically decloak after this delay (below zero = infinite)
+        "HideShadow": false, //Hide "Shadows" so make it fully invisible (Same as FullyInvisible in ShadowCustom)
+        "RequireTagForDetectionWhileCloaking": true, //Cloaked enemies requires bio-tag to be detected by sentry?
+        "AllowEABAbilityWhileCloaking": true, //Allow other EAB (Tentacles, Projectiles ETC) while cloaking
+        "Name": "Cloaking-Persistent"
       }
     ],
     "EMP": [
