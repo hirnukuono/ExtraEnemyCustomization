@@ -1,7 +1,7 @@
 {
   "BehaviourAbilityCustom": [
     {
-      "Enabled": true,
+      "Enabled": false,
       "DebugName": "EMP Shooter",
       "Target": {
         "Mode": "NameContains",
@@ -81,7 +81,7 @@
       ]
     },
     {
-      "Enabled": true,
+      "Enabled": false,
       "DebugName": "Small Cloaker",
       "Target": {
         "Mode": "PersistentID",
@@ -128,7 +128,7 @@
   ],
   "DeathAbilityCustom": [
     {
-      "Enabled": true,
+      "Enabled": false,
       "DebugName": "Exploder!",
       "Target": {
         "Mode": "NameContains",
