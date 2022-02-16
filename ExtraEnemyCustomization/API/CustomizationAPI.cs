@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace EECustom.API
 {
-    public static class EECCustomizationAPI
+    public static class CustomizationAPI
     {
         public static event Action<EnemyAgent> SpawnCustomizationDone;
 

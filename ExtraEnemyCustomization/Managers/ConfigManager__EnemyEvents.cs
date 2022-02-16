@@ -156,7 +156,7 @@ namespace EECustom.Managers
                 e.OnSpawned(agent);
             });
 
-            EECCustomizationAPI.OnSpawnCustomizationDone_Internal(agent);
+            CustomizationAPI.OnSpawnCustomizationDone_Internal(agent);
         }
 
         internal bool FireGlowEvent(EnemyAgent agent, ref GlowInfo glowInfo)
