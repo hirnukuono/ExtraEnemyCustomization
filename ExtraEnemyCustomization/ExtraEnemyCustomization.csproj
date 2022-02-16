@@ -35,8 +35,4 @@
     <Reference Remove="$(UnhollowedLibsFolder)/Newtonsoft.Json.dll" />
     <Reference Remove="$(UnhollowedLibsFolder)/netstandard.dll" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Customizations\Shared\Inject\" />
-  </ItemGroup>
 </Project>
