@@ -10,6 +10,8 @@ namespace EECustom.Managers
 {
     public partial class ConfigManager
     {
+        public IEnumerable<EnemyCustomBase> CustomizationBuffer => _customizationBuffer;
+
         private readonly List<EnemyCustomBase> _customizationBuffer = new();
 
         private void GenerateBuffer()

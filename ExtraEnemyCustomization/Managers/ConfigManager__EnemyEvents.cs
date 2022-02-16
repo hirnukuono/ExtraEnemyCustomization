@@ -1,4 +1,5 @@
-﻿using EECustom.Customizations;
+﻿using EECustom.API;
+using EECustom.Customizations;
 using EECustom.Utils;
 using Enemies;
 using GameData;
@@ -154,6 +155,8 @@ namespace EECustom.Managers
             {
                 e.OnSpawned(agent);
             });
+
+            EECCustomizationAPI.OnSpawnCustomizationDone_Internal(agent);
         }
 
         internal bool FireGlowEvent(EnemyAgent agent, ref GlowInfo glowInfo)

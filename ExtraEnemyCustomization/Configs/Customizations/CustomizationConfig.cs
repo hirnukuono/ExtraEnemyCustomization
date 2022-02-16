@@ -29,7 +29,7 @@ namespace EECustom.Configs.Customizations
                 return tempList;
             }
 
-            return Array.Empty<EnemyCustomBase>();
+            return Enumerable.Empty<EnemyCustomBase>();
         }
     }
 
