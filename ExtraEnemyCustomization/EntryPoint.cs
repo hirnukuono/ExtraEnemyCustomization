@@ -43,7 +43,7 @@ namespace EECustom
 
             BasePath = Path.Combine(MTFOUtil.CustomPath, "ExtraEnemyCustomization");
 
-            HarmonyInstance = new Harmony("EECustomization.Harmony");
+            HarmonyInstance = new Harmony("EEC.Harmony");
             HarmonyInstance.PatchAll();
 
             NetworkManager.Initialize();
