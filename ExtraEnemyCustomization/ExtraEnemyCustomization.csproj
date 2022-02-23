@@ -31,12 +31,11 @@
     <Reference Include="$(MonoManagedFolder)/Microsoft.CSharp.dll" Private="false" />
     <Reference Include="$(MonoManagedFolder)/System.Text.Json.dll" Private="false" />
     <Reference Include="$(UnhollowedLibsFolder)/*.dll" Private="false" />
+    <Compile Remove="Customizations\Shared\Inject\**" />
+    <EmbeddedResource Remove="Customizations\Shared\Inject\**" />
+    <None Remove="Customizations\Shared\Inject\**" />
     <Reference Include="$(PluginsFolder)/GTFO-API.dll" Private="false" />
     <Reference Remove="$(UnhollowedLibsFolder)/Newtonsoft.Json.dll" />
     <Reference Remove="$(UnhollowedLibsFolder)/netstandard.dll" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Customizations\Shared\Inject\" />
   </ItemGroup>
 </Project>

@@ -28,6 +28,7 @@ namespace EECustom.Customizations
         {
         }
 
+        public IEnumerable<uint> TargetEnemyIDs => _isTargetLookup.ToArray().Where(x => x.Value == true).Select(x => x.Key); 
         public EnemyCustomBase Base => this;
 
         public abstract string GetProcessName();

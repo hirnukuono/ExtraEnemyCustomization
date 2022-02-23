@@ -16,7 +16,7 @@ namespace EECustom.CustomSettings.Inject
             var data = CustomProjectileManager.GetInstanceData(instanceID);
             if (data != null)
             {
-                if (data.Explosion.Enabled)
+                if (data.Explosion?.Enabled ?? false)
                     data.Explosion.DoExplode(__instance.transform.position);
 
                 var baseAgent = hit.collider?.GetComponent<IDamageable>()?.GetBaseAgent() ?? null;
@@ -26,10 +26,10 @@ namespace EECustom.CustomSettings.Inject
                 if (!baseAgent.TryCastToPlayerAgent(out var agent))
                     return;
 
-                if (data.Knockback.Enabled)
+                if (data.Knockback?.Enabled ?? false)
                     data.Knockback.DoKnockbackIgnoreDistance(__instance.transform.position, agent);
 
-                if (data.Bleed.Enabled)
+                if (data.Bleed?.Enabled ?? false)
                     data.Bleed.DoBleed(agent);
             }
         }
