@@ -6,13 +6,15 @@ namespace EECustom.Utils.JsonElements
 {
     public class AgentModeTargetConverter : JsonConverter<AgentModeTarget>
     {
+        private readonly static char[] _separators = new char[] { ',', '|' };
+
         public override AgentModeTarget Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             switch (reader.TokenType)
             {
                 case JsonTokenType.String:
                     var strValue = reader.GetString();
-                    var splitValues = strValue.Split(',', '|', StringSplitOptions.RemoveEmptyEntries);
+                    var splitValues = strValue.Split(_separators, StringSplitOptions.RemoveEmptyEntries);
                     if (splitValues.Length <= 0)
                     {
                         throw new JsonException($"There are no entries in {strValue}! Are you sure it's in right format?");
@@ -27,28 +29,28 @@ namespace EECustom.Utils.JsonElements
                             case "off":
                             case "dead":
                                 target |= AgentModeType.Off;
-                                break;
+                                continue;
 
                             case "agressive":
                             case "combat":
                                 target |= AgentModeType.Agressive;
-                                break;
+                                continue;
 
                             case "hibernate":
                             case "hibernation":
                             case "hibernating":
                             case "sleeping":
                                 target |= AgentModeType.Hibernate;
-                                break;
+                                continue;
 
                             case "scout":
                             case "scoutpatrolling":
                                 target |= AgentModeType.Scout;
-                                break;
+                                continue;
 
                             case "patrolling":
                                 target |= AgentModeType.Patrolling;
-                                break;
+                                continue;
                         }
                     }
                     return new AgentModeTarget(target);
