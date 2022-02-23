@@ -80,7 +80,7 @@ namespace EECustom.Managers
                     Path = BasePath,
                     IncludeSubdirectories = false,
                     NotifyFilter = NotifyFilters.LastWrite,
-                    Filter = "*.json"
+                    Filter = "*.*"
                 };
                 watcher.Changed += new FileSystemEventHandler(OnConfigFileEdited_ReloadConfig);
                 watcher.EnableRaisingEvents = true;
@@ -173,22 +173,54 @@ namespace EECustom.Managers
                     throw new ArgumentOutOfRangeException(nameof(configType));
                 }
 
-                var fileName = $"{name}.json";
-                var filePath = Path.Combine(BasePath, fileName);
-                Logger.Debug($"Loading {fileName}...");
-                Logger.Verbose($" - Full Path: {filePath}");
+                Logger.Debug($"Loading '{name}' Config...");
 
-                if (!TryLoadConfigData(filePath, configType, out var config))
+                if (TryGetExistingConfigPath(name, out var path))
                 {
-                    return;
-                }
+                    Logger.Verbose($" - Full Path: {path}");
 
-                _configInstances[name] = config;
-                config.Loaded();
+                    if (!TryLoadConfigData(path, configType, out var config))
+                    {
+                        return;
+                    }
+
+                    _configInstances[name] = config;
+                    config.Loaded();
+                }
+                else
+                {
+                    Logger.Warning($"Config file for '{name}' is not exist, ignoring this config...");
+                }
             }
             catch (Exception e)
             {
                 Logger.Error($"Error Occured While reading Config from type: {configType.Name}\n{e}");
+            }
+        }
+
+        private static bool TryGetExistingConfigPath(string name, out string path)
+        {
+            var fileName = $"{name}.jsonc";
+            var filePath = Path.Combine(BasePath, fileName);
+
+            if (File.Exists(filePath))
+            {
+                path = filePath;
+                return true;
+            }
+
+            fileName = $"{name}.json";
+            filePath = Path.Combine(BasePath, fileName);
+
+            if (File.Exists(filePath))
+            {
+                path = filePath;
+                return true;
+            }
+            else
+            {
+                path = string.Empty;
+                return false;
             }
         }
 
