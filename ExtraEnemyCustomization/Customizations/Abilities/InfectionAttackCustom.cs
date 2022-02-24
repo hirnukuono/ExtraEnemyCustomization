@@ -7,50 +7,14 @@ using Player;
 
 namespace EECustom.Customizations.Abilities
 {
-    public sealed class InfectionAttackCustom : EnemyCustomBase
+    public sealed class InfectionAttackCustom : AttackCustomBase<InfectionAttackData>
     {
-        public InfectionAttackData MeleeData { get; set; } = new();
-        public InfectionAttackData TentacleData { get; set; } = new();
-
         public override string GetProcessName()
         {
             return "InfectionAttack";
         }
 
-        public override void OnConfigLoaded()
-        {
-            LocalPlayerDamageEvents.MeleeDamage += OnMelee;
-            LocalPlayerDamageEvents.TentacleDamage += OnTentacle;
-        }
-
-        public override void OnConfigUnloaded()
-        {
-            LocalPlayerDamageEvents.MeleeDamage -= OnMelee;
-            LocalPlayerDamageEvents.TentacleDamage -= OnTentacle;
-        }
-
-        public void OnMelee(PlayerAgent player, Agent inflictor, float damage)
-        {
-            DoInfection(player, inflictor, MeleeData);
-        }
-
-        public void OnTentacle(PlayerAgent player, Agent inflictor, float damage)
-        {
-            DoInfection(player, inflictor, TentacleData);
-        }
-
-        private void DoInfection(PlayerAgent player, Agent inflictor, InfectionAttackData setting)
-        {
-            if (inflictor.TryCastToEnemyAgent(out var enemy))
-            {
-                if (IsTarget(enemy))
-                {
-                    ApplyInfection(setting, player);
-                }
-            }
-        }
-
-        private static void ApplyInfection(InfectionAttackData data, PlayerAgent player)
+        protected override void OnApplyEffect(InfectionAttackData data, PlayerAgent player, EnemyAgent inflicator)
         {
             var infectionAbs = data.Infection.GetAbsValue(PlayerData.MaxInfection);
             if (infectionAbs == 0.0f)
