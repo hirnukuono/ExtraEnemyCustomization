@@ -59,6 +59,7 @@ namespace EECustom.Events
             OnUpdate = null;
             OnLateUpdate = null;
             OnFixedUpdate = null;
+            OnDestroyed = null;
         }
     }
 }
