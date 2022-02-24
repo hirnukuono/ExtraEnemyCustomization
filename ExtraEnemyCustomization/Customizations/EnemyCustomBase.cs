@@ -5,6 +5,7 @@ using GameData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace EECustom.Customizations
 {
@@ -28,6 +29,7 @@ namespace EECustom.Customizations
         {
         }
 
+        [JsonIgnore]
         public IEnumerable<uint> TargetEnemyIDs => _isTargetLookup.ToArray().Where(x => x.Value == true).Select(x => x.Key); 
         public EnemyCustomBase Base => this;
 
