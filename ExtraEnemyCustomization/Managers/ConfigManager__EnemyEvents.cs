@@ -102,7 +102,7 @@ namespace EECustom.Managers
 
         private readonly EnemyEventHolder<IEnemyPrefabBuiltEvent> _enemyPrefabBuiltHolder = new("PrefabBuilt");
         private readonly EnemyEventHolder<IEnemySpawnedEvent> _enemySpawnedHolder = new("Spawned");
-        private readonly EnemyEventHolder<IEnemyAgentModeEvent> _enemyModeChangedHolder = new("AgentModeChange");
+        private readonly EnemyEventHolder<IEnemyAgentModeEvent> _enemyModeChangedHolder = new("AgentModeChange", ignoreLogs: true);
         private readonly EnemyEventHolder<IEnemyGlowEvent> _enemyGlowHolder = new("Glow", ignoreLogs: true);
 
         private void GenerateEventBuffer()
