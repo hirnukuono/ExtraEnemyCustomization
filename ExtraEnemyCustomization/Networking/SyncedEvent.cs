@@ -1,4 +1,5 @@
 ﻿using GTFO.API;
+using SNetwork;
 
 namespace EECustom.Networking
 {
@@ -21,9 +22,17 @@ namespace EECustom.Networking
             _isSetup = true;
         }
 
-        public void Send(T packetData)
+        public void Send(T packetData, SNet_Player target = null)
         {
-            NetworkAPI.InvokeEvent(EventName, packetData);
+            if (target != null)
+            {
+                NetworkAPI.InvokeEvent(EventName, packetData, target);
+            }
+            else
+            {
+                NetworkAPI.InvokeEvent(EventName, packetData);
+            }
+            
             ReceiveLocal_Callback(packetData);
         }
 
