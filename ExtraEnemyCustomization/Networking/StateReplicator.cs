@@ -40,7 +40,7 @@ namespace EECustom.Networking
             SetStateName = $"EEC_StateReplicator_{typeof(S).Name}SS";
             ChangeRequestName = $"EEC_StateReplicator_{typeof(S).Name}CR";
             NetworkAPI.RegisterEvent<ReplicatorPayload<S>>(SetStateName, ReceiveSetState_FromMaster);
-            NetworkAPI.RegisterEvent<ReplicatorPayload<S>>(ChangeRequestName, ReceiveStateChangeRequest);
+            NetworkAPI.RegisterEvent<ReplicatorPayload<S>>(ChangeRequestName, ReceiveSetState_FromClient);
             _isInitialized = true;
         }
 
@@ -113,6 +113,8 @@ namespace EECustom.Networking
             {
                 NetworkAPI.InvokeEvent(SetStateName, newState, SNet_ChannelType.GameOrderCritical);
                 _stateDataLookup[id] = state;
+
+                ReceiveSetState_FromMaster(SNet.Master.Lookup, newState);
             }
             else if (SNet.HasMaster)
             {
@@ -140,9 +142,6 @@ namespace EECustom.Networking
 
         private void ReceiveSetState_FromMaster(ulong sender, ReplicatorPayload<S> statePacket)
         {
-            if (SNet.IsMaster)
-                return;
-
             var key = statePacket.key;
             var newState = statePacket.state;
             if (_stateDataLookup.TryGetValue(key, out var savedState))
@@ -157,7 +156,7 @@ namespace EECustom.Networking
             _stateDataLookup[key] = newState;
         }
 
-        private void ReceiveStateChangeRequest(ulong sender, ReplicatorPayload<S> statePacket)
+        private void ReceiveSetState_FromClient(ulong sender, ReplicatorPayload<S> statePacket)
         {
             if (!SNet.IsMaster)
                 return;

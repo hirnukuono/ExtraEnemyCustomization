@@ -1,4 +1,5 @@
-﻿using EECustom.API;
+﻿using Agents;
+using EECustom.API;
 using EECustom.Customizations;
 using EECustom.Utils;
 using Enemies;
@@ -101,18 +102,21 @@ namespace EECustom.Managers
 
         private readonly EnemyEventHolder<IEnemyPrefabBuiltEvent> _enemyPrefabBuiltHolder = new("PrefabBuilt");
         private readonly EnemyEventHolder<IEnemySpawnedEvent> _enemySpawnedHolder = new("Spawned");
+        private readonly EnemyEventHolder<IEnemyAgentModeEvent> _enemyModeChangedHolder = new("AgentModeChange");
         private readonly EnemyEventHolder<IEnemyGlowEvent> _enemyGlowHolder = new("Glow", ignoreLogs: true);
 
         private void GenerateEventBuffer()
         {
             _enemyPrefabBuiltHolder.Clear();
             _enemySpawnedHolder.Clear();
+            _enemyModeChangedHolder.Clear();
             _enemyGlowHolder.Clear();
 
             foreach (var custom in _customizationBuffer)
             {
                 _enemyPrefabBuiltHolder.TryAdd(custom);
                 _enemySpawnedHolder.TryAdd(custom);
+                _enemyModeChangedHolder.TryAdd(custom);
                 _enemyGlowHolder.TryAdd(custom);
             }
         }
@@ -157,6 +161,14 @@ namespace EECustom.Managers
             });
 
             CustomizationAPI.OnSpawnCustomizationDone_Internal(agent);
+        }
+
+        internal void FireAgentModeChangedEvent(EnemyAgent agent, AgentMode newMode)
+        {
+            _enemyModeChangedHolder.FireEvent(agent, (e) =>
+            {
+                e.OnAgentModeChanged(agent, newMode);
+            });
         }
 
         internal bool FireGlowEvent(EnemyAgent agent, ref GlowInfo glowInfo)

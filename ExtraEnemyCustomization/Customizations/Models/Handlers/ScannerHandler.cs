@@ -43,7 +43,6 @@ namespace EECustom.Customizations.Models.Handlers
 
         internal void Setup()
         {
-            SetAgentMode_Master(OwnerAgent.AI.Mode);
             UpdateState(out _currentState);
 
             _previousColor = GetStateColor(_currentState);
@@ -54,15 +53,6 @@ namespace EECustom.Customizations.Models.Handlers
         {
             if (OwnerAgent is null)
                 return;
-
-            if (SNet.IsMaster)
-            {
-                var currentMode = OwnerAgent.AI.Mode;
-                if (_agentMode != currentMode)
-                {
-                    SetAgentMode_Master(currentMode);
-                }
-            }
 
             UpdateState(out var state);
 
@@ -94,20 +84,6 @@ namespace EECustom.Customizations.Models.Handlers
         internal void OnDestroy()
         {
             OwnerAgent = null;
-        }
-
-        [HideFromIl2Cpp]
-        internal void SetAgentMode_Master(AgentMode mode)
-        {
-            if (SNet.IsMaster)
-            {
-                ScannerCustom._sync.SetState(OwnerAgent.GlobalID, new ScannerStatusPacket()
-                {
-                    mode = mode
-                });
-
-                _agentMode = mode;
-            }
         }
 
         [HideFromIl2Cpp]

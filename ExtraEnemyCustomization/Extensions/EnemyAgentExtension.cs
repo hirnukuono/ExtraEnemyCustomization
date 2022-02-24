@@ -1,4 +1,5 @@
-﻿using EECustom.Utils;
+﻿using AIGraph;
+using EECustom.Utils;
 using Enemies;
 using System;
 
@@ -27,6 +28,15 @@ namespace EECustom
         public static bool TryGetProperty<T>(this EnemyAgent agent, out T property) where T : class, new()
         {
             return EnemyProperty<T>.TryGet(agent, out property);
+        }
+
+        public static AIG_CourseNode GetSpawnedNode(this EnemyAgent agent)
+        {
+            var spawnData = agent.m_replicator.Cast<EnemyReplicator>().GetSpawnData();
+            if (!spawnData.courseNode.TryGet(out var node))
+                return null;
+
+            return node;
         }
     }
 }
