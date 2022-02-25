@@ -10,11 +10,16 @@ namespace EECustom.Utils.Integrations
     {
         public const string PLUGIN_GUID = "MTFO.Extension.PartialBlocks";
 
+        public delegate bool TryGetDelegate(string guid, out uint id);
+
         public static JsonConverter PersistentIDConverter { get; private set; } = null;
+        public static JsonConverter LocalizedTextConverter { get; private set; } = null;
         public static bool IsLoaded { get; private set; } = false;
         public static bool Initialized { get; private set; } = false;
         public static string PartialDataPath { get; private set; } = string.Empty;
         public static string ConfigPath { get; private set; } = string.Empty;
+
+        private static readonly TryGetDelegate _tryGetIDDelegate;
 
         static MTFOPartialDataUtil()
         {
@@ -53,6 +58,13 @@ namespace EECustom.Utils.Integrations
                     PartialDataPath = (string)dataPathProp.GetValue(null);
                     ConfigPath = (string)configPathProp.GetValue(null);
 
+                    var persistentIDManager = types.First(t => t.Name == "PersistentIDManager");
+                    if (persistentIDManager is null)
+                        throw new Exception("Unable to Find PersistentIDManager Class");
+
+                    var tryGetDelegate = persistentIDManager.GetMethod("TryGetId", BindingFlags.Public | BindingFlags.Static);
+                    _tryGetIDDelegate = (TryGetDelegate)tryGetDelegate.CreateDelegate(typeof(TryGetDelegate));
+
                     PersistentIDConverter = (JsonConverter)Activator.CreateInstance(converterType);
                     IsLoaded = true;
                 }
@@ -61,6 +73,29 @@ namespace EECustom.Utils.Integrations
                     Logger.Error($"Exception thrown while reading data from MTFO_Extension_PartialData:\n{e}");
                 }
             }
+        }
+
+        public static bool TryGetId(string guid, out uint id)
+        {
+            if (!IsLoaded)
+            {
+                id = 0;
+                return false;
+            }
+
+            if (!Initialized)
+            {
+                id = 0;
+                return false;
+            }
+
+            if (_tryGetIDDelegate == null)
+            {
+                id = 0;
+                return false;
+            }
+
+            return _tryGetIDDelegate.Invoke(guid, out id);
         }
     }
 }

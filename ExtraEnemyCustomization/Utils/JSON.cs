@@ -21,8 +21,10 @@ namespace EECustom.Utils
         static JSON()
         {
             _setting.Converters.Add(new ValueBaseConverter());
+            _setting.Converters.Add(new EventWrapperConverter());
             _setting.Converters.Add(new AgentModeTargetConverter());
             _setting.Converters.Add(new ColorConverter());
+            _setting.Converters.Add(new LocalizedTextConverter());
             _setting.Converters.Add(new JsonStringEnumConverter());
             _setting.Converters.Add(new Vector2Converter());
             _setting.Converters.Add(new Vector3Converter());

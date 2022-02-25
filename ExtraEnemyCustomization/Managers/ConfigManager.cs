@@ -24,6 +24,7 @@ namespace EECustom.Managers
         public static ProjectileCustomConfig ProjectileCustom => GetConfig<ProjectileCustomConfig>();
         public static TentacleCustomConfig TentacleCustom => GetConfig<TentacleCustomConfig>();
         public static DetectionCustomConfig DetectionCustom => GetConfig<DetectionCustomConfig>();
+        public static PropertyCustomConfig PropertyCustom => GetConfig<PropertyCustomConfig>();
         public static SpawnCostCustomConfig SpawnCostCustom => GetConfig<SpawnCostCustomConfig>();
         public static EnemyAbilityCustomConfig EnemyAbilityCustom => GetConfig<EnemyAbilityCustomConfig>();
 
@@ -40,6 +41,7 @@ namespace EECustom.Managers
             typeof(EnemyAbilityCustomConfig),
             typeof(ModelCustomConfig),
             typeof(ProjectileCustomConfig),
+            typeof(PropertyCustomConfig),
             typeof(SpawnCostCustomConfig),
             typeof(TentacleCustomConfig)
         };

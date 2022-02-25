@@ -40,7 +40,7 @@ namespace EECustom.Configs.Customizations
         EnemyAbility,
         Model,
         Projectile,
-        SpawnCost,
+        Property,
         Tentacle
     }
 }
