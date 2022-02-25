@@ -231,6 +231,33 @@
       }
     }
   ],
+  "DrainStaminaAttackCustom": [
+    {
+      "Enabled": true,
+      "DebugName": "Drain Stamina",
+      "Target": {
+        "Mode": "CategoryAny", //CategoryAll
+        "persistentIDs": [],
+        "nameParam": "",
+        "nameIgnoreCase": true,
+        "categories": [
+          "Bullrush"
+        ]
+      },
+      "MeleeData": {
+        "DrainAmount": 0.05, //1.0 = full stamina
+        "DrainAmountInCombat": 0.1,
+        "ResetRecoverTimer": false,
+        "ResetRecoverTimerInCombat": false
+      },
+      "TentacleData": {
+        "DrainAmount": 0.05,
+        "DrainAmountInCombat": 0.1,
+        "ResetRecoverTimer": false,
+        "ResetRecoverTimerInCombat": false
+      }
+    }
+  ],
   "DoorBreakerCustom": [
     {
       "Enabled": false, //Big Sleepers will break door instantly

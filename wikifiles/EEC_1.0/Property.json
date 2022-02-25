@@ -1,0 +1,67 @@
+{
+  "SpawnCostCustom": [
+    {
+      "Enabled": false, //You can check first item of Model.json if you have no idea with this formatting
+      "DebugName": "Bosses-10.0",
+      "Target": {
+        "Mode": "PersistentID",
+        "persistentIDs": [
+          36, //Birther
+          37, //Birther Boss
+          29 //Tank
+        ],
+        "nameParam": "",
+        "categories": []
+      },
+      "SpawnCost": 10.0 //Set Target Enemy cost to this
+    }
+  ],
+  "EventsCustom": [
+    {
+      "Enabled": false,
+      "DebugName": "Shadow",
+      "Target": {
+        "Mode": "NameContains",
+        "persistentIDs": [],
+        "nameParam": "Shadow",
+        "nameIgnoreCase": true,
+        "categories": []
+      },
+      "OnSpawnedEvent": {
+        "Enabled": true,
+        "Events": [
+          {
+            "Type": 0,
+            "Delay": 0.0,
+            "WardenIntel": "Shadow has Spawned!"
+          }
+        ]
+      },
+      "OnWakeupEvent": {
+        "Enabled": true,
+        "Events": [
+          {
+            "Type": 3,
+            "Delay": 0.0
+          },
+          {
+            "Type": 0,
+            "Delay": 0.0,
+            "WardenIntel": "Shadow now in combat State"
+          }
+        ]
+      },
+      "OnDeadEvent": {
+        "Enabled": true,
+        "Events": [
+          {
+            "Type": 0,
+            "Delay": 0.0,
+            "WardenIntel": "Shadow has Dead!"
+          }
+        ]
+      },
+      "TriggerOnBossDeathEventOnDead": true //Trigger SpawnedZone's OnBossDeathEvent?
+    }
+  ]
+}
