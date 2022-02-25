@@ -8,11 +8,8 @@ using Player;
 
 namespace EECustom.Customizations.Abilities
 {
-    public sealed class BleedAttackCustom : EnemyCustomBase
+    public sealed class BleedAttackCustom : AttackCustomBase<BleedSetting>
     {
-        public BleedSetting MeleeData { get; set; } = new();
-        public BleedSetting TentacleData { get; set; } = new();
-
         public override string GetProcessName()
         {
             return "BleedAttack";
@@ -20,8 +17,7 @@ namespace EECustom.Customizations.Abilities
 
         public override void OnConfigLoaded()
         {
-            LocalPlayerDamageEvents.MeleeDamage += OnMelee;
-            LocalPlayerDamageEvents.TentacleDamage += OnTentacle;
+            base.OnConfigLoaded();
 
             if (ConfigManager.Global.CanMediStopBleeding)
                 ResourcePackEvents.ReceiveMedi += RecieveMedi;
@@ -29,24 +25,13 @@ namespace EECustom.Customizations.Abilities
 
         public override void OnConfigUnloaded()
         {
-            LocalPlayerDamageEvents.MeleeDamage -= OnMelee;
-            LocalPlayerDamageEvents.TentacleDamage -= OnTentacle;
+            base.OnConfigLoaded();
 
             if (ConfigManager.Global.CanMediStopBleeding)
                 ResourcePackEvents.ReceiveMedi -= RecieveMedi;
         }
 
-        public void OnMelee(PlayerAgent player, Agent inflictor, float damage)
-        {
-            DoBleed(player, inflictor, MeleeData);
-        }
-
-        public void OnTentacle(PlayerAgent player, Agent inflictor, float damage)
-        {
-            DoBleed(player, inflictor, TentacleData);
-        }
-
-        private void DoBleed(PlayerAgent player, Agent inflictor, BleedSetting setting)
+        protected override void OnApplyEffect(BleedSetting setting, PlayerAgent player, EnemyAgent inflictor)
         {
             if (inflictor.TryCastToEnemyAgent(out var enemy))
             {

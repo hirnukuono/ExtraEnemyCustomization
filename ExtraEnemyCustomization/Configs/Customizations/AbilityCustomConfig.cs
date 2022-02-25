@@ -14,6 +14,7 @@ namespace EECustom.Configs.Customizations
         public KnockbackAttackCustom[] KnockbackAttackCustom { get; set; } = Array.Empty<KnockbackAttackCustom>();
         public ExplosiveAttackCustom[] ExplosiveAttackCustom { get; set; } = Array.Empty<ExplosiveAttackCustom>();
         public BleedAttackCustom[] BleedAttackCustom { get; set; } = Array.Empty<BleedAttackCustom>();
+        public DrainStaminaAttackCustom[] DrainStaminaAttackCustom { get; set; } = Array.Empty<DrainStaminaAttackCustom>();
         public DoorBreakerCustom[] DoorBreakerCustom { get; set; } = Array.Empty<DoorBreakerCustom>();
         public ScoutScreamingCustom[] ScoutScreamingCustom { get; set; } = Array.Empty<ScoutScreamingCustom>();
 
