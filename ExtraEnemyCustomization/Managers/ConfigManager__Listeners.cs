@@ -10,9 +10,19 @@ namespace EECustom.Managers
     {
         private static void OnConfigFileEdited_ReloadConfig(object sender, FileSystemEventArgs e)
         {
+            var fileExtension = Path.GetExtension(e.Name);
+            if (fileExtension.InvariantEquals(".json", ignoreCase: true) ||
+                fileExtension.InvariantEquals(".jsonc", ignoreCase: true))
+            {
+                EnqueueJob(e.Name);
+            }
+        }
+
+        private static void EnqueueJob(string path)
+        {
             ThreadDispatcher.Enqueue(JobComplexity.Heavy, () =>
             {
-                var filename = Path.GetFileNameWithoutExtension(e.Name);
+                var filename = Path.GetFileNameWithoutExtension(path);
                 if (_configFileNameToType.TryGetValue(filename.ToLowerInvariant(), out var type))
                 {
                     filename = _configTypeToFileName[type];
