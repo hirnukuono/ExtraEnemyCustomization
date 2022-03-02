@@ -71,9 +71,9 @@ namespace EECustom.Managers
 
                     if (custom.Target.IsMatch(enemyBlock))
                     {
-                        if (!IgnoreLogs) custom.LogDev($"Apply {EventName} Event: {agent.name}");
+                        if (!IgnoreLogs && Logger.DevLogAllowed) custom.LogDev($"Apply {EventName} Event: {agent.name}");
                         doAction?.Invoke(handler);
-                        if (!IgnoreLogs) custom.LogVerbose($"Finished!");
+                        if (!IgnoreLogs && Logger.VerboseLogAllowed) custom.LogVerbose($"Finished!");
                     }
                 }
             }
@@ -92,9 +92,9 @@ namespace EECustom.Managers
 
                     if (custom.IsTarget(agent))
                     {
-                        if (!IgnoreLogs) custom.LogDev($"Apply {EventName} Event: {agent.name}");
+                        if (!IgnoreLogs && Logger.DevLogAllowed) custom.LogDev($"Apply {EventName} Event: {agent.name}");
                         doAction?.Invoke(handler);
-                        if (!IgnoreLogs) custom.LogVerbose($"Finished!");
+                        if (!IgnoreLogs && Logger.VerboseLogAllowed) custom.LogVerbose($"Finished!");
                     }
                 }
             }

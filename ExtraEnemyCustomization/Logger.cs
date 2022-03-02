@@ -8,6 +8,9 @@ namespace EECustom
         public static bool UsingDevMessage { get; private set; } = false;
         public static bool UsingVerbose { get; private set; } = false;
 
+        public static bool DevLogAllowed => UsingDevMessage;
+        public static bool VerboseLogAllowed => UsingDevMessage && UsingVerbose;
+
         internal static void Initialize()
         {
             LogInstance = new ManualLogSource("EEC");
