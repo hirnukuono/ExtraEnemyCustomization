@@ -31,11 +31,11 @@ namespace EECustom.CustomAbilities.Explosion
         {
             if(_pool.TryDequeue(out var handler))
             {
-                handler.DoEffect(data);
                 handler.EffectDoneOnce = () =>
                 {
                     _pool.Enqueue(handler);
                 };
+                handler.DoEffect(data);
             }
         }
     }
