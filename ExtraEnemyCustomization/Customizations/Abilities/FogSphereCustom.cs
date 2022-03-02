@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace EECustom.Customizations.Abilities
 {
-    public sealed class FogSphereCustom : RevertableEnemyCustomBase, IEnemySpawnedEvent, IEnemyPrefabBuiltEvent
+    public sealed class FogSphereCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyPrefabBuiltEvent
     {
         public Color ColorMin { get; set; } = Color.white;
         public Color ColorMax { get; set; } = Color.clear;
@@ -51,11 +51,6 @@ namespace EECustom.Customizations.Abilities
                 fogHandler.m_totalLength = Duration;
 
                 eabFog.m_fogSpherePrefab = newFogPrefab;
-
-                PushRevertJob(() =>
-                {
-                    eabFog.m_fogSpherePrefab = fogPrefab;
-                });
             }
         }
 

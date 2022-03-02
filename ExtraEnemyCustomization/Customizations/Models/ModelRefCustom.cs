@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace EECustom.Customizations.Models
 {
-    public sealed class ModelRefCustom : RevertableEnemyCustomBase, IEnemyPrefabBuiltEvent
+    public sealed class ModelRefCustom : EnemyCustomBase, IEnemyPrefabBuiltEvent
     {
         public ModelRefData[] ModelRefs { get; set; } = Array.Empty<ModelRefData>();
 
@@ -18,12 +18,6 @@ namespace EECustom.Customizations.Models
             var modelRef = agent.ModelRef;
             var changeCache = new ModelRefCache();
             changeCache.CopyFrom(modelRef);
-
-            var originalCache = changeCache;
-            PushRevertJob(() =>
-            {
-                originalCache.CopyTo(ref modelRef);
-            });
 
             foreach (var mRef in ModelRefs)
             {

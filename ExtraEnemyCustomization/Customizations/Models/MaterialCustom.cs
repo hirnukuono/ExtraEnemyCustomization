@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace EECustom.Customizations.Models
 {
-    public sealed class MaterialCustom : RevertableEnemyCustomBase, IEnemyPrefabBuiltEvent
+    public sealed class MaterialCustom : EnemyCustomBase, IEnemyPrefabBuiltEvent
     {
         public MaterialSwapSet[] MaterialSets { get; set; } = Array.Empty<MaterialSwapSet>();
 
@@ -54,10 +54,6 @@ namespace EECustom.Customizations.Models
                 LogDev($" - Trying to Replace Material, Before: {matName} After: {toMat.name}");
 
                 var originalMat = matRef.m_material;
-                PushRevertJob(() =>
-                {
-                    matRef.m_material = originalMat;
-                });
 
                 var newMaterial = new Material(toMat);
                 switch (swapSet.SkinNoise)
