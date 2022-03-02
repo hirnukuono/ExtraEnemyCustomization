@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace EECustom.CustomAbilities.EMP.Handlers
 {
-    // TODO: Check if the level has a reactor and if that reactor affects the lights, if it does we'll have to a late update to stop it from flickering EMP'd lights
     public class EMPLightHandler : EMPHandlerBase
     {
         /// <summary>
@@ -16,6 +15,11 @@ namespace EECustom.CustomAbilities.EMP.Handlers
         /// </summary>
         private float _originalIntensity;
 
+        /// <summary>
+        /// The original color of the light
+        /// </summary>
+        private Color _originalColor;
+
         public override void Setup(GameObject gameObject, EMPController controller)
         {
             _light = gameObject.GetComponent<LG_Light>();
@@ -25,6 +29,7 @@ namespace EECustom.CustomAbilities.EMP.Handlers
                 return;
             }
             _originalIntensity = _light.GetIntensity();
+            _originalColor = _light.m_color;
             _state = EMPState.On;
         }
 
@@ -35,12 +40,20 @@ namespace EECustom.CustomAbilities.EMP.Handlers
 
         protected override void DeviceOn()
         {
-            _light?.ChangeIntensity(_originalIntensity);
+            if (_light != null)
+            {
+                _light.ChangeIntensity(_originalIntensity);
+                _light.ChangeColor(_originalColor);
+            }
         }
 
         protected override void DeviceOff()
         {
-            _light?.ChangeIntensity(0);
+            if (_light != null)
+            {
+                _light.ChangeIntensity(0);
+                _light.ChangeColor(Color.black);
+            }
         }
     }
 }
