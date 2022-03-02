@@ -122,12 +122,12 @@ namespace EECustom
 
         private IEnumerable<Type> GetAllAutoConstructor()
         {
-            return GetType().Assembly.GetTypes().Where(type => type != null && type.GetCustomAttributes(typeof(CallConstructorOnLoadAttribute), false).FirstOrDefault() != null);
+            return GetType().Assembly.GetTypes().Where(type => type != null && Attribute.IsDefined(type, typeof(CallConstructorOnLoadAttribute)));
         }
 
         private IEnumerable<Type> GetAllHandlers()
         {
-            return GetType().Assembly.GetTypes().Where(type => type != null && type.GetCustomAttributes(typeof(InjectToIl2CppAttribute), false).FirstOrDefault() != null);
+            return GetType().Assembly.GetTypes().Where(type => type != null && Attribute.IsDefined(type, typeof(InjectToIl2CppAttribute)));
         }
     }
 }
