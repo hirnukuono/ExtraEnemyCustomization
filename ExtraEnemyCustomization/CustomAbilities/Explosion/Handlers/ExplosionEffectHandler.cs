@@ -9,53 +9,53 @@ using UnityEngine;
 namespace EECustom.CustomAbilities.Explosion.Handlers
 {
     [InjectToIl2Cpp]
-    public sealed class ExplosionEffectHandler : MonoBehaviour
+    internal sealed class ExplosionEffectHandler : MonoBehaviour
     {
-        public Color FlashColor;
-        public float Range;
-        public float Intensity;
-        public float EffectDuration;
+        public Action EffectDoneOnce;
 
         private bool _lightAllocated = false;
         private FX_PointLight _light;
         private Timer _timer;
 
-        internal void Start()
+        internal void DoEffect(ExplosionEffectData data)
         {
             if (FX_Manager.TryAllocateFXLight(out _light, important: false))
             {
-                _light.SetColor(FlashColor);
-                _light.SetRange(Range);
-                _light.m_intensity = Intensity;
-                _light.m_position = transform.position;
+                _light.SetColor(data.flashColor);
+                _light.SetRange(data.range);
+                _light.m_intensity = data.intensity;
+                _light.m_position = data.position;
                 _light.m_isOn = true;
                 _light.UpdateData();
                 _light.UpdateTransform();
                 _lightAllocated = true;
-                _timer.Reset(EffectDuration);
+                _timer.Reset(data.duration);
             }
             else
             {
-                Destroy(this);
+                OnDone();
             }
         }
 
         internal void Update()
         {
-            if (_timer.TickAndCheckDone())
+            if (_lightAllocated && _timer.TickAndCheckDone())
             {
-                Destroy(this);
+                OnDone();
             }
         }
 
-        internal void OnDestroy()
+        private void OnDone()
         {
             if (_lightAllocated)
             {
                 FX_Manager.DeallocateFXLight(_light);
             }
 
+            EffectDoneOnce?.Invoke();
+            EffectDoneOnce = null;
             _light = null;
+            _lightAllocated = false;
         }
     }
 }

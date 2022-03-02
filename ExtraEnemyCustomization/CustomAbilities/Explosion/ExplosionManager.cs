@@ -1,6 +1,7 @@
 ﻿using AK;
 using EECustom.Attributes;
 using EECustom.CustomAbilities.Explosion.Handlers;
+using EECustom.Events;
 using SNetwork;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,19 @@ namespace EECustom.CustomAbilities.Explosion
     [CallConstructorOnLoad]
     public static class ExplosionManager
     {
+        public static readonly Color FlashColor = new (1, 0.2f, 0, 1);
+
         internal static ExplosionSync Sync { get; private set; } = new();
 
         static ExplosionManager()
         {
             Sync.Setup();
+            AssetEvents.AllAssetLoaded += AssetEvents_AllAssetLoaded;
+        }
+
+        private static void AssetEvents_AllAssetLoaded()
+        {
+            ExplosionEffectPooling.Initialize();
         }
 
         public static void DoExplosion(ExplosionData data)
@@ -88,12 +97,14 @@ namespace EECustom.CustomAbilities.Explosion
 
         public static void LightFlash(Vector3 pos)
         {
-            var effectHandler = new GameObject().AddComponent<ExplosionEffectHandler>();
-            effectHandler.transform.position = pos;
-            effectHandler.FlashColor = new Color(1, 0.2f, 0, 1);
-            effectHandler.Intensity = 5.0f;
-            effectHandler.Range = 50.0f;
-            effectHandler.EffectDuration = 0.05f;
+            ExplosionEffectPooling.TryDoEffect(new ExplosionEffectData()
+            {
+                position = pos,
+                flashColor = FlashColor,
+                intensity = 5.0f,
+                range = 50.0f,
+                duration = 0.05f
+            });
         }
     }
 
