@@ -4,7 +4,7 @@ using UnityEngine.Rendering;
 
 namespace EECustom.Customizations.Models
 {
-    public sealed class ShadowCustom : EnemyCustomBase, IEnemySpawnedEvent
+    public sealed class ShadowCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyPrefabBuiltEvent
     {
         public bool IncludeEggSack { get; set; } = false;
         public bool RequireTagForDetection { get; set; } = true;
@@ -15,15 +15,8 @@ namespace EECustom.Customizations.Models
             return "Shadow";
         }
 
-        public void OnSpawned(EnemyAgent agent)
+        public void OnPrefabBuilt(EnemyAgent agent)
         {
-            agent.RequireTagForDetection = RequireTagForDetection;
-            agent.MovingCuller.m_disableAnimatorCullingWhenRenderingShadow = true;
-
-            agent.MovingCuller.Culler.Renderers.Clear();
-            agent.MovingCuller.Culler.hasShadowsEnabled = true;
-            agent.SetAnimatorCullingEnabled(false);
-
             var comps = agent.GetComponentsInChildren<Renderer>(true);
             foreach (var comp in comps)
             {
@@ -54,6 +47,16 @@ namespace EECustom.Customizations.Models
                     skinmeshrenderer.updateWhenOffscreen = true;
                 }
             }
+        }
+
+        public void OnSpawned(EnemyAgent agent)
+        {
+            agent.RequireTagForDetection = RequireTagForDetection;
+            agent.MovingCuller.m_disableAnimatorCullingWhenRenderingShadow = true;
+
+            agent.MovingCuller.Culler.Renderers.Clear();
+            agent.MovingCuller.Culler.hasShadowsEnabled = true;
+            agent.SetAnimatorCullingEnabled(false);
         }
     }
 }

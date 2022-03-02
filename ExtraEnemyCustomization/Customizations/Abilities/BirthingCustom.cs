@@ -4,7 +4,7 @@ using GameData;
 
 namespace EECustom.Customizations.Abilities
 {
-    public sealed class BirthingCustom : EnemyCustomBase, IEnemySpawnedEvent
+    public sealed class BirthingCustom : EnemyCustomBase, IEnemyPrefabBuiltEvent
     {
         public uint EnemyGroupToSpawn { get; set; }
         public ValueBase ChildrenCost { get; set; } = ValueBase.Unchanged;
@@ -19,7 +19,7 @@ namespace EECustom.Customizations.Abilities
             return "Birthing";
         }
 
-        public void OnSpawned(EnemyAgent agent)
+        public void OnPrefabBuilt(EnemyAgent agent)
         {
             var eabBirth = agent.GetComponentInChildren<EAB_Birthing>(true);
             if (eabBirth != null)
