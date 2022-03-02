@@ -233,7 +233,7 @@
   ],
   "DrainStaminaAttackCustom": [
     {
-      "Enabled": true,
+      "Enabled": false,
       "DebugName": "Drain Stamina",
       "Target": {
         "Mode": "CategoryAny", //CategoryAll
