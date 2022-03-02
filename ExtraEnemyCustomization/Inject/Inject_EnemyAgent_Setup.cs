@@ -12,19 +12,15 @@ namespace EECustom.Inject
         [HarmonyWrapSafe]
         internal static void Prefix(EnemyAgent __instance)
         {
-            EnemyEvents.OnSpawn(__instance);
-        }
-
-        [HarmonyWrapSafe]
-        internal static void Postfix(EnemyAgent __instance)
-        {
-            if (__instance.name.InvariantEndsWith(")")) //No Replicator Number = Fake call
+            if (!__instance.m_isSetup)
             {
-                return;
+                EnemyEvents.OnSpawn(__instance);
             }
-
-            EnemyEvents.OnSpawned(__instance);
-            ConfigManager.Current.FireSpawnedEvent(__instance);
+            else
+            {
+                EnemyEvents.OnSpawned(__instance);
+                ConfigManager.Current.FireSpawnedEvent(__instance);
+            }
         }
     }
 }
