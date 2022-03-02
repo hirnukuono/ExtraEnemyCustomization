@@ -64,7 +64,7 @@ namespace EECustom
             AssetCacheManager.AssetLoaded();
 
             ConfigManager.FireAssetLoaded();
-            ConfigManager.Current.FirePrefabBuildEventAll();
+            ConfigManager.Current.FirePrefabBuildEventAll(rebuildPrefabs: false);
         }
 
         public override bool Unload()

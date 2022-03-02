@@ -121,7 +121,7 @@ namespace EECustom.Managers
             }
         }
 
-        internal void FirePrefabBuildEventAll()
+        internal void FirePrefabBuildEventAll(bool rebuildPrefabs)
         {
             EnemyDataBlock[] allBlocks = GameDataBlockBase<EnemyDataBlock>.GetAllBlocks();
             foreach (var block in allBlocks)
@@ -133,6 +133,14 @@ namespace EECustom.Managers
                     continue;
                 }
 
+                if (rebuildPrefabs)
+                {
+                    UnityEngine.Object.Destroy(prefab);
+                    EnemyPrefabManager.GenerateEnemy(block);
+
+                    prefab = EnemyPrefabManager.GetEnemyPrefab(block.persistentID);
+                }
+
                 var enemyAgentComp = prefab.GetComponentInChildren<EnemyAgent>(true);
                 if (enemyAgentComp is null)
                 {
@@ -142,6 +150,12 @@ namespace EECustom.Managers
 
                 RegisterTargetEnemyLookup(block);
                 FirePrefabBuiltEvent(enemyAgentComp);
+            }
+
+            if (rebuildPrefabs)
+            {
+                EnemyAllocator.Current.m_enemyReplicationManager.ClearPrefabs();
+                EnemyAllocator.Current.GetEnemyPrefabs();
             }
         }
 

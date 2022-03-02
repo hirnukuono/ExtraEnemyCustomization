@@ -110,7 +110,7 @@ namespace EECustom.Managers
             Current.GenerateBuffer();
 
             FireAssetLoaded();
-            Current.FirePrefabBuildEventAll();
+            Current.FirePrefabBuildEventAll(rebuildPrefabs: true);
         }
 
         internal static void FireAssetLoaded()
