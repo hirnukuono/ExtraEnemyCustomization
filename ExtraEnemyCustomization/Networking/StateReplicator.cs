@@ -14,7 +14,7 @@ namespace EECustom.Networking
 
     public abstract class StateReplicator<S> where S : struct
     {
-        private static readonly List<ushort> _listeningKeys = new();
+        private static readonly HashSet<ushort> _listeningKeys = new();
         private static readonly Dictionary<ushort, Action<S>> _onStateChangeLookup = new();
         private static readonly Dictionary<ushort, S> _stateDataLookup = new();
 
