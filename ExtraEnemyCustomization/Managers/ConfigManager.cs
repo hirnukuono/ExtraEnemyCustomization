@@ -12,7 +12,7 @@ using System.Reflection;
 namespace EECustom.Managers
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
-    public class ConfigCacheAttribute : Attribute
+    internal sealed class ConfigCacheAttribute : Attribute
     {
 
     }
