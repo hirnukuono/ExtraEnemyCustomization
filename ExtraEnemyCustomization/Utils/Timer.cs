@@ -19,16 +19,19 @@ namespace EECustom.Utils
             {
                 if (Duration != 0.0f)
                 {
-                    return PassedTime / Duration;
+                    return PassedTime * _durationInv;
                 }
                 return 1.0f;
             }
         }
 
+        private float _durationInv;
+
         public LazyTimer(float duration)
         {
             PassedTime = 0.0f;
             Duration = duration;
+            _durationInv = 1.0f / duration;
 
             _lastTickTime = GetTime();
         }
@@ -39,6 +42,7 @@ namespace EECustom.Utils
             if (newDuration >= 0.0f)
             {
                 Duration = newDuration;
+                _durationInv = 1.0f / newDuration;
             }
 
             _lastTickTime = GetTime();
@@ -82,16 +86,19 @@ namespace EECustom.Utils
             {
                 if (Duration != 0.0f)
                 {
-                    return PassedTime / Duration;
+                    return PassedTime * _durationInv;
                 }
                 return 1.0f;
             }
         }
 
+        private float _durationInv;
+
         public Timer(float duration)
         {
             PassedTime = 0.0f;
             Duration = duration;
+            _durationInv = 1.0f / duration;
         }
 
         public void Reset(float newDuration = -1.0f)
@@ -100,6 +107,7 @@ namespace EECustom.Utils
             if (newDuration >= 0.0f)
             {
                 Duration = newDuration;
+                _durationInv = 1.0f / newDuration;
             }
         }
 
@@ -128,16 +136,19 @@ namespace EECustom.Utils
             {
                 if (Duration != 0.0)
                 {
-                    return (PassedTime / Duration);
+                    return PassedTime * _durationInv;
                 }
                 return 1.0;
             }
         }
 
+        private double _durationInv;
+
         public DoubleTimer(double duration)
         {
             PassedTime = 0.0;
             Duration = duration;
+            _durationInv = 1.0 / duration;
         }
 
         public void Reset(double newDuration = -1.0)
@@ -146,6 +157,7 @@ namespace EECustom.Utils
             if (newDuration >= 0.0)
             {
                 Duration = newDuration;
+                _durationInv = 1.0 / newDuration;
             }
         }
 
