@@ -7,9 +7,16 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace EECustom.Managers
 {
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
+    public class ConfigCacheAttribute : Attribute
+    {
+
+    }
+
     public partial class ConfigManager
     {
         public static bool UseLiveEdit { get; private set; }
@@ -17,16 +24,16 @@ namespace EECustom.Managers
         public static string BasePath => EntryPoint.BasePath;
         public static ConfigManager Current { get; private set; }
 
-        public static GlobalConfig Global => GetConfig<GlobalConfig>();
-        public static CategoryConfig Categories => GetConfig<CategoryConfig>();
-        public static ModelCustomConfig ModelCustom => GetConfig<ModelCustomConfig>();
-        public static AbilityCustomConfig AbilityCustom => GetConfig<AbilityCustomConfig>();
-        public static ProjectileCustomConfig ProjectileCustom => GetConfig<ProjectileCustomConfig>();
-        public static TentacleCustomConfig TentacleCustom => GetConfig<TentacleCustomConfig>();
-        public static DetectionCustomConfig DetectionCustom => GetConfig<DetectionCustomConfig>();
-        public static PropertyCustomConfig PropertyCustom => GetConfig<PropertyCustomConfig>();
-        public static SpawnCostCustomConfig SpawnCostCustom => GetConfig<SpawnCostCustomConfig>();
-        public static EnemyAbilityCustomConfig EnemyAbilityCustom => GetConfig<EnemyAbilityCustomConfig>();
+        [ConfigCache] public static GlobalConfig Global { get; private set; }
+        [ConfigCache] public static CategoryConfig Categories { get; private set; }
+        [ConfigCache] public static ModelCustomConfig ModelCustom { get; private set; }
+        [ConfigCache] public static AbilityCustomConfig AbilityCustom { get; private set; }
+        [ConfigCache] public static ProjectileCustomConfig ProjectileCustom { get; private set; }
+        [ConfigCache] public static TentacleCustomConfig TentacleCustom { get; private set; }
+        [ConfigCache] public static DetectionCustomConfig DetectionCustom { get; private set; }
+        [ConfigCache] public static PropertyCustomConfig PropertyCustom { get; private set; }
+        [ConfigCache] public static SpawnCostCustomConfig SpawnCostCustom { get; private set; }
+        [ConfigCache] public static EnemyAbilityCustomConfig EnemyAbilityCustom { get; private set; }
 
         private static readonly Type[] _configTypes = new Type[]
         {
@@ -49,6 +56,13 @@ namespace EECustom.Managers
         private static readonly Dictionary<Type, string> _configTypeToFileName = new();
         private static readonly Dictionary<string, Type> _configFileNameToType = new();
         private static readonly Dictionary<string, Config> _configInstances = new();
+        private static readonly IEnumerable<PropertyInfo> _cacheProperties;
+
+        static ConfigManager()
+        {
+            _cacheProperties = typeof(ConfigManager).GetProperties()
+                        .Where(x => Attribute.IsDefined(x, typeof(ConfigCacheAttribute)));
+        }
 
         internal static void Initialize()
         {
@@ -192,6 +206,15 @@ namespace EECustom.Managers
                 else
                 {
                     Logger.Warning($"Config file for '{name}' is not exist, ignoring this config...");
+                }
+
+                var cacheProperty = _cacheProperties
+                        .Where(x => x.PropertyType == configType)
+                        .FirstOrDefault();
+
+                if (cacheProperty != null)
+                {
+                    cacheProperty.SetValue(null, _configInstances[name]);
                 }
             }
             catch (Exception e)

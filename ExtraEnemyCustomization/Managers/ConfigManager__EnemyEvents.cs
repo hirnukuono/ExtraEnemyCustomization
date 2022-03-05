@@ -12,7 +12,7 @@ namespace EECustom.Managers
 {
     public partial class ConfigManager
     {
-        public class EnemyEventHolder<T> where T : class, IEnemyEvent
+        public sealed class EnemyEventHolder<T> where T : class, IEnemyEvent
         {
             public string EventName { get; set; } = string.Empty;
             public bool IgnoreLogs { get; set; } = false;
@@ -56,44 +56,25 @@ namespace EECustom.Managers
                 _hasDirty = true;
             }
 
-            internal void FireEventPreSpawn(EnemyAgent agent, Action<T> doAction)
-            {
-                var handlers = Events;
-                var enemyBlock = GameDataBlockBase<EnemyDataBlock>.GetBlock(agent.EnemyDataID);
-
-                for (int i = 0; i < handlers.Length; i++)
-                {
-                    var handler = handlers[i];
-                    var custom = handler.Base;
-
-                    if (!custom.Enabled)
-                        return;
-
-                    if (custom.Target.IsMatch(enemyBlock))
-                    {
-                        if (!IgnoreLogs && Logger.DevLogAllowed) custom.LogDev($"Apply {EventName} Event: {agent.name}");
-                        doAction?.Invoke(handler);
-                        if (!IgnoreLogs && Logger.VerboseLogAllowed) custom.LogVerbose($"Finished!");
-                    }
-                }
-            }
-
             internal void FireEvent(EnemyAgent agent, Action<T> doAction)
             {
+                if (doAction == null)
+                    return;
+
                 var handlers = Events;
+                var length = handlers.Length;
 
-                for (int i = 0; i < handlers.Length; i++)
+                T handler;
+                EnemyCustomBase custom;
+                for (int i = 0; i < length; i++)
                 {
-                    var handler = handlers[i];
-                    var custom = handler.Base;
-
-                    if (!custom.Enabled)
-                        return;
+                    handler = handlers[i];
+                    custom = handler.Base;
 
                     if (custom.IsTarget(agent))
                     {
                         if (!IgnoreLogs && Logger.DevLogAllowed) custom.LogDev($"Apply {EventName} Event: {agent.name}");
-                        doAction?.Invoke(handler);
+                        doAction.Invoke(handler);
                         if (!IgnoreLogs && Logger.VerboseLogAllowed) custom.LogVerbose($"Finished!");
                     }
                 }
