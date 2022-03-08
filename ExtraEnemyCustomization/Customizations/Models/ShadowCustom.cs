@@ -55,7 +55,6 @@ namespace EECustom.Customizations.Models
             agent.RequireTagForDetection = RequireTagForDetection;
             agent.MovingCuller.m_disableAnimatorCullingWhenRenderingShadow = true;
 
-            agent.MovingCuller.Culler.Renderers.Clear();
             agent.MovingCuller.Culler.hasShadowsEnabled = true;
             agent.SetAnimatorCullingEnabled(false);
         }
