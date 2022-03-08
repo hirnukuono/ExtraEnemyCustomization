@@ -43,7 +43,7 @@ namespace EECustom.Customizations.Models.Handlers
             _timer.Reset(StartDelay);
         }
 
-        internal void Update()
+        internal void FixedUpdate()
         {
             if (!_timer.TickAndCheckDone())
                 return;

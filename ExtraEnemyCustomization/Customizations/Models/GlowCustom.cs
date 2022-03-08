@@ -35,12 +35,14 @@ namespace EECustom.Customizations.Models
             for (int i = 0; i < PulseEffects.Length; i++)
             {
                 var pulse = PulseEffects[i];
-                LogDev($"PatternFound!: {pulse.GlowRawPattern}");
+                if (Logger.DevLogAllowed)
+                    LogDev($"PatternFound!: {pulse.GlowRawPattern}");
 
                 pulse.CachePattern();
                 foreach (var pat in pulse.PatternData)
                 {
-                    LogDev($" - Data, step: {pat.StepDuration}, progression: {pat.Progression}");
+                    if (Logger.DevLogAllowed)
+                        LogDev($" - Data, step: {pat.StepDuration}, progression: {pat.Progression}");
                 }
 
                 PulseEffects[i] = pulse;

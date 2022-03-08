@@ -20,7 +20,6 @@ namespace EECustom.Utils.JsonConverters
                     var strValue = reader.GetString();
                     if (MTFOPartialDataUtil.TryGetId(strValue, out var id))
                     {
-                        Logger.Log($"{id}");
                         return new LocalizedText()
                         {
                             Id = id,
@@ -29,7 +28,6 @@ namespace EECustom.Utils.JsonConverters
                     }
                     else
                     {
-                        Logger.Log($"{strValue}");
                         return new LocalizedText
                         {
                             Id = 0,

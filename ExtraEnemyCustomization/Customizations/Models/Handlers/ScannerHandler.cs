@@ -41,6 +41,7 @@ namespace EECustom.Customizations.Models.Handlers
         private Timer _interpTimer;
         private Color _previousColor = Color.white;
 
+        [HideFromIl2Cpp]
         internal void Setup()
         {
             UpdateState(out _currentState);
@@ -49,7 +50,7 @@ namespace EECustom.Customizations.Models.Handlers
             OwnerAgent.ScannerColor = _previousColor;
         }
 
-        internal void Update()
+        internal void FixedUpdate()
         {
             if (OwnerAgent is null)
                 return;

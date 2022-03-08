@@ -31,8 +31,10 @@ namespace EECustom.Managers
             foreach (var custom in _customizationBuffer)
             {
                 custom.OnConfigLoaded();
-                custom.LogDev("Initialized:");
-                custom.LogVerbose(custom.Target.ToDebugString());
+                if (Logger.DevLogAllowed)
+                    custom.LogDev("Initialized:");
+                if (Logger.VerboseLogAllowed)
+                    custom.LogVerbose(custom.Target.ToDebugString());
             }
 
             GenerateEventBuffer();

@@ -19,11 +19,13 @@ namespace EECustom.Customizations.Properties
             {
                 float delta = EnemyCostManager.Current.m_enemyTypeCosts[(int)agent.EnemyData.EnemyType] - SpawnCost;
                 EnemyCostManager.AddCost(agent.DimensionIndex, -delta);
-                LogDev($"Decremented cost by {delta}!");
+                if (Logger.DevLogAllowed)
+                    LogDev($"Decremented cost by {delta}!");
             }
             else
             {
-                LogDev($"Set Enemy Cost to {SpawnCost}!");
+                if (Logger.DevLogAllowed)
+                    LogDev($"Set Enemy Cost to {SpawnCost}!");
             }
         }
     }

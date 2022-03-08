@@ -73,13 +73,16 @@ namespace EECustom.Customizations.Models
             PatrolColor = CreateNewColor(Internal_ScoutPatrolColor, Internal_ScoutPatrolSize);
             FeelerOutColor = CreateNewColor(Internal_ScoutFeelerColor, Internal_ScoutFeelerSize);
 
-            LogVerbose("Color Initialized!");
-            LogVerbose(" - Default; " + DefaultColor.ToString());
-            LogVerbose(" - Wakeup; " + WakeupColor.ToString());
-            LogVerbose(" - Detection; " + DetectionColor.ToString());
-            LogVerbose(" - Heartbeat; " + HeartbeatColor.ToString());
-            LogVerbose(" - Patrol; " + PatrolColor.ToString());
-            LogVerbose(" - Feeler; " + FeelerOutColor.ToString());
+            if (Logger.VerboseLogAllowed)
+            {
+                LogVerbose("Color Initialized!");
+                LogVerbose(" - Default; " + DefaultColor.ToString());
+                LogVerbose(" - Wakeup; " + WakeupColor.ToString());
+                LogVerbose(" - Detection; " + DetectionColor.ToString());
+                LogVerbose(" - Heartbeat; " + HeartbeatColor.ToString());
+                LogVerbose(" - Patrol; " + PatrolColor.ToString());
+                LogVerbose(" - Feeler; " + FeelerOutColor.ToString());
+            }
 
             static Color CreateNewColor(Color c, float alpha)
             {

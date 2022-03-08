@@ -102,7 +102,7 @@ namespace EECustom.Customizations.Models.Handlers
             _silhouettes = null;
         }
 
-        internal void Update()
+        internal void FixedUpdate()
         {
             if (!OwnerAgent.Alive)
             {

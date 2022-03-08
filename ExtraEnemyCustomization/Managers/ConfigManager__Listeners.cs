@@ -20,7 +20,7 @@ namespace EECustom.Managers
 
         private static void EnqueueJob(string path)
         {
-            ThreadDispatcher.Enqueue(JobComplexity.Heavy, () =>
+            ThreadDispatcher.Enqueue(() =>
             {
                 var filename = Path.GetFileNameWithoutExtension(path);
                 if (_configFileNameToType.TryGetValue(filename.ToLowerInvariant(), out var type))

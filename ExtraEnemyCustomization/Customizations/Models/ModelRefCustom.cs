@@ -118,7 +118,8 @@ namespace EECustom.Customizations.Models
                         continue;
                 }
 
-                LogDev("Done!");
+                if (Logger.DevLogAllowed)
+                    LogDev("Done!");
             }
             changeCache.CopyTo(ref modelRef);
         }

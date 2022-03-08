@@ -249,19 +249,6 @@ namespace EECustom.Managers
             }
         }
 
-        private static T GetConfig<T>() where T : Config
-        {
-            if (_configTypeToFileName.TryGetValue(typeof(T), out var filename))
-            {
-                if (_configInstances.TryGetValue(filename, out var config))
-                {
-                    if (config is T castedConfig)
-                        return castedConfig;
-                }
-            }
-            return null;
-        }
-
         private static bool TryLoadConfigData(string filePath, Type type, out Config config)
         {
             if (File.Exists(filePath))

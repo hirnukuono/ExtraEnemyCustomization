@@ -1,7 +1,6 @@
 ﻿using EECustom.Attributes;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace EECustom.Utils
@@ -11,11 +10,7 @@ namespace EECustom.Utils
     {
         public static ThreadDispatcher Current { get; private set; } = null;
 
-        private static readonly ConcurrentQueue<Action> _immediateQueue = new();
-        private static readonly ConcurrentQueue<Action> _lightQueue = new();
-        private static readonly ConcurrentQueue<Action> _mediumQueue = new();
-        private static readonly ConcurrentQueue<Action> _heavyQueue = new();
-        private int _counter = 0;
+        private static readonly ConcurrentQueue<Action> _queue = new();
 
         internal static void Initialize()
         {
@@ -28,66 +23,17 @@ namespace EECustom.Utils
             }
         }
 
-        public static void Enqueue(JobComplexity complexity, Action action)
+        public static void Enqueue(Action action)
         {
-            switch (complexity)
-            {
-                case JobComplexity.None:
-                    _immediateQueue.Enqueue(action);
-                    break;
-
-                case JobComplexity.Light:
-                    _lightQueue.Enqueue(action);
-                    break;
-
-                case JobComplexity.Medium:
-                    _mediumQueue.Enqueue(action);
-                    break;
-
-                case JobComplexity.Heavy:
-                    _heavyQueue.Enqueue(action);
-                    break;
-            }
-            
+            _queue.Enqueue(action);
         }
 
-        internal void FixedUpdate()
+        internal static void Update()
         {
-            Action action;
-
-            while (_immediateQueue.TryDequeue(out action))
+            while (_queue.TryDequeue(out var action))
             {
                 action?.Invoke();
-            }
-
-            _counter = 0;
-            while (_lightQueue.TryDequeue(out action) && _counter < 10)
-            {
-                action?.Invoke();
-                _counter++;
-            }
-
-            _counter = 0;
-            while (_mediumQueue.TryDequeue(out action) && _counter < 5)
-            {
-                action?.Invoke();
-                _counter++;
-            }
-
-            _counter = 0;
-            while (_heavyQueue.TryDequeue(out action) && _counter < 2)
-            {
-                action?.Invoke();
-                _counter++;
             }
         }
-    }
-
-    public enum JobComplexity
-    {
-        None,
-        Light,
-        Medium,
-        Heavy
     }
 }

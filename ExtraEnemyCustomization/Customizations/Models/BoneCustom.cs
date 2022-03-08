@@ -54,7 +54,8 @@ namespace EECustom.Customizations.Models
                     transform.localScale = boneTransform.Scale;
                 }
 
-                LogVerbose($"Applied Bone Setting: {transform.name}, offset: {boneTransform.Offset}, scale: {boneTransform.Scale} rotationOffset: {boneTransform.RotationOffset}");
+                if (Logger.VerboseLogAllowed)
+                    LogVerbose($"Applied Bone Setting: {transform.name}, offset: {boneTransform.Offset}, scale: {boneTransform.Scale} rotationOffset: {boneTransform.RotationOffset}");
             }
             catch (Exception e)
             {

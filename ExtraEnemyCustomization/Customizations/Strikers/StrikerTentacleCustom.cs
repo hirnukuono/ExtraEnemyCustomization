@@ -30,7 +30,8 @@ namespace EECustom.Customizations.Strikers
                 {
                     var tenType = TentacleTypes[i % TentacleTypes.Length];
                     tentacle.m_GPUCurvyType = tenType;
-                    LogVerbose($" - Applied Tentacle Type!, index: {i} type: {tenType}");
+                    if (Logger.VerboseLogAllowed)
+                        LogVerbose($" - Applied Tentacle Type!, index: {i} type: {tenType}");
                 }
 
                 if (isSettingEnabled)
@@ -46,7 +47,8 @@ namespace EECustom.Customizations.Strikers
                     tentacle.m_splineWidthPos2 = setting.SplineWidthPos2.GetAbsValue(tentacle.m_splineWidthPos2);
                     tentacle.m_splineHeightPos1 = setting.SplineHeightPos1.GetAbsValue(tentacle.m_splineHeightPos1);
                     tentacle.m_splineHeightPos2 = setting.SplineHeightPos2.GetAbsValue(tentacle.m_splineHeightPos2);
-                    LogVerbose($" - Applied Tentacle Setting!, index: {i}");
+                    if (Logger.VerboseLogAllowed)
+                        LogVerbose($" - Applied Tentacle Setting!, index: {i}");
                 }
             }
         }

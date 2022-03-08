@@ -39,7 +39,8 @@ namespace EECustom.Customizations.Models
             foreach (var matRef in charMats)
             {
                 var matName = matRef.m_material.name;
-                LogVerbose($" - Debug Info, Material Found: {matName}");
+                if (Logger.VerboseLogAllowed)
+                    LogVerbose($" - Debug Info, Material Found: {matName}");
 
                 var swapSet = MaterialSets.SingleOrDefault(x => x.From.InvariantEquals(matName));
                 if (swapSet == null)
@@ -51,7 +52,8 @@ namespace EECustom.Customizations.Models
                     continue;
                 }
 
-                LogDev($" - Trying to Replace Material, Before: {matName} After: {toMat.name}");
+                if (Logger.DevLogAllowed)
+                    LogDev($" - Trying to Replace Material, Before: {matName} After: {toMat.name}");
 
                 var originalMat = matRef.m_material;
 
@@ -102,7 +104,8 @@ namespace EECustom.Customizations.Models
                 }
 
                 matRef.m_material = newMaterial;
-                LogVerbose(" - Replaced!");
+                if (Logger.VerboseLogAllowed)
+                    LogVerbose(" - Replaced!");
             }
         }
     }

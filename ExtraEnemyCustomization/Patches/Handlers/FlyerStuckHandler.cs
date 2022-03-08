@@ -19,66 +19,62 @@ namespace EECustom.Patches.Handlers
         private int _tryCount = -1;
         private bool _shouldCheck = true;
 
-        internal void Update()
-        {
-            if (!_shouldCheck)
-                return;
-
-            if (Agent.AI.Mode != AgentMode.Agressive)
-                return;
-
-            if (!_timer.TickAndCheckDone())
-                return;
-
-            _timer.Reset(UpdateInterval);
-
-            if (_tryCount == -1)
-            {
-                _firstPosition = Agent.Position;
-                _tryCount = 0;
-                return;
-            }
-
-            if (Vector3.Distance(_firstPosition, Agent.Position) < 0.1f)
-            {
-                _tryCount++;
-
-                if (_tryCount >= RetryCount)
-                {
-                    Logger.Debug("Flyer was stuck in Place!");
-                    Agent.m_replicator.Despawn();
-                }
-            }
-            else
-            {
-                _shouldCheck = false;
-            }
-        }
-
         internal void FixedUpdate()
         {
             if (_shouldCheck)
-                return;
-
-            var goal = Agent.AI.NavmeshAgentGoal;
-            var goalXZ = new Vector2(goal.x, goal.z);
-            var goalDeltaSqr = (goalXZ - _lastGoalXZ).sqrMagnitude;
-            if (goalDeltaSqr < 0.1f)
             {
-                var state = (EB_States)Agent.AI.m_behaviour.CurrentState.ENUM_ID;
-                if (state == EB_States.InCombat) //Possibly Stuck
+                if (Agent.AI.Mode != AgentMode.Agressive)
+                    return;
+
+                if (!_timer.TickAndCheckDone())
+                    return;
+
+                _timer.Reset(UpdateInterval);
+
+                if (_tryCount == -1)
                 {
-                    _tryCount = -1;
-                    _shouldCheck = true;
+                    _firstPosition = Agent.Position;
+                    _tryCount = 0;
+                    return;
+                }
+
+                if (Vector3.Distance(_firstPosition, Agent.Position) < 0.1f)
+                {
+                    _tryCount++;
+
+                    if (_tryCount >= RetryCount)
+                    {
+                        Logger.Debug("Flyer was stuck in Place!");
+                        Agent.m_replicator.Despawn();
+                    }
+                }
+                else
+                {
+                    _shouldCheck = false;
                 }
             }
             else
             {
-                _tryCount = -1;
-                _shouldCheck = false;
-            }
+                var goal = Agent.AI.NavmeshAgentGoal;
+                var goalXZ = new Vector2(goal.x, goal.z);
+                var goalDeltaSqr = (goalXZ - _lastGoalXZ).sqrMagnitude;
+                if (goalDeltaSqr < 0.1f)
+                {
+                    var state = (EB_States)Agent.AI.m_behaviour.CurrentState.ENUM_ID;
+                    if (state == EB_States.InCombat) //Possibly Stuck
+                    {
+                        _tryCount = -1;
+                        _shouldCheck = true;
+                    }
+                }
+                else
+                {
+                    _tryCount = -1;
+                    _shouldCheck = false;
+                }
 
-            _lastGoalXZ = goalXZ;
+                _lastGoalXZ = goalXZ;
+            }
         }
 
         internal void OnDestroy()

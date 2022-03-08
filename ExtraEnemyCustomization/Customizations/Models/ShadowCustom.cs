@@ -22,7 +22,8 @@ namespace EECustom.Customizations.Models
             {
                 if (!IncludeEggSack && comp.gameObject.name.InvariantContains("Egg"))
                 {
-                    LogVerbose(" - Ignored EggSack Object!");
+                    if (Logger.VerboseLogAllowed)
+                        LogVerbose(" - Ignored EggSack Object!");
                     comp.shadowCastingMode = ShadowCastingMode.On;
                     comp.enabled = true;
                     continue;

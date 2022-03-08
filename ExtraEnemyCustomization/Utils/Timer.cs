@@ -113,7 +113,7 @@ namespace EECustom.Utils
 
         public void Tick()
         {
-            PassedTime += Clock.Delta;
+            PassedTime += Time.deltaTime;
         }
 
         public bool TickAndCheckDone()
@@ -163,7 +163,7 @@ namespace EECustom.Utils
 
         public void Tick()
         {
-            PassedTime += Clock.Delta;
+            PassedTime += Time.deltaTime;
         }
 
         public bool TickAndCheckDone()
