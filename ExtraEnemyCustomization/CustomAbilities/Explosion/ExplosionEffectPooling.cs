@@ -24,6 +24,7 @@ namespace EECustom.CustomAbilities.Explosion
             UnityEngine.Object.DontDestroyOnLoad(newObject);
 
             var effectHandler = newObject.AddComponent<ExplosionEffectHandler>();
+            newObject.SetActive(false);
             return effectHandler;
         }
 
@@ -33,8 +34,10 @@ namespace EECustom.CustomAbilities.Explosion
             {
                 handler.EffectDoneOnce = () =>
                 {
+                    handler.gameObject.SetActive(false);
                     _pool.Enqueue(handler);
                 };
+                handler.gameObject.SetActive(true);
                 handler.DoEffect(data);
             }
         }

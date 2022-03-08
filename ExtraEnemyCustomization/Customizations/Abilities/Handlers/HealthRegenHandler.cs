@@ -51,7 +51,7 @@ namespace EECustom.Customizations.Abilities.Handlers
             }
         }
 
-        internal void Update()
+        internal void FixedUpdate()
         {
             if (!SNet.IsMaster)
                 return;

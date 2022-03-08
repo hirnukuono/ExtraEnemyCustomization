@@ -32,7 +32,7 @@ namespace EECustom.Customizations.EnemyAbilities.Handlers
             _latestMode = Agent.AI.Mode;
         }
 
-        internal void Update()
+        internal void FixedUpdate()
         {
             if (!_updateTimer.TickAndCheckDone())
                 return;

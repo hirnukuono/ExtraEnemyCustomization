@@ -60,13 +60,13 @@ namespace EECustom.Utils
 
         public static float NextFloatInclusive()
         {
-            return Math.Clamp(0.0f, 1.0f, (float)NextDoubleInclusive());
+            return Math.Clamp((float)NextDoubleInclusive(), 0.0f, 1.0f);
         }
 
         public static double NextDoubleInclusive()
         {
             int baseNumber = _rand.Next(0, InclusiveDoublePrecision + 1);
-            return Math.Clamp(0.0, 1.0, baseNumber * InclusiveDoubleConversion);
+            return Math.Clamp(baseNumber * InclusiveDoubleConversion, 0.0, 1.0);
         }
 
         public static float NextFloat()

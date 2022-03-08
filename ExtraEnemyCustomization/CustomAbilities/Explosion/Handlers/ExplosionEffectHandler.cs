@@ -37,7 +37,7 @@ namespace EECustom.CustomAbilities.Explosion.Handlers
             }
         }
 
-        internal void Update()
+        internal void FixedUpdate()
         {
             if (_lightAllocated && _timer.TickAndCheckDone())
             {
