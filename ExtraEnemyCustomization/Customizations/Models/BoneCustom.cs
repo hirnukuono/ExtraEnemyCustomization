@@ -1,5 +1,6 @@
 ﻿using EECustom.Events;
 using Enemies;
+using GTFO.API;
 using System;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ namespace EECustom.Customizations.Models
     public sealed class BoneCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
         public BoneTransform[] Bones { get; set; } = Array.Empty<BoneTransform>();
+        public BonePrefab[] Prefabs { get; set; } = Array.Empty<BonePrefab>();
 
         public override string GetProcessName()
         {
@@ -19,6 +21,11 @@ namespace EECustom.Customizations.Models
             foreach (var boneTransform in Bones)
             {
                 TryApplyBoneTransform(agent, boneTransform);
+            }
+
+            foreach (var bonePrefab in Prefabs)
+            {
+                TryApplyBonePrefab(agent, bonePrefab);
             }
         }
 
@@ -62,6 +69,31 @@ namespace EECustom.Customizations.Models
                 LogError($"Bone Transform owner: [{agent.name}] bone: [{boneTransform.Bone}] were not set! : {e}");
             }
         }
+
+        private void TryApplyBonePrefab(EnemyAgent agent, BonePrefab bonePrefab)
+        {
+            try
+            {
+                var transform = agent.Anim.GetBoneTransform(bonePrefab.Bone);
+                if (transform == null)
+                    throw new NullReferenceException("Bone is missing in prefab!");
+
+                var prefab = AssetAPI.GetLoadedAsset(bonePrefab.Prefab);
+                if (prefab == null)
+                    throw new NullReferenceException($"Prefab '{bonePrefab.Prefab}' is missing!");
+
+                var boneAttach = UnityEngine.Object.Instantiate(prefab, transform).Cast<GameObject>();
+                boneAttach.transform.localPosition = bonePrefab.Position;
+                boneAttach.transform.localEulerAngles = bonePrefab.Rotation;
+                boneAttach.transform.localScale = bonePrefab.Scale;
+
+                LogVerbose($"Attached Bone Prefab: {transform.name} '{bonePrefab.Prefab}', pos: {bonePrefab.Position}, scale: {bonePrefab.Scale} rot: {bonePrefab.Rotation}");
+            }
+            catch (Exception e)
+            {
+                LogError($"Bone Transform owner: [{agent.name}] bone: [{bonePrefab.Bone}] prefab: [{bonePrefab.Prefab}] were not attached! : {e}");
+            }
+        }
     }
 
     public class BoneTransform
@@ -71,5 +103,14 @@ namespace EECustom.Customizations.Models
         public Vector3 Scale { get; set; } = Vector3.zero;
         public Vector3 Offset { get; set; } = Vector3.zero;
         public Vector3 RotationOffset { get; set; } = Vector3.zero;
+    }
+
+    public class BonePrefab
+    {
+        public HumanBodyBones Bone { get; set; } = HumanBodyBones.Head;
+        public string Prefab { get; set; } = string.Empty;
+        public Vector3 Scale { get; set; } = Vector3.zero;
+        public Vector3 Position { get; set; } = Vector3.zero;
+        public Vector3 Rotation { get; set; } = Vector3.zero;
     }
 }

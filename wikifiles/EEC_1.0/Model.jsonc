@@ -262,6 +262,15 @@
             "z": -90.0
           }
         }
+      ],
+      "Prefabs": [
+        {
+          "Bone": "Head",
+          "Prefab": "Assets/PrefabToAttach",
+          "Scale": "1, 1, 1",
+          "Position": "0, 0, 0",
+          "Rotation": "0, 0, 0"
+        }
       ]
     }
   ],
