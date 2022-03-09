@@ -39,7 +39,7 @@ namespace EECustom.Customizations.Models.Handlers
         public bool OptimizeOnAwake = true;
 
         private AgentMode _agentMode = AgentMode.Off;
-        private EnemyState _currentState = EnemyState.Hibernate;
+        private EnemyState _currentState = EnemyState.Initial;
         private bool _interpDone = true;
         private Timer _interpTimer;
         private Timer _updateTimer;
@@ -51,8 +51,8 @@ namespace EECustom.Customizations.Models.Handlers
         [HideFromIl2Cpp]
         internal void Setup()
         {
-            UpdateState(out _currentState);
-            OwnerAgent.ScannerColor = GetStateColor(_currentState);
+            UpdateState(out var state);
+            OwnerAgent.ScannerColor = GetStateColor(state);
 
             if (_disableScriptAfterDone)
             {
