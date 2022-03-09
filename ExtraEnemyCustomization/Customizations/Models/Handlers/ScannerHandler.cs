@@ -53,6 +53,12 @@ namespace EECustom.Customizations.Models.Handlers
 
             _previousColor = GetStateColor(_currentState);
             OwnerAgent.ScannerColor = _previousColor;
+
+            if (_disableScriptAfterDone)
+            {
+                enabled = false;
+                _disableScriptAfterDone = false;
+            }
         }
 
         internal void FixedUpdate()
