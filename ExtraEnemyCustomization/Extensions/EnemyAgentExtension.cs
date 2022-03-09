@@ -32,12 +32,12 @@ namespace EECustom
 
         public static pEnemySpawnData GetSpawnData(this EnemyAgent agent)
         {
-            return agent.m_replicator.Cast<EnemyReplicator>().GetSpawnData();
+            return agent.Sync.Replicator.Cast<EnemyReplicator>().GetSpawnData();
         }
 
         public static AIG_CourseNode GetSpawnedNode(this EnemyAgent agent)
         {
-            var spawnData = agent.m_replicator.Cast<EnemyReplicator>().GetSpawnData();
+            var spawnData = agent.Sync.Replicator.Cast<EnemyReplicator>().GetSpawnData();
             if (!spawnData.courseNode.TryGet(out var node))
                 return null;
 

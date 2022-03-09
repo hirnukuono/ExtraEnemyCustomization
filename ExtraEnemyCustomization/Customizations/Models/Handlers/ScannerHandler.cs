@@ -44,49 +44,72 @@ namespace EECustom.Customizations.Models.Handlers
         private Timer _interpTimer;
         private Timer _updateTimer;
         private Color _previousColor = Color.white;
+        private Color _doneColor = Color.white;
         private bool _disableScriptAfterDone = false;
+        private bool _isSetup = false;
 
         [HideFromIl2Cpp]
         internal void Setup()
         {
             UpdateState(out _currentState);
-
-            _previousColor = GetStateColor(_currentState);
-            OwnerAgent.ScannerColor = _previousColor;
+            OwnerAgent.ScannerColor = GetStateColor(_currentState);
 
             if (_disableScriptAfterDone)
             {
                 enabled = false;
                 _disableScriptAfterDone = false;
             }
+
+            _isSetup = true;
         }
 
-        internal void FixedUpdate()
+        internal void Update()
         {
-            if (OwnerAgent is null)
+            if (!_isSetup)
                 return;
 
-            if (OwnerAgent.UpdateMode != NodeUpdateMode.Close)
+            EnemyState state;
+            if (!OwnerAgent.IsInDetectedList)
+            {
+                //NOT Visible on Bio-Tracker
+
+                if (OwnerAgent.UpdateMode != NodeUpdateMode.Close)
+                    return;
+
+                if (!_updateTimer.TickAndCheckDone())
+                    return;
+
+                UpdateState(out state);
+                if (_currentState != state)
+                {
+                    _currentState = state;
+                    _interpDone = true;
+                    _interpTimer.Reset(InterpDuration);
+                    OwnerAgent.ScannerColor = GetStateColor(state);
+                }
                 return;
+            }
+
+            //Visible on Bio-Tracker
 
             if (!_updateTimer.TickAndCheckDone())
                 return;
 
-            UpdateState(out var state);
-
+            UpdateState(out state);
             if (_currentState != state)
             {
                 _currentState = state;
+                _previousColor = OwnerAgent.m_scannerColor;
+                _doneColor = GetStateColor(state);
                 _interpDone = false;
                 _interpTimer.Reset(InterpDuration);
-                _previousColor = OwnerAgent.m_scannerColor;
             }
 
             if (!_interpDone)
             {
                 if (_interpTimer.TickAndCheckDone(_updateTimer.PassedTime))
                 {
-                    OwnerAgent.ScannerColor = GetStateColor(_currentState);
+                    OwnerAgent.ScannerColor = _doneColor;
                     _interpDone = true;
 
                     if (_disableScriptAfterDone)
@@ -98,9 +121,7 @@ namespace EECustom.Customizations.Models.Handlers
                 }
 
                 var progress = _interpTimer.Progress;
-                var color1 = _previousColor;
-                var color2 = GetStateColor(_currentState);
-                var newColor = Color.Lerp(color1, color2, progress);
+                var newColor = Color.Lerp(_previousColor, _doneColor, progress);
                 OwnerAgent.ScannerColor = newColor;
             }
 
@@ -123,7 +144,7 @@ namespace EECustom.Customizations.Models.Handlers
                 {
                     _disableScriptAfterDone = true;
                 }
-                else if (!enabled)
+                else if (!enabled && _isSetup)
                 {
                     enabled = true;
                 }
