@@ -30,6 +30,11 @@ namespace EECustom
             return EnemyProperty<T>.TryGet(agent, out property);
         }
 
+        public static pEnemySpawnData GetSpawnData(this EnemyAgent agent)
+        {
+            return agent.m_replicator.Cast<EnemyReplicator>().GetSpawnData();
+        }
+
         public static AIG_CourseNode GetSpawnedNode(this EnemyAgent agent)
         {
             var spawnData = agent.m_replicator.Cast<EnemyReplicator>().GetSpawnData();

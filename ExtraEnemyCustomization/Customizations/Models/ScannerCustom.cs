@@ -103,6 +103,7 @@ namespace EECustom.Customizations.Models
 
         public void OnSpawned(EnemyAgent agent)
         {
+            var spawnData = agent.GetSpawnData();
             var scannerManager = agent.gameObject.GetComponent<ScannerHandler>();
             if (scannerManager != null)
             {
@@ -118,6 +119,7 @@ namespace EECustom.Customizations.Models
                 scannerManager.InterpDuration = LerpingDuration;
                 scannerManager.UpdateInterval = UpdateInterval;
                 scannerManager.OptimizeOnAwake = OptimizeAfterAwake;
+                scannerManager.UpdateAgentMode(spawnData.mode);
                 scannerManager.Setup();
             }
         }
