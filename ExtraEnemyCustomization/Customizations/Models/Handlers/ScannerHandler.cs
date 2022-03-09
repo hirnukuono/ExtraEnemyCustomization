@@ -34,12 +34,17 @@ namespace EECustom.Customizations.Models.Handlers
         public bool UsingScoutColor = false;
 
         public float InterpDuration = 0.5f;
+        public float UpdateInterval = 0.05f;
+
+        public bool OptimizeOnAwake = true;
 
         private AgentMode _agentMode = AgentMode.Off;
         private EnemyState _currentState = EnemyState.Hibernate;
         private bool _interpDone = true;
         private Timer _interpTimer;
+        private Timer _updateTimer;
         private Color _previousColor = Color.white;
+        private bool _disableScriptAfterDone = false;
 
         [HideFromIl2Cpp]
         internal void Setup()
@@ -55,6 +60,12 @@ namespace EECustom.Customizations.Models.Handlers
             if (OwnerAgent is null)
                 return;
 
+            if (OwnerAgent.UpdateMode != NodeUpdateMode.Close)
+                return;
+
+            if (!_updateTimer.TickAndCheckDone())
+                return;
+
             UpdateState(out var state);
 
             if (_currentState != state)
@@ -67,10 +78,16 @@ namespace EECustom.Customizations.Models.Handlers
 
             if (!_interpDone)
             {
-                if (_interpTimer.TickAndCheckDone())
+                if (_interpTimer.TickAndCheckDone(_updateTimer.PassedTime))
                 {
                     OwnerAgent.ScannerColor = GetStateColor(_currentState);
                     _interpDone = true;
+
+                    if (_disableScriptAfterDone)
+                    {
+                        _disableScriptAfterDone = false;
+                        enabled = false;
+                    }
                     return;
                 }
 
@@ -80,6 +97,8 @@ namespace EECustom.Customizations.Models.Handlers
                 var newColor = Color.Lerp(color1, color2, progress);
                 OwnerAgent.ScannerColor = newColor;
             }
+
+            _updateTimer.Reset(UpdateInterval);
         }
 
         internal void OnDestroy()
@@ -91,6 +110,18 @@ namespace EECustom.Customizations.Models.Handlers
         internal void UpdateAgentMode(AgentMode mode)
         {
             _agentMode = mode;
+
+            if (OptimizeOnAwake)
+            {
+                if (_agentMode == AgentMode.Agressive)
+                {
+                    _disableScriptAfterDone = true;
+                }
+                else if (!enabled)
+                {
+                    enabled = true;
+                }
+            }
         }
 
         [HideFromIl2Cpp]

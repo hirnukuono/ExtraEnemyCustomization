@@ -116,9 +116,20 @@ namespace EECustom.Utils
             PassedTime += Time.deltaTime;
         }
 
+        public void Tick(float deltaTime)
+        {
+            PassedTime += deltaTime;
+        }
+
         public bool TickAndCheckDone()
         {
             Tick();
+            return Done;
+        }
+
+        public bool TickAndCheckDone(float deltaTime)
+        {
+            Tick(deltaTime);
             return Done;
         }
     }
