@@ -17,6 +17,8 @@ namespace EECustom.Customizations.Models
 
         public void OnPrefabBuilt(EnemyAgent agent)
         {
+            agent.RequireTagForDetection = RequireTagForDetection;
+
             var comps = agent.GetComponentsInChildren<Renderer>(true);
             foreach (var comp in comps)
             {
@@ -29,32 +31,27 @@ namespace EECustom.Customizations.Models
                     continue;
                 }
 
+                var skinmeshrenderer = comp.TryCast<SkinnedMeshRenderer>();
+                if (skinmeshrenderer != null)
+                {
+                    skinmeshrenderer.updateWhenOffscreen = true;
+                }
+
                 if (FullyInvisible)
                 {
-                    comp.shadowCastingMode = ShadowCastingMode.Off;
-                    comp.castShadows = false;
-                    comp.forceRenderingOff = true;
+                    Object.Destroy(comp);
                 }
                 else
                 {
                     comp.castShadows = true;
                     comp.shadowCastingMode = ShadowCastingMode.ShadowsOnly;
-                    comp.enabled = true;
-                }
-
-                var skinmeshrenderer = comp.TryCast<SkinnedMeshRenderer>();
-                if (skinmeshrenderer != null)
-                {
-                    skinmeshrenderer.updateWhenOffscreen = true;
                 }
             }
         }
 
         public void OnSpawned(EnemyAgent agent)
         {
-            agent.RequireTagForDetection = RequireTagForDetection;
             agent.MovingCuller.m_disableAnimatorCullingWhenRenderingShadow = true;
-
             agent.MovingCuller.Culler.hasShadowsEnabled = true;
             agent.SetAnimatorCullingEnabled(false);
         }
