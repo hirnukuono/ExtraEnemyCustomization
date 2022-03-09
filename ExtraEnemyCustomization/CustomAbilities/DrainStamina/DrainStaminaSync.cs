@@ -8,6 +8,8 @@ namespace EECustom.CustomAbilities.DrainStamina
 {
     internal sealed class DrainStaminaSync : SyncedEvent<DrainStaminaData>
     {
+        public override string GUID => "DRS";
+
         public override void Receive(DrainStaminaData packet)
         {
             if (!PlayerManager.HasLocalPlayerAgent())

@@ -8,6 +8,8 @@ namespace EECustom.Customizations.Detections
 {
     public sealed class ScoutAnimSync : SyncedEvent<ScoutAnimSync.Packet>
     {
+        public override string GUID => "SAM";
+
         public void DoRandom(EnemyAgent agent)
         {
             if (!SNet.IsMaster)

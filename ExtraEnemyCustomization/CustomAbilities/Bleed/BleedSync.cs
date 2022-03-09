@@ -11,6 +11,8 @@ namespace EECustom.CustomAbilities.Bleed
         private static PlayerAgent _localAgent = null;
         private static BleedHandler _handler = null;
 
+        public override string GUID => "BLD";
+
         public override void Receive(BleedingData packet)
         {
             if (!PlayerManager.HasLocalPlayerAgent())

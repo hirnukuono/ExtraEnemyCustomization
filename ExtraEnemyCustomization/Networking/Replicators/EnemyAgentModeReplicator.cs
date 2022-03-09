@@ -9,6 +9,8 @@ namespace EECustom.Networking.Replicators
     {
         public override bool ClearOnLevelCleanup => true;
 
+        public override string GUID => "EMD";
+
         public void SetState(ushort id, AgentMode newMode)
         {
             SetState(id, new State()

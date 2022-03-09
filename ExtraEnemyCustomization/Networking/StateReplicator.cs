@@ -20,6 +20,7 @@ namespace EECustom.Networking
 
         public abstract bool ClearOnLevelCleanup { get; }
 
+        public abstract string GUID { get; }
         public bool IsSetup { get => _isInitialized; }
         public string SetStateName { get; private set; } = string.Empty;
         public string ChangeRequestName { get; private set; } = string.Empty;
@@ -37,8 +38,8 @@ namespace EECustom.Networking
                 LevelEvents.LevelCleanup += Clear;
             }
 
-            SetStateName = $"EEC_StateReplicator_{typeof(S).Name}SS";
-            ChangeRequestName = $"EEC_StateReplicator_{typeof(S).Name}CR";
+            SetStateName = $"EECRp{GUID}S";
+            ChangeRequestName = $"EECRp{GUID}R";
             NetworkAPI.RegisterEvent<ReplicatorPayload<S>>(SetStateName, ReceiveSetState_FromMaster);
             NetworkAPI.RegisterEvent<ReplicatorPayload<S>>(ChangeRequestName, ReceiveSetState_FromClient);
             _isInitialized = true;

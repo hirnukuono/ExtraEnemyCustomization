@@ -5,6 +5,8 @@ namespace EECustom.Networking.Events
 {
     public sealed class EnemyAnimEvent : SyncedEvent<EnemyAnimEvent.Packet>
     {
+        public override string GUID => "EAE";
+
         public override void Receive(Packet packet)
         {
             SNet_Replication.TryGetReplicator(packet.enemyID, out var replicator);

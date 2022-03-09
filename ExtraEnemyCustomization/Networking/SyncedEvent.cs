@@ -7,6 +7,7 @@ namespace EECustom.Networking
     {
         public delegate void ReceiveHandler(T packet);
 
+        public abstract string GUID { get; }
         public bool IsSetup { get => _isSetup; }
         public string EventName { get; private set; } = string.Empty;
 
@@ -17,7 +18,7 @@ namespace EECustom.Networking
             if (_isSetup)
                 return;
 
-            EventName = $"EEC_Networking_{typeof(T).Name}";
+            EventName = $"EEC{GUID}";
             NetworkAPI.RegisterEvent<T>(EventName, ReceiveClient_Callback);
             _isSetup = true;
         }

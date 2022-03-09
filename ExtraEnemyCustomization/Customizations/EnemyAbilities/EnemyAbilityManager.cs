@@ -134,6 +134,8 @@ namespace EECustom.Customizations.EnemyAbilities
 
     public class AbilityEvent : SyncedEvent<AbilityEvent.Packet>
     {
+        public override string GUID => "ABE";
+
         public struct Packet
         {
             public AbilityPacketType Type;
