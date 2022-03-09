@@ -463,6 +463,8 @@
       "WakeupColor": "#ff1a1a", //Color: Wakeup Color
       "WakeupSize": 1.0, //Size of the Wakeup Color
       "LerpingDuration": 0.4, //Color-Color Transition duration, longer means smoother
+      "UpdateInterval": 0.05, //Optimization Purpose, Interval for updating ScannerCustom
+      "OptimizeAfterAwake": true, //Disable ScannerCustom Update when enemies are spawned as Aggressive / became Aggressive State
       "UsingDetectionColor": true, //Use Detection/Heartbeat ColorSet?
       "DetectionColor": "#B18904", //Color: Hibernate Detection Phase Color
       "DetectionSize": 1.0, //Size of the Hibernate Detection Phase Color
