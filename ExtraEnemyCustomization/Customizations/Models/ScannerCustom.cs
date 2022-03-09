@@ -104,19 +104,21 @@ namespace EECustom.Customizations.Models
         public void OnSpawned(EnemyAgent agent)
         {
             var spawnData = agent.GetSpawnData();
-            if (OptimizeAfterAwake && spawnData.mode == AgentMode.Agressive)
+            switch (spawnData.mode)
             {
-                agent.ScannerColor = WakeupColor;
-                return;
-            }
-
-            //Disallow PathMove ES's Color change on scout
-            if (spawnData.mode == AgentMode.Scout)
-            {
-                if (agent.ScannerData.m_soundIndex == -1)
-                {
-                    agent.ScannerData.m_soundIndex = 0;
-                }
+                //Disallow PathMove ES's Color change
+                case AgentMode.Agressive:
+                case AgentMode.Scout:
+                    if (agent.ScannerData.m_soundIndex == -1)
+                    {
+                        agent.ScannerData.m_soundIndex = 0;
+                    }
+                    if (OptimizeAfterAwake)
+                    {
+                        agent.ScannerColor = WakeupColor;
+                        return;
+                    }
+                    break;
             }
 
             var scannerManager = agent.gameObject.GetComponent<ScannerHandler>();
