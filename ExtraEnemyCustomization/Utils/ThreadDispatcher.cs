@@ -31,7 +31,7 @@ namespace EECustom.Utils
             _queue.Enqueue(action);
         }
 
-        internal static void Update()
+        internal void Update()
         {
             while (_queue.TryDequeue(out var action))
             {
