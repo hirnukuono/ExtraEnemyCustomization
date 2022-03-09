@@ -123,63 +123,64 @@ namespace EECustom.Customizations.Models
             }
             changeCache.CopyTo(ref modelRef);
         }
-    }
 
-    public class ModelRefData
-    {
-        public BaseModelRefType Type { get; set; } = BaseModelRefType.None;
-        public BaseModelRefType CopyFrom { get; set; } = BaseModelRefType.None;
-        public string CreateFromPath { get; set; } = string.Empty;
-        public Vector3 Offset { get; set; } = Vector3.zero;
-        public Vector3 RotateOffset { get; set; } = Vector3.zero;
-    }
 
-    public enum BaseModelRefType
-    {
-        None,
-        Tentacle,
-        Tentacle2,
-        Tentacle3,
-        TentacleNoHead,
-        TentacleNoCheat,
-        ShooterFire,
-        ScoutFeeler,
-        BioMarker
-    }
-
-    public struct ModelRefCache
-    {
-        public Transform m_tentacleAlign;
-        public Transform m_tentacleAlign2;
-        public Transform m_tentacleAlign3;
-        public Transform m_tentacleAlignNoHead;
-        public Transform m_tentacleAlignNoChest;
-        public Transform m_shooterFireAlign;
-        public Transform m_detectAbilityAlign;
-        public Transform m_markerTagAlign;
-
-        public void CopyFrom(EnemyModelRefs modelRef)
+        public sealed class ModelRefData
         {
-            m_tentacleAlign = modelRef.m_tentacleAlign;
-            m_tentacleAlign2 = modelRef.m_tentacleAlign2;
-            m_tentacleAlign3 = modelRef.m_tentacleAlign3;
-            m_tentacleAlignNoHead = modelRef.m_tentacleAlignNoHead;
-            m_tentacleAlignNoChest = modelRef.m_tentacleAlignNoChest;
-            m_shooterFireAlign = modelRef.m_shooterFireAlign;
-            m_detectAbilityAlign = modelRef.m_detectAbilityAlign;
-            m_markerTagAlign = modelRef.m_markerTagAlign.transform;
+            public BaseModelRefType Type { get; set; } = BaseModelRefType.None;
+            public BaseModelRefType CopyFrom { get; set; } = BaseModelRefType.None;
+            public string CreateFromPath { get; set; } = string.Empty;
+            public Vector3 Offset { get; set; } = Vector3.zero;
+            public Vector3 RotateOffset { get; set; } = Vector3.zero;
         }
 
-        public void CopyTo(ref EnemyModelRefs modelRef)
+        public enum BaseModelRefType
         {
-            modelRef.m_tentacleAlign = m_tentacleAlign;
-            modelRef.m_tentacleAlign2 = m_tentacleAlign2;
-            modelRef.m_tentacleAlign3 = m_tentacleAlign3;
-            modelRef.m_tentacleAlignNoHead = m_tentacleAlignNoHead;
-            modelRef.m_tentacleAlignNoChest = m_tentacleAlignNoChest;
-            modelRef.m_shooterFireAlign = m_shooterFireAlign;
-            modelRef.m_detectAbilityAlign = m_detectAbilityAlign;
-            modelRef.m_markerTagAlign = m_markerTagAlign.gameObject;
+            None,
+            Tentacle,
+            Tentacle2,
+            Tentacle3,
+            TentacleNoHead,
+            TentacleNoCheat,
+            ShooterFire,
+            ScoutFeeler,
+            BioMarker
+        }
+
+        public struct ModelRefCache
+        {
+            public Transform m_tentacleAlign;
+            public Transform m_tentacleAlign2;
+            public Transform m_tentacleAlign3;
+            public Transform m_tentacleAlignNoHead;
+            public Transform m_tentacleAlignNoChest;
+            public Transform m_shooterFireAlign;
+            public Transform m_detectAbilityAlign;
+            public Transform m_markerTagAlign;
+
+            public void CopyFrom(EnemyModelRefs modelRef)
+            {
+                m_tentacleAlign = modelRef.m_tentacleAlign;
+                m_tentacleAlign2 = modelRef.m_tentacleAlign2;
+                m_tentacleAlign3 = modelRef.m_tentacleAlign3;
+                m_tentacleAlignNoHead = modelRef.m_tentacleAlignNoHead;
+                m_tentacleAlignNoChest = modelRef.m_tentacleAlignNoChest;
+                m_shooterFireAlign = modelRef.m_shooterFireAlign;
+                m_detectAbilityAlign = modelRef.m_detectAbilityAlign;
+                m_markerTagAlign = modelRef.m_markerTagAlign.transform;
+            }
+
+            public void CopyTo(ref EnemyModelRefs modelRef)
+            {
+                modelRef.m_tentacleAlign = m_tentacleAlign;
+                modelRef.m_tentacleAlign2 = m_tentacleAlign2;
+                modelRef.m_tentacleAlign3 = m_tentacleAlign3;
+                modelRef.m_tentacleAlignNoHead = m_tentacleAlignNoHead;
+                modelRef.m_tentacleAlignNoChest = m_tentacleAlignNoChest;
+                modelRef.m_shooterFireAlign = m_shooterFireAlign;
+                modelRef.m_detectAbilityAlign = m_detectAbilityAlign;
+                modelRef.m_markerTagAlign = m_markerTagAlign.gameObject;
+            }
         }
     }
 }

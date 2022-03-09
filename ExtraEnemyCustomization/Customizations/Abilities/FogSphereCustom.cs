@@ -58,14 +58,14 @@ namespace EECustom.Customizations.Abilities
         {
             if (EffectVolume.Enabled)
             {
-                var effectSetting = agent.RegisterOrGetProperty<SphereEffectSetting>();
+                var effectSetting = agent.RegisterOrGetProperty<SphereEffectProperty>();
                 effectSetting.HandlerCount = 0;
                 effectSetting.Setting = EffectVolume;
             }
         }
     }
 
-    public class SphereEffectSetting
+    internal sealed class SphereEffectProperty
     {
         public int HandlerCount = 0;
         public EffectVolumeSetting Setting;

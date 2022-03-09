@@ -119,7 +119,7 @@ namespace EECustom.Utils
             }
 
             var index = hashes.Length > 1 ? Rand.IndexOf(hashes) : 0;
-            NetworkManager.EnemyAnim.Send(new EnemyAnimPacket()
+            NetworkManager.EnemyAnim.Send(new EnemyAnimEvent.Packet()
             {
                 enemyID = agent.GlobalID,
                 crossfadeTime = crossfadeTime,

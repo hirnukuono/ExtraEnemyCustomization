@@ -90,7 +90,7 @@ namespace EECustom.Customizations.EnemyAbilities
             if (!SNet.IsMaster)
                 return;
 
-            _abilityEvent.Send(new AbilityPacket()
+            _abilityEvent.Send(new AbilityEvent.Packet()
             {
                 Type = type,
                 SyncID = syncID,
@@ -98,7 +98,7 @@ namespace EECustom.Customizations.EnemyAbilities
             });
         }
 
-        private static void OnReceiveEvent(AbilityPacket packet)
+        private static void OnReceiveEvent(AbilityEvent.Packet packet)
         {
             if (_abilityIDLookup.TryGetValue(packet.SyncID, out var ability))
             {
@@ -132,16 +132,17 @@ namespace EECustom.Customizations.EnemyAbilities
         }
     }
 
-    public class AbilityEvent : SyncedEvent<AbilityPacket>
+    public class AbilityEvent : SyncedEvent<AbilityEvent.Packet>
     {
+        public struct Packet
+        {
+            public AbilityPacketType Type;
+            public ushort SyncID;
+            public ushort EnemyID;
+        }
     }
 
-    public struct AbilityPacket
-    {
-        public AbilityPacketType Type;
-        public ushort SyncID;
-        public ushort EnemyID;
-    }
+    
 
     public enum AbilityPacketType : byte
     {

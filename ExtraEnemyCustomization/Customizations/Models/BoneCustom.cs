@@ -94,23 +94,23 @@ namespace EECustom.Customizations.Models
                 LogError($"Bone Transform owner: [{agent.name}] bone: [{bonePrefab.Bone}] prefab: [{bonePrefab.Prefab}] were not attached! : {e}");
             }
         }
-    }
 
-    public class BoneTransform
-    {
-        public HumanBodyBones Bone { get; set; } = HumanBodyBones.Head;
-        public bool UsingRelativeScale { get; set; } = false;
-        public Vector3 Scale { get; set; } = Vector3.zero;
-        public Vector3 Offset { get; set; } = Vector3.zero;
-        public Vector3 RotationOffset { get; set; } = Vector3.zero;
-    }
+        public sealed class BoneTransform
+        {
+            public HumanBodyBones Bone { get; set; } = HumanBodyBones.Head;
+            public bool UsingRelativeScale { get; set; } = false;
+            public Vector3 Scale { get; set; } = Vector3.zero;
+            public Vector3 Offset { get; set; } = Vector3.zero;
+            public Vector3 RotationOffset { get; set; } = Vector3.zero;
+        }
 
-    public class BonePrefab
-    {
-        public HumanBodyBones Bone { get; set; } = HumanBodyBones.Head;
-        public string Prefab { get; set; } = string.Empty;
-        public Vector3 Scale { get; set; } = Vector3.zero;
-        public Vector3 Position { get; set; } = Vector3.zero;
-        public Vector3 Rotation { get; set; } = Vector3.zero;
+        public sealed class BonePrefab
+        {
+            public HumanBodyBones Bone { get; set; } = HumanBodyBones.Head;
+            public string Prefab { get; set; } = string.Empty;
+            public Vector3 Scale { get; set; } = Vector3.zero;
+            public Vector3 Position { get; set; } = Vector3.zero;
+            public Vector3 Rotation { get; set; } = Vector3.zero;
+        }
     }
 }

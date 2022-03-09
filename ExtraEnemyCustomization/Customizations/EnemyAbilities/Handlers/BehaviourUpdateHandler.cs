@@ -14,7 +14,7 @@ using UnityEngine;
 namespace EECustom.Customizations.EnemyAbilities.Handlers
 {
     [InjectToIl2Cpp]
-    public sealed class BehaviourUpdateHandler : MonoBehaviour
+    internal sealed class BehaviourUpdateHandler : MonoBehaviour
     {
         public EnemyAgent Agent;
         public AbilityBehaviour Behaviour;

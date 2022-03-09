@@ -26,7 +26,7 @@ namespace EECustom.Customizations.Abilities
 
         public void OnSpawned(EnemyAgent agent)
         {
-            var setting = agent.RegisterOrGetProperty<DoorBreakerSetting>();
+            var setting = agent.RegisterOrGetProperty<DoorBreakerProperty>();
             setting.Config = this;
             setting.Damage = Damage;
             setting.UseGlobalTimer = UseGlobalTimer;
@@ -35,7 +35,7 @@ namespace EECustom.Customizations.Abilities
         }
     }
 
-    public class DoorBreakerSetting
+    internal sealed class DoorBreakerProperty
     {
         public DoorBreakerCustom Config;
         public bool UseGlobalTimer = false;

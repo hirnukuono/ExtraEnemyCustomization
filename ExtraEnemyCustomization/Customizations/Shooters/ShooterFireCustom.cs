@@ -50,41 +50,41 @@ namespace EECustom.Customizations.Shooters
                 }
             }
         }
-    }
 
-    public class FireSetting
-    {
-        public float FromDistance { get; set; } = -1.0f;
-
-        public bool OverrideProjectileType { get; set; } = true;
-        public ProjectileType ProjectileType { get; set; } = ProjectileType.TargetingLarge;
-        public ValueBase BurstCount { get; set; } = ValueBase.Unchanged;
-        public ValueBase BurstDelay { get; set; } = ValueBase.Unchanged;
-        public ValueBase ShotDelayMin { get; set; } = ValueBase.Unchanged;
-        public ValueBase ShotDelayMax { get; set; } = ValueBase.Unchanged;
-        public ValueBase InitialFireDelay { get; set; } = ValueBase.Unchanged;
-        public ValueBase ShotSpreadXMin { get; set; } = ValueBase.Unchanged;
-        public ValueBase ShotSpreadXMax { get; set; } = ValueBase.Unchanged;
-        public ValueBase ShotSpreadYMin { get; set; } = ValueBase.Unchanged;
-        public ValueBase ShotSpreadYMax { get; set; } = ValueBase.Unchanged;
-
-        public void ApplyToEAB(EAB_ProjectileShooter eab, EAB_ProjectileShooter defValue = null)
+        public sealed class FireSetting
         {
-            if (OverrideProjectileType)
-                eab.m_type = ProjectileType;
+            public float FromDistance { get; set; } = -1.0f;
 
-            if (defValue == null)
+            public bool OverrideProjectileType { get; set; } = true;
+            public ProjectileType ProjectileType { get; set; } = ProjectileType.TargetingLarge;
+            public ValueBase BurstCount { get; set; } = ValueBase.Unchanged;
+            public ValueBase BurstDelay { get; set; } = ValueBase.Unchanged;
+            public ValueBase ShotDelayMin { get; set; } = ValueBase.Unchanged;
+            public ValueBase ShotDelayMax { get; set; } = ValueBase.Unchanged;
+            public ValueBase InitialFireDelay { get; set; } = ValueBase.Unchanged;
+            public ValueBase ShotSpreadXMin { get; set; } = ValueBase.Unchanged;
+            public ValueBase ShotSpreadXMax { get; set; } = ValueBase.Unchanged;
+            public ValueBase ShotSpreadYMin { get; set; } = ValueBase.Unchanged;
+            public ValueBase ShotSpreadYMax { get; set; } = ValueBase.Unchanged;
+
+            public void ApplyToEAB(EAB_ProjectileShooter eab, EAB_ProjectileShooter defValue = null)
             {
-                defValue = eab;
-            }
+                if (OverrideProjectileType)
+                    eab.m_type = ProjectileType;
 
-            eab.m_burstCount = BurstCount.GetAbsValue(defValue.m_burstCount);
-            eab.m_burstDelay = BurstDelay.GetAbsValue(defValue.m_burstDelay);
-            eab.m_shotDelayMin = ShotDelayMin.GetAbsValue(defValue.m_shotDelayMin);
-            eab.m_shotDelayMax = ShotDelayMax.GetAbsValue(defValue.m_shotDelayMax);
-            eab.m_initialFireDelay = InitialFireDelay.GetAbsValue(defValue.m_initialFireDelay);
-            eab.m_shotSpreadX = new Vector2(ShotSpreadXMin.GetAbsValue(defValue.m_shotSpreadX.x), ShotSpreadXMax.GetAbsValue(defValue.m_shotSpreadX.y));
-            eab.m_shotSpreadY = new Vector2(ShotSpreadYMin.GetAbsValue(defValue.m_shotSpreadY.x), ShotSpreadYMax.GetAbsValue(defValue.m_shotSpreadY.y));
+                if (defValue == null)
+                {
+                    defValue = eab;
+                }
+
+                eab.m_burstCount = BurstCount.GetAbsValue(defValue.m_burstCount);
+                eab.m_burstDelay = BurstDelay.GetAbsValue(defValue.m_burstDelay);
+                eab.m_shotDelayMin = ShotDelayMin.GetAbsValue(defValue.m_shotDelayMin);
+                eab.m_shotDelayMax = ShotDelayMax.GetAbsValue(defValue.m_shotDelayMax);
+                eab.m_initialFireDelay = InitialFireDelay.GetAbsValue(defValue.m_initialFireDelay);
+                eab.m_shotSpreadX = new Vector2(ShotSpreadXMin.GetAbsValue(defValue.m_shotSpreadX.x), ShotSpreadXMax.GetAbsValue(defValue.m_shotSpreadX.y));
+                eab.m_shotSpreadY = new Vector2(ShotSpreadYMin.GetAbsValue(defValue.m_shotSpreadY.x), ShotSpreadYMax.GetAbsValue(defValue.m_shotSpreadY.y));
+            }
         }
     }
 }

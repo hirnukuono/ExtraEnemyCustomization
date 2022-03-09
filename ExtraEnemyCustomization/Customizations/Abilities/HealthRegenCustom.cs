@@ -26,14 +26,14 @@ namespace EECustom.Customizations.Abilities
                 }
             }
         }
-    }
 
-    public class HealthRegenData
-    {
-        public float RegenInterval { get; set; } = 1.0f;
-        public float DelayUntilRegenStart { get; set; } = 5.0f;
-        public bool CanDamageInterruptRegen { get; set; } = true;
-        public ValueBase RegenAmount { get; set; } = ValueBase.Zero;
-        public ValueBase RegenCap { get; set; } = ValueBase.Zero;
+        public sealed class HealthRegenData
+        {
+            public float RegenInterval { get; set; } = 1.0f;
+            public float DelayUntilRegenStart { get; set; } = 5.0f;
+            public bool CanDamageInterruptRegen { get; set; } = true;
+            public ValueBase RegenAmount { get; set; } = ValueBase.Zero;
+            public ValueBase RegenCap { get; set; } = ValueBase.Zero;
+        }
     }
 }

@@ -6,14 +6,14 @@ using System;
 
 namespace EECustom.Customizations.Detections
 {
-    public sealed class ScoutAnimSync : SyncedEvent<ScoutAnimPacket>
+    public sealed class ScoutAnimSync : SyncedEvent<ScoutAnimSync.Packet>
     {
         public void DoRandom(EnemyAgent agent)
         {
             if (!SNet.IsMaster)
                 return;
 
-            if (!agent.TryGetProperty<ScoutAnimOverrideData>(out var data))
+            if (!agent.TryGetProperty<ScoutAnimOverrideProperty>(out var data))
                 return;
 
             ScoutAnimType nextAnim;
@@ -32,7 +32,7 @@ namespace EECustom.Customizations.Detections
                     ScoutAnimType.Standing;
             }
 
-            var packet = new ScoutAnimPacket()
+            var packet = new Packet()
             {
                 enemyID = agent.GlobalID,
                 nextAnim = nextAnim
@@ -41,9 +41,9 @@ namespace EECustom.Customizations.Detections
             Send(packet);
         }
 
-        public override void Receive(ScoutAnimPacket packet)
+        public override void Receive(Packet packet)
         {
-            if (!EnemyProperty<ScoutAnimOverrideData>.TryGet(packet.enemyID, out var data))
+            if (!EnemyProperty<ScoutAnimOverrideProperty>.TryGet(packet.enemyID, out var data))
                 return;
 
             if (data.Agent.WasCollected)
@@ -61,15 +61,15 @@ namespace EECustom.Customizations.Detections
                 data.AnimDetermined = true;
             }
         }
+
+        public struct Packet
+        {
+            public ushort enemyID;
+            public ScoutAnimType nextAnim;
+        }
     }
 
-    public struct ScoutAnimPacket
-    {
-        public ushort enemyID;
-        public ScoutAnimType nextAnim;
-    }
-
-    public class ScoutAnimOverrideData
+    internal sealed class ScoutAnimOverrideProperty
     {
         public EnemyAgent Agent;
         public float ChanceToBend = 0.0f;

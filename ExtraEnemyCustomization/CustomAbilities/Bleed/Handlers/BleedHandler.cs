@@ -9,7 +9,7 @@ using UnityEngine;
 namespace EECustom.CustomAbilities.Bleed.Handlers
 {
     [InjectToIl2Cpp]
-    public sealed class BleedHandler : MonoBehaviour
+    internal sealed class BleedHandler : MonoBehaviour
     {
         public PlayerAgent Agent;
 

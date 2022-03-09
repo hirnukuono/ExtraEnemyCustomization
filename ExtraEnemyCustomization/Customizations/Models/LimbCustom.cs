@@ -65,22 +65,22 @@ namespace EECustom.Customizations.Models
                 }
             }
         }
-    }
 
-    public class LimbData
-    {
-        public string LimbName { get; set; } = "Head";
-        public LimbDamageType LimbType { get; set; } = LimbDamageType.Weakspot;
-        public float CustomMulti { get; set; } = 1.0f;
-        public ValueBase Health { get; set; } = ValueBase.Unchanged;
-    }
+        public sealed class LimbData
+        {
+            public string LimbName { get; set; } = "Head";
+            public LimbDamageType LimbType { get; set; } = LimbDamageType.Weakspot;
+            public float CustomMulti { get; set; } = 1.0f;
+            public ValueBase Health { get; set; } = ValueBase.Unchanged;
+        }
 
-    public enum LimbDamageType
-    {
-        Normal,
-        Weakspot,
-        WeakspotCustom,
-        Armor,
-        ArmorCustom
+        public enum LimbDamageType
+        {
+            Normal,
+            Weakspot,
+            WeakspotCustom,
+            Armor,
+            ArmorCustom
+        }
     }
 }

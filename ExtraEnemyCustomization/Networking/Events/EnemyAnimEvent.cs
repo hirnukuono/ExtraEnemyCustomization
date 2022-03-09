@@ -3,9 +3,9 @@ using SNetwork;
 
 namespace EECustom.Networking.Events
 {
-    public class EnemyAnimEvent : SyncedEvent<EnemyAnimPacket>
+    public sealed class EnemyAnimEvent : SyncedEvent<EnemyAnimEvent.Packet>
     {
-        public override void Receive(EnemyAnimPacket packet)
+        public override void Receive(Packet packet)
         {
             SNet_Replication.TryGetReplicator(packet.enemyID, out var replicator);
             if (replicator == null)
@@ -32,13 +32,15 @@ namespace EECustom.Networking.Events
                     navAgent.isStopped = true;
             }
         }
+
+        public struct Packet
+        {
+            public ushort enemyID;
+            public int animHash;
+            public bool pauseAI;
+            public float crossfadeTime;
+        }
     }
 
-    public struct EnemyAnimPacket
-    {
-        public ushort enemyID;
-        public int animHash;
-        public bool pauseAI;
-        public float crossfadeTime;
-    }
+    
 }

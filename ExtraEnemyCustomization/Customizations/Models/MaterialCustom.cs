@@ -108,16 +108,16 @@ namespace EECustom.Customizations.Models
                     LogVerbose(" - Replaced!");
             }
         }
-    }
 
-    public class MaterialSwapSet
-    {
-        public string From { get; set; } = "";
-        public string To { get; set; } = "";
-        public SkinNoiseType SkinNoise { get; set; } = SkinNoiseType.KeepOriginal;
-        public string SkinNoiseTexture { get; set; } = string.Empty;
-        public ColorSetting[] ColorProperties { get; set; } = Array.Empty<ColorSetting>();
-        public FloatSetting[] FloatProperties { get; set; } = Array.Empty<FloatSetting>();
+        public sealed class MaterialSwapSet
+        {
+            public string From { get; set; } = "";
+            public string To { get; set; } = "";
+            public SkinNoiseType SkinNoise { get; set; } = SkinNoiseType.KeepOriginal;
+            public string SkinNoiseTexture { get; set; } = string.Empty;
+            public ColorSetting[] ColorProperties { get; set; } = Array.Empty<ColorSetting>();
+            public FloatSetting[] FloatProperties { get; set; } = Array.Empty<FloatSetting>();
+        }
 
         public struct ColorSetting
         {
@@ -130,18 +130,12 @@ namespace EECustom.Customizations.Models
             public string Name { get; set; }
             public float Value { get; set; }
         }
-    }
 
-    public enum SkinNoiseType
-    {
-        KeepOriginal,
-        ForceOn,
-        ForceOff
-    }
-
-    public struct MaterialSwapCache
-    {
-        public MaterialRef matref;
-        public Material original;
+        public enum SkinNoiseType
+        {
+            KeepOriginal,
+            ForceOn,
+            ForceOff
+        }
     }
 }

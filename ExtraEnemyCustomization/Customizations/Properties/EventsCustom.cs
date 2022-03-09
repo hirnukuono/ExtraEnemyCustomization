@@ -73,46 +73,46 @@ namespace EECustom.Customizations.Properties
                 OnWakeupEvent.FireEvents();
             }
         }
-    }
 
-    public class EventSetting
-    {
-        public bool Enabled { get; set; } = false;
-        public EventWrapper[] Events { get; set; } = Array.Empty<EventWrapper>();
-
-        public void CacheAll()
+        public sealed class EventSetting
         {
-            if (Events == null)
-                return;
+            public bool Enabled { get; set; } = false;
+            public EventWrapper[] Events { get; set; } = Array.Empty<EventWrapper>();
 
-            foreach (var e in Events)
+            public void CacheAll()
             {
-                e.Cache();
-            }
-        }
+                if (Events == null)
+                    return;
 
-        public void FireEvents()
-        {
-            if (Events == null)
-                return;
-
-            foreach (var e in Events)
-            {
-                WardenObjectiveManager.CheckAndExecuteEventsOnTrigger(e.ToEvent(), eWardenObjectiveEventTrigger.None, ignoreTrigger: true, 0f);
-            }
-        }
-
-        public void DisposeAll()
-        {
-            if (Events == null)
-                return;
-
-            foreach (var e in Events)
-            {
-                e.Dispose();
+                foreach (var e in Events)
+                {
+                    e.Cache();
+                }
             }
 
-            Events = null;
+            public void FireEvents()
+            {
+                if (Events == null)
+                    return;
+
+                foreach (var e in Events)
+                {
+                    WardenObjectiveManager.CheckAndExecuteEventsOnTrigger(e.ToEvent(), eWardenObjectiveEventTrigger.None, ignoreTrigger: true, 0f);
+                }
+            }
+
+            public void DisposeAll()
+            {
+                if (Events == null)
+                    return;
+
+                foreach (var e in Events)
+                {
+                    e.Dispose();
+                }
+
+                Events = null;
+            }
         }
     }
 }

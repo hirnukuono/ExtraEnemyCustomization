@@ -52,59 +52,59 @@ namespace EECustom.Customizations.Strikers
                 }
             }
         }
-    }
 
-    public class TentacleSettingData
-    {
-        public eEasingType InEaseType { get; set; } = eEasingType.EaseOutCirc;
-        public eEasingType OutEaseType { get; set; } = eEasingType.EaseInExpo;
-
-        public ValueBase InDuration { get; set; } = ValueBase.Unchanged;
-        public ValueBase OutDuration { get; set; } = ValueBase.Unchanged;
-        public ValueBase HangDuration { get; set; } = ValueBase.Unchanged;
-        public ValueBase SplineWidthSafe { get; set; } = ValueBase.Unchanged;
-        public ValueBase SplineWidthPos1 { get; set; } = ValueBase.Unchanged;
-        public ValueBase SplineWidthPos2 { get; set; } = ValueBase.Unchanged;
-        public ValueBase SplineHeightPos1 { get; set; } = ValueBase.Unchanged;
-        public ValueBase SplineHeightPos2 { get; set; } = ValueBase.Unchanged;
-
-        public EaseFunc GetInEaseFunction()
+        public sealed class TentacleSettingData
         {
-            return GetEaseFunction(InEaseType);
-        }
+            public eEasingType InEaseType { get; set; } = eEasingType.EaseOutCirc;
+            public eEasingType OutEaseType { get; set; } = eEasingType.EaseInExpo;
 
-        public EaseFunc GetOutEaseFunction()
-        {
-            return GetEaseFunction(OutEaseType);
-        }
+            public ValueBase InDuration { get; set; } = ValueBase.Unchanged;
+            public ValueBase OutDuration { get; set; } = ValueBase.Unchanged;
+            public ValueBase HangDuration { get; set; } = ValueBase.Unchanged;
+            public ValueBase SplineWidthSafe { get; set; } = ValueBase.Unchanged;
+            public ValueBase SplineWidthPos1 { get; set; } = ValueBase.Unchanged;
+            public ValueBase SplineWidthPos2 { get; set; } = ValueBase.Unchanged;
+            public ValueBase SplineHeightPos1 { get; set; } = ValueBase.Unchanged;
+            public ValueBase SplineHeightPos2 { get; set; } = ValueBase.Unchanged;
 
-        public static EaseFunc GetEaseFunction(eEasingType easeType)
-        {
-            return easeType switch
+            public EaseFunc GetInEaseFunction()
             {
-                eEasingType.EaseInQuad => new EaseFunc(Easing.EaseInQuad),
-                eEasingType.EaseOutQuad => new EaseFunc(Easing.EaseOutQuad),
-                eEasingType.EaseInOutQuad => new EaseFunc(Easing.EaseInOutQuad),
-                eEasingType.EaseInCubic => new EaseFunc(Easing.EaseInCubic),
-                eEasingType.EaseOutCubic => new EaseFunc(Easing.EaseOutCubic),
-                eEasingType.EaseInOutCubic => new EaseFunc(Easing.EaseInOutCubic),
-                eEasingType.EaseInQuart => new EaseFunc(Easing.EaseInQuart),
-                eEasingType.EaseOutQuart => new EaseFunc(Easing.EaseOutQuart),
-                eEasingType.EaseInOutQuart => new EaseFunc(Easing.EaseInOutQuart),
-                eEasingType.EaseInQuint => new EaseFunc(Easing.EaseInQuint),
-                eEasingType.EaseOutQuint => new EaseFunc(Easing.EaseOutQuint),
-                eEasingType.EaseInOutQuint => new EaseFunc(Easing.EaseInOutQuint),
-                eEasingType.EaseInSine => new EaseFunc(Easing.EaseInSine),
-                eEasingType.EaseOutSine => new EaseFunc(Easing.EaseOutSine),
-                eEasingType.EaseInOutSine => new EaseFunc(Easing.EaseInOutSine),
-                eEasingType.EaseInExpo => new EaseFunc(Easing.EaseInExpo),
-                eEasingType.EaseOutExpo => new EaseFunc(Easing.EaseOutExpo),
-                eEasingType.EaseInOutExpo => new EaseFunc(Easing.EaseInOutExpo),
-                eEasingType.EaseInCirc => new EaseFunc(Easing.EaseInCirc),
-                eEasingType.EaseOutCirc => new EaseFunc(Easing.EaseOutCirc),
-                eEasingType.EaseInOutCirc => new EaseFunc(Easing.EaseInOutCirc),
-                _ => new EaseFunc(Easing.LinearTween),
-            };
+                return GetEaseFunction(InEaseType);
+            }
+
+            public EaseFunc GetOutEaseFunction()
+            {
+                return GetEaseFunction(OutEaseType);
+            }
+
+            public static EaseFunc GetEaseFunction(eEasingType easeType)
+            {
+                return easeType switch
+                {
+                    eEasingType.EaseInQuad => new EaseFunc(Easing.EaseInQuad),
+                    eEasingType.EaseOutQuad => new EaseFunc(Easing.EaseOutQuad),
+                    eEasingType.EaseInOutQuad => new EaseFunc(Easing.EaseInOutQuad),
+                    eEasingType.EaseInCubic => new EaseFunc(Easing.EaseInCubic),
+                    eEasingType.EaseOutCubic => new EaseFunc(Easing.EaseOutCubic),
+                    eEasingType.EaseInOutCubic => new EaseFunc(Easing.EaseInOutCubic),
+                    eEasingType.EaseInQuart => new EaseFunc(Easing.EaseInQuart),
+                    eEasingType.EaseOutQuart => new EaseFunc(Easing.EaseOutQuart),
+                    eEasingType.EaseInOutQuart => new EaseFunc(Easing.EaseInOutQuart),
+                    eEasingType.EaseInQuint => new EaseFunc(Easing.EaseInQuint),
+                    eEasingType.EaseOutQuint => new EaseFunc(Easing.EaseOutQuint),
+                    eEasingType.EaseInOutQuint => new EaseFunc(Easing.EaseInOutQuint),
+                    eEasingType.EaseInSine => new EaseFunc(Easing.EaseInSine),
+                    eEasingType.EaseOutSine => new EaseFunc(Easing.EaseOutSine),
+                    eEasingType.EaseInOutSine => new EaseFunc(Easing.EaseInOutSine),
+                    eEasingType.EaseInExpo => new EaseFunc(Easing.EaseInExpo),
+                    eEasingType.EaseOutExpo => new EaseFunc(Easing.EaseOutExpo),
+                    eEasingType.EaseInOutExpo => new EaseFunc(Easing.EaseInOutExpo),
+                    eEasingType.EaseInCirc => new EaseFunc(Easing.EaseInCirc),
+                    eEasingType.EaseOutCirc => new EaseFunc(Easing.EaseOutCirc),
+                    eEasingType.EaseInOutCirc => new EaseFunc(Easing.EaseInOutCirc),
+                    _ => new EaseFunc(Easing.LinearTween),
+                };
+            }
         }
     }
 }

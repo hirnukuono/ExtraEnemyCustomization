@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace EECustom.Utils.JsonConverters
 {
-    public class Vector3Converter : JsonConverter<Vector3>
+    public sealed class Vector3Converter : JsonConverter<Vector3>
     {
         public override bool HandleNull => false;
 

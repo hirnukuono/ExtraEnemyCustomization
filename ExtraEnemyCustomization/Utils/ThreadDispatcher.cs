@@ -25,6 +25,9 @@ namespace EECustom.Utils
 
         public static void Enqueue(Action action)
         {
+            if (action == null)
+                return;
+
             _queue.Enqueue(action);
         }
 
@@ -32,7 +35,7 @@ namespace EECustom.Utils
         {
             while (_queue.TryDequeue(out var action))
             {
-                action?.Invoke();
+                action.Invoke();
             }
         }
     }

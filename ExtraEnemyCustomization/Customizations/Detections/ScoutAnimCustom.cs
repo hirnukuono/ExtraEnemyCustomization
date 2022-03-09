@@ -28,7 +28,7 @@ namespace EECustom.Customizations.Detections
 
         public void OnSpawned(EnemyAgent agent)
         {
-            var data = agent.RegisterOrGetProperty<ScoutAnimOverrideData>();
+            var data = agent.RegisterOrGetProperty<ScoutAnimOverrideProperty>();
             data.Agent = agent;
             switch (RandomType)
             {

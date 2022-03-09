@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace EECustom.Utils.JsonElements
 {
-    public class ValueBaseConverter : JsonConverter<ValueBase>
+    public sealed class ValueBaseConverter : JsonConverter<ValueBase>
     {
         public override bool HandleNull => false;
 

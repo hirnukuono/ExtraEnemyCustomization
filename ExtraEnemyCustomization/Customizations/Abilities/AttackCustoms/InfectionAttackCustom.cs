@@ -7,14 +7,14 @@ using Player;
 
 namespace EECustom.Customizations.Abilities
 {
-    public sealed class InfectionAttackCustom : AttackCustomBase<InfectionAttackData>
+    public sealed class InfectionAttackCustom : AttackCustomBase<InfectionAttackCustom.AttackData>
     {
         public override string GetProcessName()
         {
             return "InfectionAttack";
         }
 
-        protected override void OnApplyEffect(InfectionAttackData data, PlayerAgent player, EnemyAgent inflicator)
+        protected override void OnApplyEffect(AttackData data, PlayerAgent player, EnemyAgent inflicator)
         {
             var infectionAbs = data.Infection.GetAbsValue(PlayerData.MaxInfection);
             if (infectionAbs == 0.0f)
@@ -42,13 +42,13 @@ namespace EECustom.Customizations.Abilities
                 mode = pInfectionMode.Add
             }, true, true);
         }
-    }
 
-    public class InfectionAttackData
-    {
-        public ValueBase Infection { get; set; } = ValueBase.Zero;
-        public uint SoundEventID { get; set; } = 0u;
-        public bool UseEffect { get; set; } = false;
-        public float ScreenLiquidRange { get; set; } = 0.0f;
+        public sealed class AttackData
+        {
+            public ValueBase Infection { get; set; } = ValueBase.Zero;
+            public uint SoundEventID { get; set; } = 0u;
+            public bool UseEffect { get; set; } = false;
+            public float ScreenLiquidRange { get; set; } = 0.0f;
+        }
     }
 }

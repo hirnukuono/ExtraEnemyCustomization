@@ -41,7 +41,7 @@ namespace EECustom.Customizations.EnemyAbilities
         }
     }
 
-    public class BehaviourAbilitySetting : AbilitySettingBase
+    public sealed class BehaviourAbilitySetting : AbilitySettingBase
     {
         public float UpdateInterval { get; set; } = 0.15f;
         public bool ForceExitOnConditionMismatch { get; set; } = false;
@@ -55,7 +55,7 @@ namespace EECustom.Customizations.EnemyAbilities
         public CooldownSetting Cooldown { get; set; } = new();
     }
 
-    public class EnemyStateSetting
+    public sealed class EnemyStateSetting
     {
         public StateCheckingBehaviour Mode { get; set; } = StateCheckingBehaviour.None;
         public ES_StateEnum[] States { get; set; } = Array.Empty<ES_StateEnum>();
@@ -78,14 +78,14 @@ namespace EECustom.Customizations.EnemyAbilities
         }
     }
 
-    public class CooldownSetting
+    public sealed class CooldownSetting
     {
         public bool Enabled { get; set; } = false;
         public float InitCooldown { get; set; } = 0.0f;
         public float Cooldown { get; set; } = 5.0f;
     }
 
-    public class DistanceSetting
+    public sealed class DistanceSetting
     {
         public DistanceCheckingBehaviour Mode { get; set; } = DistanceCheckingBehaviour.AlwaysAllow;
         public float Min { get; set; } = 0.0f;

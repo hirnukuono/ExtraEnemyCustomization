@@ -6,13 +6,13 @@ using UnityEngine;
 namespace EECustom.Customizations.Shooters.Handlers
 {
     [InjectToIl2Cpp]
-    public sealed class ShooterDistSettingHandler : MonoBehaviour
+    internal sealed class ShooterDistSettingHandler : MonoBehaviour
     {
         public EAB_ProjectileShooter DefaultValue;
         public EAB_ProjectileShooter EAB_Shooter;
-        public FireSetting[] FireSettings;
+        public ShooterFireCustom.FireSetting[] FireSettings;
 
-        private FireSetting _currentSetting = null;
+        private ShooterFireCustom.FireSetting _currentSetting = null;
         private Timer _updateTimer = new(0.125f);
 
         internal void Update()

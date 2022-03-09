@@ -35,7 +35,7 @@ namespace EECustom.Customizations.EnemyAbilities
         }
     }
 
-    public class DeathAbilitySetting : AbilitySettingBase
+    public sealed class DeathAbilitySetting : AbilitySettingBase
     {
         public AgentModeTarget AllowedMode { get; set; } = AgentModeTarget.Agressive;
         public float Delay { get; set; } = 0.0f;

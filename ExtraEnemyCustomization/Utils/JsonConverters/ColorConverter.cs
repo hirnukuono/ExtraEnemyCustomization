@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace EECustom.Utils.JsonConverters
 {
-    public class ColorConverter : JsonConverter<Color>
+    public sealed class ColorConverter : JsonConverter<Color>
     {
         public override bool HandleNull => false;
 

@@ -8,7 +8,7 @@ using System.Text.Json.Serialization;
 
 namespace EECustom.Utils.JsonConverters
 {
-    public class LocalizedTextConverter : JsonConverter<LocalizedText>
+    public sealed class LocalizedTextConverter : JsonConverter<LocalizedText>
     {
         public override bool HandleNull => false;
 

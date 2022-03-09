@@ -10,11 +10,10 @@ using UnityEngine;
 namespace EECustom.Customizations.Abilities.Handlers
 {
     [InjectToIl2Cpp]
-    public sealed class HealthRegenHandler : MonoBehaviour
+    internal sealed class HealthRegenHandler : MonoBehaviour
     {
         public Dam_EnemyDamageBase DamageBase;
-
-        public HealthRegenData RegenData;
+        public HealthRegenCustom.HealthRegenData RegenData;
 
         private Timer _regenInitialTimer;
         private Timer _regenIntervalTimer;

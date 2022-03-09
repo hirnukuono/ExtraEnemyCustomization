@@ -11,7 +11,7 @@ using UnityEngine;
 namespace EECustom.Networking.Handlers
 {
     [InjectToIl2Cpp]
-    internal class EnemyStateUpdater : MonoBehaviour
+    internal sealed class EnemyStateUpdater : MonoBehaviour
     {
         public EnemyAgent Agent;
 
@@ -28,10 +28,7 @@ namespace EECustom.Networking.Handlers
             {
                 _currentAgentMode = newMode;
 
-                NetworkManager.EnemyAgentModeState.SetState(Agent.GlobalID, new EnemyState()
-                {
-                    mode = newMode
-                });
+                NetworkManager.EnemyAgentModeState.SetState(Agent.GlobalID, newMode);
             }
         }
 

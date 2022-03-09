@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace EECustom.Utils.JsonElements
 {
-    public class AgentModeTargetConverter : JsonConverter<AgentModeTarget>
+    public sealed class AgentModeTargetConverter : JsonConverter<AgentModeTarget>
     {
         private readonly static char[] _separators = new char[] { ',', '|' };
 
