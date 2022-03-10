@@ -1,7 +1,6 @@
 ﻿using EECustom.Events;
 using EECustom.Managers;
 using EECustom.Networking.Events;
-using EECustom.Networking.Handlers;
 using EECustom.Networking.Replicators;
 using Enemies;
 
@@ -26,9 +25,6 @@ namespace EECustom.Networking
             {
                 ConfigManager.Current.FireAgentModeChangedEvent(agent, newState.mode);
             });
-
-            var updater = agent.gameObject.AddComponent<EnemyStateUpdater>();
-            updater.Agent = agent;
         }
     }
 }
