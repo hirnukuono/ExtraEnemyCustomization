@@ -1,9 +1,6 @@
 ﻿using Agents;
 using Enemies;
 using Player;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EECustom
 {
@@ -37,8 +34,7 @@ namespace EECustom
             result = tempResult;
             return true;
 
-
-            ReturnNULL:
+        ReturnNULL:
             result = null;
             return false;
         }

@@ -3,8 +3,6 @@ using EECustom.Utils.JsonElements;
 using Enemies;
 using GameData;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EECustom.Customizations.Properties
 {

@@ -43,6 +43,4 @@ namespace EECustom.Networking.Events
             public float crossfadeTime;
         }
     }
-
-    
 }

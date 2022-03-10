@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using EECustom.Utils;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
-using EECustom.Utils;
 
 namespace EECustom.Customizations.EnemyAbilities.Abilities
 {
@@ -165,7 +165,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
                     Logger.Error($"Cloak Renderer is missing! : orig {originalRenderer == null}, trs { transitionRenderer == null}");
                     return;
                 }
-            
+
                 if (p <= 0.0f)
                 {
                     DisableOriginalRenderer();

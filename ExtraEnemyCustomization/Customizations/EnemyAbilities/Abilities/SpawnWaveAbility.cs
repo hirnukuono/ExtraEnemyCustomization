@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace EECustom.Customizations.EnemyAbilities.Abilities
+﻿namespace EECustom.Customizations.EnemyAbilities.Abilities
 {
     public sealed class SpawnWaveAbility : AbilityBase<SpawnWaveBehaviour>
     {

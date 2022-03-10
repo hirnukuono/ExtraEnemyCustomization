@@ -4,9 +4,6 @@ using EECustom.Managers;
 using EECustom.Patches.Handlers;
 using Enemies;
 using SNetwork;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EECustom.Patches
 {

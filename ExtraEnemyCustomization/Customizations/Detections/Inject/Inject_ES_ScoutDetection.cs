@@ -1,5 +1,4 @@
-﻿using EECustom.Utils;
-using HarmonyLib;
+﻿using HarmonyLib;
 using SNetwork;
 
 namespace EECustom.Customizations.Detections.Inject

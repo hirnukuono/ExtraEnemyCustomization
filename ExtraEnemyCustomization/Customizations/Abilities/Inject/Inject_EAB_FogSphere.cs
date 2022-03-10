@@ -1,5 +1,4 @@
 ﻿using EECustom.Customizations.Shared.Handlers;
-using EECustom.Utils;
 using HarmonyLib;
 
 namespace EECustom.Customizations.Abilities.Inject

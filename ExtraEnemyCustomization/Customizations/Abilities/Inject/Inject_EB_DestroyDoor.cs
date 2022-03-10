@@ -2,7 +2,6 @@
 using Enemies;
 using HarmonyLib;
 using LevelGeneration;
-using System;
 
 namespace EECustom.Customizations.Abilities.Inject
 {

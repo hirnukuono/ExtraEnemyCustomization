@@ -1,6 +1,5 @@
 ﻿using EECustom.Utils;
 using Enemies;
-using System;
 
 namespace EECustom.Customizations.Detections
 {

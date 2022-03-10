@@ -1,14 +1,9 @@
-﻿using Agents;
-using EECustom.Customizations.EnemyAbilities.Abilities;
+﻿using EECustom.Customizations.EnemyAbilities.Abilities;
 using EECustom.Customizations.EnemyAbilities.Handlers;
-using EECustom.Events;
 using EECustom.Utils.JsonElements;
 using Enemies;
-using Player;
-using SNetwork;
 using System;
 using System.Linq;
-using UnityEngine;
 
 namespace EECustom.Customizations.EnemyAbilities
 {

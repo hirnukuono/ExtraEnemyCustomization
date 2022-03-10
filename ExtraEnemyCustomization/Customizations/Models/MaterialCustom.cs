@@ -19,7 +19,7 @@ namespace EECustom.Customizations.Models
         public override void OnConfigLoaded()
         {
             var list = new List<MaterialSwapSet>();
-            foreach(var group in MaterialSets.GroupBy(x => x.From))
+            foreach (var group in MaterialSets.GroupBy(x => x.From))
             {
                 var firstItem = group.First();
                 if (group.Count() > 1)

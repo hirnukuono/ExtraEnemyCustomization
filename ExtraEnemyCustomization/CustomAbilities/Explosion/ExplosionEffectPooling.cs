@@ -1,7 +1,5 @@
 ﻿using EECustom.CustomAbilities.Explosion.Handlers;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
 namespace EECustom.CustomAbilities.Explosion
@@ -30,7 +28,7 @@ namespace EECustom.CustomAbilities.Explosion
 
         public static void TryDoEffect(ExplosionEffectData data)
         {
-            if(_pool.TryDequeue(out var handler))
+            if (_pool.TryDequeue(out var handler))
             {
                 handler.EffectDoneOnce = () =>
                 {

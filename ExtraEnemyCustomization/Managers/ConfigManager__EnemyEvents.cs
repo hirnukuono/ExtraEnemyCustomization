@@ -1,12 +1,10 @@
 ﻿using Agents;
 using EECustom.API;
 using EECustom.Customizations;
-using EECustom.Utils;
 using Enemies;
 using GameData;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace EECustom.Managers
 {

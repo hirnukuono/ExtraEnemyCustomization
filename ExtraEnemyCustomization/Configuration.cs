@@ -1,8 +1,5 @@
 ﻿using BepInEx.Configuration;
 using EECustom.Managers;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EECustom
 {
@@ -14,16 +11,17 @@ namespace EECustom
 
         //GENERAL CONFIGS
         public static ConfigEntry<bool> UseLiveEdit { get; private set; }
+
         public static ConfigEntry<bool> LinkMTFOHotReload { get; private set; }
 
         //LOGGING CONFIGS
         public static ConfigEntry<bool> UseDebugLog { get; private set; }
+
         public static ConfigEntry<bool> UseVerboseLog { get; private set; }
         public static ConfigEntry<AssetCacheManager.OutputType> AssetCacheBehaviour { get; private set; }
 
         //DEVELOPER CONFIGS
         public static ConfigEntry<bool> DumpConfig { get; private set; }
-
 
         private static ConfigFile _currentContext;
 

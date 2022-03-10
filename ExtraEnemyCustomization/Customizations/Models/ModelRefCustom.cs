@@ -124,7 +124,6 @@ namespace EECustom.Customizations.Models
             changeCache.CopyTo(ref modelRef);
         }
 
-
         public sealed class ModelRefData
         {
             public BaseModelRefType Type { get; set; } = BaseModelRefType.None;

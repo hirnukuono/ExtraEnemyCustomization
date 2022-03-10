@@ -1,9 +1,7 @@
-﻿using EECustom.Customizations;
-using EECustom.Customizations.Shooters;
+﻿using EECustom.Customizations.Shooters;
 using EECustom.CustomSettings;
 using EECustom.CustomSettings.DTO;
 using System;
-using System.Collections.Generic;
 
 namespace EECustom.Configs.Customizations
 {

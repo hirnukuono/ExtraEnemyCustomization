@@ -1,7 +1,5 @@
 ﻿using GameData;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EECustom.Utils.JsonElements
 {
@@ -10,7 +8,7 @@ namespace EECustom.Utils.JsonElements
     {
         private string _json;
         private WardenObjectiveEventData _cached = null;
-        
+
         public EventWrapper(string json)
         {
             _json = json;

@@ -1,7 +1,5 @@
-﻿using EECustom.Customizations;
-using EECustom.Customizations.Abilities;
+﻿using EECustom.Customizations.Abilities;
 using System;
-using System.Collections.Generic;
 
 namespace EECustom.Configs.Customizations
 {

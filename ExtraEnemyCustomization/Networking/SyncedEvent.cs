@@ -33,7 +33,7 @@ namespace EECustom.Networking
             {
                 NetworkAPI.InvokeEvent(EventName, packetData);
             }
-            
+
             ReceiveLocal_Callback(packetData);
         }
 

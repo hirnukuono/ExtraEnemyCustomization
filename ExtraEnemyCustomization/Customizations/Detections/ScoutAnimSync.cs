@@ -2,7 +2,6 @@
 using EECustom.Utils;
 using Enemies;
 using SNetwork;
-using System;
 
 namespace EECustom.Customizations.Detections
 {

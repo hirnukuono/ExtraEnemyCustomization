@@ -1,8 +1,6 @@
-﻿using EECustom.Customizations;
-using EECustom.Customizations.Strikers;
+﻿using EECustom.Customizations.Strikers;
 using EECustom.CustomSettings.DTO;
 using System;
-using System.Collections.Generic;
 
 namespace EECustom.Configs.Customizations
 {

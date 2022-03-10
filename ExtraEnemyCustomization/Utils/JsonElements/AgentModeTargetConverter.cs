@@ -6,7 +6,7 @@ namespace EECustom.Utils.JsonElements
 {
     public sealed class AgentModeTargetConverter : JsonConverter<AgentModeTarget>
     {
-        private readonly static char[] _separators = new char[] { ',', '|' };
+        private static readonly char[] _separators = new char[] { ',', '|' };
 
         public override AgentModeTarget Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {

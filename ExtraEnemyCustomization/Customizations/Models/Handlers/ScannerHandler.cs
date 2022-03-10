@@ -2,7 +2,6 @@
 using EECustom.Attributes;
 using EECustom.Utils;
 using Enemies;
-using SNetwork;
 using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 

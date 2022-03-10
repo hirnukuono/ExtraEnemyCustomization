@@ -1,5 +1,4 @@
 ﻿using HarmonyLib;
-using Player;
 using UnityEngine;
 
 namespace EECustom.CustomSettings.Inject

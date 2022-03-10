@@ -2,7 +2,6 @@
 using EECustom.Networking;
 using EECustom.Utils;
 using Player;
-using System;
 
 namespace EECustom.CustomAbilities.Bleed
 {

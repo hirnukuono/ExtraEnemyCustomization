@@ -1,5 +1,4 @@
 ﻿using EECustom.Customizations.Abilities.Inject;
-using EECustom.Utils;
 using Enemies;
 
 namespace EECustom.Customizations.Abilities

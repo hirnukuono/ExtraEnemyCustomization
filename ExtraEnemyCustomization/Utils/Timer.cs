@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
 namespace EECustom.Utils
@@ -13,6 +11,7 @@ namespace EECustom.Utils
 
         public bool Done => Progress >= 1.0f;
         public float Progress => Mathf.Clamp01(ProgressUnclamped);
+
         public float ProgressUnclamped
         {
             get
@@ -80,6 +79,7 @@ namespace EECustom.Utils
 
         public bool Done => Progress >= 1.0f;
         public float Progress => Mathf.Clamp01(ProgressUnclamped);
+
         public float ProgressUnclamped
         {
             get
@@ -141,6 +141,7 @@ namespace EECustom.Utils
 
         public bool Done => Progress >= 1.0;
         public double Progress => Math.Clamp(0.0, 1.0, ProgressUnclamped);
+
         public double ProgressUnclamped
         {
             get

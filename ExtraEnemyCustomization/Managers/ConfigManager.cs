@@ -1,6 +1,5 @@
 ﻿using EECustom.Configs;
 using EECustom.Configs.Customizations;
-using EECustom.Events;
 using EECustom.Utils;
 using EECustom.Utils.Integrations;
 using System;
@@ -14,7 +13,6 @@ namespace EECustom.Managers
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
     internal sealed class ConfigCacheAttribute : Attribute
     {
-
     }
 
     public partial class ConfigManager

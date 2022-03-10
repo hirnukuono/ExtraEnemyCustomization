@@ -39,7 +39,7 @@ namespace EECustom.Managers
                 var texture2D = new Texture2D(2, 2);
                 if (!ImageConversion.LoadImage(texture2D, fileData))
                     return;
-                
+
                 texture2D.name = fileNameWOExt;
                 texture2D.hideFlags = HideFlags.HideAndDontSave;
 

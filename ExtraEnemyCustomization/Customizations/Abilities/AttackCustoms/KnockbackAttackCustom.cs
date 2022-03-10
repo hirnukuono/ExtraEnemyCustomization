@@ -1,6 +1,4 @@
-﻿using Agents;
-using EECustom.Customizations.Shared;
-using EECustom.Events;
+﻿using EECustom.Customizations.Shared;
 using Enemies;
 using Player;
 

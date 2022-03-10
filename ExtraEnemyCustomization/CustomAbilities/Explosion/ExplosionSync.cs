@@ -1,6 +1,4 @@
 ﻿using EECustom.Networking;
-using EECustom.Utils;
-using UnityEngine;
 
 namespace EECustom.CustomAbilities.Explosion
 {

@@ -1,11 +1,7 @@
 ﻿using AK;
 using EECustom.Attributes;
-using EECustom.CustomAbilities.Explosion.Handlers;
 using EECustom.Events;
 using SNetwork;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
 namespace EECustom.CustomAbilities.Explosion
@@ -13,7 +9,7 @@ namespace EECustom.CustomAbilities.Explosion
     [CallConstructorOnLoad]
     public static class ExplosionManager
     {
-        public static readonly Color FlashColor = new (1, 0.2f, 0, 1);
+        public static readonly Color FlashColor = new(1, 0.2f, 0, 1);
 
         internal static ExplosionSync Sync { get; private set; } = new();
 

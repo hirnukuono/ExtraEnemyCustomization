@@ -1,7 +1,4 @@
 ﻿using EECustom.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EECustom.CustomAbilities.DrainStamina
 {

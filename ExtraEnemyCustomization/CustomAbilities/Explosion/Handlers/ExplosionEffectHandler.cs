@@ -2,8 +2,6 @@
 using EECustom.Utils;
 using FX_EffectSystem;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
 namespace EECustom.CustomAbilities.Explosion.Handlers

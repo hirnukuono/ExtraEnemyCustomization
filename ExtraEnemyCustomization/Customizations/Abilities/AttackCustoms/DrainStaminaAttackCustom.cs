@@ -1,9 +1,6 @@
 ﻿using EECustom.Customizations.Shared;
 using Enemies;
 using Player;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EECustom.Customizations.Abilities
 {

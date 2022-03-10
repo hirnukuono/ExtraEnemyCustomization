@@ -144,8 +144,6 @@ namespace EECustom.Customizations.EnemyAbilities
         }
     }
 
-    
-
     public enum AbilityPacketType : byte
     {
         DoTrigger,
