@@ -1,6 +1,7 @@
 ﻿using EECustom.Attributes;
 using System;
 using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
 namespace EECustom.Utils
@@ -31,6 +32,7 @@ namespace EECustom.Utils
             _queue.Enqueue(action);
         }
 
+        [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "MonoBehaviour Callback can't be static")]
         internal void Update()
         {
             while (_queue.TryDequeue(out var action))
