@@ -81,6 +81,8 @@ namespace EECustom.Managers
 
         private readonly EnemyEventHolder<IEnemyPrefabBuiltEvent> _enemyPrefabBuiltHolder = new("PrefabBuilt");
         private readonly EnemyEventHolder<IEnemySpawnedEvent> _enemySpawnedHolder = new("Spawned");
+        private readonly EnemyEventHolder<IEnemyDeadEvent> _enemyDeadHolder = new("Dead");
+        private readonly EnemyEventHolder<IEnemyDespawnedEvent> _enemyDespawnedHolder = new("Despawned");
         private readonly EnemyEventHolder<IEnemyAgentModeEvent> _enemyModeChangedHolder = new("AgentModeChange", ignoreLogs: true);
         private readonly EnemyEventHolder<IEnemyGlowEvent> _enemyGlowHolder = new("Glow", ignoreLogs: true);
 
@@ -88,6 +90,8 @@ namespace EECustom.Managers
         {
             _enemyPrefabBuiltHolder.Clear();
             _enemySpawnedHolder.Clear();
+            _enemyDeadHolder.Clear();
+            _enemyDespawnedHolder.Clear();
             _enemyModeChangedHolder.Clear();
             _enemyGlowHolder.Clear();
 
@@ -95,6 +99,8 @@ namespace EECustom.Managers
             {
                 _enemyPrefabBuiltHolder.TryAdd(custom);
                 _enemySpawnedHolder.TryAdd(custom);
+                _enemyDeadHolder.TryAdd(custom);
+                _enemyDespawnedHolder.TryAdd(custom);
                 _enemyModeChangedHolder.TryAdd(custom);
                 _enemyGlowHolder.TryAdd(custom);
             }
@@ -154,6 +160,22 @@ namespace EECustom.Managers
             });
 
             CustomizationAPI.OnSpawnCustomizationDone_Internal(agent);
+        }
+
+        internal void FireDeadEvent(EnemyAgent agent)
+        {
+            _enemyDeadHolder.FireEvent(agent, (e) =>
+            {
+                e.OnDead(agent);
+            });
+        }
+
+        internal void FireDespawnedEvent(EnemyAgent agent)
+        {
+            _enemyDespawnedHolder.FireEvent(agent, (e) =>
+            {
+                e.OnDespawned(agent);
+            });
         }
 
         internal void FireAgentModeChangedEvent(EnemyAgent agent, AgentMode newMode)

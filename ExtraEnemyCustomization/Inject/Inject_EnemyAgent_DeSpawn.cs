@@ -1,4 +1,5 @@
 ﻿using EECustom.Events;
+using EECustom.Managers;
 using Enemies;
 using HarmonyLib;
 
@@ -17,6 +18,7 @@ namespace EECustom.Inject
         internal static void Postfix(EnemyAgent __instance)
         {
             EnemyEvents.OnDespawned(__instance);
+            ConfigManager.Current.FireDespawnedEvent(__instance);
         }
     }
 }

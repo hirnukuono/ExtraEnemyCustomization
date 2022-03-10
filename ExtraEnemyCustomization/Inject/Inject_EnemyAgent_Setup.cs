@@ -19,6 +19,11 @@ namespace EECustom.Inject
             {
                 EnemyEvents.OnSpawned(__instance);
                 ConfigManager.Current.FireSpawnedEvent(__instance);
+
+                __instance.AddOnDeadOnce(() =>
+                {
+                    ConfigManager.Current.FireDeadEvent(__instance);
+                });
             }
         }
     }
