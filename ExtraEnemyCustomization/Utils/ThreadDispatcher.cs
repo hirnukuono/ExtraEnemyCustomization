@@ -12,6 +12,7 @@ namespace EECustom.Utils
         public static ThreadDispatcher Current { get; private set; } = null;
 
         private static readonly ConcurrentQueue<Action> _queue = new();
+        private static readonly ConcurrentQueue<Action> _heavyQueue = new();
 
         internal static void Initialize()
         {
@@ -32,10 +33,24 @@ namespace EECustom.Utils
             _queue.Enqueue(action);
         }
 
+        public static void EnqueueHeavy(Action action)
+        {
+            if (action == null)
+                return;
+
+            _heavyQueue.Enqueue(action);
+        }
+
         [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "MonoBehaviour Callback can't be static")]
         internal void Update()
         {
-            while (_queue.TryDequeue(out var action))
+            Action action;
+            while (_queue.TryDequeue(out action))
+            {
+                action.Invoke();
+            }
+
+            if (_heavyQueue.TryDequeue(out action))
             {
                 action.Invoke();
             }

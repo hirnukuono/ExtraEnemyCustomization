@@ -1,8 +1,10 @@
 ﻿using Agents;
 using EECustom.API;
 using EECustom.Customizations;
+using EECustom.Utils;
 using Enemies;
 using GameData;
+using LevelGeneration;
 using System;
 using System.Collections.Generic;
 
@@ -154,12 +156,30 @@ namespace EECustom.Managers
 
         internal void FireSpawnedEvent(EnemyAgent agent)
         {
-            _enemySpawnedHolder.FireEvent(agent, (e) =>
+            if (Global.UsingSlowSpawnedEvent)
             {
-                e.OnSpawned(agent);
-            });
+                ThreadDispatcher.EnqueueHeavy(() =>
+                {
+                    _enemySpawnedHolder.FireEvent(agent, (e) =>
+                    {
+                        if (agent == null || agent.WasCollected || !agent.Alive)
+                            return;
 
-            CustomizationAPI.OnSpawnCustomizationDone_Internal(agent);
+                        e.OnSpawned(agent);
+                    });
+
+                    CustomizationAPI.OnSpawnCustomizationDone_Internal(agent);
+                });
+            }
+            else
+            {
+                _enemySpawnedHolder.FireEvent(agent, (e) =>
+                {
+                    e.OnSpawned(agent);
+                });
+
+                CustomizationAPI.OnSpawnCustomizationDone_Internal(agent);
+            }
         }
 
         internal void FireDeadEvent(EnemyAgent agent)
