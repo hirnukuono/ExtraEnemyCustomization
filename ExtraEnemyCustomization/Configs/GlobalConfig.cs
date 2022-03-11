@@ -5,8 +5,8 @@ namespace EECustom.Configs
     public sealed class GlobalConfig : Config
     {
         #region Performance
-        [JsonPropertyName("Performance.SlowSpawnedEvent")]
-        public bool UsingSlowSpawnedEvent { get; set; } = false;
+        [JsonPropertyName("Performance.LazySpawnedEvent")]
+        public bool UsingLazySpawnedEvent { get; set; } = true;
         #endregion
 
         #region FlyerStuck

@@ -156,7 +156,7 @@ namespace EECustom.Managers
 
         internal void FireSpawnedEvent(EnemyAgent agent)
         {
-            if (Global.UsingSlowSpawnedEvent)
+            if (Global.UsingLazySpawnedEvent)
             {
                 ThreadDispatcher.EnqueueHeavy(() =>
                 {
