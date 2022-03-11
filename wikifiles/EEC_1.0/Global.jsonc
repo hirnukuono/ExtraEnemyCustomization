@@ -1,5 +1,5 @@
 {
-  "Performance.LazySpawnedEvent": true, //Lazily process OnSpawned Events, Could reduce lag spike on surge alarm / Initial level startup
+  "Performance.LazySpawnedEvent": false, //EXPERIMENTAL::Lazily process OnSpawned Events, Could reduce lag spike on surge alarm / Initial level startup
 
   "Flyer.StuckCheck.Enabled": true, //Using Flyer Stuck Check? (Kill stuck flyer after few seconds)
   "Flyer.StuckCheck.RetryCount": 5, //Check Retry Count

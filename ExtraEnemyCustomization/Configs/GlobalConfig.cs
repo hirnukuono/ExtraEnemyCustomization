@@ -6,7 +6,7 @@ namespace EECustom.Configs
     {
         #region Performance
         [JsonPropertyName("Performance.LazySpawnedEvent")]
-        public bool UsingLazySpawnedEvent { get; set; } = true;
+        public bool UsingLazySpawnedEvent { get; set; } = false;
         #endregion
 
         #region FlyerStuck
