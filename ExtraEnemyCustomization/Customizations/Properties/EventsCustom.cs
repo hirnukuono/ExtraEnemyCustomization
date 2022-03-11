@@ -6,7 +6,7 @@ using System;
 
 namespace EECustom.Customizations.Properties
 {
-    public sealed class EventsCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyAgentModeEvent
+    public sealed class EventsCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyDeadEvent, IEnemyAgentModeEvent
     {
         public EventSetting OnSpawnedEvent { get; set; } = new();
         public EventSetting OnWakeupEvent { get; set; } = new();
@@ -39,11 +39,6 @@ namespace EECustom.Customizations.Properties
                 OnSpawnedEvent.FireEvents();
             }
 
-            if (OnDeadEvent?.Enabled ?? false)
-            {
-                agent.AddOnDeadOnce(OnDeadEvent.FireEvents);
-            }
-
             if (TriggerOnBossDeathEventOnDead)
             {
                 var spawnedNode = agent.GetSpawnedNode();
@@ -69,6 +64,14 @@ namespace EECustom.Customizations.Properties
             if (OnWakeupEvent?.Enabled ?? false)
             {
                 OnWakeupEvent.FireEvents();
+            }
+        }
+
+        public void OnDead(EnemyAgent agent)
+        {
+            if (OnDeadEvent?.Enabled ?? false)
+            {
+                OnDeadEvent.FireEvents();
             }
         }
 

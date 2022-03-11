@@ -43,10 +43,6 @@ namespace EECustom.Customizations.EnemyAbilities
                 OnBehaviourAssigned(agent, newBehaviour, ab);
             }
 
-            agent.AddOnDeadOnce(() =>
-            {
-                OnDead(agent);
-            });
             OnSpawnedPost(agent);
         }
 
@@ -55,10 +51,6 @@ namespace EECustom.Customizations.EnemyAbilities
         }
 
         public virtual void OnSpawnedPost(EnemyAgent agent)
-        {
-        }
-
-        public virtual void OnDead(EnemyAgent agent)
         {
         }
     }

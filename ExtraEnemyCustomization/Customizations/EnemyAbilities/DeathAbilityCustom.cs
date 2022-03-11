@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace EECustom.Customizations.EnemyAbilities
 {
-    public sealed class DeathAbilityCustom : EnemyAbilityCustomBase<DeathAbilitySetting>, IEnemySpawnedEvent
+    public sealed class DeathAbilityCustom : EnemyAbilityCustomBase<DeathAbilitySetting>, IEnemyDeadEvent
     {
         public override string GetProcessName()
         {
             return "DeathAbility";
         }
 
-        public override void OnDead(EnemyAgent agent)
+        public void OnDead(EnemyAgent agent)
         {
             foreach (var ab in Abilities)
             {

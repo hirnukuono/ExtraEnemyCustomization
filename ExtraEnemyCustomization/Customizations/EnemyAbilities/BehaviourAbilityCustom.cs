@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace EECustom.Customizations.EnemyAbilities
 {
-    public sealed class BehaviourAbilityCustom : EnemyAbilityCustomBase<BehaviourAbilitySetting>, IEnemySpawnedEvent
+    public sealed class BehaviourAbilityCustom : EnemyAbilityCustomBase<BehaviourAbilitySetting>
     {
         public override string GetProcessName()
         {
@@ -21,10 +21,6 @@ namespace EECustom.Customizations.EnemyAbilities
                 abSetting.DistanceWithLOS.ShouldCheckLOS = true;
                 abSetting.DistanceWithoutLOS.ShouldCheckLOS = false;
             }
-        }
-
-        public override void OnSpawnedPost(EnemyAgent agent)
-        {
         }
 
         public override void OnBehaviourAssigned(EnemyAgent agent, AbilityBehaviour behaviour, BehaviourAbilitySetting setting)
