@@ -32,6 +32,8 @@ namespace EECustom.Managers
             }
 
             private readonly List<T> _eventList = new();
+            private readonly List<T> _enemyCacheTempList = new();
+            private readonly Dictionary<uint, T[]> _eventsEnemyCache = new();
             private T[] _events = Array.Empty<T>();
             private bool _hasDirty = false;
 
@@ -52,6 +54,7 @@ namespace EECustom.Managers
 
             public void Clear()
             {
+                _eventsEnemyCache.Clear();
                 _eventList.Clear();
                 _hasDirty = true;
             }
@@ -61,9 +64,21 @@ namespace EECustom.Managers
                 if (doAction == null)
                     return;
 
-                var handlers = Events;
-                var length = handlers.Length;
+                bool buildCache = false;
+                bool usingCache = false;
+                if (!_eventsEnemyCache.TryGetValue(agent.EnemyDataID, out var handlers))
+                {
+                    handlers = Events;
 
+                    buildCache = true;
+                    _enemyCacheTempList.Clear();
+                }
+                else
+                {
+                    usingCache = true;
+                }
+
+                var length = handlers.Length;
                 T handler;
                 EnemyCustomBase custom;
                 for (int i = 0; i < length; i++)
@@ -71,12 +86,22 @@ namespace EECustom.Managers
                     handler = handlers[i];
                     custom = handler.Base;
 
-                    if (custom.IsTarget(agent))
+                    if (usingCache || custom.IsTarget(agent))
                     {
+                        if (buildCache)
+                        {
+                            _enemyCacheTempList.Add(handler);
+                        }
+
                         if (!IgnoreLogs && Logger.DevLogAllowed) custom.LogDev($"Apply {EventName} Event: {agent.name}");
                         doAction.Invoke(handler);
                         if (!IgnoreLogs && Logger.VerboseLogAllowed) custom.LogVerbose($"Finished!");
                     }
+                }
+
+                if (buildCache)
+                {
+                    _eventsEnemyCache[agent.EnemyDataID] = _enemyCacheTempList.ToArray();
                 }
             }
         }
