@@ -34,6 +34,8 @@ namespace EECustom.Managers
             private readonly List<T> _eventList = new();
             private readonly List<T> _enemyCacheTempList = new();
             private readonly Dictionary<uint, T[]> _eventsEnemyCache = new();
+            private T _handlerTemp;
+            private EnemyCustomBase _customTemp;
             private T[] _events = Array.Empty<T>();
             private bool _hasDirty = false;
 
@@ -59,49 +61,46 @@ namespace EECustom.Managers
                 _hasDirty = true;
             }
 
+            internal void RegisterCache(uint enemyID, bool forceRebuild)
+            {
+                if (forceRebuild || !_eventsEnemyCache.ContainsKey(enemyID))
+                {
+                    _enemyCacheTempList.Clear();
+
+                    var handlers = Events;
+                    var length = handlers.Length;
+                    for (int i = 0; i < length; i++)
+                    {
+                        _handlerTemp = handlers[i];
+                        _customTemp = _handlerTemp.Base;
+
+                        if (_customTemp.IsTarget(enemyID))
+                        {
+                            _enemyCacheTempList.Add(_handlerTemp);
+                        }
+                    }
+
+                    _eventsEnemyCache[enemyID] = _enemyCacheTempList.ToArray();
+                }
+            }
+
             internal void FireEvent(EnemyAgent agent, Action<T> doAction)
             {
                 if (doAction == null)
                     return;
 
-                bool buildCache = false;
-                bool usingCache = false;
                 if (!_eventsEnemyCache.TryGetValue(agent.EnemyDataID, out var handlers))
-                {
-                    handlers = Events;
-
-                    buildCache = true;
-                    _enemyCacheTempList.Clear();
-                }
-                else
-                {
-                    usingCache = true;
-                }
+                    return;
 
                 var length = handlers.Length;
-                T handler;
-                EnemyCustomBase custom;
                 for (int i = 0; i < length; i++)
                 {
-                    handler = handlers[i];
-                    custom = handler.Base;
+                    _handlerTemp = handlers[i];
+                    _customTemp = _handlerTemp.Base;
 
-                    if (usingCache || custom.IsTarget(agent))
-                    {
-                        if (buildCache)
-                        {
-                            _enemyCacheTempList.Add(handler);
-                        }
-
-                        if (!IgnoreLogs && Logger.DevLogAllowed) custom.LogDev($"Apply {EventName} Event: {agent.name}");
-                        doAction.Invoke(handler);
-                        if (!IgnoreLogs && Logger.VerboseLogAllowed) custom.LogVerbose($"Finished!");
-                    }
-                }
-
-                if (buildCache)
-                {
-                    _eventsEnemyCache[agent.EnemyDataID] = _enemyCacheTempList.ToArray();
+                    if (!IgnoreLogs && Logger.DevLogAllowed) _customTemp.LogDev($"Apply {EventName} Event: {agent.name}");
+                    doAction.Invoke(_handlerTemp);
+                    if (!IgnoreLogs && Logger.VerboseLogAllowed) _customTemp.LogVerbose($"Finished!");
                 }
             }
         }
@@ -133,6 +132,16 @@ namespace EECustom.Managers
             }
         }
 
+        private void CacheEnemyEventBuffer(uint enemyID)
+        {
+            _enemyPrefabBuiltHolder.RegisterCache(enemyID, forceRebuild: false);
+            _enemySpawnedHolder.RegisterCache(enemyID, forceRebuild: false);
+            _enemyDeadHolder.RegisterCache(enemyID, forceRebuild: false);
+            _enemyDespawnedHolder.RegisterCache(enemyID, forceRebuild: false);
+            _enemyModeChangedHolder.RegisterCache(enemyID, forceRebuild: false);
+            _enemyGlowHolder.RegisterCache(enemyID, forceRebuild: false);
+        }
+
         internal void FirePrefabBuildEventAll(bool rebuildPrefabs)
         {
             EnemyDataBlock[] allBlocks = GameDataBlockBase<EnemyDataBlock>.GetAllBlocks();
@@ -161,6 +170,7 @@ namespace EECustom.Managers
                 }
 
                 RegisterTargetEnemyLookup(block);
+                CacheEnemyEventBuffer(block.persistentID);
                 FirePrefabBuiltEvent(enemyAgentComp);
             }
 
