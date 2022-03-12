@@ -136,7 +136,10 @@ namespace EECustom.Customizations.Models
                 scannerManager.InterpDuration = LerpingDuration;
                 scannerManager.UpdateInterval = UpdateInterval;
                 scannerManager.OptimizeOnAwake = OptimizeAfterAwake;
-                scannerManager.UpdateAgentMode(spawnData.mode);
+                if (scannerManager.CurrentMode == AgentMode.Off)
+                {
+                    scannerManager.UpdateAgentMode(spawnData.mode);
+                }
                 scannerManager.Setup();
             }
         }

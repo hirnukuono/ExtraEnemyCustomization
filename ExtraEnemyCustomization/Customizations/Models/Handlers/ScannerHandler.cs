@@ -21,6 +21,8 @@ namespace EECustom.Customizations.Models.Handlers
     [InjectToIl2Cpp]
     internal sealed class ScannerHandler : MonoBehaviour
     {
+        public AgentMode CurrentMode => _agentMode;
+
         public EnemyAgent OwnerAgent;
         public Color DefaultColor;
         public Color WakeupColor;
