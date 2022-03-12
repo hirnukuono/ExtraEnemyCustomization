@@ -6,13 +6,13 @@ using System.Linq;
 
 namespace EECustom.Managers
 {
-    public partial class ConfigManager
+    public static partial class ConfigManager
     {
-        public IEnumerable<EnemyCustomBase> CustomizationBuffer => _customizationBuffer;
+        public static IEnumerable<EnemyCustomBase> CustomizationBuffer => _customizationBuffer;
 
-        private readonly List<EnemyCustomBase> _customizationBuffer = new();
+        private static readonly List<EnemyCustomBase> _customizationBuffer = new();
 
-        private void GenerateBuffer()
+        private static void GenerateBuffer()
         {
             _customizationBuffer.Clear();
 
@@ -38,7 +38,7 @@ namespace EECustom.Managers
             GenerateEventBuffer();
         }
 
-        internal void RegisterTargetEnemyLookup(EnemyDataBlock enemy)
+        internal static void RegisterTargetEnemyLookup(EnemyDataBlock enemy)
         {
             foreach (var custom in _customizationBuffer)
             {

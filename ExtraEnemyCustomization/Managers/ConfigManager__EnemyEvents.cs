@@ -4,13 +4,12 @@ using EECustom.Customizations;
 using EECustom.Utils;
 using Enemies;
 using GameData;
-using LevelGeneration;
 using System;
 using System.Collections.Generic;
 
 namespace EECustom.Managers
 {
-    public partial class ConfigManager
+    public static partial class ConfigManager
     {
         public sealed class EnemyEventHolder<T> where T : class, IEnemyEvent
         {
@@ -105,14 +104,14 @@ namespace EECustom.Managers
             }
         }
 
-        private readonly EnemyEventHolder<IEnemyPrefabBuiltEvent> _enemyPrefabBuiltHolder = new("PrefabBuilt");
-        private readonly EnemyEventHolder<IEnemySpawnedEvent> _enemySpawnedHolder = new("Spawned");
-        private readonly EnemyEventHolder<IEnemyDeadEvent> _enemyDeadHolder = new("Dead");
-        private readonly EnemyEventHolder<IEnemyDespawnedEvent> _enemyDespawnedHolder = new("Despawned");
-        private readonly EnemyEventHolder<IEnemyAgentModeEvent> _enemyModeChangedHolder = new("AgentModeChange", ignoreLogs: true);
-        private readonly EnemyEventHolder<IEnemyGlowEvent> _enemyGlowHolder = new("Glow", ignoreLogs: true);
+        private static readonly EnemyEventHolder<IEnemyPrefabBuiltEvent> _enemyPrefabBuiltHolder = new("PrefabBuilt");
+        private static readonly EnemyEventHolder<IEnemySpawnedEvent> _enemySpawnedHolder = new("Spawned");
+        private static readonly EnemyEventHolder<IEnemyDeadEvent> _enemyDeadHolder = new("Dead");
+        private static readonly EnemyEventHolder<IEnemyDespawnedEvent> _enemyDespawnedHolder = new("Despawned");
+        private static readonly EnemyEventHolder<IEnemyAgentModeEvent> _enemyModeChangedHolder = new("AgentModeChange", ignoreLogs: true);
+        private static readonly EnemyEventHolder<IEnemyGlowEvent> _enemyGlowHolder = new("Glow", ignoreLogs: true);
 
-        private void GenerateEventBuffer()
+        private static void GenerateEventBuffer()
         {
             _enemyPrefabBuiltHolder.Clear();
             _enemySpawnedHolder.Clear();
@@ -132,7 +131,7 @@ namespace EECustom.Managers
             }
         }
 
-        private void CacheEnemyEventBuffer(uint enemyID)
+        private static void CacheEnemyEventBuffer(uint enemyID)
         {
             _enemyPrefabBuiltHolder.RegisterCache(enemyID, forceRebuild: false);
             _enemySpawnedHolder.RegisterCache(enemyID, forceRebuild: false);
@@ -142,7 +141,7 @@ namespace EECustom.Managers
             _enemyGlowHolder.RegisterCache(enemyID, forceRebuild: false);
         }
 
-        internal void FirePrefabBuildEventAll(bool rebuildPrefabs)
+        internal static void FirePrefabBuildEventAll(bool rebuildPrefabs)
         {
             EnemyDataBlock[] allBlocks = GameDataBlockBase<EnemyDataBlock>.GetAllBlocks();
             foreach (var block in allBlocks)
@@ -181,7 +180,7 @@ namespace EECustom.Managers
             }
         }
 
-        internal void FirePrefabBuiltEvent(EnemyAgent agent)
+        internal static void FirePrefabBuiltEvent(EnemyAgent agent)
         {
             _enemyPrefabBuiltHolder.FireEvent(agent, (e) =>
             {
@@ -189,7 +188,7 @@ namespace EECustom.Managers
             });
         }
 
-        internal void FireSpawnedEvent(EnemyAgent agent)
+        internal static void FireSpawnedEvent(EnemyAgent agent)
         {
             if (Global.UsingLazySpawnedEvent)
             {
@@ -217,7 +216,7 @@ namespace EECustom.Managers
             }
         }
 
-        internal void FireDeadEvent(EnemyAgent agent)
+        internal static void FireDeadEvent(EnemyAgent agent)
         {
             _enemyDeadHolder.FireEvent(agent, (e) =>
             {
@@ -225,7 +224,7 @@ namespace EECustom.Managers
             });
         }
 
-        internal void FireDespawnedEvent(EnemyAgent agent)
+        internal static void FireDespawnedEvent(EnemyAgent agent)
         {
             _enemyDespawnedHolder.FireEvent(agent, (e) =>
             {
@@ -233,7 +232,7 @@ namespace EECustom.Managers
             });
         }
 
-        internal void FireAgentModeChangedEvent(EnemyAgent agent, AgentMode newMode)
+        internal static void FireAgentModeChangedEvent(EnemyAgent agent, AgentMode newMode)
         {
             _enemyModeChangedHolder.FireEvent(agent, (e) =>
             {
@@ -241,7 +240,7 @@ namespace EECustom.Managers
             });
         }
 
-        internal bool FireGlowEvent(EnemyAgent agent, ref GlowInfo glowInfo)
+        internal static bool FireGlowEvent(EnemyAgent agent, ref GlowInfo glowInfo)
         {
             bool altered = false;
             var newGlowInfo = new GlowInfo(glowInfo.Color, glowInfo.Position);

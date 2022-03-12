@@ -60,10 +60,7 @@ namespace EECustom.API
 
         public static IEnumerable<EnemyCustomBase> GetCustomizationsOf(uint enemyID, string customizationTypeName)
         {
-            if (ConfigManager.Current == null)
-                return Enumerable.Empty<EnemyCustomBase>();
-
-            var buffer = ConfigManager.Current.CustomizationBuffer;
+            var buffer = ConfigManager.CustomizationBuffer;
 
             if (!buffer.Any())
                 return Enumerable.Empty<EnemyCustomBase>();

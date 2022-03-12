@@ -3,7 +3,7 @@ using System.IO;
 
 namespace EECustom.Managers
 {
-    public partial class ConfigManager
+    public static partial class ConfigManager
     {
         private static void OnConfigFileEdited_ReloadConfig(object sender, FileSystemEventArgs e)
         {

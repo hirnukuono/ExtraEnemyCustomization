@@ -23,7 +23,7 @@ namespace EECustom.Networking
         {
             EnemyAgentModeState.Register(agent.GlobalID, default, (newState) =>
             {
-                ConfigManager.Current.FireAgentModeChangedEvent(agent, newState.mode);
+                ConfigManager.FireAgentModeChangedEvent(agent, newState.mode);
             });
         }
     }

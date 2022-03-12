@@ -15,7 +15,7 @@ namespace EECustom.Inject
         internal static void Pre_InterpolateGlow(ref Color col, ref Vector4 pos, EnemyAppearance __instance)
         {
             var glowInfo = new GlowInfo(col, pos);
-            if (ConfigManager.Current.FireGlowEvent(__instance.m_owner, ref glowInfo))
+            if (ConfigManager.FireGlowEvent(__instance.m_owner, ref glowInfo))
             {
                 col = glowInfo.Color;
                 pos = glowInfo.Position;

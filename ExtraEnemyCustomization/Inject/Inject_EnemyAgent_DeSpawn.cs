@@ -18,7 +18,7 @@ namespace EECustom.Inject
         internal static void Postfix(EnemyAgent __instance)
         {
             EnemyEvents.OnDespawned(__instance);
-            ConfigManager.Current.FireDespawnedEvent(__instance);
+            ConfigManager.FireDespawnedEvent(__instance);
         }
     }
 }
