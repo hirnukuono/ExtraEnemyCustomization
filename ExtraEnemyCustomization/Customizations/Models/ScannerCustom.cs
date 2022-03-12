@@ -23,7 +23,7 @@ namespace EECustom.Customizations.Models
         public float Internal_WakeupSize { get; set; } = 1.0f;
 
         public float LerpingDuration { get; set; } = 0.5f;
-        public float UpdateInterval { get; set; } = 0.05f;
+        public float UpdateInterval { get; set; } = 0.15f;
         public bool OptimizeAfterAwake { get; set; } = true;
 
         public bool UsingDetectionColor { get; set; } = false;

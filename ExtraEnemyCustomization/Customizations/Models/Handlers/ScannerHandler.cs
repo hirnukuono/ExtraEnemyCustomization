@@ -1,7 +1,9 @@
 ﻿using Agents;
+using BepInEx.IL2CPP.Utils;
 using EECustom.Attributes;
 using EECustom.Utils;
 using Enemies;
+using System.Collections;
 using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 
@@ -39,11 +41,9 @@ namespace EECustom.Customizations.Models.Handlers
 
         public bool OptimizeOnAwake = true;
 
+        private Coroutine _colorInterpolationCoroutine;
         private AgentMode _agentMode = AgentMode.Off;
         private EnemyState _currentState = EnemyState.Initial;
-        private bool _interpDone = true;
-        private Timer _interpTimer;
-        private Timer _updateTimer;
         private Color _previousColor = Color.white;
         private Color _doneColor = Color.white;
         private bool _disableScriptAfterDone = false;
@@ -64,7 +64,22 @@ namespace EECustom.Customizations.Models.Handlers
             _isSetup = true;
         }
 
-        internal void Update()
+        internal void OnEnable()
+        {
+            MonoBehaviourExtensions.StartCoroutine(this, UpdateLoop());
+        }
+
+        private IEnumerator UpdateLoop()
+        {
+            while (true)
+            {
+                DoUpdate();
+                yield return new WaitForSeconds(UpdateInterval);
+            }
+        }
+
+        [HideFromIl2Cpp]
+        private void DoUpdate()
         {
             if (!_isSetup)
                 return;
@@ -77,56 +92,46 @@ namespace EECustom.Customizations.Models.Handlers
                 if (OwnerAgent.UpdateMode != NodeUpdateMode.Close)
                     return;
 
-                if (!_updateTimer.TickAndCheckDone())
-                    return;
-
                 UpdateState(out state);
                 if (_currentState != state)
                 {
                     _currentState = state;
-                    _interpDone = true;
-                    _interpTimer.Reset(InterpDuration);
                     OwnerAgent.ScannerColor = GetStateColor(state);
                 }
                 return;
             }
 
             //Visible on Bio-Tracker
-
-            if (!_updateTimer.TickAndCheckDone())
-                return;
-
             UpdateState(out state);
             if (_currentState != state)
             {
                 _currentState = state;
                 _previousColor = OwnerAgent.m_scannerColor;
                 _doneColor = GetStateColor(state);
-                _interpDone = false;
-                _interpTimer.Reset(InterpDuration);
-            }
 
-            if (!_interpDone)
-            {
-                if (_interpTimer.TickAndCheckDone(_updateTimer.PassedTime))
+                if (_colorInterpolationCoroutine != null)
                 {
-                    OwnerAgent.ScannerColor = _doneColor;
-                    _interpDone = true;
-
-                    if (_disableScriptAfterDone)
-                    {
-                        _disableScriptAfterDone = false;
-                        enabled = false;
-                    }
-                    return;
+                    StopCoroutine(_colorInterpolationCoroutine);
                 }
+                _colorInterpolationCoroutine = MonoBehaviourExtensions.StartCoroutine(this, ColorInterpolation());
+            }
+        }
 
-                var progress = _interpTimer.Progress;
+        private IEnumerator ColorInterpolation()
+        {
+            var interpTimer = new Timer(InterpDuration);
+
+            while (!interpTimer.TickAndCheckDone())
+            {
+                var progress = interpTimer.Progress;
                 var newColor = Color.Lerp(_previousColor, _doneColor, progress);
                 OwnerAgent.ScannerColor = newColor;
+                yield return null;
             }
 
-            _updateTimer.Reset(UpdateInterval);
+            OwnerAgent.ScannerColor = _doneColor;
+            _colorInterpolationCoroutine = null;
+            yield return null;
         }
 
         internal void OnDestroy()
