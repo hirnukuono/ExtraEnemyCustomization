@@ -71,10 +71,17 @@ namespace EECustom.Customizations.Models.Handlers
 
         private IEnumerator UpdateLoop()
         {
+            var currentUpdateInterval = UpdateInterval;
+            var yielder = new WaitForSeconds(UpdateInterval);
+
             while (true)
             {
                 DoUpdate();
-                yield return new WaitForSeconds(UpdateInterval);
+                if (currentUpdateInterval != UpdateInterval)
+                {
+                    yielder = new WaitForSeconds(UpdateInterval);
+                }
+                yield return yielder;
             }
         }
 
@@ -97,6 +104,7 @@ namespace EECustom.Customizations.Models.Handlers
                 {
                     _currentState = state;
                     OwnerAgent.ScannerColor = GetStateColor(state);
+                    TryDisable();
                 }
                 return;
             }
@@ -131,7 +139,17 @@ namespace EECustom.Customizations.Models.Handlers
 
             OwnerAgent.ScannerColor = _doneColor;
             _colorInterpolationCoroutine = null;
+            TryDisable();
             yield return null;
+        }
+
+        private void TryDisable()
+        {
+            if (_disableScriptAfterDone)
+            {
+                enabled = false;
+                _disableScriptAfterDone = false;
+            }
         }
 
         internal void OnDestroy()
