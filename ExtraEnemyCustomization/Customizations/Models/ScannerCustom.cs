@@ -108,7 +108,6 @@ namespace EECustom.Customizations.Models
             {
                 //Disallow PathMove ES's Color change
                 case AgentMode.Agressive:
-                case AgentMode.Scout:
                     if (agent.ScannerData.m_soundIndex == -1)
                     {
                         agent.ScannerData.m_soundIndex = 0;
@@ -117,6 +116,12 @@ namespace EECustom.Customizations.Models
                     {
                         agent.ScannerColor = WakeupColor;
                         return;
+                    }
+                    break;
+                case AgentMode.Scout:
+                    if (agent.ScannerData.m_soundIndex == -1)
+                    {
+                        agent.ScannerData.m_soundIndex = 0;
                     }
                     break;
             }
