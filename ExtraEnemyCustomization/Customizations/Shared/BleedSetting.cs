@@ -13,6 +13,7 @@ namespace EECustom.Customizations.Shared
         public float Interval { get; set; } = 0.0f;
         public float Duration { get; set; } = 0.0f;
         public bool HasLiquid { get; set; } = true;
+        public bool CanBeStacked { get; set; } = false;
         public ScreenLiquidSettingName LiquidSetting { get; set; } = ScreenLiquidSettingName.enemyBlood_Squirt;
 
         public void DoBleed(PlayerAgent agent)
@@ -23,6 +24,7 @@ namespace EECustom.Customizations.Shared
                 duration = Duration,
                 damage = Damage.GetAbsValue(PlayerData.MaxHealth),
                 chanceToBleed = ChanceToBleed,
+                doStack = CanBeStacked,
                 liquid = HasLiquid ? LiquidSetting : (ScreenLiquidSettingName)(-1)
             });
         }

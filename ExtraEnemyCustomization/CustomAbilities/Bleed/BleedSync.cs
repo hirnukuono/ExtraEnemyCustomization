@@ -24,7 +24,7 @@ namespace EECustom.CustomAbilities.Bleed
                     if (!Rand.CanDoBy(packet.chanceToBleed))
                         return;
 
-                    GetHandler(agent).DoBleed(packet.damage, packet.interval, packet.duration, packet.liquid);
+                    GetHandler(agent).DoBleed(packet);
                 }
                 else
                 {

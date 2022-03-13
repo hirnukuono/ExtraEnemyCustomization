@@ -35,6 +35,7 @@ namespace EECustom.CustomAbilities.Bleed
         public float duration;
         public float damage;
         public float chanceToBleed;
+        public bool doStack;
         public ScreenLiquidSettingName liquid;
     }
 }
