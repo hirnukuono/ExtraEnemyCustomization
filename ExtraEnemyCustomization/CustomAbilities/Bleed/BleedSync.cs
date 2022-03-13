@@ -9,9 +9,7 @@ namespace EECustom.CustomAbilities.Bleed
     internal sealed class BleedSync : SyncedPlayerEvent<BleedingData>
     {
         public override string GUID => "BLD";
-
         public override bool SendToTargetOnly => true;
-
         public override bool AllowBots => false;
 
         protected override void Receive(BleedingData packet, SNet_Player receivedPlayer)
