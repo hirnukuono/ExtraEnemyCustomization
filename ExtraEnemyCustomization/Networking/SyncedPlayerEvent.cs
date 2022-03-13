@@ -12,14 +12,6 @@ namespace EECustom.Networking
         public ulong lookup;
         public T packet;
 
-        public void SetPlayer(SNet_Player player)
-        {
-            if (player != null)
-            {
-                lookup = player.Lookup;
-            }
-        }
-
         public bool TryGetPlayer(out SNet_Player player)
         {
             if (lookup == 0UL)
