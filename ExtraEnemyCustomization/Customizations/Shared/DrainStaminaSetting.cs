@@ -13,9 +13,8 @@ namespace EECustom.Customizations.Shared
 
         public void DoDrain(PlayerAgent agent)
         {
-            DrainStaminaManager.DoDrain(new DrainStaminaData()
+            DrainStaminaManager.DoDrain(agent, new DrainStaminaData()
             {
-                playerSlot = agent.PlayerSlotIndex,
                 amount = DrainAmount,
                 amountInCombat = DrainAmountInCombat,
                 resetRecover = ResetRecoverTimer,

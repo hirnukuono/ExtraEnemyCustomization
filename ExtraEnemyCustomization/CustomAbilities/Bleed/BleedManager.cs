@@ -1,4 +1,5 @@
 ﻿using EECustom.Attributes;
+using Player;
 
 namespace EECustom.CustomAbilities.Bleed
 {
@@ -12,16 +13,15 @@ namespace EECustom.CustomAbilities.Bleed
             Sync.Setup();
         }
 
-        public static void DoBleed(BleedingData data)
+        public static void DoBleed(PlayerAgent agent, BleedingData data)
         {
-            Sync.Send(data);
+            Sync.SendToPlayer(data, agent);
         }
 
-        public static void StopBleed(int playerIndex)
+        public static void StopBleed(PlayerAgent agent)
         {
-            DoBleed(new BleedingData()
+            DoBleed(agent, new BleedingData()
             {
-                playerSlot = playerIndex,
                 interval = 0.0f,
                 duration = -1.0f,
                 damage = 0
@@ -31,7 +31,6 @@ namespace EECustom.CustomAbilities.Bleed
 
     public struct BleedingData
     {
-        public int playerSlot;
         public float interval;
         public float duration;
         public float damage;

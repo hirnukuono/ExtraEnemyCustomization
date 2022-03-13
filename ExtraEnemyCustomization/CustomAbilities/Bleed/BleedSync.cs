@@ -2,51 +2,47 @@
 using EECustom.Networking;
 using EECustom.Utils;
 using Player;
+using SNetwork;
 
 namespace EECustom.CustomAbilities.Bleed
 {
-    internal sealed class BleedSync : SyncedEvent<BleedingData>
+    internal sealed class BleedSync : SyncedPlayerEvent<BleedingData>
     {
-        private static PlayerAgent _localAgent = null;
-        private static BleedHandler _handler = null;
-
         public override string GUID => "BLD";
 
-        public override void Receive(BleedingData packet)
+        public override bool SendToTargetOnly => true;
+
+        public override bool AllowBots => false;
+
+        protected override void Receive(BleedingData packet, SNet_Player receivedPlayer)
         {
-            if (!PlayerManager.HasLocalPlayerAgent())
-                return;
-
-            _localAgent = PlayerManager.GetLocalPlayerAgent();
-            if (_localAgent.PlayerSlotIndex != packet.playerSlot)
-                return;
-
-            Logger.Verbose($"Bleed Received: [{packet.playerSlot}] {packet.damage} {packet.interval} {packet.duration}");
-
-            if (packet.duration >= 0.0f)
+            if (TryGetPlayerAgent(receivedPlayer, out var agent))
             {
-                if (!Rand.CanDoBy(packet.chanceToBleed))
-                    return;
+                Logger.Verbose($"Bleed Received: [{agent.PlayerSlotIndex}] {packet.damage} {packet.interval} {packet.duration}");
 
-                UpdateHandler();
-                _handler.DoBleed(packet.damage, packet.interval, packet.duration, packet.liquid);
-            }
-            else
-            {
-                UpdateHandler();
-                _handler.StopBleed();
-            }
+                if (packet.duration >= 0.0f)
+                {
+                    if (!Rand.CanDoBy(packet.chanceToBleed))
+                        return;
+
+                    GetHandler(agent).DoBleed(packet.damage, packet.interval, packet.duration, packet.liquid);
+                }
+                else
+                {
+                    GetHandler(agent).StopBleed();
+                }
+            } 
         }
 
-        private static void UpdateHandler()
+        private static BleedHandler GetHandler(PlayerAgent agent)
         {
-            _handler = _localAgent.gameObject.GetComponent<BleedHandler>();
-
-            if (_handler == null)
+            var handler = agent.gameObject.GetComponent<BleedHandler>();
+            if (handler == null)
             {
-                _handler = _localAgent.gameObject.AddComponent<BleedHandler>();
+                handler = agent.gameObject.AddComponent<BleedHandler>();
             }
-            _handler.Agent = _localAgent;
+            handler.Agent = agent;
+            return handler;
         }
     }
 }

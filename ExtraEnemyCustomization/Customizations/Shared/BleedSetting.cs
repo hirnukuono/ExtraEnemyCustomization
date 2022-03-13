@@ -17,9 +17,8 @@ namespace EECustom.Customizations.Shared
 
         public void DoBleed(PlayerAgent agent)
         {
-            BleedManager.DoBleed(new BleedingData()
+            BleedManager.DoBleed(agent, new BleedingData()
             {
-                playerSlot = agent.PlayerSlotIndex,
                 interval = Interval,
                 duration = Duration,
                 damage = Damage.GetAbsValue(PlayerData.MaxHealth),
@@ -30,7 +29,7 @@ namespace EECustom.Customizations.Shared
 
         public static void StopBleed(PlayerAgent agent)
         {
-            BleedManager.StopBleed(agent.PlayerSlotIndex);
+            BleedManager.StopBleed(agent);
         }
     }
 }

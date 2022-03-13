@@ -8,6 +8,8 @@ namespace EECustom.Networking
 {
     public static class NetworkManager
     {
+        public const ulong LOWEST_STEAMID64 = 0x0110000100000001;
+
         public static EnemyAgentModeReplicator EnemyAgentModeState { get; private set; } = new();
         public static EnemyAnimEvent EnemyAnim { get; private set; } = new();
 

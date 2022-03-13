@@ -1,4 +1,5 @@
 ﻿using EECustom.Attributes;
+using Player;
 
 namespace EECustom.CustomAbilities.DrainStamina
 {
@@ -12,15 +13,14 @@ namespace EECustom.CustomAbilities.DrainStamina
             Sync.Setup();
         }
 
-        public static void DoDrain(DrainStaminaData data)
+        public static void DoDrain(PlayerAgent agent, DrainStaminaData data)
         {
-            Sync.Send(data);
+            Sync.SendToPlayer(data, agent);
         }
     }
 
     public struct DrainStaminaData
     {
-        public int playerSlot;
         public float amount;
         public float amountInCombat;
         public bool resetRecover;
