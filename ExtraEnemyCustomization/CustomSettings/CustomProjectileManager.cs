@@ -135,6 +135,18 @@ namespace EECustom.CustomSettings
 
                     _instanceProjLookup[instanceID] = this;
 
+                    if (Settings?.SpeedChange?.Enabled ?? false)
+                    {
+                        var progress = 0.0f;
+                        var originalSpeed = projectile.Speed;
+                        MonoBehaviourEventHandler.AttatchToObject(gameObject, onUpdate: (_) =>
+                        {
+                            var multi = Settings.SpeedChange.EvaluateMultiplier(progress);
+                            projectile.Speed = originalSpeed * multi;
+                            progress += Time.deltaTime;
+                        });
+                    }
+
                     MonoBehaviourEventHandler.AttatchToObject(gameObject, onDestroyed: (_) =>
                     {
                         RemoveInstanceLookup(instanceID);
