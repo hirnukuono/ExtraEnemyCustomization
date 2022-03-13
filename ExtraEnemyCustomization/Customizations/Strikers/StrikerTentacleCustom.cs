@@ -70,12 +70,12 @@ namespace EECustom.Customizations.Strikers
 
             public EaseFunc GetInEaseFunction()
             {
-                return EasingUtil.GetEaseFunction(InEaseType);
+                return InEaseType.GetEaseFunction();
             }
 
             public EaseFunc GetOutEaseFunction()
             {
-                return EasingUtil.GetEaseFunction(OutEaseType);
+                return OutEaseType.GetEaseFunction();
             }
         }
     }

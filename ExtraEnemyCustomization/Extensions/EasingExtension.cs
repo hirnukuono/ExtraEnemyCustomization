@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace EECustom.Utils
+namespace EECustom
 {
     using EaseFunc = Func<float, float, float, float, float>;
 
-    public static class EasingUtil
+    public static class EasingExtension
     {
-        public static EaseFunc GetEaseFunction(eEasingType easeType)
+        public static EaseFunc GetEaseFunction(this eEasingType easeType)
         {
             return easeType switch
             {
