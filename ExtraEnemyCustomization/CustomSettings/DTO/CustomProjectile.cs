@@ -12,6 +12,7 @@ namespace EECustom.CustomSettings.DTO
         public ValueBase Speed { get; set; } = ValueBase.Unchanged;
         public MultiplierShiftSetting SpeedChange { get; set; } = new();
         public ValueBase HomingStrength { get; set; } = ValueBase.Unchanged;
+        public MultiplierShiftSetting HomingStrengthChange { get; set; } = new();
         public Color GlowColor { get; set; } = Color.yellow;
         public ValueBase GlowRange { get; set; } = ValueBase.Unchanged;
         public ValueBase Damage { get; set; } = ValueBase.Unchanged;

@@ -135,21 +135,34 @@ namespace EECustom.CustomSettings
 
                     _instanceProjLookup[instanceID] = this;
 
+                    UnityEventHandler update = null;
                     if (Settings?.SpeedChange?.Enabled ?? false)
                     {
                         Settings.SpeedChange.CalcInv();
-
                         var progress = 0.0f;
                         var originalSpeed = projectile.Speed;
-                        MonoBehaviourEventHandler.AttatchToObject(gameObject, onUpdate: (_) =>
+                        update += (_) =>
                         {
                             var multi = Settings.SpeedChange.EvaluateMultiplier(progress);
                             projectile.Speed = originalSpeed * multi;
                             progress += Time.deltaTime;
-                        });
+                        };
                     }
 
-                    MonoBehaviourEventHandler.AttatchToObject(gameObject, onDestroyed: (_) =>
+                    if (Settings?.HomingStrengthChange?.Enabled ?? false)
+                    {
+                        Settings.HomingStrengthChange.CalcInv();
+                        var progress = 0.0f;
+                        var originalHoming = projectile.TargetStrength;
+                        update += (_) =>
+                        {
+                            var multi = Settings.HomingStrengthChange.EvaluateMultiplier(progress);
+                            projectile.TargetStrength = originalHoming * multi;
+                            progress += Time.deltaTime;
+                        };
+                    }
+
+                    MonoBehaviourEventHandler.AttatchToObject(gameObject, onUpdate: update, onDestroyed: (_) =>
                     {
                         RemoveInstanceLookup(instanceID);
                     });
