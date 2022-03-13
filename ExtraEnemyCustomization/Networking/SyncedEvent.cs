@@ -51,11 +51,11 @@ namespace EECustom.Networking
             OnReceive?.Invoke(packet);
         }
 
-        public virtual void ReceiveLocal(T packet)
+        protected virtual void ReceiveLocal(T packet)
         {
         }
 
-        public virtual void Receive(T packet)
+        protected virtual void Receive(T packet)
         {
         }
 

@@ -6,7 +6,7 @@ namespace EECustom.CustomAbilities.Explosion
     {
         public override string GUID => "EXP";
 
-        public override void Receive(ExplosionData packet)
+        protected override void Receive(ExplosionData packet)
         {
             Logger.Verbose($"Explosion Received: [{packet.position}] {packet.damage} {packet.enemyMulti} {packet.minRange} {packet.maxRange}");
             ExplosionManager.Internal_TriggerExplosion(packet.position, packet.damage, packet.enemyMulti, packet.minRange, packet.maxRange);

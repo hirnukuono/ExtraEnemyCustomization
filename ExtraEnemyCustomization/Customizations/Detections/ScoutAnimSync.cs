@@ -42,7 +42,7 @@ namespace EECustom.Customizations.Detections
             Send(packet);
         }
 
-        public override void Receive(Packet packet)
+        protected override void Receive(Packet packet)
         {
             if (!EnemyProperty<ScoutAnimOverrideProperty>.TryGet(packet.enemyID, out var data))
                 return;

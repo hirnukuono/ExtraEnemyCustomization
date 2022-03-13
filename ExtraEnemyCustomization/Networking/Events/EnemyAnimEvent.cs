@@ -7,7 +7,7 @@ namespace EECustom.Networking.Events
     {
         public override string GUID => "EAE";
 
-        public override void Receive(Packet packet)
+        protected override void Receive(Packet packet)
         {
             SNet_Replication.TryGetReplicator(packet.enemyID, out var replicator);
             if (replicator == null)
