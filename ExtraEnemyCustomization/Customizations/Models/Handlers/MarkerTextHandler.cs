@@ -18,6 +18,8 @@ namespace EECustom.Customizations.Models.Handlers
         public NavMarker Marker;
         private string _baseText;
         private bool[] _hasFormat = null;
+        private bool _shouldUpdateRainbow = false;
+        private Color _rainbow;
 
         private static readonly MarkerFormatText[] _valuesOfEnum = null;
         private static readonly string[] _formatString = null;
@@ -47,7 +49,7 @@ namespace EECustom.Customizations.Models.Handlers
         }
 
         [HideFromIl2Cpp]
-        internal void StartUpdate(string baseText)
+        internal void ChangeBaseText(string baseText)
         {
             _baseText = baseText;
             _hasFormat = new bool[_valuesOfEnum.Length];
@@ -61,6 +63,13 @@ namespace EECustom.Customizations.Models.Handlers
                         case MarkerFormatText.NAME:
                             _baseText = _baseText.Replace(_formatString[i], Agent.EnemyData.name, StringComparison.OrdinalIgnoreCase);
                             _hasFormat[i] = false;
+                            break;
+
+                        case MarkerFormatText.GAMING:
+                            _baseText = _baseText.Replace(_formatString[i], _formatString[i], StringComparison.OrdinalIgnoreCase);
+                            _hasFormat[i] = true;
+                            hasAnyFormatText = true;
+                            _shouldUpdateRainbow = true;
                             break;
 
                         default:
@@ -86,6 +95,10 @@ namespace EECustom.Customizations.Models.Handlers
         internal void OnEnable()
         {
             StopAllCoroutines();
+            if (_shouldUpdateRainbow)
+            {
+                MonoBehaviourExtensions.StartCoroutine(this, GamingMoment());
+            }
             MonoBehaviourExtensions.StartCoroutine(this, UpdateText());
         }
 
@@ -93,6 +106,7 @@ namespace EECustom.Customizations.Models.Handlers
         {
             var oldText = string.Empty;
             var textBuilder = new StringBuilder(_baseText);
+
             while (true)
             {
                 for (int i = 1 /*Skips None*/; i < _valuesOfEnum.Length; i++)
@@ -110,6 +124,7 @@ namespace EECustom.Customizations.Models.Handlers
                         MarkerFormatText.HP_MAX_ROUND => Mathf.RoundToInt(Agent.Damage.HealthMax).ToString(),
                         MarkerFormatText.HP_PERCENT => (Agent.Damage.Health / Agent.Damage.HealthMax * 100.0f).ToString("0.00"),
                         MarkerFormatText.HP_PERCENT_ROUND => Mathf.RoundToInt(Agent.Damage.Health / Agent.Damage.HealthMax * 100.0f).ToString(),
+                        MarkerFormatText.GAMING => ColorUtility.ToHtmlStringRGB(_rainbow),
                         _ => string.Empty,
                     };
 
@@ -133,6 +148,15 @@ namespace EECustom.Customizations.Models.Handlers
             }
         }
 
+        private IEnumerator GamingMoment()
+        {
+            while (true)
+            {
+                _rainbow = Color.HSVToRGB(Mathf.Repeat(Clock.ExpeditionProgressionTime, 1.0f), 1.0f, 1.0f);
+                yield return null;
+            }
+        }
+
         internal void OnDestroy()
         {
             Agent = null;
@@ -150,6 +174,7 @@ namespace EECustom.Customizations.Models.Handlers
         HP_MAX,
         HP_MAX_ROUND,
         HP_PERCENT,
-        HP_PERCENT_ROUND
+        HP_PERCENT_ROUND,
+        GAMING //yes
     }
 }

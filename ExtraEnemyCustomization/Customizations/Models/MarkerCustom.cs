@@ -86,7 +86,7 @@ namespace EECustom.Customizations.Models
                     }
 
                     handler.Marker = marker;
-                    handler.StartUpdate(MarkerText);
+                    handler.ChangeBaseText(MarkerText);
                 }
                 else
                 {
