@@ -82,9 +82,7 @@ namespace EECustom.CustomSettings
             _projDataLookup.Add(projInfo.ID, new ProjectileData()
             {
                 Prefab = newPrefab,
-                Explosion = projInfo.Explosion,
-                Knockback = projInfo.Knockback,
-                Bleed = projInfo.Bleed
+                Settings = projInfo
             });
             Logger.Debug($"Added Projectile!: {projInfo.ID} ({projInfo.DebugName})");
         }
@@ -126,9 +124,7 @@ namespace EECustom.CustomSettings
         public class ProjectileData
         {
             public GameObject Prefab;
-            public ExplosionSetting Explosion;
-            public KnockbackSetting Knockback;
-            public BleedSetting Bleed;
+            public CustomProjectile Settings;
 
             public void RegisterInstance(GameObject gameObject)
             {

@@ -18,5 +18,28 @@ namespace EECustom.CustomSettings.DTO
         public ExplosionSetting Explosion { get; set; } = new();
         public KnockbackSetting Knockback { get; set; } = new();
         public BleedSetting Bleed { get; set; } = new();
+        public DrainStaminaSetting DrainStamina { get; set; } = new();
+
+        public void Collision(Vector3 projectilePosition, RaycastHit hit)
+        {
+            if (Explosion?.Enabled ?? false)
+                Explosion.DoExplode(projectilePosition);
+
+            var baseAgent = hit.collider?.GetComponent<IDamageable>()?.GetBaseAgent() ?? null;
+            if (baseAgent == null)
+                return;
+
+            if (!baseAgent.TryCastToPlayerAgent(out var agent))
+                return;
+
+            if (Knockback?.Enabled ?? false)
+                Knockback.DoKnockbackIgnoreDistance(projectilePosition, agent);
+
+            if (Bleed?.Enabled ?? false)
+                Bleed.DoBleed(agent);
+
+            if (DrainStamina?.Enabled ?? false)
+                DrainStamina.DoDrain(agent);
+        }
     }
 }
