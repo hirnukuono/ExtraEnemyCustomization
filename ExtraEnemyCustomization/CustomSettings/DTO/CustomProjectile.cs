@@ -66,7 +66,7 @@ namespace EECustom.CustomSettings.DTO
                     RepeatMode.Unclamped => Mathf.LerpUnclamped(MinMulti, MaxMulti, Ease(progress * _durationInv)),
                     RepeatMode.PingPong => Mathf.Lerp(MinMulti, MaxMulti, Ease(Mathf.PingPong(progress * _durationInv, 1.0f))),
                     RepeatMode.Repeat => Mathf.Lerp(MinMulti, MaxMulti, Ease(Mathf.Repeat(progress * _durationInv, 1.0f))),
-                    _ => Mathf.Lerp(MinMulti, MaxMulti, Ease(progress * _durationInv)) //Clamped, Etc
+                    _ => Mathf.LerpUnclamped(MinMulti, MaxMulti, Mathf.Clamp01(Ease(progress * _durationInv))) //Clamped, Etc
                 };
             }
 
