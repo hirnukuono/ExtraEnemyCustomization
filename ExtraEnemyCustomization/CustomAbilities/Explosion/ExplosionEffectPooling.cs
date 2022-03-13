@@ -19,7 +19,7 @@ namespace EECustom.CustomAbilities.Explosion
         private static ExplosionEffectHandler CreatePoolObject()
         {
             var newObject = new GameObject();
-            UnityEngine.Object.DontDestroyOnLoad(newObject);
+            Object.DontDestroyOnLoad(newObject);
 
             var effectHandler = newObject.AddComponent<ExplosionEffectHandler>();
             newObject.SetActive(false);
