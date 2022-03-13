@@ -36,7 +36,6 @@ namespace EECustom.CustomAbilities.Bleed.Handlers
             if (bleedData.doStack)
             {
                 MonoBehaviourExtensions.StartCoroutine(this, DoStackableBleed(bleedData));
-                _bleedRoutineCounter++;
             }
             else
             {
@@ -44,14 +43,14 @@ namespace EECustom.CustomAbilities.Bleed.Handlers
                 {
                     StopCoroutine(_globalBleedRoutine);
                 }
-
                 _globalBleedRoutine = MonoBehaviourExtensions.StartCoroutine(this, DoGlobalBleed(bleedData));
-                _globalBleedRunning = true;
             }
         }
 
         private IEnumerator DoGlobalBleed(BleedingData bleedData)
         {
+            _globalBleedRunning = true;
+
             var intervalYielder = new WaitForSeconds(bleedData.interval);
             var timer = 0.0f;
 
@@ -82,6 +81,8 @@ namespace EECustom.CustomAbilities.Bleed.Handlers
 
         private IEnumerator DoStackableBleed(BleedingData bleedData)
         {
+            _bleedRoutineCounter++;
+
             var intervalYielder = new WaitForSeconds(bleedData.interval);
             var timer = 0.0f;
 
@@ -102,6 +103,7 @@ namespace EECustom.CustomAbilities.Bleed.Handlers
                 timer += bleedData.interval;
                 yield return intervalYielder;
             }
+
             _bleedRoutineCounter--;
 
             Inject_PUI_LocalPlayerStatus.IsBleeding = _globalBleedRunning || _bleedRoutineCounter > 0;
