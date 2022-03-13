@@ -137,6 +137,8 @@ namespace EECustom.CustomSettings
 
                     if (Settings?.SpeedChange?.Enabled ?? false)
                     {
+                        Settings.SpeedChange.CalcInv();
+
                         var progress = 0.0f;
                         var originalSpeed = projectile.Speed;
                         MonoBehaviourEventHandler.AttatchToObject(gameObject, onUpdate: (_) =>
