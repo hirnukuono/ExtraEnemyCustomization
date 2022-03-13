@@ -59,12 +59,13 @@ namespace EECustom.CustomAbilities.Bleed.Handlers
 
             while (timer < bleedData.duration)
             {
+                if (hasLiquid)
+                {
+                    ScreenLiquidManager.DirectApply(liquid, new Vector2(Rand.Range(0.3f, 0.7f), Rand.Range(0.3f, 0.7f)), Vector2.down);
+                }
+
                 if (Agent.Alive)
                 {
-                    if (hasLiquid)
-                    {
-                        ScreenLiquidManager.DirectApply(liquid, new Vector2(Rand.Range(0.3f, 0.7f), Rand.Range(0.3f, 0.7f)), Vector2.down);
-                    }
                     Agent.Damage.FireDamage(bleedData.damage, Agent);
                 }
 
@@ -91,12 +92,13 @@ namespace EECustom.CustomAbilities.Bleed.Handlers
 
             while (timer < bleedData.duration)
             {
+                if (hasLiquid)
+                {
+                    ScreenLiquidManager.DirectApply(liquid, new Vector2(Rand.Range(0.3f, 0.7f), Rand.Range(0.3f, 0.7f)), Vector2.down);
+                }
+
                 if (Agent.Alive)
                 {
-                    if (hasLiquid)
-                    {
-                        ScreenLiquidManager.DirectApply(liquid, new Vector2(Rand.Range(0.3f, 0.7f), Rand.Range(0.3f, 0.7f)), Vector2.down);
-                    }
                     Agent.Damage.FireDamage(bleedData.damage, Agent);
                 }
 
