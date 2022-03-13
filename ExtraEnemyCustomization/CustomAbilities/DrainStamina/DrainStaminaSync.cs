@@ -14,7 +14,9 @@ namespace EECustom.CustomAbilities.DrainStamina
         {
             if (TryGetPlayerAgent(receivedPlayer, out var agent))
             {
-                Logger.Debug($"DrainStamina [{agent.PlayerSlotIndex} {packet.amount} {packet.amountInCombat}]");
+                if (Logger.VerboseLogAllowed)
+                    Logger.Verbose($"DrainStamina [{agent.PlayerSlotIndex} {packet.amount} {packet.amountInCombat}]");
+
                 agent.Stamina.UseStamina(new PlayerStamina.ActionCost()
                 {
                     baseStaminaCostOutOfCombat = packet.amount,

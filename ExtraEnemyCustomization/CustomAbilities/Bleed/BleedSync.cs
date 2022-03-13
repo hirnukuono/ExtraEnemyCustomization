@@ -18,7 +18,8 @@ namespace EECustom.CustomAbilities.Bleed
         {
             if (TryGetPlayerAgent(receivedPlayer, out var agent))
             {
-                Logger.Verbose($"Bleed Received: [{agent.PlayerSlotIndex}] {packet.damage} {packet.interval} {packet.duration}");
+                if (Logger.VerboseLogAllowed)
+                    Logger.Verbose($"Bleed Received: [{agent.PlayerSlotIndex}] {packet.damage} {packet.interval} {packet.duration}");
 
                 if (packet.duration >= 0.0f)
                 {
