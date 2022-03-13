@@ -138,12 +138,12 @@ namespace EECustom.CustomSettings
                     UnityEventHandler update = null;
                     if (Settings?.SpeedChange?.Enabled ?? false)
                     {
-                        Settings.SpeedChange.CalcInv();
+                        var inv = 1.0f / Settings.SpeedChange.Duration;
                         var progress = 0.0f;
                         var originalSpeed = projectile.Speed;
                         update += (_) =>
                         {
-                            var multi = Settings.SpeedChange.EvaluateMultiplier(progress);
+                            var multi = Settings.SpeedChange.EvaluateMultiplier(progress * inv);
                             projectile.Speed = originalSpeed * multi;
                             progress += Time.deltaTime;
                         };
@@ -151,12 +151,12 @@ namespace EECustom.CustomSettings
 
                     if (Settings?.HomingStrengthChange?.Enabled ?? false)
                     {
-                        Settings.HomingStrengthChange.CalcInv();
+                        var inv = 1.0f / Settings.SpeedChange.Duration;
                         var progress = 0.0f;
                         var originalHoming = projectile.TargetStrength;
                         update += (_) =>
                         {
-                            var multi = Settings.HomingStrengthChange.EvaluateMultiplier(progress);
+                            var multi = Settings.HomingStrengthChange.EvaluateMultiplier(progress * inv);
                             projectile.TargetStrength = originalHoming * multi;
                             progress += Time.deltaTime;
                         };

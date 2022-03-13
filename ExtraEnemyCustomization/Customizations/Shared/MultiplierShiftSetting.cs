@@ -14,21 +14,14 @@ namespace EECustom.Customizations.Shared
         public eEasingType EasingMode { get; set; } = eEasingType.Linear;
         public RepeatMode Mode { get; set; } = RepeatMode.Clamped;
 
-        private float _durationInv = 0.0f;
-
-        public void CalcInv()
-        {
-            _durationInv = 1.0f / Duration;
-        }
-
         public float EvaluateMultiplier(float progress)
         {
             return Mode switch
             {
-                RepeatMode.Unclamped => Mathf.LerpUnclamped(MinMulti, MaxMulti, Ease(progress * _durationInv)),
-                RepeatMode.PingPong => Mathf.Lerp(MinMulti, MaxMulti, Ease(Mathf.PingPong(progress * _durationInv, 1.0f))),
-                RepeatMode.Repeat => Mathf.Lerp(MinMulti, MaxMulti, Ease(Mathf.Repeat(progress * _durationInv, 1.0f))),
-                _ => Mathf.LerpUnclamped(MinMulti, MaxMulti, Mathf.Clamp01(Ease(progress * _durationInv))) //Clamped, Etc
+                RepeatMode.Unclamped => Mathf.LerpUnclamped(MinMulti, MaxMulti, Ease(progress)),
+                RepeatMode.PingPong => Mathf.Lerp(MinMulti, MaxMulti, Ease(Mathf.PingPong(progress, 1.0f))),
+                RepeatMode.Repeat => Mathf.Lerp(MinMulti, MaxMulti, Ease(Mathf.Repeat(progress, 1.0f))),
+                _ => Mathf.LerpUnclamped(MinMulti, MaxMulti, Mathf.Clamp01(Ease(progress))) //Clamped, Etc
             };
         }
 
