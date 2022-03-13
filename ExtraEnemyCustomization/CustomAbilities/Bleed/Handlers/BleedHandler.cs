@@ -77,6 +77,7 @@ namespace EECustom.CustomAbilities.Bleed.Handlers
             _globalBleedRoutine = null;
 
             Inject_PUI_LocalPlayerStatus.IsBleeding = _globalBleedRunning || _bleedRoutineCounter > 0;
+            GuiManager.PlayerLayer.UpdateHealth(Agent.Damage.GetHealthRel(), Agent.MeleeBuffTimer > Clock.Time);
         }
 
         private IEnumerator DoStackableBleed(BleedingData bleedData)
@@ -104,6 +105,7 @@ namespace EECustom.CustomAbilities.Bleed.Handlers
             _bleedRoutineCounter--;
 
             Inject_PUI_LocalPlayerStatus.IsBleeding = _globalBleedRunning || _bleedRoutineCounter > 0;
+            GuiManager.PlayerLayer.UpdateHealth(Agent.Damage.GetHealthRel(), Agent.MeleeBuffTimer > Clock.Time);
         }
 
         [HideFromIl2Cpp]
