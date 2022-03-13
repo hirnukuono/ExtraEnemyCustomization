@@ -11,6 +11,8 @@ namespace EECustom.Customizations.Shared
         public float MinMulti { get; set; } = 1.0f;
         public float MaxMulti { get; set; } = 1.0f;
         public float Duration { get; set; } = 1.0f;
+        public bool StopAfterDuration { get; set; } = true;
+        public float StopMulti { get; set; } = 1.0f;
         public eEasingType EasingMode { get; set; } = eEasingType.Linear;
         public RepeatMode Mode { get; set; } = RepeatMode.Clamped;
 

@@ -138,12 +138,27 @@ namespace EECustom.CustomSettings
                     UnityEventHandler update = null;
                     if (Settings?.SpeedChange?.Enabled ?? false)
                     {
-                        var inv = 1.0f / Settings.SpeedChange.Duration;
+                        var speedChange = Settings.SpeedChange;
+                        var inv = 1.0f / speedChange.Duration;
                         var progress = 0.0f;
                         var originalSpeed = projectile.Speed;
+                        var enabled = true;
                         update += (_) =>
                         {
-                            var multi = Settings.SpeedChange.EvaluateMultiplier(progress * inv);
+                            if (!enabled)
+                                return;
+
+                            if (speedChange.StopAfterDuration)
+                            {
+                                if (progress >= speedChange.Duration)
+                                {
+                                    projectile.Speed = originalSpeed * speedChange.StopMulti;
+                                    enabled = false;
+                                    return;
+                                }
+                            }
+
+                            var multi = speedChange.EvaluateMultiplier(progress * inv);
                             projectile.Speed = originalSpeed * multi;
                             progress += Time.deltaTime;
                         };
@@ -151,12 +166,27 @@ namespace EECustom.CustomSettings
 
                     if (Settings?.HomingStrengthChange?.Enabled ?? false)
                     {
-                        var inv = 1.0f / Settings.SpeedChange.Duration;
+                        var homingChange = Settings.HomingStrengthChange;
+                        var inv = 1.0f / homingChange.Duration;
                         var progress = 0.0f;
                         var originalHoming = projectile.TargetStrength;
+                        var enabled = true;
                         update += (_) =>
                         {
-                            var multi = Settings.HomingStrengthChange.EvaluateMultiplier(progress * inv);
+                            if (!enabled)
+                                return;
+
+                            if (homingChange.StopAfterDuration)
+                            {
+                                if (progress >= homingChange.Duration)
+                                {
+                                    projectile.Speed = originalHoming * homingChange.StopMulti;
+                                    enabled = false;
+                                    return;
+                                }
+                            }
+
+                            var multi = homingChange.EvaluateMultiplier(progress * inv);
                             projectile.TargetStrength = originalHoming * multi;
                             progress += Time.deltaTime;
                         };
