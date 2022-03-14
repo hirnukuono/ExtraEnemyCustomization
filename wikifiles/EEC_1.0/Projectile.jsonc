@@ -96,7 +96,58 @@
       "ID": 50, //Do not overlap with existing one (0~12), It also should be between 0~255 (byte type)
       "BaseProjectile": "TargetingSmall", //It should be from existing projectile
       "Speed": "80%", //BasedValue (Based on base projectile speed): Speed of Projectile, meter/s I guess
+      "SpeedChange": {
+        "Enabled": true,
+        "MinMulti": -0.2, //Min Multiplier
+        "MaxMulti": 0.4, //Max Multiplier
+        "Duration": 2.0, //Duration of full effect
+        "StopAfterDuration": false, //Stop Changing speed after duration
+        "StopMulti": 0.0, //Specify Multiplier
+        "EasingMode": "Linear", //Easing type for Min-Max Transition
+        /*Possible Ease Type
+				Preview: https://matthewlein.com/tools/ceaser
+          Linear = 0
+          EaseInQuad = 1
+          EaseOutQuad
+          EaseInOutQuad
+          EaseInCubic = 4
+          EaseOutCubic
+          EaseInOutCubic
+          EaseInQuart = 7
+          EaseOutQuart
+          EaseInOutQuart
+          EaseInQuint = 10
+          EaseOutQuint
+          EaseInOutQuint
+          EaseInSine = 13
+          EaseOutSine
+          EaseInOutSine
+          EaseInExpo = 16
+          EaseOutExpo
+          EaseInOutExpo
+          EaseInCirc = 19
+          EaseOutCirc
+          EaseInOutCirc
+				*/
+        "Mode": "PingPong" //Min-Max transition movement
+        /*
+          Clamped = Min -> Max -> Keep exact Max value after Duration [Graph: /￣￣...]
+          Unclamped = Min -> Max -> Keep increase after Duration [Graph: ↗+...]
+          PingPong = Min -> Max -> Min -> Max -> ... [Graph: ↗↘↗↘↗↘...]
+          Repeat = Min -> Max -> go to Min without transition [Graph: //////...]
+        */
+      },
       "HomingStrength": "120%", //BasedValue (Based on base projectile strength): How strong it should be Homing to Target?
+      "HomingStrengthChange": {
+        "Enabled": true,
+        "MinMulti": -0.2, //Min Multiplier
+        "MaxMulti": 0.4, //Max Multiplier
+        "Duration": 2.0, //Duration of full effect
+        "StopAfterDuration": false, //Stop Changing homing strength after duration
+        "StopMulti": 0.0, //Specify Multiplier
+        "EasingMode": "Linear", //Easing type for Min-Max Transition
+        "Mode": "PingPong" //Min-Max transition movement
+      },
       "GlowColor": "cyan", //Color: Glow Color
       "GlowRange": 1.0, //BasedValue Glow Range
       "Damage": "50% of default", //BasedValue: (Based on PlayerDataBlock.health, Has original Value): Damage to deal 
@@ -122,26 +173,34 @@
         "ChanceToBleed": 0.5, //Chance to be bleed (0.0 = zero, 1.0 = always)
         "Interval": 0.15, //Interval for each damage
         "Duration": 10.0, //Duration for bleeding effect
+        "CanBeStacked": false, //Can Bleeding effect be stacked?
         "HasLiquid": true, //Using Liquid Effect?
         "LiquidSetting": "enemyBlood_SmallRandomStreak" //Name of Liquid effect you want to use (It will be sprayed for each damage)
         /*
-				enemyBlood_BigBloodBomb = 0,
-				enemyBlood_SmallRandomStreak = 1,
-				enemyBlood_Squirt = 2,
-				shooterGoo = 3,
-				spitterJizz = 4,
-				elevatorRain = 5,
-				waterDrizzle = 6,
-				waterDrip = 7,
-				playerBlood = 8,
-				disinfectionPack_Apply = 9,
-				disinfectionStation_Apply = 10,
-				infectionSweat = 11,
-				playerBlood_SmallDamage = 12,
-				playerBlood_BigDamage = 13,
-				playerBlood_Downed = 14,
-				anemoneGoo = 15
+          enemyBlood_BigBloodBomb = 0,
+          enemyBlood_SmallRandomStreak = 1,
+          enemyBlood_Squirt = 2,
+          shooterGoo = 3,
+          spitterJizz = 4,
+          elevatorRain = 5,
+          waterDrizzle = 6,
+          waterDrip = 7,
+          playerBlood = 8,
+          disinfectionPack_Apply = 9,
+          disinfectionStation_Apply = 10,
+          infectionSweat = 11,
+          playerBlood_SmallDamage = 12,
+          playerBlood_BigDamage = 13,
+          playerBlood_Downed = 14,
+          anemoneGoo = 15
 				*/
+      },
+      "DrainStamina": {
+        "Enabled": true,
+        "DrainAmount": 0.25, //1.0 = full stamina
+        "DrainAmountInCombat": 0.25,
+        "ResetRecoverTimer": false,
+        "ResetRecoverTimerInCombat": false
       }
     }
   ]

@@ -401,6 +401,18 @@
       },
       "SpriteName": "marker_shadow.png", //FileName for icon, Leave it as blank if you want default sprite, image files should placed in ExtraEnemyCustomization/icons folder
       "MarkerColor": "#d22f1e", //Color for Marker: Official one is #d22f1e
+      "MarkerText": "BIO_PROVE::[HP]", //Display text for Marker
+      /* Allowed Formatting
+        [NAME] - EnemyDataBlock Name
+        [HP] - Enemy Health (0.00 format)
+        [HP_ROUND] - Enemy Health (Rounded Integer format)
+        [HP_MAX] - Max Enemy Health (0.00 format)
+        [HP_MAX_ROUND] - Max Enemy Health (Rounded Integer format)
+        [HP_PERCENT] - Enemy Health Percentage (0.00 format)
+        [HP_PERCENT_ROUND] - Enemy Health Percentage (Rounded Integer format)
+        [GAMING] - ?
+      */
+      "ShowDistance": false, //Show meter distance indicator for Marker
       "BlinkIn": true, //Use Blink Effect when first spawned?
       "Blink": true, //Use Random Blink Effect?
       "BlinkDuration": 7.0, //How long should Random Blink effect work?
@@ -410,7 +422,7 @@
     },
     {
       "Enabled": false,
-      "DebugName": "Scout",
+      "DebugName": "Gaming Scout",
       "Target": {
         "Mode": "NameContains",
         "persistentIDs": [],
@@ -420,6 +432,8 @@
       },
       "SpriteName": "marker_special.png",
       "MarkerColor": "#F08080",
+      "MarkerText": "<color=#[GAMING]>[NAME]",
+      "ShowDistance": true,
       "BlinkIn": true,
       "Blink": true,
       "BlinkDuration": 60.0,
@@ -439,6 +453,8 @@
       },
       "SpriteName": "marker_miniboss.png",
       "MarkerColor": "red",
+      "MarkerText": "",
+      "ShowDistance": false,
       "BlinkIn": true,
       "Blink": true,
       "BlinkDuration": 60.0,
