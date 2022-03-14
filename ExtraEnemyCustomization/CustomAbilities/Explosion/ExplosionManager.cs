@@ -13,6 +13,8 @@ namespace EECustom.CustomAbilities.Explosion
 
         internal static ExplosionSync Sync { get; private set; } = new();
 
+        private static bool _usingLightFlash = true;
+
         static ExplosionManager()
         {
             Sync.Setup();
@@ -22,6 +24,7 @@ namespace EECustom.CustomAbilities.Explosion
         private static void AssetEvents_AllAssetLoaded()
         {
             ExplosionEffectPooling.Initialize();
+            _usingLightFlash = Configuration.ShowExplosionEffect.Value;
         }
 
         public static void DoExplosion(ExplosionData data)
@@ -32,7 +35,9 @@ namespace EECustom.CustomAbilities.Explosion
         internal static void Internal_TriggerExplosion(Vector3 position, float damage, float enemyMulti, float minRange, float maxRange)
         {
             CellSound.Post(EVENTS.STICKYMINEEXPLODE, position);
-            LightFlash(position);
+
+            if (_usingLightFlash)
+                LightFlash(position);
 
             if (!SNet.IsMaster)
                 return;

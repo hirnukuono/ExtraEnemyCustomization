@@ -13,6 +13,7 @@ namespace EECustom
         //USER CONFIGS
         public static ConfigEntry<bool> ShowMarkerText { get; private set; }
         public static ConfigEntry<bool> ShowMarkerDistance { get; private set; }
+        public static ConfigEntry<bool> ShowExplosionEffect { get; private set; }
 
         //GENERAL CONFIGS
         public static ConfigEntry<bool> UseLiveEdit { get; private set; }
@@ -35,6 +36,7 @@ namespace EECustom
 
             ShowMarkerText = BindUserConfig("Marker Text", "Display Enemy Marker Texts? (if set by rundown devs)", true);
             ShowMarkerDistance = BindUserConfig("Marker Distance", "Display Enemy Marker Distance? (if set by rundown devs)", true);
+            ShowExplosionEffect = BindUserConfig("Explosion Flash", "(Accessibility) Display Light flash effect for explosion abilities?", true);
 
             UseLiveEdit = BindGeneralConfig("Live Edit", "Reload Config when they are edited while in-game", false);
             LinkMTFOHotReload = BindGeneralConfig("Reload on MTFO HotReload", "Reload Configs when MTFO's HotReload button has pressed?", true);
