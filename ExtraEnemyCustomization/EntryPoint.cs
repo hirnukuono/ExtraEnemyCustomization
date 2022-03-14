@@ -35,7 +35,7 @@ namespace EECustom
 
         public override void Load()
         {
-            Configuration.BindAll(Config);
+            Configuration.CreateAndBindAll();
             Logger.Initialize();
 
             InjectAllIl2CppType();
