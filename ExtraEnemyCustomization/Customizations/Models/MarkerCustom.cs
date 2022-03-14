@@ -1,4 +1,5 @@
-﻿using EECustom.Events;
+﻿using EECustom.Customizations.Models.Handlers;
+using EECustom.Events;
 using EECustom.Managers;
 using Enemies;
 using System;
@@ -11,6 +12,7 @@ namespace EECustom.Customizations.Models
         public string SpriteName { get; set; } = string.Empty;
         public Color MarkerColor { get; set; } = new Color(0.8235f, 0.1843f, 0.1176f);
         public string MarkerText { get; set; } = string.Empty;
+        public bool ShowDistance { get; set; } = false;
         public bool BlinkIn { get; set; } = false;
         public bool Blink { get; set; } = false;
         public float BlinkDuration { get; set; } = 30.0f;
@@ -19,8 +21,8 @@ namespace EECustom.Customizations.Models
         public bool AllowMarkingOnHibernate { get; set; } = false;
 
         private Sprite _sprite = null;
-        //private bool _HasText = false;
-        //private bool _TextRequiresAutoUpdate = false;
+        private bool _hasText = false;
+        private bool _textRequiresAutoUpdate = false;
 
         public override string GetProcessName()
         {
@@ -38,17 +40,14 @@ namespace EECustom.Customizations.Models
 
         public override void OnConfigLoaded()
         {
-            //TODO: Implement it someday
             if (!string.IsNullOrEmpty(MarkerText))
             {
-                /*
-                _HasText = true;
+                _hasText = true;
 
-                if (MarkerText.ContainsAnyIgnoreCase("[HP_MAX]", "[HP]", "[HP_PERCENT]", "[HP_PERCENT_INT]"))
+                if (MarkerTextHandler.TextContainsAnyFormat(MarkerText))
                 {
-                    _TextRequiresAutoUpdate = true;
+                    _textRequiresAutoUpdate = true;
                 }
-                */
             }
 
             EnemyMarkerEvents.Marked += OnMarked;
@@ -71,9 +70,37 @@ namespace EECustom.Customizations.Models
                 return;
 
             marker.m_enemySubObj.SetColor(MarkerColor);
-            //marker.SetTitle("wew");
-            //marker.SetVisualStates(NavMarkerOption.Enemy | NavMarkerOption.Title, NavMarkerOption.Enemy | NavMarkerOption.Title, NavMarkerOption.Empty, NavMarkerOption.Empty);
-            //MINOR: Adding Text for Marker maybe?
+
+            var option = NavMarkerOption.Enemy;
+            if (_hasText)
+            {
+                option |= NavMarkerOption.Title;
+                
+                if (_textRequiresAutoUpdate)
+                {
+                    var handler = marker.gameObject.GetComponent<MarkerTextHandler>();
+                    if (handler == null)
+                    {
+                        handler = marker.gameObject.AddComponent<MarkerTextHandler>();
+                        handler.Agent = agent;
+                    }
+
+                    handler.Marker = marker;
+                    handler.ChangeBaseText(MarkerText);
+                }
+                else
+                {
+                    marker.SetTitle(MarkerText);
+                }
+            }
+
+            if (ShowDistance)
+            {
+                option |= NavMarkerOption.Distance;
+            }
+
+            marker.SetVisualStates(option, option, NavMarkerOption.Empty, NavMarkerOption.Empty);
+
 
             if (_sprite != null)
             {
