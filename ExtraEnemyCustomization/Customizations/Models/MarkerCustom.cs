@@ -40,14 +40,22 @@ namespace EECustom.Customizations.Models
 
         public override void OnConfigLoaded()
         {
-            if (!string.IsNullOrEmpty(MarkerText))
+            if (Configuration.ShowMarkerText.Value == true)
             {
-                _hasText = true;
-
-                if (MarkerTextHandler.TextContainsAnyFormat(MarkerText))
+                if (!string.IsNullOrEmpty(MarkerText))
                 {
-                    _textRequiresAutoUpdate = true;
+                    _hasText = true;
+
+                    if (MarkerTextHandler.TextContainsAnyFormat(MarkerText))
+                    {
+                        _textRequiresAutoUpdate = true;
+                    }
                 }
+            }
+
+            if (Configuration.ShowMarkerDistance.Value == false)
+            {
+                ShowDistance = false;
             }
 
             EnemyMarkerEvents.Marked += OnMarked;
