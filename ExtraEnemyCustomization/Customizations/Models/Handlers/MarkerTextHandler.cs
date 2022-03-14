@@ -23,6 +23,7 @@ namespace EECustom.Customizations.Models.Handlers
 
         private static readonly MarkerFormatText[] _valuesOfEnum = null;
         private static readonly string[] _formatString = null;
+        private static readonly WaitForSeconds _updateYielder = new(0.15f);
 
         static MarkerTextHandler()
         {
@@ -144,7 +145,7 @@ namespace EECustom.Customizations.Models.Handlers
 
                 textBuilder.Clear();
                 textBuilder.Append(_baseText);
-                yield return new WaitForFixedUpdate();
+                yield return _updateYielder;
             }
         }
 
