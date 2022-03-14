@@ -47,6 +47,7 @@ namespace EECustom.CustomAbilities.Bleed.Handlers
             }
         }
 
+        [HideFromIl2Cpp]
         private IEnumerator DoGlobalBleed(BleedingData bleedData)
         {
             _globalBleedRunning = true;
@@ -80,6 +81,7 @@ namespace EECustom.CustomAbilities.Bleed.Handlers
             GuiManager.PlayerLayer.UpdateHealth(Agent.Damage.GetHealthRel(), Agent.MeleeBuffTimer > Clock.Time);
         }
 
+        [HideFromIl2Cpp]
         private IEnumerator DoStackableBleed(BleedingData bleedData)
         {
             _bleedRoutineCounter++;

@@ -103,6 +103,7 @@ namespace EECustom.Customizations.Models.Handlers
             MonoBehaviourExtensions.StartCoroutine(this, UpdateText());
         }
 
+        [HideFromIl2Cpp]
         private IEnumerator UpdateText()
         {
             var oldText = string.Empty;
@@ -149,6 +150,7 @@ namespace EECustom.Customizations.Models.Handlers
             }
         }
 
+        [HideFromIl2Cpp]
         private IEnumerator GamingMoment()
         {
             while (true)

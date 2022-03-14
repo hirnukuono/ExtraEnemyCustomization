@@ -69,6 +69,7 @@ namespace EECustom.Customizations.Models.Handlers
             MonoBehaviourExtensions.StartCoroutine(this, UpdateLoop());
         }
 
+        [HideFromIl2Cpp]
         private IEnumerator UpdateLoop()
         {
             var currentUpdateInterval = UpdateInterval;
@@ -125,6 +126,7 @@ namespace EECustom.Customizations.Models.Handlers
             }
         }
 
+        [HideFromIl2Cpp]
         private IEnumerator ColorInterpolation()
         {
             var interpTimer = new Timer(InterpDuration);
@@ -143,6 +145,7 @@ namespace EECustom.Customizations.Models.Handlers
             yield return null;
         }
 
+        [HideFromIl2Cpp]
         private void TryDisable()
         {
             if (_disableScriptAfterDone)
