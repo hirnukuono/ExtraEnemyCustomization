@@ -15,6 +15,7 @@ namespace EECustom.Customizations.Abilities
         {
             LocalPlayerDamageEvents.MeleeDamage += OnMelee;
             LocalPlayerDamageEvents.TentacleDamage += OnTentacle;
+#warning Remove null check after 2.x.x
             if (ProjectileData != null)
                 LocalPlayerDamageEvents.ProjectileDamage += OnProjectile;
         }
