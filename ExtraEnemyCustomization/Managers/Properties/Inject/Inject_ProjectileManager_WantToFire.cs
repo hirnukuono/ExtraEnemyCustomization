@@ -10,7 +10,8 @@ namespace EECustom.Managers.Properties.Inject
     {
         internal static void Prefix(ref int burstSize)
         {
-            burstSize = Inject_EAB_Shooter.LastAgent?.GlobalID ?? 1;
+            if (Inject_EAB_Shooter.LastAgent != null)
+                burstSize = Inject_EAB_Shooter.LastAgent.GlobalID;
         }
     }
 }

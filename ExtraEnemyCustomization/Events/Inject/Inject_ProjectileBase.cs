@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using UnityEngine;
 
@@ -10,9 +11,16 @@ namespace EECustom.Events.Inject
     internal static class Inject_ProjectileBase
     {
         [HarmonyWrapSafe]
+        [SuppressMessage("Type Safety", "UNT0014:Invalid type for call to GetComponent", Justification = "IDamagable IS Unity Component Interface")]
         internal static void Prefix(ProjectileBase __instance, RaycastHit hit)
         {
-            var baseAgent = hit.collider?.GetComponent<IDamageable>()?.GetBaseAgent() ?? null;
+            if (hit.collider == null)
+                return;
+
+            if (!hit.collider.TryGetComponent<IDamageable>(out var damagable))
+                return;
+
+            var baseAgent = damagable.GetBaseAgent();
             if (baseAgent == null)
                 return;
 

@@ -4,6 +4,7 @@ using HarmonyLib;
 using SNetwork;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace EECustom.Managers.Properties.Inject
@@ -12,6 +13,7 @@ namespace EECustom.Managers.Properties.Inject
     internal static class Inject_ProjectileManager_DoFire
     {
         [HarmonyWrapSafe]
+        [SuppressMessage("Type Safety", "UNT0014:Invalid type for call to GetComponent", Justification = "IDamagable IS Unity Component Interface")]
         internal static void Postfix(ProjectileManager.pFireTargeting data)
         {
             if (data.burstSize == 1)
