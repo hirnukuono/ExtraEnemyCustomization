@@ -1,9 +1,11 @@
 ﻿using Agents;
 using Enemies;
 using System;
+using System.Text.Json.Serialization;
 
 namespace EECustom.Utils.JsonElements
 {
+    [JsonConverter(typeof(AgentModeTargetConverter))]
     public struct AgentModeTarget
     {
         public static readonly AgentModeTarget All = new(AgentModeType.Off | AgentModeType.Hibernate | AgentModeType.Agressive | AgentModeType.Scout | AgentModeType.Patrolling);

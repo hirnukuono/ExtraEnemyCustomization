@@ -1,9 +1,11 @@
 ﻿using GameData;
 using System;
+using System.Text.Json.Serialization;
 
 namespace EECustom.Utils.JsonElements
 {
     //MINOR: NOTE! Calling ctor for LocalizedText before game has loaded will leads to crash.
+    [JsonConverter(typeof(EventWrapperConverter))]
     public sealed class EventWrapper : IDisposable
     {
         private string _json;
