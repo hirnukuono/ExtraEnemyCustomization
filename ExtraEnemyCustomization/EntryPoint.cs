@@ -3,6 +3,7 @@ using BepInEx.IL2CPP;
 using EECustom.Attributes;
 using EECustom.Events;
 using EECustom.Managers;
+using EECustom.Managers.Assets;
 using EECustom.Networking;
 using EECustom.Utils;
 using EECustom.Utils.Integrations;

@@ -9,17 +9,20 @@ namespace EECustom.Customizations.Abilities
     {
         public T MeleeData { get; set; } = new();
         public T TentacleData { get; set; } = new();
+        public T ProjectileData { get; set; } = new();
 
         public override void OnConfigLoaded()
         {
             LocalPlayerDamageEvents.MeleeDamage += OnMelee;
             LocalPlayerDamageEvents.TentacleDamage += OnTentacle;
+            LocalPlayerDamageEvents.ProjectileDamage += OnProjectile;
         }
 
         public override void OnConfigUnloaded()
         {
             LocalPlayerDamageEvents.MeleeDamage -= OnMelee;
             LocalPlayerDamageEvents.TentacleDamage -= OnTentacle;
+            LocalPlayerDamageEvents.ProjectileDamage -= OnProjectile;
         }
 
         private void OnMelee(PlayerAgent player, Agent inflictor, float damage)
@@ -30,6 +33,11 @@ namespace EECustom.Customizations.Abilities
         private void OnTentacle(PlayerAgent player, Agent inflictor, float damage)
         {
             Do(player, inflictor, TentacleData);
+        }
+
+        private void OnProjectile(PlayerAgent player, Agent inflictor, ProjectileBase projectile, float damage)
+        {
+            Do(player, inflictor, ProjectileData);
         }
 
         private void Do(PlayerAgent player, Agent inflictor, T setting)

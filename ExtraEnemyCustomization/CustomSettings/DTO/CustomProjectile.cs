@@ -1,5 +1,6 @@
 ﻿using EECustom.Customizations.Shared;
 using EECustom.Utils.JsonElements;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
@@ -18,11 +19,12 @@ namespace EECustom.CustomSettings.DTO
         public ValueBase GlowRange { get; set; } = ValueBase.Unchanged;
         public ValueBase Damage { get; set; } = ValueBase.Unchanged;
         public ValueBase Infection { get; set; } = ValueBase.Unchanged;
-        public ExplosionSetting Explosion { get; set; } = new();
-        public KnockbackSetting Knockback { get; set; } = new();
-        public BleedSetting Bleed { get; set; } = new();
-        public DrainStaminaSetting DrainStamina { get; set; } = new();
+        [Obsolete("Will be merged to AttackCustoms")] public ExplosionSetting Explosion { get; set; } = new();
+        [Obsolete("Will be merged to AttackCustoms")] public KnockbackSetting Knockback { get; set; } = new();
+        [Obsolete("Will be merged to AttackCustoms")] public BleedSetting Bleed { get; set; } = new();
+        [Obsolete("Will be merged to AttackCustoms")] public DrainStaminaSetting DrainStamina { get; set; } = new();
 
+        [Obsolete("Will be merged to AttackCustoms")]
         [SuppressMessage("Type Safety", "UNT0014:Invalid type for call to GetComponent", Justification = "IDamagable IS Unity Component Interface")]
         public void Collision(Vector3 projectilePosition, RaycastHit hit)
         {
