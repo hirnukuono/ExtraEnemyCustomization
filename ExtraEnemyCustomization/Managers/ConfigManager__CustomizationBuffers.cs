@@ -38,11 +38,19 @@ namespace EECustom.Managers
             GenerateEventBuffer();
         }
 
-        internal static void RegisterTargetEnemyLookup(EnemyDataBlock enemy)
+        private static void RegisterTargetEnemyLookup(EnemyDataBlock enemy)
         {
             foreach (var custom in _customizationBuffer)
             {
                 custom.RegisterTargetEnemyLookup(enemy);
+            }
+        }
+
+        private static void TargetEnemyLookupFullyBuilt()
+        {
+            foreach (var custom in _customizationBuffer)
+            {
+                custom.OnTargetIDLookupBuilt();
             }
         }
     }

@@ -25,66 +25,46 @@ namespace EECustom.Customizations.Models.Handlers
     {
         public AgentMode CurrentMode => _agentMode;
 
-        public EnemyAgent OwnerAgent;
-        public Color DefaultColor;
-        public Color WakeupColor;
-        public Color DetectionColor;
-        public Color HeartbeatColor;
-        public Color PatrolColor;
-        public Color FeelerColor;
-
-        public bool UsingDetectionColor = false;
-        public bool UsingScoutColor = false;
-
-        public float InterpDuration = 0.5f;
-        public float UpdateInterval = 0.05f;
-
-        public bool OptimizeOnAwake = true;
-
+        private ScannerColorData _data;
+        private EnemyAgent _ownerAgent;
         private Coroutine _colorInterpolationCoroutine;
         private AgentMode _agentMode = AgentMode.Off;
         private EnemyState _currentState = EnemyState.Initial;
         private Color _previousColor = Color.white;
         private Color _doneColor = Color.white;
         private bool _disableScriptAfterDone = false;
-        private bool _isSetup = false;
-
-        [HideFromIl2Cpp]
-        internal void Setup()
-        {
-            UpdateState(out var state);
-            OwnerAgent.ScannerColor = GetStateColor(state);
-
-            if (_disableScriptAfterDone)
-            {
-                enabled = false;
-                _disableScriptAfterDone = false;
-            }
-
-            _isSetup = true;
-        }
 
         internal void OnEnable()
         {
-            MonoBehaviourExtensions.StartCoroutine(this, UpdateLoop());
+            _ownerAgent = GetComponent<EnemyAgent>();
+            if (ScannerCustom._colorLookup.TryGetValue(_ownerAgent.EnemyDataID, out _data))
+            {
+                UpdateState(out var state);
+                _ownerAgent.ScannerColor = GetStateColor(state);
+                TryDisable();
+
+                MonoBehaviourExtensions.StartCoroutine(this, UpdateLoop());
+            }
+            else
+            {
+                Logger.Error("ColorData was missing! - Unable to start ScannerHandler!");
+                Destroy(this);
+            }
         }
 
         [HideFromIl2Cpp]
         private IEnumerator UpdateLoop()
         {
-            var currentUpdateInterval = UpdateInterval;
-            var yielder = WaitFor.Seconds[UpdateInterval];
+            var currentUpdateInterval = _data.UpdateInterval;
+            var yielder = WaitFor.Seconds[_data.UpdateInterval];
 
             while (true)
             {
-                if (_isSetup)
-                {
-                    DoUpdate();
-                }
+                DoUpdate();
 
-                if (currentUpdateInterval != UpdateInterval)
+                if (currentUpdateInterval != _data.UpdateInterval)
                 {
-                    yielder = WaitFor.Seconds[UpdateInterval];
+                    yielder = WaitFor.Seconds[_data.UpdateInterval];
                 }
                 yield return yielder;
             }
@@ -93,34 +73,27 @@ namespace EECustom.Customizations.Models.Handlers
         [HideFromIl2Cpp]
         private void DoUpdate()
         {
-            if (!_isSetup)
-                return;
-
             EnemyState state;
-            if (!OwnerAgent.IsInDetectedList)
+            if (!_ownerAgent.IsInDetectedList)
             {
                 //NOT Visible on Bio-Tracker
 
-                if (OwnerAgent.UpdateMode != NodeUpdateMode.Close)
+                if (_ownerAgent.UpdateMode != NodeUpdateMode.Close)
                     return;
 
-                UpdateState(out state);
-                if (_currentState != state)
+                if (HasNewState())
                 {
-                    _currentState = state;
-                    OwnerAgent.ScannerColor = GetStateColor(state);
+                    _ownerAgent.ScannerColor = GetStateColor(_currentState);
                     TryDisable();
                 }
                 return;
             }
 
             //Visible on Bio-Tracker
-            UpdateState(out state);
-            if (_currentState != state)
+            if (HasNewState())
             {
-                _currentState = state;
-                _previousColor = OwnerAgent.m_scannerColor;
-                _doneColor = GetStateColor(state);
+                _previousColor = _ownerAgent.m_scannerColor;
+                _doneColor = GetStateColor(_currentState);
 
                 if (_colorInterpolationCoroutine != null)
                 {
@@ -133,17 +106,17 @@ namespace EECustom.Customizations.Models.Handlers
         [HideFromIl2Cpp]
         private IEnumerator ColorInterpolation()
         {
-            var interpTimer = new Timer(InterpDuration);
+            var interpTimer = new Timer(_data.InterpDuration);
 
             while (!interpTimer.TickAndCheckDone())
             {
                 var progress = interpTimer.Progress;
                 var newColor = Color.Lerp(_previousColor, _doneColor, progress);
-                OwnerAgent.ScannerColor = newColor;
+                _ownerAgent.ScannerColor = newColor;
                 yield return null;
             }
 
-            OwnerAgent.ScannerColor = _doneColor;
+            _ownerAgent.ScannerColor = _doneColor;
             _colorInterpolationCoroutine = null;
             TryDisable();
             yield return null;
@@ -161,25 +134,45 @@ namespace EECustom.Customizations.Models.Handlers
 
         internal void OnDestroy()
         {
-            OwnerAgent = null;
+            _ownerAgent = null;
         }
 
         [HideFromIl2Cpp]
-        internal void UpdateAgentMode(AgentMode mode)
+        internal void UpdateAgentMode(AgentMode mode, bool forceUpdateWithoutTransition = false)
         {
             _agentMode = mode;
 
-            if (OptimizeOnAwake)
+            if (forceUpdateWithoutTransition)
+            {
+                if (HasNewState())
+                {
+                    _ownerAgent.ScannerColor = GetStateColor(_currentState);
+                }
+            }
+
+            if (_data.OptimizeOnAwake)
             {
                 if (_agentMode == AgentMode.Agressive)
                 {
                     _disableScriptAfterDone = true;
                 }
-                else if (!enabled && _isSetup)
+                else if (!enabled)
                 {
                     enabled = true;
                 }
             }
+        }
+
+        [HideFromIl2Cpp]
+        private bool HasNewState()
+        {
+            UpdateState(out var newState);
+            if (_currentState != newState)
+            {
+                _currentState = newState;
+                return true;
+            }
+            return false;
         }
 
         [HideFromIl2Cpp]
@@ -188,15 +181,15 @@ namespace EECustom.Customizations.Models.Handlers
             switch (_agentMode)
             {
                 case AgentMode.Hibernate:
-                    if (!UsingDetectionColor)
+                    if (!_data.UsingDetectionColor)
                     {
                         state = EnemyState.Hibernate;
                         return;
                     }
 
-                    if (OwnerAgent.IsHibernationDetecting)
+                    if (_ownerAgent.IsHibernationDetecting)
                     {
-                        if (OwnerAgent.Locomotion.Hibernate.m_heartbeatActive)
+                        if (_ownerAgent.Locomotion.Hibernate.m_heartbeatActive)
                         {
                             state = EnemyState.Heartbeat;
                             return;
@@ -207,7 +200,7 @@ namespace EECustom.Customizations.Models.Handlers
                             return;
                         }
                     }
-                    else if (OwnerAgent.Locomotion.CurrentStateEnum == ES_StateEnum.HibernateWakeUp)
+                    else if (_ownerAgent.Locomotion.CurrentStateEnum == ES_StateEnum.HibernateWakeUp)
                     {
                         state = EnemyState.Wakeup;
                         return;
@@ -223,19 +216,19 @@ namespace EECustom.Customizations.Models.Handlers
                     return;
 
                 case AgentMode.Scout:
-                    if (!UsingScoutColor)
+                    if (!_data.UsingScoutColor)
                     {
                         state = EnemyState.Wakeup;
                         return;
                     }
 
-                    if (OwnerAgent.Locomotion.CurrentStateEnum == ES_StateEnum.ScoutScream)
+                    if (_ownerAgent.Locomotion.CurrentStateEnum == ES_StateEnum.ScoutScream)
                     {
                         state = EnemyState.Wakeup;
                         return;
                     }
 
-                    var detection = OwnerAgent.Locomotion.ScoutDetection.m_antennaDetection;
+                    var detection = _ownerAgent.Locomotion.ScoutDetection.m_antennaDetection;
                     if (detection == null)
                     {
                         state = EnemyState.Scout;
@@ -264,13 +257,13 @@ namespace EECustom.Customizations.Models.Handlers
         {
             return state switch
             {
-                EnemyState.Hibernate => DefaultColor,
-                EnemyState.Detect => DetectionColor,
-                EnemyState.Heartbeat => HeartbeatColor,
-                EnemyState.Wakeup => WakeupColor,
-                EnemyState.Scout => PatrolColor,
-                EnemyState.ScoutDetect => FeelerColor,
-                _ => DefaultColor
+                EnemyState.Hibernate => _data.DefaultColor,
+                EnemyState.Detect => _data.DetectionColor,
+                EnemyState.Heartbeat => _data.HeartbeatColor,
+                EnemyState.Wakeup => _data.WakeupColor,
+                EnemyState.Scout => _data.PatrolColor,
+                EnemyState.ScoutDetect => _data.FeelerOutColor,
+                _ => _data.DefaultColor
             };
         }
     }

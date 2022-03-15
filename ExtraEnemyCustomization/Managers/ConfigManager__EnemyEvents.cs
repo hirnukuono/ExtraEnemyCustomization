@@ -173,6 +173,8 @@ namespace EECustom.Managers
                 FirePrefabBuiltEvent(enemyAgentComp);
             }
 
+            TargetEnemyLookupFullyBuilt();
+
             if (rebuildPrefabs)
             {
                 EnemyAllocator.Current.m_enemyReplicationManager.ClearPrefabs();

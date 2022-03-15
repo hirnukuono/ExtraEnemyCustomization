@@ -1,6 +1,7 @@
 ﻿using Agents;
 using EECustom.Customizations.Models.Handlers;
 using Enemies;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace EECustom.Customizations.Models
 {
     public sealed class ScannerCustom : EnemyCustomBase, IEnemyPrefabBuiltEvent, IEnemySpawnedEvent, IEnemyAgentModeEvent
     {
-        public static readonly Color DefaultDetectionColor = new(1f, 0.1f, 0.1f, 1f);
+        internal static readonly Dictionary<uint, ScannerColorData> _colorLookup = new();
 
         [JsonPropertyName("DefaultColor")]
         public Color Internal_DefaultColor { get; set; } = new(0.7f, 0.7f, 0.7f);
@@ -54,12 +55,7 @@ namespace EECustom.Customizations.Models
         [JsonPropertyName("ScoutFeelerSize")]
         public float Internal_ScoutFeelerSize { get; set; } = 1.0f;
 
-        public Color DefaultColor;
-        public Color WakeupColor;
-        public Color DetectionColor;
-        public Color HeartbeatColor;
-        public Color PatrolColor;
-        public Color FeelerOutColor;
+        public ScannerColorData ColorData;
 
         public override string GetProcessName()
         {
@@ -68,28 +64,49 @@ namespace EECustom.Customizations.Models
 
         public override void OnConfigLoaded()
         {
-            DefaultColor = CreateNewColor(Internal_DefaultColor, Internal_DefaultSize);
-            WakeupColor = CreateNewColor(Internal_WakeupColor, Internal_WakeupSize);
-            DetectionColor = CreateNewColor(Internal_DetectionColor, Internal_DetectionSize);
-            HeartbeatColor = CreateNewColor(Internal_HeartbeatColor, Internal_HeartbeatSize);
-            PatrolColor = CreateNewColor(Internal_ScoutPatrolColor, Internal_ScoutPatrolSize);
-            FeelerOutColor = CreateNewColor(Internal_ScoutFeelerColor, Internal_ScoutFeelerSize);
+            ColorData = new ScannerColorData()
+            {
+                DefaultColor = CreateNewColor(Internal_DefaultColor, Internal_DefaultSize),
+                WakeupColor = CreateNewColor(Internal_WakeupColor, Internal_WakeupSize),
+                DetectionColor = CreateNewColor(Internal_DetectionColor, Internal_DetectionSize),
+                HeartbeatColor = CreateNewColor(Internal_HeartbeatColor, Internal_HeartbeatSize),
+                PatrolColor = CreateNewColor(Internal_ScoutPatrolColor, Internal_ScoutPatrolSize),
+                FeelerOutColor = CreateNewColor(Internal_ScoutFeelerColor, Internal_ScoutFeelerSize),
+                InterpDuration = LerpingDuration,
+                UpdateInterval = UpdateInterval,
+                UsingScoutColor = UsingScoutColor,
+                UsingDetectionColor = UsingDetectionColor,
+                OptimizeOnAwake = OptimizeAfterAwake
+            };
 
             if (Logger.VerboseLogAllowed)
             {
                 LogVerbose("Color Initialized!");
-                LogVerbose(" - Default; " + DefaultColor.ToString());
-                LogVerbose(" - Wakeup; " + WakeupColor.ToString());
-                LogVerbose(" - Detection; " + DetectionColor.ToString());
-                LogVerbose(" - Heartbeat; " + HeartbeatColor.ToString());
-                LogVerbose(" - Patrol; " + PatrolColor.ToString());
-                LogVerbose(" - Feeler; " + FeelerOutColor.ToString());
+                LogVerbose(" - Default; " + ColorData.DefaultColor.ToString());
+                LogVerbose(" - Wakeup; " + ColorData.WakeupColor.ToString());
+                LogVerbose(" - Detection; " + ColorData.DetectionColor.ToString());
+                LogVerbose(" - Heartbeat; " + ColorData.HeartbeatColor.ToString());
+                LogVerbose(" - Patrol; " + ColorData.PatrolColor.ToString());
+                LogVerbose(" - Feeler; " + ColorData.FeelerOutColor.ToString());
             }
 
             static Color CreateNewColor(Color c, float alpha)
             {
                 return new Color(c.r, c.g, c.b, alpha);
             }
+        }
+
+        public override void OnTargetIDLookupBuilt()
+        {
+            foreach (var id in TargetEnemyIDs)
+            {
+                _colorLookup[id] = ColorData;
+            }
+        }
+
+        public override void OnConfigUnloaded()
+        {
+            _colorLookup.Clear();
         }
 
         public void OnPrefabBuilt(EnemyAgent agent)
@@ -114,7 +131,7 @@ namespace EECustom.Customizations.Models
                     }
                     if (OptimizeAfterAwake)
                     {
-                        agent.ScannerColor = WakeupColor;
+                        agent.ScannerColor = ColorData.WakeupColor;
                         return;
                     }
                     break;
@@ -129,23 +146,10 @@ namespace EECustom.Customizations.Models
             var scannerManager = agent.gameObject.GetComponent<ScannerHandler>();
             if (scannerManager != null)
             {
-                scannerManager.OwnerAgent = agent;
-                scannerManager.DefaultColor = DefaultColor;
-                scannerManager.WakeupColor = WakeupColor;
-                scannerManager.DetectionColor = DetectionColor;
-                scannerManager.HeartbeatColor = HeartbeatColor;
-                scannerManager.PatrolColor = PatrolColor;
-                scannerManager.FeelerColor = FeelerOutColor;
-                scannerManager.UsingDetectionColor = UsingDetectionColor;
-                scannerManager.UsingScoutColor = UsingScoutColor;
-                scannerManager.InterpDuration = LerpingDuration;
-                scannerManager.UpdateInterval = UpdateInterval;
-                scannerManager.OptimizeOnAwake = OptimizeAfterAwake;
                 if (scannerManager.CurrentMode == AgentMode.Off)
                 {
-                    scannerManager.UpdateAgentMode(spawnData.mode);
+                    scannerManager.UpdateAgentMode(spawnData.mode, forceUpdateWithoutTransition: true);
                 }
-                scannerManager.Setup();
             }
         }
 
@@ -157,5 +161,23 @@ namespace EECustom.Customizations.Models
                 scannerManager.UpdateAgentMode(newMode);
             }
         }
+    }
+
+    public struct ScannerColorData
+    {
+        public Color DefaultColor;
+        public Color WakeupColor;
+        public Color DetectionColor;
+        public Color HeartbeatColor;
+        public Color PatrolColor;
+        public Color FeelerOutColor;
+
+        public bool UsingDetectionColor;
+        public bool UsingScoutColor;
+
+        public float InterpDuration;
+        public float UpdateInterval;
+
+        public bool OptimizeOnAwake;
     }
 }

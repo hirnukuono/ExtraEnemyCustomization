@@ -23,6 +23,11 @@ namespace EECustom.Customizations
         {
         }
 
+        public virtual void OnTargetIDLookupBuilt()
+        {
+
+        }
+
         public virtual void OnConfigUnloaded()
         {
         }
