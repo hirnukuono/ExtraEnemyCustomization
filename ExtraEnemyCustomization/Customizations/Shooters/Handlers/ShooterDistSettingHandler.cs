@@ -15,7 +15,7 @@ namespace EECustom.Customizations.Shooters.Handlers
         private ShooterFireCustom.FireSetting _currentSetting = null;
         private Timer _updateTimer = new(0.125f);
 
-        internal void Update()
+        private void Update()
         {
             if (!_updateTimer.TickAndCheckDone())
                 return;
@@ -37,7 +37,7 @@ namespace EECustom.Customizations.Shooters.Handlers
             }
         }
 
-        internal void OnDestroy()
+        private void OnDestroy()
         {
             EAB_Shooter = null;
             FireSettings = null;

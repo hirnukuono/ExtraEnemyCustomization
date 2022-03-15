@@ -13,7 +13,7 @@ namespace EECustom.Customizations.Shared.Handlers
         private Timer _updateTimer = new(0.1f);
         private bool _updatedOnce = false;
 
-        internal void Update()
+        private void Update()
         {
             if (Handler.m_sphere != null && _updateTimer.TickAndCheckDone())
             {
@@ -31,7 +31,7 @@ namespace EECustom.Customizations.Shared.Handlers
             }
         }
 
-        internal void OnDestroy()
+        private void OnDestroy()
         {
             EffectVolumeManager.UnregisterVolume(EVSphere);
 

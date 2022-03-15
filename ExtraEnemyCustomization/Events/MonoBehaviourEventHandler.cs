@@ -39,22 +39,22 @@ namespace EECustom.Events
                 handler.OnDestroyed += onDestroyed;
         }
 
-        internal void Update()
+        private void Update()
         {
             OnUpdate?.Invoke(gameObject);
         }
 
-        internal void LateUpdate()
+        private void LateUpdate()
         {
             OnLateUpdate?.Invoke(gameObject);
         }
 
-        internal void FixedUpdate()
+        private void FixedUpdate()
         {
             OnFixedUpdate?.Invoke(gameObject);
         }
 
-        internal void OnDestroy()
+        private void OnDestroy()
         {
             OnDestroyed?.Invoke(gameObject);
 

@@ -14,7 +14,7 @@ namespace EECustom.Customizations.Models.Handlers
 
         private Color _latestColorB = Color.clear;
 
-        internal void OnDestroy()
+        private void OnDestroy()
         {
             SilhouetteMaterial = null;
         }
@@ -60,7 +60,7 @@ namespace EECustom.Customizations.Models.Handlers
         private EnemySilhouette[] _silhouettes = null;
         private bool _eventRegistered = false;
 
-        internal void Start()
+        private void Start()
         {
             _silhouettes = GetComponentsInChildren<EnemySilhouette>(true);
             foreach (var sil in _silhouettes)
@@ -92,7 +92,7 @@ namespace EECustom.Customizations.Models.Handlers
             }
         }
 
-        internal void OnDestroy()
+        private void OnDestroy()
         {
             if (_eventRegistered)
                 EnemyMarkerEvents.Marked -= OnMarked;
@@ -102,7 +102,7 @@ namespace EECustom.Customizations.Models.Handlers
             _silhouettes = null;
         }
 
-        internal void FixedUpdate()
+        private void FixedUpdate()
         {
             if (!OwnerAgent.Alive)
             {

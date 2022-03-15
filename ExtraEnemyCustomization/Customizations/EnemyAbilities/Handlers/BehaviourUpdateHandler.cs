@@ -23,13 +23,13 @@ namespace EECustom.Customizations.EnemyAbilities.Handlers
         private Timer _updateTimer;
         private bool _hasInitialTimerDone = false;
 
-        internal void Start()
+        private void Start()
         {
             _updateTimer.Reset(Setting.UpdateInterval);
             _latestMode = Agent.AI.Mode;
         }
 
-        internal void FixedUpdate()
+        private void FixedUpdate()
         {
             if (!_updateTimer.TickAndCheckDone())
                 return;
@@ -73,7 +73,7 @@ namespace EECustom.Customizations.EnemyAbilities.Handlers
             Behaviour.DoTriggerSync();
         }
 
-        internal void OnDestroy()
+        private void OnDestroy()
         {
             Agent = null;
             Behaviour = null;

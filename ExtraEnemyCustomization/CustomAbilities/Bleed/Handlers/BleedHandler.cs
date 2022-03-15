@@ -19,7 +19,7 @@ namespace EECustom.CustomAbilities.Bleed.Handlers
         private Coroutine _globalBleedRoutine = null;
         private int _bleedRoutineCounter = 0;
 
-        internal void OnDestroy()
+        private void OnDestroy()
         {
             StopBleed();
             Agent = null;

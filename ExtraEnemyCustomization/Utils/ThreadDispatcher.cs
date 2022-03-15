@@ -41,8 +41,7 @@ namespace EECustom.Utils
             _heavyQueue.Enqueue(action);
         }
 
-        [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "MonoBehaviour Callback can't be static")]
-        internal void Update()
+        private void Update()
         {
             Action action;
             while (_queue.TryDequeue(out action))

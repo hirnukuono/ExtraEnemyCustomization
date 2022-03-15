@@ -94,7 +94,7 @@ namespace EECustom.Customizations.Models.Handlers
             }
         }
 
-        internal void OnEnable()
+        private void OnEnable()
         {
             StopAllCoroutines();
             if (_shouldUpdateRainbow)
@@ -161,7 +161,7 @@ namespace EECustom.Customizations.Models.Handlers
             }
         }
 
-        internal void OnDestroy()
+        private void OnDestroy()
         {
             Agent = null;
             Marker = null;

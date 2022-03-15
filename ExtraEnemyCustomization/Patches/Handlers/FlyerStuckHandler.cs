@@ -19,7 +19,7 @@ namespace EECustom.Patches.Handlers
         private int _tryCount = -1;
         private bool _shouldCheck = true;
 
-        internal void FixedUpdate()
+        private void FixedUpdate()
         {
             if (_shouldCheck)
             {
@@ -77,7 +77,7 @@ namespace EECustom.Patches.Handlers
             }
         }
 
-        internal void OnDestroy()
+        private void OnDestroy()
         {
             Agent = null;
         }

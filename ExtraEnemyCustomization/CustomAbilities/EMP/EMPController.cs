@@ -18,12 +18,12 @@ namespace EECustom.CustomAbilities.EMP
         [HideFromIl2Cpp]
         public Vector3 Position => transform.position;
 
-        internal void Awake()
+        private void Awake()
         {
             EMPManager.AddTarget(this);
         }
 
-        internal void OnDestroy()
+        private void OnDestroy()
         {
             EMPManager.RemoveTarget(this);
             _handler.OnDespawn();
@@ -31,7 +31,7 @@ namespace EECustom.CustomAbilities.EMP
             _handler = null;
         }
 
-        internal void OnEnable()
+        private void OnEnable()
         {
             if (GameStateManager.CurrentStateName != eGameStateName.InLevel) return;
             if (!_setup) return;
@@ -46,7 +46,7 @@ namespace EECustom.CustomAbilities.EMP
             }
         }
 
-        internal void Update()
+        private void Update()
         {
             if (!_hasHandler) return;
             _handler.Tick(IsEMPActive);

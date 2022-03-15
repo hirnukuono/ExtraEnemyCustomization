@@ -34,7 +34,7 @@ namespace EECustom.Customizations.Models.Handlers
         private Color _doneColor = Color.white;
         private bool _disableScriptAfterDone = false;
 
-        internal void OnEnable()
+        private void OnEnable()
         {
             _ownerAgent = GetComponent<EnemyAgent>();
             if (ScannerCustom._colorLookup.TryGetValue(_ownerAgent.EnemyDataID, out _data))
@@ -131,7 +131,7 @@ namespace EECustom.Customizations.Models.Handlers
             }
         }
 
-        internal void OnDestroy()
+        private void OnDestroy()
         {
             _ownerAgent = null;
         }

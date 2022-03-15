@@ -20,7 +20,7 @@ namespace EECustom.Customizations.Models.Handlers
         private int _currentPatternIndex = 0;
         private int _patternLength = 0;
 
-        internal void Start()
+        private void Start()
         {
             if (PulseData.PatternData == null)
             {
@@ -43,7 +43,7 @@ namespace EECustom.Customizations.Models.Handlers
             _timer.Reset(StartDelay);
         }
 
-        internal void FixedUpdate()
+        private void FixedUpdate()
         {
             if (!_timer.TickAndCheckDone())
                 return;
@@ -105,7 +105,7 @@ namespace EECustom.Customizations.Models.Handlers
             _timer.Reset(duration);
         }
 
-        internal void OnDestroy()
+        private void OnDestroy()
         {
             _ownerAgent = null;
         }

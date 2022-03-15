@@ -24,7 +24,7 @@ namespace EECustom.Customizations.Abilities.Handlers
         private float _regenCapAbsValue = 0.0f;
         private float _regenAmountAbsValue = 0.0f;
 
-        internal void Start()
+        private void Start()
         {
             _isRegening = false;
             _alwaysRegen = !RegenData.CanDamageInterruptRegen;
@@ -50,7 +50,7 @@ namespace EECustom.Customizations.Abilities.Handlers
             }
         }
 
-        internal void FixedUpdate()
+        private void FixedUpdate()
         {
             if (!SNet.IsMaster)
                 return;
@@ -76,7 +76,7 @@ namespace EECustom.Customizations.Abilities.Handlers
             }
         }
 
-        internal void OnDestroy()
+        private void OnDestroy()
         {
             DamageBase = null;
             RegenData = null;
