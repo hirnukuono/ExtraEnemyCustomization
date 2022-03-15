@@ -73,7 +73,7 @@ namespace EECustom.Customizations.Models.Handlers
         private IEnumerator UpdateLoop()
         {
             var currentUpdateInterval = UpdateInterval;
-            var yielder = new WaitForSeconds(UpdateInterval);
+            var yielder = WaitFor.Seconds[UpdateInterval];
 
             while (true)
             {
@@ -84,7 +84,7 @@ namespace EECustom.Customizations.Models.Handlers
 
                 if (currentUpdateInterval != UpdateInterval)
                 {
-                    yielder = new WaitForSeconds(UpdateInterval);
+                    yielder = WaitFor.Seconds[UpdateInterval];
                 }
                 yield return yielder;
             }

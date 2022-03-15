@@ -1,5 +1,6 @@
 ﻿using BepInEx.IL2CPP.Utils;
 using EECustom.Attributes;
+using EECustom.Utils;
 using Enemies;
 using System;
 using System.Collections;
@@ -23,7 +24,7 @@ namespace EECustom.Customizations.Models.Handlers
 
         private static readonly MarkerFormatText[] _valuesOfEnum = null;
         private static readonly string[] _formatString = null;
-        private static readonly WaitForSeconds _updateYielder = new(0.15f);
+        private static readonly WaitForSeconds _updateYielder = WaitFor.Seconds[0.15f];
 
         static MarkerTextHandler()
         {

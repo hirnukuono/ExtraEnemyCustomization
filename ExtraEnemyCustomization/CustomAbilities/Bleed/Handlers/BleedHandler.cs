@@ -52,7 +52,7 @@ namespace EECustom.CustomAbilities.Bleed.Handlers
         {
             _globalBleedRunning = true;
 
-            var intervalYielder = new WaitForSeconds(bleedData.interval);
+            var intervalYielder = WaitFor.Seconds[bleedData.interval];
             var timer = 0.0f;
 
             var liquid = bleedData.liquid;
@@ -86,7 +86,7 @@ namespace EECustom.CustomAbilities.Bleed.Handlers
         {
             _bleedRoutineCounter++;
 
-            var intervalYielder = new WaitForSeconds(bleedData.interval);
+            var intervalYielder = WaitFor.Seconds[bleedData.interval];
             var timer = 0.0f;
 
             var liquid = bleedData.liquid;
