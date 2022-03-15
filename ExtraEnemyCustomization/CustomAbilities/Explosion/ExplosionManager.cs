@@ -2,6 +2,7 @@
 using EECustom.Attributes;
 using EECustom.Events;
 using SNetwork;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
 namespace EECustom.CustomAbilities.Explosion
@@ -32,6 +33,7 @@ namespace EECustom.CustomAbilities.Explosion
             Sync.Send(data);
         }
 
+        [SuppressMessage("Type Safety", "UNT0014:Invalid type for call to GetComponent", Justification = "IDamagable IS Unity Component Interface")]
         internal static void Internal_TriggerExplosion(Vector3 position, float damage, float enemyMulti, float minRange, float maxRange)
         {
             CellSound.Post(EVENTS.STICKYMINEEXPLODE, position);
@@ -51,12 +53,23 @@ namespace EECustom.CustomAbilities.Explosion
 
             foreach (var target in targets)
             {
-                var targetDamagable = target.GetComponent<IDamageable>();
-                if (targetDamagable == null)
+                if (!target.TryGetComponent<IDamageable>(out var targetDamagable))
                     continue;
 
                 targetDamagable = targetDamagable.GetBaseDamagable();
-                var targetPosition = targetDamagable.GetBaseAgent()?.EyePosition ?? target.transform.position;
+                if (targetDamagable == null)
+                    continue;
+
+                Vector3 targetPosition;
+                var baseAgent = targetDamagable.GetBaseAgent();
+                if (baseAgent != null)
+                {
+                    targetPosition = baseAgent.EyePosition;
+                }
+                else
+                {
+                    targetPosition = target.transform.position;
+                }
 
                 if (targetDamagable.TempSearchID == searchID)
                 {

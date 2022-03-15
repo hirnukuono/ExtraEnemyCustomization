@@ -111,8 +111,7 @@ namespace EECustom.Customizations.Models
 
         public void OnPrefabBuilt(EnemyAgent agent)
         {
-            var handler = agent.gameObject.GetComponent<ScannerHandler>();
-            if (handler == null)
+            if (!agent.gameObject.TryGetComponent<ScannerHandler>(out _))
             {
                 agent.gameObject.AddComponent<ScannerHandler>();
             }
@@ -143,8 +142,7 @@ namespace EECustom.Customizations.Models
                     break;
             }
 
-            var scannerManager = agent.gameObject.GetComponent<ScannerHandler>();
-            if (scannerManager != null)
+            if (agent.gameObject.TryGetComponent<ScannerHandler>(out var scannerManager))
             {
                 if (scannerManager.CurrentMode == AgentMode.Off)
                 {
@@ -155,8 +153,7 @@ namespace EECustom.Customizations.Models
 
         public void OnAgentModeChanged(EnemyAgent agent, AgentMode newMode)
         {
-            var scannerManager = agent.gameObject.GetComponent<ScannerHandler>();
-            if (scannerManager != null)
+            if (agent.gameObject.TryGetComponent<ScannerHandler>(out var scannerManager))
             {
                 scannerManager.UpdateAgentMode(newMode);
             }

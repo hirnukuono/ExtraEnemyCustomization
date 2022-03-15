@@ -86,8 +86,7 @@ namespace EECustom.Customizations.Models
                 
                 if (_textRequiresAutoUpdate)
                 {
-                    var handler = marker.gameObject.GetComponent<MarkerTextHandler>();
-                    if (handler == null)
+                    if (!marker.gameObject.TryGetComponent<MarkerTextHandler>(out var handler))
                     {
                         handler = marker.gameObject.AddComponent<MarkerTextHandler>();
                         handler.Agent = agent;

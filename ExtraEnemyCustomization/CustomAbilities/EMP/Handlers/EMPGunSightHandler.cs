@@ -14,7 +14,8 @@ namespace EECustom.CustomAbilities.EMP.Handlers
             if (renderers != null)
             {
                 _sightPictures = renderers
-                    .Where(x => x.material?.shader?.name?.InvariantContains("HolographicSight") ?? false)
+                    .Where(x => x.sharedMaterial != null && x.sharedMaterial.shader != null)
+                    .Where(x => x.sharedMaterial.shader.name.InvariantContains("HolographicSight"))
                     .Select(x => x.gameObject)
                     .ToArray();
             }

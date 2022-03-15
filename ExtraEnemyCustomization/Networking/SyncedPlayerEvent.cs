@@ -66,7 +66,10 @@ namespace EECustom.Networking
         {
             foreach (var agent in agents)
             {
-                SendToPlayer(packetData, agent?.Owner ?? null);
+                if (agent == null || agent.Owner == null)
+                    continue;
+
+                SendToPlayer(packetData, agent.Owner);
             }
         }
 
@@ -78,7 +81,14 @@ namespace EECustom.Networking
             }
         }
 
-        public void SendToPlayer(T packetData, PlayerAgent agent) => SendToPlayer(packetData, agent?.Owner ?? null);
+        public void SendToPlayer(T packetData, PlayerAgent agent)
+        {
+            if (agent == null || agent.Owner == null)
+                return;
+
+            SendToPlayer(packetData, agent.Owner);
+        }
+
         public void SendToPlayer(T packetData, SNet_Player player)
         {
             if (player == null)

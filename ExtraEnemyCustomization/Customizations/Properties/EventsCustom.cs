@@ -45,7 +45,14 @@ namespace EECustom.Customizations.Properties
                 if (spawnedNode == null)
                     return;
 
-                var events = spawnedNode?.m_zone?.m_settings?.m_zoneData?.EventsOnBossDeath ?? null;
+                if (spawnedNode.m_zone == null)
+                    return;
+
+                if (spawnedNode.m_zone.m_settings == null)
+                    return;
+
+                var zoneSetting = spawnedNode.m_zone.m_settings;
+                var events = zoneSetting?.m_zoneData.EventsOnBossDeath ?? null;
                 if (events != null)
                 {
                     agent.AddOnDeadOnce(() =>

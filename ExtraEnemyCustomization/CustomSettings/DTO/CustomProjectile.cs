@@ -1,5 +1,6 @@
 ﻿using EECustom.Customizations.Shared;
 using EECustom.Utils.JsonElements;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
 namespace EECustom.CustomSettings.DTO
@@ -22,12 +23,19 @@ namespace EECustom.CustomSettings.DTO
         public BleedSetting Bleed { get; set; } = new();
         public DrainStaminaSetting DrainStamina { get; set; } = new();
 
+        [SuppressMessage("Type Safety", "UNT0014:Invalid type for call to GetComponent", Justification = "IDamagable IS Unity Component Interface")]
         public void Collision(Vector3 projectilePosition, RaycastHit hit)
         {
             if (Explosion?.Enabled ?? false)
                 Explosion.DoExplode(projectilePosition);
 
-            var baseAgent = hit.collider?.GetComponent<IDamageable>()?.GetBaseAgent() ?? null;
+            if (hit.collider == null)
+                return;
+
+            if (!hit.collider.TryGetComponent<IDamageable>(out var damagable))
+                return;
+
+            var baseAgent = damagable.GetBaseAgent();
             if (baseAgent == null)
                 return;
 

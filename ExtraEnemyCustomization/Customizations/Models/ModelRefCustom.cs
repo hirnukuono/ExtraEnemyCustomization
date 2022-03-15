@@ -70,8 +70,7 @@ namespace EECustom.Customizations.Models
 
                 var newObj = new GameObject("New_ModelRef");
                 newObj.transform.parent = baseTransform.parent;
-                newObj.transform.position = baseTransform.position;
-                newObj.transform.rotation = baseTransform.rotation;
+                newObj.transform.SetPositionAndRotation(baseTransform.position, baseTransform.rotation);
 
                 newObj.transform.localPosition = baseTransform.localPosition + mRef.Offset;
                 newObj.transform.localRotation = baseTransform.localRotation;

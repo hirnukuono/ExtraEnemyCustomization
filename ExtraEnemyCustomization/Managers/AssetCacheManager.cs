@@ -37,11 +37,15 @@ namespace EECustom.Managers
 
             public override bool ShouldCache(Material mat)
             {
-                var shaderName = mat?.shader?.name ?? string.Empty;
+                if (mat == null)
+                    return false;
+
+                if (mat.shader == null)
+                    return false;
 
                 if (!ConfigManager.Global.CacheAllMaterials)
                 {
-                    if (!shaderName.InvariantContains("EnemyFlesh"))
+                    if (!mat.shader.name.InvariantContains("EnemyFlesh"))
                         return false;
                 }
                 return true;

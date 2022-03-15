@@ -125,8 +125,14 @@ namespace EECustom.Customizations.Models.Handlers
                     _tagUpdateDone = true;
                 }
 
-                var alpha = _enemyMarker?.m_enemySubObj?.m_sprites?[0]?.color.a ?? 0.0f;
-                var tagColor = _enemyMarker?.m_enemySubObj?.m_sprites?[0]?.color ?? DefaultColor;
+                float alpha = 0.0f;
+                Color tagColor = DefaultColor;
+                if (TryGetEnemyMarkerSpriteRenderer(out var renderer))
+                {
+                    alpha = renderer.color.a;
+                    tagColor = renderer.color;
+                }
+
                 if (RequireTag)
                 {
                     var newColor = ReplaceColorWithMarker ? tagColor.AlphaMultiplied(alpha) : DefaultColor.AlphaMultiplied(alpha);
@@ -198,6 +204,31 @@ namespace EECustom.Customizations.Models.Handlers
             {
                 _silhouettes[i].SetColorB(color);
             }
+        }
+
+        private bool TryGetEnemyMarkerSpriteRenderer(out SpriteRenderer renderer)
+        {
+            if (_enemyMarker == null && _enemyMarker.m_enemySubObj == null)
+            {
+                renderer = null;
+                return false;
+            }
+
+            var enemySubObj = _enemyMarker.m_enemySubObj;
+            if (enemySubObj.m_sprites == null)
+            {
+                renderer = null;
+                return false;
+            }
+
+            if (enemySubObj.m_sprites.Length < 1)
+            {
+                renderer = null;
+                return false;
+            }
+
+            renderer = enemySubObj.m_sprites[0];
+            return renderer != null;
         }
     }
 }

@@ -26,27 +26,19 @@ namespace EECustom.Customizations.Shooters
             var projectileSetting = agent.GetComponentInChildren<EAB_ProjectileShooter>(true);
             if (projectileSetting != null)
             {
+                var defaultValue = new ShooterFireOption();
+                defaultValue.CopyFrom(projectileSetting);
+
                 if (FireSettings.Length > 1)
                 {
-                    var clone = new EAB_ProjectileShooter()
-                    {
-                        m_burstCount = projectileSetting.m_burstCount,
-                        m_burstDelay = projectileSetting.m_burstDelay,
-                        m_shotDelayMin = projectileSetting.m_shotDelayMin,
-                        m_shotDelayMax = projectileSetting.m_shotDelayMax,
-                        m_initialFireDelay = projectileSetting.m_initialFireDelay,
-                        m_shotSpreadX = projectileSetting.m_shotSpreadX,
-                        m_shotSpreadY = projectileSetting.m_shotSpreadY
-                    };
-
                     var ability = agent.gameObject.AddComponent<ShooterDistSettingHandler>();
-                    ability.DefaultValue = clone;
+                    ability.DefaultValue = defaultValue;
                     ability.EAB_Shooter = projectileSetting;
                     ability.FireSettings = FireSettings;
                 }
                 else if (FireSettings.Length == 1)
                 {
-                    FireSettings[0].ApplyToEAB(projectileSetting);
+                    FireSettings[0].ApplyToEAB(projectileSetting, defaultValue);
                 }
             }
         }
@@ -67,24 +59,52 @@ namespace EECustom.Customizations.Shooters
             public ValueBase ShotSpreadYMin { get; set; } = ValueBase.Unchanged;
             public ValueBase ShotSpreadYMax { get; set; } = ValueBase.Unchanged;
 
-            public void ApplyToEAB(EAB_ProjectileShooter eab, EAB_ProjectileShooter defValue = null)
+            public void ApplyToEAB(EAB_ProjectileShooter eab, ShooterFireOption defValue)
             {
                 if (OverrideProjectileType)
                     eab.m_type = ProjectileType;
 
-                if (defValue == null)
-                {
-                    defValue = eab;
-                }
-
-                eab.m_burstCount = BurstCount.GetAbsValue(defValue.m_burstCount);
-                eab.m_burstDelay = BurstDelay.GetAbsValue(defValue.m_burstDelay);
-                eab.m_shotDelayMin = ShotDelayMin.GetAbsValue(defValue.m_shotDelayMin);
-                eab.m_shotDelayMax = ShotDelayMax.GetAbsValue(defValue.m_shotDelayMax);
-                eab.m_initialFireDelay = InitialFireDelay.GetAbsValue(defValue.m_initialFireDelay);
-                eab.m_shotSpreadX = new Vector2(ShotSpreadXMin.GetAbsValue(defValue.m_shotSpreadX.x), ShotSpreadXMax.GetAbsValue(defValue.m_shotSpreadX.y));
-                eab.m_shotSpreadY = new Vector2(ShotSpreadYMin.GetAbsValue(defValue.m_shotSpreadY.x), ShotSpreadYMax.GetAbsValue(defValue.m_shotSpreadY.y));
+                eab.m_burstCount = BurstCount.GetAbsValue(defValue.burstCount);
+                eab.m_burstDelay = BurstDelay.GetAbsValue(defValue.burstDelay);
+                eab.m_shotDelayMin = ShotDelayMin.GetAbsValue(defValue.shotDelayMin);
+                eab.m_shotDelayMax = ShotDelayMax.GetAbsValue(defValue.shotDelayMax);
+                eab.m_initialFireDelay = InitialFireDelay.GetAbsValue(defValue.initialFireDelay);
+                eab.m_shotSpreadX = new Vector2(ShotSpreadXMin.GetAbsValue(defValue.shotSpreadX.x), ShotSpreadXMax.GetAbsValue(defValue.shotSpreadX.y));
+                eab.m_shotSpreadY = new Vector2(ShotSpreadYMin.GetAbsValue(defValue.shotSpreadY.x), ShotSpreadYMax.GetAbsValue(defValue.shotSpreadY.y));
             }
+        }
+    }
+
+    public struct ShooterFireOption
+    {
+        public int burstCount;
+        public float burstDelay;
+        public float shotDelayMin;
+        public float shotDelayMax;
+        public float initialFireDelay;
+        public Vector2 shotSpreadX;
+        public Vector2 shotSpreadY;
+
+        public void CopyFrom(EAB_ProjectileShooter eabShooter)
+        {
+            burstCount = eabShooter.m_burstCount;
+            burstDelay = eabShooter.m_burstDelay;
+            shotDelayMin = eabShooter.m_shotDelayMin;
+            shotDelayMax = eabShooter.m_shotDelayMax;
+            initialFireDelay = eabShooter.m_initialFireDelay;
+            shotSpreadX = eabShooter.m_shotSpreadX;
+            shotSpreadY = eabShooter.m_shotSpreadY;
+        }
+
+        public void CopyTo(EAB_ProjectileShooter eabShooter)
+        {
+            eabShooter.m_burstCount = burstCount;
+            eabShooter.m_burstDelay = burstDelay;
+            eabShooter.m_shotDelayMin = shotDelayMin;
+            eabShooter.m_shotDelayMax = shotDelayMax;
+            eabShooter.m_initialFireDelay = initialFireDelay;
+            eabShooter.m_shotSpreadX = shotSpreadX;
+            eabShooter.m_shotSpreadY = shotSpreadY;
         }
     }
 }
