@@ -73,7 +73,6 @@ namespace EECustom.Customizations.Models.Handlers
         [HideFromIl2Cpp]
         private void DoUpdate()
         {
-            EnemyState state;
             if (!_ownerAgent.IsInDetectedList)
             {
                 //NOT Visible on Bio-Tracker
