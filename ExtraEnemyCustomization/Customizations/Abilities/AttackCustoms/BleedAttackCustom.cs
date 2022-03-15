@@ -32,13 +32,7 @@ namespace EECustom.Customizations.Abilities
 
         protected override void OnApplyEffect(BleedSetting setting, PlayerAgent player, EnemyAgent inflictor)
         {
-            if (inflictor.TryCastToEnemyAgent(out var enemy))
-            {
-                if (IsTarget(enemy))
-                {
-                    setting.DoBleed(player);
-                }
-            }
+            setting.DoBleed(player);
         }
 
         private static void RecieveMedi(iResourcePackReceiver receiver, float _)
