@@ -23,14 +23,6 @@ namespace EECustom.CustomAbilities.EMP
             EMPManager.AddTarget(this);
         }
 
-        private void OnDestroy()
-        {
-            EMPManager.RemoveTarget(this);
-            _handler.OnDespawn();
-
-            _handler = null;
-        }
-
         private void OnEnable()
         {
             if (GameStateManager.CurrentStateName != eGameStateName.InLevel) return;
@@ -71,6 +63,14 @@ namespace EECustom.CustomAbilities.EMP
             _handler.Setup(gameObject, this);
             _hasHandler = true;
             _setup = true;
+        }
+
+        private void OnDestroy()
+        {
+            EMPManager.RemoveTarget(this);
+            _handler.OnDespawn();
+
+            _handler = null;
         }
     }
 }

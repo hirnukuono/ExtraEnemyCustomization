@@ -73,13 +73,6 @@ namespace EECustom.Customizations.EnemyAbilities.Handlers
             Behaviour.DoTriggerSync();
         }
 
-        private void OnDestroy()
-        {
-            Agent = null;
-            Behaviour = null;
-            Setting = null;
-        }
-
         [HideFromIl2Cpp]
         private bool CheckAllowedModeCondition()
         {
@@ -145,6 +138,13 @@ namespace EECustom.Customizations.EnemyAbilities.Handlers
 
             var distSettingToUse = hasLos ? Setting.DistanceWithLOS : Setting.DistanceWithoutLOS;
             return distSettingToUse.CanUseAbility(hasLos, distance);
+        }
+
+        private void OnDestroy()
+        {
+            Agent = null;
+            Behaviour = null;
+            Setting = null;
         }
     }
 }

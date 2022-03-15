@@ -131,11 +131,6 @@ namespace EECustom.Customizations.Models.Handlers
             }
         }
 
-        private void OnDestroy()
-        {
-            _ownerAgent = null;
-        }
-
         [HideFromIl2Cpp]
         internal void UpdateAgentMode(AgentMode mode, bool forceUpdateWithoutTransition = false)
         {
@@ -264,6 +259,12 @@ namespace EECustom.Customizations.Models.Handlers
                 EnemyState.ScoutDetect => _data.FeelerOutColor,
                 _ => _data.DefaultColor
             };
+        }
+
+        private void OnDestroy()
+        {
+            _ownerAgent = null;
+            _colorInterpolationCoroutine = null;
         }
     }
 }

@@ -14,11 +14,6 @@ namespace EECustom.Customizations.Models.Handlers
 
         private Color _latestColorB = Color.clear;
 
-        private void OnDestroy()
-        {
-            SilhouetteMaterial = null;
-        }
-
         [HideFromIl2Cpp]
         public void EnableSilhouette()
         {
@@ -42,6 +37,11 @@ namespace EECustom.Customizations.Models.Handlers
         {
             SilhouetteMaterial.SetVector("_ColorB", color);
             _latestColorB = color;
+        }
+
+        private void OnDestroy()
+        {
+            SilhouetteMaterial = null;
         }
     }
 
@@ -90,16 +90,6 @@ namespace EECustom.Customizations.Models.Handlers
                 SetColorB(DefaultColor);
                 Show();
             }
-        }
-
-        private void OnDestroy()
-        {
-            if (_eventRegistered)
-                EnemyMarkerEvents.Marked -= OnMarked;
-
-            OwnerAgent = null;
-            _enemyMarker = null;
-            _silhouettes = null;
         }
 
         private void FixedUpdate()
@@ -229,6 +219,16 @@ namespace EECustom.Customizations.Models.Handlers
 
             renderer = enemySubObj.m_sprites[0];
             return renderer != null;
+        }
+
+        private void OnDestroy()
+        {
+            if (_eventRegistered)
+                EnemyMarkerEvents.Marked -= OnMarked;
+
+            OwnerAgent = null;
+            _enemyMarker = null;
+            _silhouettes = null;
         }
     }
 }

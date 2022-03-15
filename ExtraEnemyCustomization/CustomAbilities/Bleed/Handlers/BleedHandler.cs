@@ -19,12 +19,6 @@ namespace EECustom.CustomAbilities.Bleed.Handlers
         private Coroutine _globalBleedRoutine = null;
         private int _bleedRoutineCounter = 0;
 
-        private void OnDestroy()
-        {
-            StopBleed();
-            Agent = null;
-        }
-
         [HideFromIl2Cpp]
         public void DoBleed(BleedingData bleedData)
         {
@@ -124,6 +118,12 @@ namespace EECustom.CustomAbilities.Bleed.Handlers
 
             Inject_PUI_LocalPlayerStatus.IsBleeding = false;
             GuiManager.PlayerLayer.UpdateHealth(Agent.Damage.GetHealthRel(), Agent.MeleeBuffTimer > Clock.Time);
+        }
+
+        private void OnDestroy()
+        {
+            StopBleed();
+            Agent = null;
         }
     }
 }
