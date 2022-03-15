@@ -5,24 +5,26 @@ using Player;
 
 namespace EECustom.Customizations.Abilities
 {
-    public abstract class AttackCustomBase<T> : EnemyCustomBase where T : new()
+    public abstract class AttackCustomBase<T> : EnemyCustomBase where T : class, new()
     {
         public T MeleeData { get; set; } = new();
         public T TentacleData { get; set; } = new();
-        public T ProjectileData { get; set; } = new();
+        public T ProjectileData { get; set; } = null;
 
         public override void OnConfigLoaded()
         {
             LocalPlayerDamageEvents.MeleeDamage += OnMelee;
             LocalPlayerDamageEvents.TentacleDamage += OnTentacle;
-            LocalPlayerDamageEvents.ProjectileDamage += OnProjectile;
+            if (ProjectileData != null)
+                LocalPlayerDamageEvents.ProjectileDamage += OnProjectile;
         }
 
         public override void OnConfigUnloaded()
         {
             LocalPlayerDamageEvents.MeleeDamage -= OnMelee;
             LocalPlayerDamageEvents.TentacleDamage -= OnTentacle;
-            LocalPlayerDamageEvents.ProjectileDamage -= OnProjectile;
+            if (ProjectileData != null)
+                LocalPlayerDamageEvents.ProjectileDamage -= OnProjectile;
         }
 
         private void OnMelee(PlayerAgent player, Agent inflictor, float damage)
