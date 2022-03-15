@@ -77,7 +77,11 @@ namespace EECustom.Customizations.Models.Handlers
 
             while (true)
             {
-                DoUpdate();
+                if (_isSetup)
+                {
+                    DoUpdate();
+                }
+
                 if (currentUpdateInterval != UpdateInterval)
                 {
                     yielder = new WaitForSeconds(UpdateInterval);
