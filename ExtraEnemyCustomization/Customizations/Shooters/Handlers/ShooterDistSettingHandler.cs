@@ -8,7 +8,7 @@ namespace EECustom.Customizations.Shooters.Handlers
     [InjectToIl2Cpp]
     internal sealed class ShooterDistSettingHandler : MonoBehaviour
     {
-        public EAB_ProjectileShooter DefaultValue;
+        public ShooterFireOption DefaultValue;
         public EAB_ProjectileShooter EAB_Shooter;
         public ShooterFireCustom.FireSetting[] FireSettings;
 
@@ -39,9 +39,6 @@ namespace EECustom.Customizations.Shooters.Handlers
 
         internal void OnDestroy()
         {
-            Destroy(DefaultValue);
-            DefaultValue = null;
-
             EAB_Shooter = null;
             FireSettings = null;
             _currentSetting = null;

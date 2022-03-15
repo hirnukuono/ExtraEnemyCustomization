@@ -10,8 +10,7 @@ namespace EECustom.CustomAbilities.EMP.Handlers
 
         public override void Setup(GameObject gameObject, EMPController controller)
         {
-            _scanner = gameObject.GetComponent<EnemyScanner>();
-            if (_scanner == null)
+            if (!gameObject.TryGetComponent(out _scanner))
             {
                 Logger.Error("Couldn't get bio-tracker component!");
             }

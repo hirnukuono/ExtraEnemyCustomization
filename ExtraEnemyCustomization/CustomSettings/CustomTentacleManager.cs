@@ -1,6 +1,7 @@
 ﻿using EECustom.CustomSettings.DTO;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace EECustom.CustomSettings
 {
@@ -41,13 +42,15 @@ namespace EECustom.CustomSettings
             }
 
             //TODO: For some reason, it's broken. Fix it
-            var setup = new GPUC_Setup
-            {
-                m_bodyPrefab = GetSetup(tentInfo.BodyPrefab).m_bodyPrefab,
-                m_bodyTileMaterial = GetSetup(tentInfo.BodyMaterial).m_bodyTileMaterial,
-                m_headPrefab = GetSetup(tentInfo.HeadPrefab).m_headPrefab,
-                m_headMaterial = GetSetup(tentInfo.HeadMaterial).m_headMaterial
-            };
+            var prefab = new GameObject();
+            UnityEngine.Object.DontDestroyOnLoad(prefab);
+            
+            var setup = prefab.AddComponent<GPUC_Setup>();
+            setup.m_bodyPrefab = GetSetup(tentInfo.BodyPrefab).m_bodyPrefab;
+            setup.m_bodyTileMaterial = GetSetup(tentInfo.BodyMaterial).m_bodyTileMaterial;
+            setup.m_headPrefab = GetSetup(tentInfo.HeadPrefab).m_headPrefab;
+            setup.m_headMaterial = GetSetup(tentInfo.HeadMaterial).m_headMaterial;
+
             var baseS = GetSetup(tentInfo.BodyPrefab);
             Logger.Warning($"limit: {baseS.m_globalLimit}, gbuffer: {baseS.m_renderToGBuffer}, segMax: {baseS.m_segmentsMax}");
             setup.m_globalLimit = 50;

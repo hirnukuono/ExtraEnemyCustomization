@@ -22,8 +22,7 @@ namespace EECustom.CustomAbilities.EMP.Handlers
 
         public override void Setup(GameObject gameObject, EMPController controller)
         {
-            _light = gameObject.GetComponent<LG_Light>();
-            if (_light == null)
+            if (!gameObject.TryGetComponent(out _light))
             {
                 Logger.Warning("No Light!");
                 return;
@@ -35,7 +34,10 @@ namespace EECustom.CustomAbilities.EMP.Handlers
 
         protected override void FlickerDevice()
         {
-            _light?.ChangeIntensity(GetRandom01() * _originalIntensity);
+            if (_light != null)
+            {
+                _light.ChangeIntensity(GetRandom01() * _originalIntensity);
+            }
         }
 
         protected override void DeviceOn()
