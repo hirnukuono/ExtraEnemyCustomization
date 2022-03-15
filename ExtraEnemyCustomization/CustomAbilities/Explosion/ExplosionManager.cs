@@ -61,9 +61,10 @@ namespace EECustom.CustomAbilities.Explosion
                     continue;
 
                 Vector3 targetPosition;
-                if (targetDamagable.GetBaseAgent() != null)
+                var baseAgent = targetDamagable.GetBaseAgent();
+                if (baseAgent != null)
                 {
-                    targetPosition = targetDamagable.GetBaseAgent().EyePosition;
+                    targetPosition = baseAgent.EyePosition;
                 }
                 else
                 {
