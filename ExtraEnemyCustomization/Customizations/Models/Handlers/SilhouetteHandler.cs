@@ -196,6 +196,7 @@ namespace EECustom.Customizations.Models.Handlers
             }
         }
 
+        [HideFromIl2Cpp]
         private bool TryGetEnemyMarkerSpriteRenderer(out SpriteRenderer renderer)
         {
             if (_enemyMarker == null && _enemyMarker.m_enemySubObj == null)
