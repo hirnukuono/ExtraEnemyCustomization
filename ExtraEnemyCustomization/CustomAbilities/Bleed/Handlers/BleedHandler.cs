@@ -52,6 +52,7 @@ namespace EECustom.CustomAbilities.Bleed.Handlers
             {
                 _specialOverrideText = bleedData.textSpecialOverride;
                 Inject_PUI_LocalPlayerStatus.SpecialOverrideTextID = bleedData.textSpecialOverride;
+                shouldRevertText = true;
             }
 
             var intervalYielder = WaitFor.Seconds[bleedData.interval];
@@ -98,6 +99,7 @@ namespace EECustom.CustomAbilities.Bleed.Handlers
             if (_specialOverrideText == 0u)
             {
                 _specialOverrideText = bleedData.textSpecialOverride;
+                Inject_PUI_LocalPlayerStatus.SpecialOverrideTextID = bleedData.textSpecialOverride;
                 shouldRevertText = true;
             }
 
