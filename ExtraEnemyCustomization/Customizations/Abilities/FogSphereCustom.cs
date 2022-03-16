@@ -1,4 +1,5 @@
 ﻿using EECustom.Customizations.Shared;
+using EECustom.Utils.JsonElements;
 using Enemies;
 using UnityEngine;
 
@@ -6,14 +7,19 @@ namespace EECustom.Customizations.Abilities
 {
     public sealed class FogSphereCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyPrefabBuiltEvent
     {
+        public CurveWrapper ColorCurve { get; set; } = CurveWrapper.Empty;
         public Color ColorMin { get; set; } = Color.white;
         public Color ColorMax { get; set; } = Color.clear;
+        public CurveWrapper IntensityCurve { get; set; } = CurveWrapper.Empty;
         public float IntensityMin { get; set; } = 1.0f;
         public float IntensityMax { get; set; } = 5.0f;
+        public CurveWrapper RangeCurve { get; set; } = CurveWrapper.Empty;
         public float RangeMin { get; set; } = 1.0f;
         public float RangeMax { get; set; } = 3.0f;
+        public CurveWrapper DensityCurve { get; set; } = CurveWrapper.Empty;
         public float DensityMin { get; set; } = 1.0f;
         public float DensityMax { get; set; } = 5.0f;
+        public CurveWrapper DensityAmountCurve { get; set; } = CurveWrapper.Empty;
         public float DensityAmountMin { get; set; } = 0.0f;
         public float DensityAmountMax { get; set; } = 5.0f;
         public float Duration { get; set; } = 30.0f;
@@ -47,6 +53,21 @@ namespace EECustom.Customizations.Abilities
                 fogHandler.m_densityAmountMin = DensityAmountMin;
                 fogHandler.m_densityAmountMax = DensityAmountMax;
                 fogHandler.m_totalLength = Duration;
+
+                if (ColorCurve.TryBuildCurve(out var curve))
+                    fogHandler.m_colorCurve = curve;
+
+                if (IntensityCurve.TryBuildCurve(out curve))
+                    fogHandler.m_intensityCurve = curve;
+
+                if (RangeCurve.TryBuildCurve(out curve))
+                    fogHandler.m_rangeCurve = curve;
+
+                if (DensityCurve.TryBuildCurve(out curve))
+                    fogHandler.m_densityCurve = curve;
+
+                if (DensityAmountCurve.TryBuildCurve(out curve))
+                    fogHandler.m_densityAmountCurve = curve;
 
                 eabFog.m_fogSpherePrefab = newFogPrefab;
             }

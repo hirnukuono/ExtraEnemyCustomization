@@ -8,6 +8,11 @@ namespace EECustom
 
     public static class EasingExtension
     {
+        public static float Evaluate(this eEasingType easeType, float progress, bool backward = false)
+        {
+            return Easing.GetEasingValue(easeType, progress, backward);
+        }
+
         public static EaseFunc GetEaseFunction(this eEasingType easeType)
         {
             return easeType switch

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace EECustom.Utils.JsonElements
 {
+    [JsonConverter(typeof(ValueBaseConverter))]
     public struct ValueBase
     {
         public static readonly ValueBase Unchanged = new(1.0f, ValueMode.Rel, true);
