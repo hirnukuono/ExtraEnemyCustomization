@@ -15,6 +15,7 @@ namespace EECustom.Customizations.Shared
         public bool HasLiquid { get; set; } = true;
         public bool CanBeStacked { get; set; } = false;
         public ScreenLiquidSettingName LiquidSetting { get; set; } = ScreenLiquidSettingName.enemyBlood_Squirt;
+        public uint OverrideBleedingTextID { get; set; } = 0u;
 
         public void DoBleed(PlayerAgent agent)
         {
@@ -25,7 +26,8 @@ namespace EECustom.Customizations.Shared
                 damage = Damage.GetAbsValue(PlayerData.MaxHealth),
                 chanceToBleed = ChanceToBleed,
                 doStack = CanBeStacked,
-                liquid = HasLiquid ? LiquidSetting : (ScreenLiquidSettingName)(-1)
+                liquid = HasLiquid ? LiquidSetting : (ScreenLiquidSettingName)(-1),
+                textSpecialOverride = OverrideBleedingTextID
             });
         }
 
