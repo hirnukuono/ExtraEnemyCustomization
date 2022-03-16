@@ -6,8 +6,8 @@ namespace EECustom.Customizations.Shared
     public sealed class DrainStaminaSetting
     {
         public bool Enabled { get; set; } = false;
-        public float DrainAmount { get; set; } = 0.05f;
-        public float DrainAmountInCombat { get; set; } = 0.1f;
+        public float DrainAmount { get; set; } = 0.0f;
+        public float DrainAmountInCombat { get; set; } = 0.0f;
         public bool ResetRecoverTimer { get; set; } = false;
         public bool ResetRecoverTimerInCombat { get; set; } = false;
 
