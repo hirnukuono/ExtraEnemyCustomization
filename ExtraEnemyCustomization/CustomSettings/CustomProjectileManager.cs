@@ -2,6 +2,7 @@
 using EECustom.CustomSettings.DTO;
 using EECustom.Events;
 using EECustom.Utils;
+using Player;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,20 @@ namespace EECustom.CustomSettings
             LevelEvents.LevelCleanup += () =>
             {
                 _instanceProjLookup.Clear();
+            };
+
+            ProjectileEvents.CollidedWorld += (ProjectileBase proj, GameObject _) =>
+            {
+                var instanceID = proj.gameObject.GetInstanceID();
+                var data = GetInstanceData(instanceID);
+                data?.Settings?.Collision(proj.transform.position);
+            };
+
+            ProjectileEvents.CollidedPlayer += (ProjectileBase proj, PlayerAgent agent) =>
+            {
+                var instanceID = proj.gameObject.GetInstanceID();
+                var data = GetInstanceData(instanceID);
+                data?.Settings?.Collision(proj.transform.position, agent);
             };
         }
 

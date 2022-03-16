@@ -24,7 +24,13 @@ namespace EECustom.Customizations.Abilities
             {
                 ProjectileEvents.CollidedWorld += ProjectileEvents_CollidedWorld;
             }
+
+            if (ProjectileExplodesOnPlayer)
+            {
+                ProjectileEvents.CollidedPlayer += ProjectileEvents_CollidedPlayer;
+            }
         }
+
         public override void OnConfigUnloaded()
         {
             base.OnConfigUnloaded();
@@ -32,22 +38,33 @@ namespace EECustom.Customizations.Abilities
             {
                 ProjectileEvents.CollidedWorld -= ProjectileEvents_CollidedWorld;
             }
+
+            if (ProjectileExplodesOnPlayer)
+            {
+                ProjectileEvents.CollidedPlayer -= ProjectileEvents_CollidedPlayer;
+            }
         }
 
-        private void ProjectileEvents_CollidedWorld(ProjectileBase projectile, GameObject world)
+        private void ProjectileEvents_CollidedWorld(ProjectileBase projectile, GameObject _)
+            => TriggerProjectileExplosion(projectile);
+
+        private void ProjectileEvents_CollidedPlayer(ProjectileBase projectile, PlayerAgent _)
+            => TriggerProjectileExplosion(projectile);
+
+        private void TriggerProjectileExplosion(ProjectileBase projectile)
         {
             if (projectile.TryGetOwner(out var agent))
-            {
-                if (IsTarget(agent))
-                {
-                    ProjectileData.DoExplode(projectile.transform.position);
+                return;
 
-                    if (ProjectileData.KillInflictor)
-                    {
-                        var damage = agent.Damage;
-                        damage.ExplosionDamage(damage.HealthMax, Vector3.zero, Vector3.zero);
-                    }
-                }
+            if (!IsTarget(agent))
+                return;
+
+            ProjectileData.DoExplode(projectile.transform.position);
+
+            if (ProjectileData.KillInflictor)
+            {
+                var damage = agent.Damage;
+                damage.ExplosionDamage(damage.HealthMax, Vector3.zero, Vector3.zero);
             }
         }
 
@@ -64,10 +81,7 @@ namespace EECustom.Customizations.Abilities
 
         protected override void OnApplyProjectileEffect(ExplosionSetting setting, PlayerAgent player, EnemyAgent inflictor, ProjectileBase projectile)
         {
-            if (ProjectileExplodesOnPlayer)
-            {
-                OnApplyEffect(setting, player, inflictor);
-            }
+            return;
         }
     }
 

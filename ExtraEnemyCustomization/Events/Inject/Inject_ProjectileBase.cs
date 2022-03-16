@@ -11,7 +11,6 @@ namespace EECustom.Events.Inject
     internal static class Inject_ProjectileBase
     {
         [HarmonyWrapSafe]
-        [SuppressMessage("Type Safety", "UNT0014:Invalid type for call to GetComponent", Justification = "IDamagable IS Unity Component Interface")]
         internal static void Prefix(ProjectileBase __instance, RaycastHit hit)
         {
             if (hit.collider == null)

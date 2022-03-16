@@ -1,5 +1,6 @@
 ﻿using EECustom.Customizations.Shared;
 using EECustom.Utils.JsonElements;
+using Player;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
@@ -25,33 +26,23 @@ namespace EECustom.CustomSettings.DTO
         [Obsolete("Will be merged to AttackCustoms")] public DrainStaminaSetting DrainStamina { get; set; } = new();
 
         [Obsolete("Will be merged to AttackCustoms")]
-        [SuppressMessage("Type Safety", "UNT0014:Invalid type for call to GetComponent", Justification = "IDamagable IS Unity Component Interface")]
-        public void Collision(Vector3 projectilePosition, RaycastHit hit)
+
+        public void Collision(Vector3 projectilePosition, PlayerAgent player = null)
         {
             if (Explosion?.Enabled ?? false)
                 Explosion.DoExplode(projectilePosition);
 
-            if (hit.collider == null)
-                return;
-
-            if (!hit.collider.gameObject.TryGetComp<IDamageable>(out var damagable))
-                return;
-
-            var baseAgent = damagable.GetBaseAgent();
-            if (baseAgent == null)
-                return;
-
-            if (!baseAgent.TryCastToPlayerAgent(out var agent))
+            if (player == null)
                 return;
 
             if (Knockback?.Enabled ?? false)
-                Knockback.DoKnockbackIgnoreDistance(projectilePosition, agent);
+                Knockback.DoKnockbackIgnoreDistance(projectilePosition, player);
 
             if (Bleed?.Enabled ?? false)
-                Bleed.DoBleed(agent);
+                Bleed.DoBleed(player);
 
             if (DrainStamina?.Enabled ?? false)
-                DrainStamina.DoDrain(agent);
+                DrainStamina.DoDrain(player);
         }
     }
 }
