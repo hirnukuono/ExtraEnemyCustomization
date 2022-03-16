@@ -8,7 +8,7 @@ namespace EECustom.Utils.JsonElements
 {
     public sealed class CurveWrapper : Collection<CurveKeyFrame>
     {
-        public const int KEYFRAME_FRAMECOUNT = 10;
+        public const int KEYFRAME_FRAMECOUNT = 20;
         public const float KEYFRAME_PROGRESS_INV = 1.0f / KEYFRAME_FRAMECOUNT;
 
         public static readonly CurveWrapper Empty = new();
@@ -44,6 +44,7 @@ namespace EECustom.Utils.JsonElements
 
                 var deltaTime = nextItem.Time - item.Time;
                 var deltaValue = nextItem.Value - item.Value;
+                var slope = deltaValue / deltaTime;
                 for (int j = 0; j < KEYFRAME_FRAMECOUNT; j++)
                 {
                     var progress = KEYFRAME_PROGRESS_INV * j;
@@ -52,7 +53,9 @@ namespace EECustom.Utils.JsonElements
                     _keys.Add(new Keyframe()
                     {
                         time = time,
-                        value = value
+                        value = value,
+                        inTangent = slope,
+                        outTangent = slope
                     });
                 }
             }
