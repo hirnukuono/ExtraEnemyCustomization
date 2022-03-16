@@ -1,4 +1,5 @@
 ﻿using EECustom.Customizations.Abilities.Inject;
+using EECustom.Events;
 using Enemies;
 
 namespace EECustom.Customizations.Abilities
@@ -21,6 +22,19 @@ namespace EECustom.Customizations.Abilities
         {
             EB_InCombat_MoveToNextNode_DestroyDoor.s_globalRetryTimer = float.MaxValue;
             Inject_EB_DestroyDoor.ShouldOverride = true;
+
+            LevelEvents.LevelCleanup += LevelCleanup;
+        }
+
+        public override void OnConfigUnloaded()
+        {
+            LevelEvents.LevelCleanup -= LevelCleanup;
+        }
+
+        private void LevelCleanup()
+        {
+            EB_InCombat_MoveToNextNode_DestroyDoor.s_globalRetryTimer = 0.0f;
+            _globalTimer = 0.0f;
         }
 
         public void OnSpawned(EnemyAgent agent)
