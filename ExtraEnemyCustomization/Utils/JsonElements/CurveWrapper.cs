@@ -58,7 +58,7 @@ namespace EECustom.Utils.JsonElements
             }
 
             curve = new AnimationCurve(_keys.ToArray());
-            return false;
+            return true;
         }
     }
 
