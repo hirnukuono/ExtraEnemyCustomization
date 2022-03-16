@@ -9,8 +9,8 @@ namespace EECustom.Customizations.Abilities
 {
     public sealed class ExplosiveAttackCustom : AttackCustomBase<ExplosionSetting>
     {
-        public bool ProjectileExplodesOnWorld { get; set; } = true;
-        public bool ProjectileExplodesOnPlayer { get; set; } = true;
+        public bool ProjectileExplodesOnWorld { get; set; } = false;
+        public bool ProjectileExplodesOnPlayer { get; set; } = false;
 
         public override string GetProcessName()
         {
