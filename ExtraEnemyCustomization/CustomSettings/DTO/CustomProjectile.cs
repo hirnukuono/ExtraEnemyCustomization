@@ -34,7 +34,7 @@ namespace EECustom.CustomSettings.DTO
             if (hit.collider == null)
                 return;
 
-            if (!hit.collider.TryGetComponent<IDamageable>(out var damagable))
+            if (!hit.collider.gameObject.TryGetComp<IDamageable>(out var damagable))
                 return;
 
             var baseAgent = damagable.GetBaseAgent();

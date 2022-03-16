@@ -53,7 +53,7 @@ namespace EECustom.CustomAbilities.Explosion
 
             foreach (var target in targets)
             {
-                if (!target.TryGetComponent<IDamageable>(out var targetDamagable))
+                if (target.gameObject.TryGetComp<IDamageable>(out var targetDamagable))
                     continue;
 
                 targetDamagable = targetDamagable.GetBaseDamagable();

@@ -17,7 +17,7 @@ namespace EECustom.Events.Inject
             if (hit.collider == null)
                 return;
 
-            if (!hit.collider.TryGetComponent<IDamageable>(out var damagable))
+            if (!hit.collider.gameObject.TryGetComp<IDamageable>(out var damagable))
             {
                 ProjectileEvents.OnCollisionWorld(__instance, hit.collider.gameObject);
                 return;
