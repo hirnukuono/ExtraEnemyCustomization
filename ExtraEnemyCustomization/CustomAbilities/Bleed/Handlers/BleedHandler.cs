@@ -18,6 +18,7 @@ namespace EECustom.CustomAbilities.Bleed.Handlers
         private bool _globalBleedRunning = false;
         private Coroutine _globalBleedRoutine = null;
         private int _bleedRoutineCounter = 0;
+        private uint _specialOverrideText = 0u;
 
         [HideFromIl2Cpp]
         public void DoBleed(BleedingData bleedData)
@@ -46,6 +47,13 @@ namespace EECustom.CustomAbilities.Bleed.Handlers
         {
             _globalBleedRunning = true;
 
+            var shouldRevertText = false;
+            if (_specialOverrideText == 0u)
+            {
+                _specialOverrideText = bleedData.textSpecialOverride;
+                Inject_PUI_LocalPlayerStatus.SpecialOverrideTextID = bleedData.textSpecialOverride;
+            }
+
             var intervalYielder = WaitFor.Seconds[bleedData.interval];
             var timer = 0.0f;
 
@@ -71,6 +79,12 @@ namespace EECustom.CustomAbilities.Bleed.Handlers
             _globalBleedRunning = false;
             _globalBleedRoutine = null;
 
+            if (shouldRevertText)
+            {
+                _specialOverrideText = 0u;
+                Inject_PUI_LocalPlayerStatus.SpecialOverrideTextID = 0u;
+            }
+
             Inject_PUI_LocalPlayerStatus.IsBleeding = _globalBleedRunning || _bleedRoutineCounter > 0;
             GuiManager.PlayerLayer.UpdateHealth(Agent.Damage.GetHealthRel(), Agent.MeleeBuffTimer > Clock.Time);
         }
@@ -79,6 +93,13 @@ namespace EECustom.CustomAbilities.Bleed.Handlers
         private IEnumerator DoStackableBleed(BleedingData bleedData)
         {
             _bleedRoutineCounter++;
+
+            var shouldRevertText = false;
+            if (_specialOverrideText == 0u)
+            {
+                _specialOverrideText = bleedData.textSpecialOverride;
+                shouldRevertText = true;
+            }
 
             var intervalYielder = WaitFor.Seconds[bleedData.interval];
             var timer = 0.0f;
@@ -104,6 +125,12 @@ namespace EECustom.CustomAbilities.Bleed.Handlers
 
             _bleedRoutineCounter--;
 
+            if (shouldRevertText)
+            {
+                _specialOverrideText = 0u;
+                Inject_PUI_LocalPlayerStatus.SpecialOverrideTextID = 0u;
+            }
+
             Inject_PUI_LocalPlayerStatus.IsBleeding = _globalBleedRunning || _bleedRoutineCounter > 0;
             GuiManager.PlayerLayer.UpdateHealth(Agent.Damage.GetHealthRel(), Agent.MeleeBuffTimer > Clock.Time);
         }
@@ -117,6 +144,7 @@ namespace EECustom.CustomAbilities.Bleed.Handlers
             _globalBleedRoutine = null;
 
             Inject_PUI_LocalPlayerStatus.IsBleeding = false;
+            Inject_PUI_LocalPlayerStatus.SpecialOverrideTextID = 0u;
             GuiManager.PlayerLayer.UpdateHealth(Agent.Damage.GetHealthRel(), Agent.MeleeBuffTimer > Clock.Time);
         }
 

@@ -37,5 +37,6 @@ namespace EECustom.CustomAbilities.Bleed
         public float chanceToBleed;
         public bool doStack;
         public ScreenLiquidSettingName liquid;
+        public uint textSpecialOverride;
     }
 }
