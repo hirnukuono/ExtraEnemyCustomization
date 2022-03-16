@@ -22,7 +22,7 @@ namespace EECustom.CustomAbilities.EMP.Handlers
 
         public override void Setup(GameObject gameObject, EMPController controller)
         {
-            if (!gameObject.TryGetComponent(out _light))
+            if (!gameObject.TryGetComp(out _light))
             {
                 Logger.Warning("No Light!");
                 return;

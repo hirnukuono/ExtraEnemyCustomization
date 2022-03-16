@@ -11,7 +11,7 @@ namespace EECustom.Customizations.Models.Inject
         [HarmonyWrapSafe]
         internal static void Prefix(ES_PathMove __instance)
         {
-            if (__instance.m_enemyAgent.gameObject.TryGetComponent<ScannerHandler>(out var scannerManager))
+            if (__instance.m_enemyAgent.gameObject.TryGetComp<ScannerHandler>(out var scannerManager))
             {
                 scannerManager.UpdateAgentMode(AgentMode.Agressive);
                 __instance.m_enemyAgent.ScannerData.m_soundIndex = 0;
@@ -25,7 +25,7 @@ namespace EECustom.Customizations.Models.Inject
         [HarmonyWrapSafe]
         internal static void Prefix(ES_PathMoveFlyer __instance)
         {
-            if (__instance.m_enemyAgent.gameObject.TryGetComponent<ScannerHandler>(out var scannerManager))
+            if (__instance.m_enemyAgent.gameObject.TryGetComp<ScannerHandler>(out var scannerManager))
             {
                 scannerManager.UpdateAgentMode(AgentMode.Agressive);
                 __instance.m_enemyAgent.ScannerData.m_soundIndex = 0;
@@ -39,7 +39,7 @@ namespace EECustom.Customizations.Models.Inject
         [HarmonyWrapSafe]
         internal static void Prefix(ES_HibernateWakeUp __instance)
         {
-            if (__instance.m_enemyAgent.gameObject.TryGetComponent<ScannerHandler>(out var scannerManager))
+            if (__instance.m_enemyAgent.gameObject.TryGetComp<ScannerHandler>(out var scannerManager))
             {
                 scannerManager.UpdateAgentMode(AgentMode.Agressive);
                 __instance.m_enemyAgent.ScannerData.m_soundIndex = 0;

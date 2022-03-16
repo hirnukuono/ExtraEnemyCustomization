@@ -35,10 +35,7 @@ namespace EECustom.CustomAbilities.Bleed
 
         private static BleedHandler GetHandler(PlayerAgent agent)
         {
-            if (!agent.gameObject.TryGetComponent<BleedHandler>(out var handler))
-            {
-                handler = agent.gameObject.AddComponent<BleedHandler>();
-            }
+            var handler = agent.gameObject.AddOrGetComponent<BleedHandler>();
             handler.Agent = agent;
             return handler;
         }

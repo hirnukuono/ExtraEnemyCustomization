@@ -1,10 +1,28 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace EECustom
 {
     public static class GameObjectExtension
     {
+        [SuppressMessage("Type Safety", "UNT0014:Invalid type for call to GetComponent", Justification = "Yes")]
+        public static bool TryGetComp<T>(this GameObject obj, out T component)
+        {
+            //MINOR: Unhollower missing method moment
+            component = obj.GetComponent<T>();
+            return component != null;
+        }
+
+        public static T AddOrGetComponent<T>(this GameObject obj) where T : Component
+        {
+            if (!TryGetComp(obj, out T comp))
+            {
+                comp = obj.AddComponent<T>();
+            }
+            return comp;
+        }
+
         public static GameObject FindChild(this GameObject obj, string name, bool includeInactive = false)
         {
             var comps = obj.GetComponentsInChildren<Transform>(includeInactive);

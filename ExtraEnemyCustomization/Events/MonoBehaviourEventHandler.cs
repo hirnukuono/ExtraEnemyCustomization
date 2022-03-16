@@ -23,8 +23,7 @@ namespace EECustom.Events
 
         public static void AttatchToObject(GameObject obj, UnityEventHandler onUpdate = null, UnityEventHandler onLateUpdate = null, UnityEventHandler onFixedUpdate = null, UnityEventHandler onDestroyed = null)
         {
-            if (!obj.TryGetComponent<MonoBehaviourEventHandler>(out var handler))
-                handler = obj.AddComponent<MonoBehaviourEventHandler>();
+            var handler = obj.AddOrGetComponent<MonoBehaviourEventHandler>();
 
             if (onUpdate != null)
                 handler.OnUpdate += onUpdate;

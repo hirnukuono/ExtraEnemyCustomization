@@ -55,7 +55,7 @@ namespace EECustom.CustomSettings
             var newPrefab = UnityEngine.Object.Instantiate(basePrefab);
             UnityEngine.Object.DontDestroyOnLoad(newPrefab);
 
-            if (newPrefab.TryGetComponent<ProjectileBase>(out var projectileBase))
+            if (newPrefab.TryGetComp<ProjectileBase>(out var projectileBase))
             {
                 projectileBase.m_maxDamage = projInfo.Damage.GetAbsValue(PlayerData.MaxHealth, projectileBase.m_maxDamage);
                 projectileBase.m_maxInfection = projInfo.Infection.GetAbsValue(PlayerData.MaxInfection, projectileBase.m_maxInfection);
@@ -127,7 +127,7 @@ namespace EECustom.CustomSettings
 
             public void RegisterInstance(GameObject gameObject)
             {
-                if (gameObject.TryGetComponent<ProjectileTargeting>(out var projectile))
+                if (gameObject.TryGetComp<ProjectileTargeting>(out var projectile))
                 {
                     var instanceID = gameObject.GetInstanceID();
 
