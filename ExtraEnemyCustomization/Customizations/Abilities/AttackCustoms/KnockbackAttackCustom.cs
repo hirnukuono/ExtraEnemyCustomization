@@ -11,9 +11,14 @@ namespace EECustom.Customizations.Abilities
             return "KnockbackAttack";
         }
 
-        protected override void OnApplyEffect(KnockbackSetting setting, PlayerAgent player, EnemyAgent inflicator)
+        protected override void OnApplyEffect(KnockbackSetting setting, PlayerAgent player, EnemyAgent inflictor)
         {
-            setting.DoKnockback(inflicator, player);
+            setting.DoKnockback(inflictor, player);
+        }
+
+        protected override void OnApplyProjectileEffect(KnockbackSetting setting, PlayerAgent player, EnemyAgent inflictor, ProjectileBase projectile)
+        {
+            OnApplyEffect(setting, player, inflictor);
         }
     }
 }

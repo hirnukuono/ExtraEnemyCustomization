@@ -35,6 +35,11 @@ namespace EECustom.Customizations.Abilities
             setting.DoBleed(player);
         }
 
+        protected override void OnApplyProjectileEffect(BleedSetting setting, PlayerAgent player, EnemyAgent inflictor, ProjectileBase projectile)
+        {
+            OnApplyEffect(setting, player, inflictor);
+        }
+
         private static void RecieveMedi(iResourcePackReceiver receiver, float _)
         {
             var player = receiver.TryCast<PlayerAgent>();

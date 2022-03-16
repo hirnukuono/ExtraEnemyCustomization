@@ -11,9 +11,14 @@ namespace EECustom.Customizations.Abilities
             return "DrainStamina";
         }
 
-        protected override void OnApplyEffect(DrainStaminaSetting setting, PlayerAgent player, EnemyAgent inflicator)
+        protected override void OnApplyEffect(DrainStaminaSetting setting, PlayerAgent player, EnemyAgent inflictor)
         {
             setting.DoDrain(player);
+        }
+
+        protected override void OnApplyProjectileEffect(DrainStaminaSetting setting, PlayerAgent player, EnemyAgent inflictor, ProjectileBase projectile)
+        {
+            OnApplyEffect(setting, player, inflictor);
         }
     }
 }

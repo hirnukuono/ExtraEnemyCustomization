@@ -41,6 +41,11 @@ namespace EECustom.Customizations.Abilities
             }, true, true);
         }
 
+        protected override void OnApplyProjectileEffect(AttackData setting, PlayerAgent player, EnemyAgent inflictor, ProjectileBase projectile)
+        {
+            OnApplyEffect(setting, player, inflictor);
+        }
+
         public sealed class AttackData
         {
             public ValueBase Infection { get; set; } = ValueBase.Zero;

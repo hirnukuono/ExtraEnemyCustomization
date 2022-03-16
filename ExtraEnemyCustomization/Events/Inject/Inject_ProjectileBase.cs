@@ -18,7 +18,11 @@ namespace EECustom.Events.Inject
                 return;
 
             if (!hit.collider.TryGetComponent<IDamageable>(out var damagable))
+            {
+                ProjectileEvents.OnCollisionWorld(__instance, hit.collider.gameObject);
                 return;
+            }
+            
 
             var baseAgent = damagable.GetBaseAgent();
             if (baseAgent == null)
@@ -27,6 +31,7 @@ namespace EECustom.Events.Inject
             if (!baseAgent.TryCastToPlayerAgent(out var playerAgent))
                 return;
 
+            ProjectileEvents.OnCollisionPlayer(__instance, playerAgent);
             if (__instance.TryGetOwner(out var owner))
             {
                 LocalPlayerDamageEvents.OnProjectileDamage(playerAgent, owner, __instance, __instance.m_maxDamage);
