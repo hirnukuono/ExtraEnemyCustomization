@@ -1,10 +1,10 @@
-﻿using EECustom.Events;
+﻿using EEC.Events;
 using Enemies;
 using HarmonyLib;
 using SNetwork;
 using System.Diagnostics.CodeAnalysis;
 
-namespace EECustom.Managers.Properties.Inject
+namespace EEC.Managers.Properties.Inject
 {
     [HarmonyPatch(typeof(ProjectileManager), nameof(ProjectileManager.DoFireTargeting))]
     internal static class Inject_ProjectileManager_DoFire

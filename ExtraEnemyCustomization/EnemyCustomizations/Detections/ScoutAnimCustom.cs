@@ -1,7 +1,7 @@
-﻿using EECustom.Utils;
+﻿using EEC.Utils;
 using Enemies;
 
-namespace EECustom.EnemyCustomizations.Detections
+namespace EEC.EnemyCustomizations.Detections
 {
     public sealed class ScoutAnimCustom : EnemyCustomBase, IEnemySpawnedEvent
     {

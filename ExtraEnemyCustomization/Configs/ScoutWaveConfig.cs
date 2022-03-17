@@ -1,7 +1,7 @@
-﻿using EECustom.CustomSettings.CustomScoutWaves;
+﻿using EEC.CustomSettings.CustomScoutWaves;
 using System;
 
-namespace EECustom.Configs
+namespace EEC.Configs
 {
     public sealed class ScoutWaveConfig : Config
     {

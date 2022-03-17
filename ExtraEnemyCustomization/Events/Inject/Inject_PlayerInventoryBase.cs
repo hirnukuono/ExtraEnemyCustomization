@@ -1,7 +1,7 @@
 ﻿using Gear;
 using HarmonyLib;
 
-namespace EECustom.Events.Inject
+namespace EEC.Events.Inject
 {
     [HarmonyPatch(typeof(PlayerInventoryBase))]
     internal static class Inject_PlayerInventoryBase

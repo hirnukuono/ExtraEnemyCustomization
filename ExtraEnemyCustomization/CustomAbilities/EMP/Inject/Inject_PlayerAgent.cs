@@ -1,8 +1,8 @@
-﻿using EECustom.CustomAbilities.EMP.Handlers;
+﻿using EEC.CustomAbilities.EMP.Handlers;
 using HarmonyLib;
 using Player;
 
-namespace EECustom.CustomAbilities.EMP.Inject
+namespace EEC.CustomAbilities.EMP.Inject
 {
     [HarmonyPatch(typeof(PlayerAgent))]
     internal static class Inject_PlayerAgent

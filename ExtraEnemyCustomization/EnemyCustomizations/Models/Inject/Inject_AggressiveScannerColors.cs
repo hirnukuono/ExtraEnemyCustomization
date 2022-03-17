@@ -1,9 +1,9 @@
 ﻿using Agents;
-using EECustom.EnemyCustomizations.Models.Handlers;
+using EEC.EnemyCustomizations.Models.Handlers;
 using Enemies;
 using HarmonyLib;
 
-namespace EECustom.EnemyCustomizations.Models.Inject
+namespace EEC.EnemyCustomizations.Models.Inject
 {
     [HarmonyPatch(typeof(ES_PathMove), nameof(ES_PathMove.CommonEnter))]
     internal static class Inject_ES_PathMove

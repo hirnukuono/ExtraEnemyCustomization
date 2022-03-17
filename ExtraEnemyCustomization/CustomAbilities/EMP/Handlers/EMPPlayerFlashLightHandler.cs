@@ -1,9 +1,9 @@
-﻿using EECustom.Events;
+﻿using EEC.Events;
 using GameData;
 using Player;
 using UnityEngine;
 
-namespace EECustom.CustomAbilities.EMP.Handlers
+namespace EEC.CustomAbilities.EMP.Handlers
 {
     public class EMPPlayerFlashLightHandler : EMPHandlerBase
     {

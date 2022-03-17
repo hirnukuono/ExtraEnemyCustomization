@@ -1,7 +1,7 @@
-﻿using EECustom.EnemyCustomizations.Abilities;
+﻿using EEC.EnemyCustomizations.Abilities;
 using System;
 
-namespace EECustom.Configs.Customizations
+namespace EEC.Configs.Customizations
 {
     public sealed class AbilityCustomConfig : CustomizationConfig
     {

@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using SNetwork;
 
-namespace EECustom.Networking.Inject
+namespace EEC.Networking.Inject
 {
     [HarmonyPatch(typeof(SNet_GlobalManager))]
     internal static class Inject_SNet_GlobalManager

@@ -1,7 +1,7 @@
 ﻿using GTFO.API;
 using SNetwork;
 
-namespace EECustom.Networking
+namespace EEC.Networking
 {
     public abstract class SyncedEvent<T> where T : struct
     {

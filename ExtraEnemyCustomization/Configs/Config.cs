@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Text.Json.Serialization;
 
-namespace EECustom.Configs
+namespace EEC.Configs
 {
     public abstract class Config
     {

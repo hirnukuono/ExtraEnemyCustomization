@@ -1,8 +1,8 @@
-﻿using EECustom.CustomAbilities.Explosion.Handlers;
+﻿using EEC.CustomAbilities.Explosion.Handlers;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace EECustom.CustomAbilities.Explosion
+namespace EEC.CustomAbilities.Explosion
 {
     public static class ExplosionEffectPooling
     {

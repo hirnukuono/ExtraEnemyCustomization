@@ -1,7 +1,7 @@
-﻿using EECustom.EnemyCustomizations.Shared.Handlers;
+﻿using EEC.EnemyCustomizations.Shared.Handlers;
 using HarmonyLib;
 
-namespace EECustom.EnemyCustomizations.Abilities.Inject
+namespace EEC.EnemyCustomizations.Abilities.Inject
 {
     [HarmonyPatch(typeof(EAB_FogSphere), nameof(EAB_FogSphere.DoTrigger))]
     internal static class Inject_EAB_FogSphere

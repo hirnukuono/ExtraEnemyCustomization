@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EECustom
+namespace EEC
 {
     public static class StringExtension
     {

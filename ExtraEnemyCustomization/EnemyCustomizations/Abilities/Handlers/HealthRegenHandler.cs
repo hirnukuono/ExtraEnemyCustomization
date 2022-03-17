@@ -1,13 +1,13 @@
 ﻿using Agents;
-using EECustom.Attributes;
-using EECustom.Events;
-using EECustom.Utils;
+using EEC.Attributes;
+using EEC.Events;
+using EEC.Utils;
 using Enemies;
 using SNetwork;
 using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 
-namespace EECustom.EnemyCustomizations.Abilities.Handlers
+namespace EEC.EnemyCustomizations.Abilities.Handlers
 {
     [InjectToIl2Cpp]
     internal sealed class HealthRegenHandler : MonoBehaviour

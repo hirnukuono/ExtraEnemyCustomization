@@ -1,8 +1,8 @@
-﻿using EECustom.CustomAbilities.EMP;
-using EECustom.Utils;
+﻿using EEC.CustomAbilities.EMP;
+using EEC.Utils;
 using UnityEngine;
 
-namespace EECustom.EnemyCustomizations.EnemyAbilities.Abilities
+namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 {
     public class EMPAbility : AbilityBase<EMPBehaviour>
     {

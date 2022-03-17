@@ -1,6 +1,6 @@
 ﻿using Gear;
 
-namespace EECustom.Events
+namespace EEC.Events
 {
     public delegate void ReceivePackHandler(iResourcePackReceiver receiver);
 

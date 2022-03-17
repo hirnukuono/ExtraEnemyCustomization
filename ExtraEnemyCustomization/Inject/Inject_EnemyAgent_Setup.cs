@@ -1,9 +1,9 @@
-﻿using EECustom.Events;
-using EECustom.Managers;
+﻿using EEC.Events;
+using EEC.Managers;
 using Enemies;
 using HarmonyLib;
 
-namespace EECustom.Inject
+namespace EEC.Inject
 {
     [HarmonyPatch(typeof(EnemyAgent), nameof(EnemyAgent.Setup))]
     internal static class Inject_EnemyAgent_Setup

@@ -1,6 +1,6 @@
 ﻿using Enemies;
 
-namespace EECustom.EnemyCustomizations
+namespace EEC.EnemyCustomizations
 {
     public interface IEnemyDeadEvent : IEnemyEvent
     {

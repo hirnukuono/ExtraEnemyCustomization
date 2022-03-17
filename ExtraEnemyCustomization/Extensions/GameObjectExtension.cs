@@ -2,7 +2,7 @@
 using System.Text.RegularExpressions;
 using UnityEngine;
 
-namespace EECustom
+namespace EEC
 {
     public static class GameObjectExtension
     {

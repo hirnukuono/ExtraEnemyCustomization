@@ -2,7 +2,7 @@
 using Player;
 using SNetwork;
 
-namespace EECustom.Networking
+namespace EEC.Networking
 {
     public struct SyncedPlayerEventPayload<T> where T : struct
     {

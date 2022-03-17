@@ -1,12 +1,12 @@
 ﻿using Agents;
 using AIGraph;
-using EECustom.CustomAbilities.Explosion;
-using EECustom.Utils;
-using EECustom.Utils.JsonElements;
+using EEC.CustomAbilities.Explosion;
+using EEC.Utils;
+using EEC.Utils.JsonElements;
 using LevelGeneration;
 using UnityEngine;
 
-namespace EECustom.EnemyCustomizations.Shared
+namespace EEC.EnemyCustomizations.Shared
 {
     public sealed class ExplosionSetting
     {

@@ -1,8 +1,8 @@
-﻿using EECustom.CustomSettings.CustomProjectiles;
-using EECustom.EnemyCustomizations.Shooters;
+﻿using EEC.CustomSettings.CustomProjectiles;
+using EEC.EnemyCustomizations.Shooters;
 using System;
 
-namespace EECustom.Configs.Customizations
+namespace EEC.Configs.Customizations
 {
     public sealed class ProjectileCustomConfig : CustomizationConfig
     {

@@ -1,7 +1,7 @@
-﻿using EECustom.Managers.Properties;
+﻿using EEC.Managers.Properties;
 using Enemies;
 
-namespace EECustom
+namespace EEC
 {
     public static class ProjectileTargetingExtension
     {

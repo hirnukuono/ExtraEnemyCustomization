@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using SNetwork;
 
-namespace EECustom.EnemyCustomizations.Detections.Inject
+namespace EEC.EnemyCustomizations.Detections.Inject
 {
     [HarmonyPatch(typeof(ES_ScoutDetection), nameof(ES_ScoutDetection.CommonEnter))]
     internal static class Inject_ES_ScoutDetection

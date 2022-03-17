@@ -1,10 +1,10 @@
 ﻿using Agents;
-using EECustom.Events;
+using EEC.Events;
 using Enemies;
 using Player;
 using System.Text.Json.Serialization;
 
-namespace EECustom.EnemyCustomizations.Abilities
+namespace EEC.EnemyCustomizations.Abilities
 {
     public abstract class AttackCustomBase<T> : EnemyCustomBase where T : class, new()
     {

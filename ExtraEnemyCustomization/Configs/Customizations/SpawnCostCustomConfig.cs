@@ -1,7 +1,7 @@
-﻿using EECustom.EnemyCustomizations.Properties;
+﻿using EEC.EnemyCustomizations.Properties;
 using System;
 
-namespace EECustom.Configs.Customizations
+namespace EEC.Configs.Customizations
 {
     [Obsolete("SpawnCost Config will be merged to Property in 2.x version!")]
     public sealed class SpawnCostCustomConfig : CustomizationConfig

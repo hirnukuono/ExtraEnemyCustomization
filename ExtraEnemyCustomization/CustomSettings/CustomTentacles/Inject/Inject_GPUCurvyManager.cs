@@ -1,8 +1,8 @@
-﻿using EECustom.Managers;
+﻿using EEC.Managers;
 using HarmonyLib;
 using System;
 
-namespace EECustom.CustomSettings.CustomTentacles.Inject
+namespace EEC.CustomSettings.CustomTentacles.Inject
 {
     [HarmonyPatch(typeof(GPUCurvyManager))]
     internal static class Inject_GPUCurvyManager

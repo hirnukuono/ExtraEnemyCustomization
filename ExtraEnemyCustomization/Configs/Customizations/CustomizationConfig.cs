@@ -1,9 +1,9 @@
-﻿using EECustom.EnemyCustomizations;
+﻿using EEC.EnemyCustomizations;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 
-namespace EECustom.Configs.Customizations
+namespace EEC.Configs.Customizations
 {
     public abstract class CustomizationConfig : Config
     {

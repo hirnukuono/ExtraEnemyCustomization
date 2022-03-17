@@ -1,6 +1,6 @@
 ﻿using Agents;
 
-namespace EECustom.Networking.Replicators
+namespace EEC.Networking.Replicators
 {
     public sealed class EnemyAgentModeReplicator : StateReplicator<EnemyAgentModeReplicator.State>
     {

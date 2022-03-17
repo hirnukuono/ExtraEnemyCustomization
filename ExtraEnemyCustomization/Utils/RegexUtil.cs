@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace EECustom.Utils
+namespace EEC.Utils
 {
     public static class RegexUtil
     {

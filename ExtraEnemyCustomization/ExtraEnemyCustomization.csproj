@@ -14,7 +14,7 @@
     <LangVersion>Latest</LangVersion>
     <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
     <Version>1.2.0</Version>
-    <RootNamespace>EECustom</RootNamespace>
+    <RootNamespace>EEC</RootNamespace>
     <Configurations>Debug;Release</Configurations>
     <Platforms>x64</Platforms>
     <AnalysisLevel>5.0</AnalysisLevel>

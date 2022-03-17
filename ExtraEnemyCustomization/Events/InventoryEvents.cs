@@ -1,6 +1,6 @@
 ﻿using Gear;
 
-namespace EECustom.Events
+namespace EEC.Events
 {
     public delegate void InventoryEventHandler(GearPartFlashlight flashlight);
 

@@ -1,10 +1,10 @@
 ﻿using AssetShards;
-using EECustom.EnemyCustomizations.Shared;
-using EECustom.EnemyCustomizations.Shared.Handlers;
+using EEC.EnemyCustomizations.Shared;
+using EEC.EnemyCustomizations.Shared.Handlers;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace EECustom.EnemyCustomizations.EnemyAbilities.Abilities
+namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 {
     public class FogSphereAbility : AbilityBase<FogSphereBehaviour>
     {

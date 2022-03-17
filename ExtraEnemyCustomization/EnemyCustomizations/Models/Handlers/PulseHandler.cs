@@ -1,11 +1,11 @@
 ﻿using Agents;
-using EECustom.Attributes;
-using EECustom.Utils;
+using EEC.Attributes;
+using EEC.Utils;
 using Enemies;
 using System;
 using UnityEngine;
 
-namespace EECustom.EnemyCustomizations.Models.Handlers
+namespace EEC.EnemyCustomizations.Models.Handlers
 {
     [InjectToIl2Cpp]
     internal sealed class PulseHandler : MonoBehaviour

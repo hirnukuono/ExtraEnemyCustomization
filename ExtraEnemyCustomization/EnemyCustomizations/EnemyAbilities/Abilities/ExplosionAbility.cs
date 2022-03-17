@@ -1,9 +1,9 @@
-﻿using EECustom.CustomAbilities.Explosion;
-using EECustom.Utils;
-using EECustom.Utils.JsonElements;
+﻿using EEC.CustomAbilities.Explosion;
+using EEC.Utils;
+using EEC.Utils.JsonElements;
 using UnityEngine;
 
-namespace EECustom.EnemyCustomizations.EnemyAbilities.Abilities
+namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 {
     public class ExplosionAbility : AbilityBase<ExplosionBehaviour>
     {

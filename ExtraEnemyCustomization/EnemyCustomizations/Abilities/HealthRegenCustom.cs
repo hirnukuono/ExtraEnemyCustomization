@@ -1,9 +1,9 @@
-﻿using EECustom.EnemyCustomizations.Abilities.Handlers;
-using EECustom.Utils.JsonElements;
+﻿using EEC.EnemyCustomizations.Abilities.Handlers;
+using EEC.Utils.JsonElements;
 using Enemies;
 using System;
 
-namespace EECustom.EnemyCustomizations.Abilities
+namespace EEC.EnemyCustomizations.Abilities
 {
     public sealed class HealthRegenCustom : EnemyCustomBase, IEnemySpawnedEvent
     {

@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using LevelGeneration;
 
-namespace EECustom.Events.Inject
+namespace EEC.Events.Inject
 {
     [HarmonyPatch(typeof(Builder))]
     internal static class Inject_Builder

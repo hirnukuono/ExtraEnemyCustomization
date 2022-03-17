@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace EECustom.CustomSettings.CustomTentacles
+namespace EEC.CustomSettings.CustomTentacles
 {
     public static class CustomTentacleManager
     {

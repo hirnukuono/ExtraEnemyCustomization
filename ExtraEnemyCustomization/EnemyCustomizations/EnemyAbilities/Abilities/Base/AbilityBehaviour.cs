@@ -1,12 +1,12 @@
 ﻿using BepInEx.Logging;
-using EECustom.EnemyCustomizations.EnemyAbilities.Events;
-using EECustom.Events;
-using EECustom.Utils;
+using EEC.EnemyCustomizations.EnemyAbilities.Events;
+using EEC.Events;
+using EEC.Utils;
 using Enemies;
 using SNetwork;
 using UnityEngine;
 
-namespace EECustom.EnemyCustomizations.EnemyAbilities.Abilities
+namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 {
     public abstract class AbilityBehaviour<AB> : AbilityBehaviour where AB : class, IAbility
     {

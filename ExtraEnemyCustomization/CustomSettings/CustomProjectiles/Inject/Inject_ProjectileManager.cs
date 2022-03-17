@@ -1,9 +1,9 @@
-﻿using EECustom.Managers;
+﻿using EEC.Managers;
 using HarmonyLib;
 using System;
 using UnityEngine;
 
-namespace EECustom.CustomSettings.CustomProjectiles.Inject
+namespace EEC.CustomSettings.CustomProjectiles.Inject
 {
     [HarmonyPatch(typeof(ProjectileManager))]
     internal static class Inject_ProjectileManager

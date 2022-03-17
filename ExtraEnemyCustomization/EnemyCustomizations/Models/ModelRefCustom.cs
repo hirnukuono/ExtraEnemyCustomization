@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-namespace EECustom.EnemyCustomizations.Models
+namespace EEC.EnemyCustomizations.Models
 {
     public sealed class ModelRefCustom : EnemyCustomBase, IEnemyPrefabBuiltEvent
     {

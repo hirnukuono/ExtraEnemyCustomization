@@ -1,7 +1,7 @@
-﻿using EECustom.CustomAbilities.DrainStamina;
+﻿using EEC.CustomAbilities.DrainStamina;
 using Player;
 
-namespace EECustom.EnemyCustomizations.Shared
+namespace EEC.EnemyCustomizations.Shared
 {
     public sealed class DrainStaminaSetting
     {

@@ -1,7 +1,7 @@
-﻿using EECustom.Utils;
+﻿using EEC.Utils;
 using System.IO;
 
-namespace EECustom.Managers
+namespace EEC.Managers
 {
     public static partial class ConfigManager
     {

@@ -2,7 +2,7 @@
 using System;
 using System.Diagnostics;
 
-namespace EECustom
+namespace EEC
 {
     public static class Logger
     {

@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace EECustom.EnemyCustomizations.Models
+namespace EEC.EnemyCustomizations.Models
 {
     public sealed class ShadowCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyPrefabBuiltEvent
     {

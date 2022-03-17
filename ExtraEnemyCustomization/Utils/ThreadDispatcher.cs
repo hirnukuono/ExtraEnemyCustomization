@@ -1,9 +1,9 @@
-﻿using EECustom.Attributes;
+﻿using EEC.Attributes;
 using System;
 using System.Collections.Concurrent;
 using UnityEngine;
 
-namespace EECustom.Utils
+namespace EEC.Utils
 {
     [InjectToIl2Cpp]
     public sealed class ThreadDispatcher : MonoBehaviour

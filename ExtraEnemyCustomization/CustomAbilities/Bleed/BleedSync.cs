@@ -1,10 +1,10 @@
-﻿using EECustom.CustomAbilities.Bleed.Handlers;
-using EECustom.Networking;
-using EECustom.Utils;
+﻿using EEC.CustomAbilities.Bleed.Handlers;
+using EEC.Networking;
+using EEC.Utils;
 using Player;
 using SNetwork;
 
-namespace EECustom.CustomAbilities.Bleed
+namespace EEC.CustomAbilities.Bleed
 {
     internal sealed class BleedSync : SyncedPlayerEvent<BleedingData>
     {

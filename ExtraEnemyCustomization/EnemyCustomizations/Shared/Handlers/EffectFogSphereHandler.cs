@@ -1,8 +1,8 @@
-﻿using EECustom.Attributes;
-using EECustom.Utils;
+﻿using EEC.Attributes;
+using EEC.Utils;
 using UnityEngine;
 
-namespace EECustom.EnemyCustomizations.Shared.Handlers
+namespace EEC.EnemyCustomizations.Shared.Handlers
 {
     [InjectToIl2Cpp]
     internal sealed class EffectFogSphereHandler : MonoBehaviour

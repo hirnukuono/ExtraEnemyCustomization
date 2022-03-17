@@ -2,7 +2,7 @@
 using Enemies;
 using Player;
 
-namespace EECustom
+namespace EEC
 {
     public static class AgentExtension
     {

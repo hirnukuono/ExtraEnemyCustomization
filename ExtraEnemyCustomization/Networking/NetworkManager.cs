@@ -1,10 +1,10 @@
-﻿using EECustom.Events;
-using EECustom.Managers;
-using EECustom.Networking.Events;
-using EECustom.Networking.Replicators;
+﻿using EEC.Events;
+using EEC.Managers;
+using EEC.Networking.Events;
+using EEC.Networking.Replicators;
 using Enemies;
 
-namespace EECustom.Networking
+namespace EEC.Networking
 {
     public static class NetworkManager
     {

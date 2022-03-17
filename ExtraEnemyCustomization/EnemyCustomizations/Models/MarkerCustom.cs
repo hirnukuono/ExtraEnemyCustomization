@@ -1,11 +1,11 @@
-﻿using EECustom.EnemyCustomizations.Models.Handlers;
-using EECustom.Events;
-using EECustom.Managers.Assets;
+﻿using EEC.EnemyCustomizations.Models.Handlers;
+using EEC.Events;
+using EEC.Managers.Assets;
 using Enemies;
 using System;
 using UnityEngine;
 
-namespace EECustom.EnemyCustomizations.Models
+namespace EEC.EnemyCustomizations.Models
 {
     public sealed class MarkerCustom : EnemyCustomBase, IEnemySpawnedEvent
     {

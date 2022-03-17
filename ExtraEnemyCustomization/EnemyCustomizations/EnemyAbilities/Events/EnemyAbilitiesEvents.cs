@@ -1,4 +1,4 @@
-﻿namespace EECustom.EnemyCustomizations.EnemyAbilities.Events
+﻿namespace EEC.EnemyCustomizations.EnemyAbilities.Events
 {
     public delegate void GenericAbilitiesHandler(Enemies.EnemyAbilities enemyAbilities);
 

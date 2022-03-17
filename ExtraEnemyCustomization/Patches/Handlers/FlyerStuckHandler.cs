@@ -1,10 +1,10 @@
 ﻿using Agents;
-using EECustom.Attributes;
-using EECustom.Utils;
+using EEC.Attributes;
+using EEC.Utils;
 using Enemies;
 using UnityEngine;
 
-namespace EECustom.Patches.Handlers
+namespace EEC.Patches.Handlers
 {
     [InjectToIl2Cpp]
     internal sealed class FlyerStuckHandler : MonoBehaviour

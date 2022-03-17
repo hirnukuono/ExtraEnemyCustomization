@@ -1,7 +1,7 @@
 ﻿using Enemies;
 using SNetwork;
 
-namespace EECustom.Networking.Events
+namespace EEC.Networking.Events
 {
     public sealed class EnemyAnimEvent : SyncedEvent<EnemyAnimEvent.Packet>
     {

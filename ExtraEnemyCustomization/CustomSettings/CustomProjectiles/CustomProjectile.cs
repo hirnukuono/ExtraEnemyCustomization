@@ -1,9 +1,9 @@
-﻿using EECustom.EnemyCustomizations.Shared;
-using EECustom.Utils.JsonElements;
+﻿using EEC.EnemyCustomizations.Shared;
+using EEC.Utils.JsonElements;
 using Player;
 using UnityEngine;
 
-namespace EECustom.CustomSettings.CustomProjectiles
+namespace EEC.CustomSettings.CustomProjectiles
 {
     public class CustomProjectile
     {

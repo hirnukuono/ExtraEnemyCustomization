@@ -1,7 +1,7 @@
-﻿using EECustom.Networking;
+﻿using EEC.Networking;
 using SNetwork;
 
-namespace EECustom.CustomAbilities.DrainStamina
+namespace EEC.CustomAbilities.DrainStamina
 {
     internal sealed class DrainStaminaSync : SyncedPlayerEvent<DrainStaminaData>
     {

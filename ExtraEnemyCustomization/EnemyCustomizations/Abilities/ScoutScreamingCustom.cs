@@ -1,9 +1,9 @@
-﻿using EECustom.EnemyCustomizations.Abilities.Handlers;
-using EECustom.EnemyCustomizations.Shared;
+﻿using EEC.EnemyCustomizations.Abilities.Handlers;
+using EEC.EnemyCustomizations.Shared;
 using Enemies;
 using UnityEngine;
 
-namespace EECustom.EnemyCustomizations.Abilities
+namespace EEC.EnemyCustomizations.Abilities
 {
     public sealed class ScoutScreamingCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyGlowEvent
     {

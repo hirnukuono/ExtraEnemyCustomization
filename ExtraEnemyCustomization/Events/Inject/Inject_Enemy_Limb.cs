@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using static Dam_EnemyDamageBase;
 
-namespace EECustom.Events.Inject
+namespace EEC.Events.Inject
 {
     [HarmonyPatch(typeof(Dam_EnemyDamageBase))]
     internal static class Inject_Enemy_Limb

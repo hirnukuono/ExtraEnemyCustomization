@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EECustom.Configs
+namespace EEC.Configs
 {
     public sealed class GlobalConfig : Config
     {

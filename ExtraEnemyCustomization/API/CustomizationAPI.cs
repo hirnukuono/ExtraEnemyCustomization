@@ -1,12 +1,12 @@
-﻿using EECustom.EnemyCustomizations;
-using EECustom.Managers;
+﻿using EEC.EnemyCustomizations;
+using EEC.Managers;
 using Enemies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 
-namespace EECustom.API
+namespace EEC.API
 {
     public static class CustomizationAPI
     {

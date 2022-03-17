@@ -1,6 +1,6 @@
 ﻿using AIGraph;
-using EECustom.Events;
-using EECustom.Utils;
+using EEC.Events;
+using EEC.Utils;
 using Enemies;
 using GameData;
 using LevelGeneration;
@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EECustom.CustomSettings.CustomScoutWaves
+namespace EEC.CustomSettings.CustomScoutWaves
 {
     public static class CustomScoutWaveManager
     {

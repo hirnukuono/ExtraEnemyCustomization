@@ -1,11 +1,11 @@
-﻿using EECustom.Configs;
-using EECustom.Utils;
-using EECustom.Utils.Integrations;
+﻿using EEC.Configs;
+using EEC.Utils;
+using EEC.Utils.Integrations;
 using System;
 using System.IO;
 using System.Linq;
 
-namespace EECustom.Managers
+namespace EEC.Managers
 {
     public static partial class ConfigManager
     {

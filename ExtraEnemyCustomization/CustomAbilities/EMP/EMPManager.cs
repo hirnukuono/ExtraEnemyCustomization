@@ -1,11 +1,11 @@
-﻿using EECustom.Attributes;
-using EECustom.CustomAbilities.EMP.Inject;
-using EECustom.Events;
-using EECustom.Networking;
+﻿using EEC.Attributes;
+using EEC.CustomAbilities.EMP.Inject;
+using EEC.Events;
+using EEC.Networking;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace EECustom.CustomAbilities.EMP
+namespace EEC.CustomAbilities.EMP
 {
     [CallConstructorOnLoad]
     public static class EMPManager

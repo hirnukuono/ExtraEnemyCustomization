@@ -1,9 +1,9 @@
-﻿using EECustom.EnemyCustomizations.EnemyAbilities;
-using EECustom.EnemyCustomizations.EnemyAbilities.Abilities;
+﻿using EEC.EnemyCustomizations.EnemyAbilities;
+using EEC.EnemyCustomizations.EnemyAbilities.Abilities;
 using System;
 using System.Collections.Generic;
 
-namespace EECustom.Configs.Customizations
+namespace EEC.Configs.Customizations
 {
     public sealed class EnemyAbilityCustomConfig : CustomizationConfig
     {

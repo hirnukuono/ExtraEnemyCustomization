@@ -1,14 +1,14 @@
 ﻿using Agents;
-using EECustom.Attributes;
-using EECustom.EnemyCustomizations.EnemyAbilities.Abilities;
-using EECustom.Utils;
+using EEC.Attributes;
+using EEC.EnemyCustomizations.EnemyAbilities.Abilities;
+using EEC.Utils;
 using Enemies;
 using Player;
 using SNetwork;
 using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 
-namespace EECustom.EnemyCustomizations.EnemyAbilities.Handlers
+namespace EEC.EnemyCustomizations.EnemyAbilities.Handlers
 {
     [InjectToIl2Cpp]
     internal sealed class BehaviourUpdateHandler : MonoBehaviour

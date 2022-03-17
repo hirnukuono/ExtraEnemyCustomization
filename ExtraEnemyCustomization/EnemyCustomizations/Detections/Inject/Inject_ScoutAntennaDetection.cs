@@ -1,7 +1,7 @@
 ﻿using Enemies;
 using HarmonyLib;
 
-namespace EECustom.EnemyCustomizations.Detections.Inject
+namespace EEC.EnemyCustomizations.Detections.Inject
 {
     [HarmonyPatch(typeof(ScoutAntennaDetection), nameof(ScoutAntennaDetection.PlayAbilityOutAnimation))]
     internal static class Inject_ScoutAntennaDetection

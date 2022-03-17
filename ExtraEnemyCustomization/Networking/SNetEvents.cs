@@ -1,6 +1,6 @@
 ﻿using SNetwork;
 
-namespace EECustom.Networking
+namespace EEC.Networking
 {
     public delegate void SNetRecallEvent(eBufferType bufferType);
 

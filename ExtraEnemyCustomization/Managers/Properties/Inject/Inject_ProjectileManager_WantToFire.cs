@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 
-namespace EECustom.Managers.Properties.Inject
+namespace EEC.Managers.Properties.Inject
 {
     [HarmonyPatch(typeof(ProjectileManager), nameof(ProjectileManager.WantToFireTargeting))]
     internal static class Inject_ProjectileManager_WantToFire

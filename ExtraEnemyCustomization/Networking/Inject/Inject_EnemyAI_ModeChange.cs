@@ -2,7 +2,7 @@
 using HarmonyLib;
 using SNetwork;
 
-namespace EECustom.Networking.Inject
+namespace EEC.Networking.Inject
 {
     [HarmonyPatch(typeof(EnemyAI), nameof(EnemyAI.ModeChange))]
     internal static class Inject_EnemyAI_ModeChange

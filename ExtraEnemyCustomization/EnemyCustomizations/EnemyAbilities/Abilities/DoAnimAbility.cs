@@ -1,8 +1,8 @@
-﻿using EECustom.Utils;
+﻿using EEC.Utils;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace EECustom.EnemyCustomizations.EnemyAbilities.Abilities
+namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 {
     public class DoAnimAbility : AbilityBase<DoAnimBehaviour>
     {

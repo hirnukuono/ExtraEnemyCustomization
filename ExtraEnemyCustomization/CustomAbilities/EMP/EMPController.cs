@@ -1,8 +1,8 @@
-﻿using EECustom.Attributes;
+﻿using EEC.Attributes;
 using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 
-namespace EECustom.CustomAbilities.EMP
+namespace EEC.CustomAbilities.EMP
 {
     [InjectToIl2Cpp]
     public sealed class EMPController : MonoBehaviour

@@ -2,7 +2,7 @@
 using Enemies;
 using UnityEngine;
 
-namespace EECustom.EnemyCustomizations.Properties
+namespace EEC.EnemyCustomizations.Properties
 {
     public sealed class DistantRoarCustom : EnemyCustomBase, IEnemySpawnedEvent
     {

@@ -1,8 +1,8 @@
-﻿using EECustom.CustomSettings.CustomTentacles;
-using EECustom.EnemyCustomizations.Strikers;
+﻿using EEC.CustomSettings.CustomTentacles;
+using EEC.EnemyCustomizations.Strikers;
 using System;
 
-namespace EECustom.Configs.Customizations
+namespace EEC.Configs.Customizations
 {
     public sealed class TentacleCustomConfig : CustomizationConfig
     {

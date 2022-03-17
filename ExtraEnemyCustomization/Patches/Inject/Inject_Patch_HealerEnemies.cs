@@ -2,7 +2,7 @@
 using SNetwork;
 using System;
 
-namespace EECustom.Patches.Inject
+namespace EEC.Patches.Inject
 {
     [HarmonyPatch(typeof(Dam_SyncedDamageBase))]
     internal static class Inject_Patch_HealerEnemies

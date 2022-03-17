@@ -1,8 +1,8 @@
-﻿using EECustom.CustomAbilities.EMP.Handlers;
+﻿using EEC.CustomAbilities.EMP.Handlers;
 using Gear;
 using Player;
 
-namespace EECustom.CustomAbilities.EMP.Inject
+namespace EEC.CustomAbilities.EMP.Inject
 {
     internal class Inject_PlayerBackpack
     {

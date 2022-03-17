@@ -1,11 +1,11 @@
-﻿using EECustom.EnemyCustomizations.EnemyAbilities.Abilities;
-using EECustom.Utils;
-using EECustom.Utils.JsonElements;
+﻿using EEC.EnemyCustomizations.EnemyAbilities.Abilities;
+using EEC.Utils;
+using EEC.Utils.JsonElements;
 using Enemies;
 using System;
 using System.Threading.Tasks;
 
-namespace EECustom.EnemyCustomizations.EnemyAbilities
+namespace EEC.EnemyCustomizations.EnemyAbilities
 {
     public sealed class DeathAbilityCustom : EnemyAbilityCustomBase<DeathAbilitySetting>, IEnemyDeadEvent
     {

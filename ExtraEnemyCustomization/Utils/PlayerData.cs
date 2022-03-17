@@ -1,4 +1,4 @@
-﻿namespace EECustom.Utils
+﻿namespace EEC.Utils
 {
     public static class PlayerData
     {

@@ -2,7 +2,7 @@
 using HarmonyLib;
 using System;
 
-namespace EECustom.Events.Inject
+namespace EEC.Events.Inject
 {
     [HarmonyPatch(typeof(AssetShardManager), nameof(AssetShardManager.LoadAllShardsForBundleAsync))]
     internal static class Inject_AssetShardManager

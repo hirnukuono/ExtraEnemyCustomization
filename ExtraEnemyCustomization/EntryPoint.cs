@@ -1,12 +1,12 @@
 ﻿using BepInEx;
 using BepInEx.IL2CPP;
-using EECustom.Attributes;
-using EECustom.Events;
-using EECustom.Managers;
-using EECustom.Managers.Assets;
-using EECustom.Networking;
-using EECustom.Utils;
-using EECustom.Utils.Integrations;
+using EEC.Attributes;
+using EEC.Events;
+using EEC.Managers;
+using EEC.Managers.Assets;
+using EEC.Networking;
+using EEC.Utils;
+using EEC.Utils.Integrations;
 using HarmonyLib;
 using System;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using UnhollowerRuntimeLib;
 
-namespace EECustom
+namespace EEC
 {
     //TODO: - Tentacle Hibernation : Possible
     //TODO: - Alerts Logic Behaviour : Maybe Possible, Can't guarantee for every option though

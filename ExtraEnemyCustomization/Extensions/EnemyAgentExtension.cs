@@ -1,10 +1,10 @@
 ﻿using AIGraph;
-using EECustom.Utils;
+using EEC.Utils;
 using Enemies;
 using SNetwork;
 using System;
 
-namespace EECustom
+namespace EEC
 {
     public static class EnemyAgentExtension
     {

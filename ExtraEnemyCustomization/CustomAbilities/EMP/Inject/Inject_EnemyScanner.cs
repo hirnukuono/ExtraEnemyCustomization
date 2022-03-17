@@ -2,7 +2,7 @@
 using Gear;
 using HarmonyLib;
 
-namespace EECustom.CustomAbilities.EMP.Inject
+namespace EEC.CustomAbilities.EMP.Inject
 {
     [HarmonyPatch(typeof(EnemyScanner))]
     internal static class Inject_EnemyScanner

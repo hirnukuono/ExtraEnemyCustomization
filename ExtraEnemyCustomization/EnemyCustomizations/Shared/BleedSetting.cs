@@ -1,9 +1,9 @@
-﻿using EECustom.CustomAbilities.Bleed;
-using EECustom.Utils;
-using EECustom.Utils.JsonElements;
+﻿using EEC.CustomAbilities.Bleed;
+using EEC.Utils;
+using EEC.Utils.JsonElements;
 using Player;
 
-namespace EECustom.EnemyCustomizations.Shared
+namespace EEC.EnemyCustomizations.Shared
 {
     public sealed class BleedSetting
     {

@@ -1,6 +1,6 @@
-﻿using EECustom.Networking;
+﻿using EEC.Networking;
 
-namespace EECustom.CustomAbilities.Explosion
+namespace EEC.CustomAbilities.Explosion
 {
     internal sealed class ExplosionSync : SyncedEvent<ExplosionData>
     {

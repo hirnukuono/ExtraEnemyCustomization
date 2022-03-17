@@ -1,7 +1,7 @@
-﻿using EECustom.Attributes;
+﻿using EEC.Attributes;
 using Player;
 
-namespace EECustom.CustomAbilities.Bleed
+namespace EEC.CustomAbilities.Bleed
 {
     [CallConstructorOnLoad]
     public static class BleedManager

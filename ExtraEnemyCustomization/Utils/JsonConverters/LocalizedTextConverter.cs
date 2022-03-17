@@ -1,10 +1,10 @@
-﻿using EECustom.Utils.Integrations;
+﻿using EEC.Utils.Integrations;
 using Localization;
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace EECustom.Utils.JsonConverters
+namespace EEC.Utils.JsonConverters
 {
     public sealed class LocalizedTextConverter : JsonConverter<LocalizedText>
     {

@@ -1,9 +1,9 @@
-﻿using EECustom.Utils.JsonElements;
+﻿using EEC.Utils.JsonElements;
 using Enemies;
 using System;
 using System.Linq;
 
-namespace EECustom.EnemyCustomizations.Models
+namespace EEC.EnemyCustomizations.Models
 {
     public sealed class LimbCustom : EnemyCustomBase, IEnemySpawnedEvent
     {

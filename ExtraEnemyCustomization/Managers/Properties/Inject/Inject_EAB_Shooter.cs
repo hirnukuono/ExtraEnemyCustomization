@@ -1,7 +1,7 @@
 ﻿using Agents;
 using HarmonyLib;
 
-namespace EECustom.Managers.Properties.Inject
+namespace EEC.Managers.Properties.Inject
 {
     [HarmonyPatch(typeof(EAB_ProjectileShooter), nameof(EAB_ProjectileShooter.FireAtAgent))]
     internal static class Inject_EAB_Shooter

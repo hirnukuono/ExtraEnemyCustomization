@@ -1,9 +1,9 @@
-﻿using EECustom.Utils;
-using EECustom.Utils.JsonElements;
+﻿using EEC.Utils;
+using EEC.Utils.JsonElements;
 using Enemies;
 using Player;
 
-namespace EECustom.EnemyCustomizations.Abilities
+namespace EEC.EnemyCustomizations.Abilities
 {
     public sealed class InfectionAttackCustom : AttackCustomBase<InfectionAttackCustom.AttackData>
     {

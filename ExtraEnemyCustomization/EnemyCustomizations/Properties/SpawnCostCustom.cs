@@ -1,7 +1,7 @@
 ﻿using Agents;
 using Enemies;
 
-namespace EECustom.EnemyCustomizations.Properties
+namespace EEC.EnemyCustomizations.Properties
 {
     public sealed class SpawnCostCustom : EnemyCustomBase, IEnemySpawnedEvent
     {

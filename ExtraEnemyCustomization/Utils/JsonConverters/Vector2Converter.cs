@@ -3,7 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using UnityEngine;
 
-namespace EECustom.Utils.JsonConverters
+namespace EEC.Utils.JsonConverters
 {
     public sealed class Vector2Converter : JsonConverter<Vector2>
     {

@@ -1,10 +1,10 @@
-﻿using EECustom.EnemyCustomizations.EnemyAbilities.Abilities;
-using EECustom.Events;
-using EECustom.Networking;
+﻿using EEC.EnemyCustomizations.EnemyAbilities.Abilities;
+using EEC.Events;
+using EEC.Networking;
 using SNetwork;
 using System.Collections.Generic;
 
-namespace EECustom.EnemyCustomizations.EnemyAbilities
+namespace EEC.EnemyCustomizations.EnemyAbilities
 {
     public static class EnemyAbilityManager
     {

@@ -1,7 +1,7 @@
-﻿using EECustom.EnemyCustomizations.Models;
+﻿using EEC.EnemyCustomizations.Models;
 using System;
 
-namespace EECustom.Configs.Customizations
+namespace EEC.Configs.Customizations
 {
     public sealed class ModelCustomConfig : CustomizationConfig
     {

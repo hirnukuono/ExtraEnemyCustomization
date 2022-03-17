@@ -1,6 +1,6 @@
 ﻿using AssetShards;
 
-namespace EECustom.Events
+namespace EEC.Events
 {
     public delegate void AssetLoadedHandler();
 

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace EECustom.Utils
+namespace EEC.Utils
 {
     public static class WaitFor
     {

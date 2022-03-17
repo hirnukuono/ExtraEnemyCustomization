@@ -1,11 +1,11 @@
-﻿using EECustom.EnemyCustomizations.Abilities.Inject;
-using EECustom.Events;
-using EECustom.Networking;
-using EECustom.Utils;
+﻿using EEC.EnemyCustomizations.Abilities.Inject;
+using EEC.Events;
+using EEC.Networking;
+using EEC.Utils;
 using Enemies;
 using SNetwork;
 
-namespace EECustom.EnemyCustomizations.Abilities
+namespace EEC.EnemyCustomizations.Abilities
 {
     public sealed class DoorBreakerCustom : EnemyCustomBase, IEnemySpawnedEvent
     {

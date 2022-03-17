@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EECustom.Configs
+namespace EEC.Configs
 {
     public sealed class CategoryConfig : Config
     {

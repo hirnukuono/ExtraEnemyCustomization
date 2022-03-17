@@ -2,7 +2,7 @@
 using System;
 using System.Text.Json.Serialization;
 
-namespace EECustom.Utils.JsonElements
+namespace EEC.Utils.JsonElements
 {
     //MINOR: NOTE! Calling ctor for LocalizedText before game has loaded will leads to crash.
     [JsonConverter(typeof(EventWrapperConverter))]

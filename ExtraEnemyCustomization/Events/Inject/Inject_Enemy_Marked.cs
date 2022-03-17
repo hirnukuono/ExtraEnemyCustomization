@@ -1,7 +1,7 @@
 ﻿using Enemies;
 using HarmonyLib;
 
-namespace EECustom.Events.Inject
+namespace EEC.Events.Inject
 {
     [HarmonyPatch(typeof(EnemyAgent), nameof(EnemyAgent.SyncPlaceNavMarkerTag))]
     internal static class Inject_Enemy_Marked

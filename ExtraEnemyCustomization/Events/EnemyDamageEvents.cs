@@ -1,7 +1,7 @@
 ﻿using Agents;
 using Enemies;
 
-namespace EECustom.Events
+namespace EEC.Events
 {
     public delegate void EnemyTakeDamageHandler(EnemyAgent enemyAgent, Agent inflictor, float damage);
 

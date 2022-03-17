@@ -1,11 +1,11 @@
 ﻿using Agents;
-using EECustom.EnemyCustomizations.Models.Handlers;
+using EEC.EnemyCustomizations.Models.Handlers;
 using Enemies;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using UnityEngine;
 
-namespace EECustom.EnemyCustomizations.Models
+namespace EEC.EnemyCustomizations.Models
 {
     public sealed class ScannerCustom : EnemyCustomBase, IEnemyPrefabBuiltEvent, IEnemySpawnedEvent, IEnemyAgentModeEvent
     {

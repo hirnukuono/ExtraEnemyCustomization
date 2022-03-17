@@ -1,11 +1,11 @@
-﻿using EECustom.EnemyCustomizations.Shared;
-using EECustom.Events;
-using EECustom.Managers;
+﻿using EEC.EnemyCustomizations.Shared;
+using EEC.Events;
+using EEC.Managers;
 using Enemies;
 using Gear;
 using Player;
 
-namespace EECustom.EnemyCustomizations.Abilities
+namespace EEC.EnemyCustomizations.Abilities
 {
     public sealed class BleedAttackCustom : AttackCustomBase<BleedSetting>
     {

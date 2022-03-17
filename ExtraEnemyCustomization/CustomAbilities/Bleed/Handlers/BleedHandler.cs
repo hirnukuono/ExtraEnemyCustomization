@@ -1,13 +1,13 @@
-﻿using EECustom.Attributes;
-using EECustom.CustomAbilities.Bleed.Inject;
-using EECustom.Utils;
+﻿using EEC.Attributes;
+using EEC.CustomAbilities.Bleed.Inject;
+using EEC.Utils;
 using Player;
 using System;
 using System.Collections;
 using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 
-namespace EECustom.CustomAbilities.Bleed.Handlers
+namespace EEC.CustomAbilities.Bleed.Handlers
 {
     [InjectToIl2Cpp]
     internal sealed class BleedHandler : MonoBehaviour

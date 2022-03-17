@@ -1,11 +1,11 @@
-﻿using EECustom.Attributes;
-using EECustom.Events;
+﻿using EEC.Attributes;
+using EEC.Events;
 using Enemies;
 using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace EECustom.EnemyCustomizations.Models.Handlers
+namespace EEC.EnemyCustomizations.Models.Handlers
 {
     [InjectToIl2Cpp]
     internal sealed class EnemySilhouette : MonoBehaviour

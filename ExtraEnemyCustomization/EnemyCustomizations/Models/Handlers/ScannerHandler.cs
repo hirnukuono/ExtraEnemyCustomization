@@ -1,12 +1,12 @@
 ﻿using Agents;
-using EECustom.Attributes;
-using EECustom.Utils;
+using EEC.Attributes;
+using EEC.Utils;
 using Enemies;
 using System.Collections;
 using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 
-namespace EECustom.EnemyCustomizations.Models.Handlers
+namespace EEC.EnemyCustomizations.Models.Handlers
 {
     public enum EnemyState
     {

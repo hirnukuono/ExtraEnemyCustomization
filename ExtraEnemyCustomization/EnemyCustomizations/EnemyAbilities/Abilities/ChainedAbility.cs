@@ -1,8 +1,8 @@
-﻿using EECustom.Utils;
+﻿using EEC.Utils;
 using System;
 using System.Collections.Generic;
 
-namespace EECustom.EnemyCustomizations.EnemyAbilities.Abilities
+namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 {
     public class ChainedAbility : AbilityBase<ChainedBehaviour>
     {

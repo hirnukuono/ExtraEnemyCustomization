@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EECustom.Managers
+namespace EEC.Managers
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
     internal sealed class ConfigCacheAttribute : Attribute

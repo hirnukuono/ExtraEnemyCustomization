@@ -1,8 +1,8 @@
-﻿using EECustom.Utils.JsonElements;
+﻿using EEC.Utils.JsonElements;
 using Enemies;
 using System;
 
-namespace EECustom.EnemyCustomizations.Strikers
+namespace EEC.EnemyCustomizations.Strikers
 {
     using EaseFunc = Func<float, float, float, float, float>;
 

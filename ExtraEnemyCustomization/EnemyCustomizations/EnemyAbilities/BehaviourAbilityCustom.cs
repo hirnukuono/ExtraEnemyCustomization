@@ -1,11 +1,11 @@
-﻿using EECustom.EnemyCustomizations.EnemyAbilities.Abilities;
-using EECustom.EnemyCustomizations.EnemyAbilities.Handlers;
-using EECustom.Utils.JsonElements;
+﻿using EEC.EnemyCustomizations.EnemyAbilities.Abilities;
+using EEC.EnemyCustomizations.EnemyAbilities.Handlers;
+using EEC.Utils.JsonElements;
 using Enemies;
 using System;
 using System.Linq;
 
-namespace EECustom.EnemyCustomizations.EnemyAbilities
+namespace EEC.EnemyCustomizations.EnemyAbilities
 {
     public sealed class BehaviourAbilityCustom : EnemyAbilityCustomBase<BehaviourAbilitySetting>
     {

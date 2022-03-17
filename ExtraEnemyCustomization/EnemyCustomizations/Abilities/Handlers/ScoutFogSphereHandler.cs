@@ -1,9 +1,9 @@
-﻿using EECustom.Attributes;
-using EECustom.Utils;
+﻿using EEC.Attributes;
+using EEC.Utils;
 using Enemies;
 using UnityEngine;
 
-namespace EECustom.EnemyCustomizations.Abilities.Handlers
+namespace EEC.EnemyCustomizations.Abilities.Handlers
 {
     [InjectToIl2Cpp]
     internal sealed class ScoutFogSphereHandler : MonoBehaviour

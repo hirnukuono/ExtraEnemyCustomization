@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-namespace EECustom.Events
+namespace EEC.Events
 {
     public static class ProjectileEvents
     {

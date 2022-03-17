@@ -1,8 +1,8 @@
-﻿using EECustom.Utils;
+﻿using EEC.Utils;
 using HarmonyLib;
 using Player;
 
-namespace EECustom.Inject
+namespace EEC.Inject
 {
     [HarmonyPatch(typeof(PlayerAgent), nameof(PlayerAgent.Setup))]
     internal static class Inject_PlayerAgent_Setup

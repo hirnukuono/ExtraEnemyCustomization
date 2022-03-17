@@ -1,7 +1,7 @@
-﻿using EECustom.EnemyCustomizations.Properties;
+﻿using EEC.EnemyCustomizations.Properties;
 using System;
 
-namespace EECustom.Configs.Customizations
+namespace EEC.Configs.Customizations
 {
     public sealed class PropertyCustomConfig : CustomizationConfig
     {

@@ -1,8 +1,8 @@
-﻿using EECustom.Attributes;
+﻿using EEC.Attributes;
 using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 
-namespace EECustom.Events
+namespace EEC.Events
 {
     public delegate void UnityEventHandler(GameObject caller);
 

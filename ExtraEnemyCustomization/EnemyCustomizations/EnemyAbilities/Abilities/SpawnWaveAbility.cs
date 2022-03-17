@@ -1,4 +1,4 @@
-﻿namespace EECustom.EnemyCustomizations.EnemyAbilities.Abilities
+﻿namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 {
     public sealed class SpawnWaveAbility : AbilityBase<SpawnWaveBehaviour>
     {

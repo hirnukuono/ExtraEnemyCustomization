@@ -1,13 +1,13 @@
-﻿using EECustom.EnemyCustomizations.Models.Handlers;
-using EECustom.Utils;
-using EECustom.Utils.JsonElements;
+﻿using EEC.EnemyCustomizations.Models.Handlers;
+using EEC.Utils;
+using EEC.Utils.JsonElements;
 using Enemies;
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using UnityEngine;
 
-namespace EECustom.EnemyCustomizations.Models
+namespace EEC.EnemyCustomizations.Models
 {
     public sealed class GlowCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyGlowEvent
     {

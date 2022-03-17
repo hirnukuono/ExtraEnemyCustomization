@@ -1,9 +1,9 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
-using EECustom.Managers.Assets;
+using EEC.Managers.Assets;
 using System.IO;
 
-namespace EECustom
+namespace EEC
 {
     public static class Configuration
     {

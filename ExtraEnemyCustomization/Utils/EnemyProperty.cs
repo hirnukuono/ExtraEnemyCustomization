@@ -1,9 +1,9 @@
-﻿using EECustom.Events;
+﻿using EEC.Events;
 using Enemies;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace EECustom.Utils
+namespace EEC.Utils
 {
     public static class EnemyProperty<T> where T : class, new()
     {

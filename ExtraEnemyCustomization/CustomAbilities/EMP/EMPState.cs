@@ -1,4 +1,4 @@
-﻿namespace EECustom.CustomAbilities.EMP
+﻿namespace EEC.CustomAbilities.EMP
 {
     public enum EMPState
     {

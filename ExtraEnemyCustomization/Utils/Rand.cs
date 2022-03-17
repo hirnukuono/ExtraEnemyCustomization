@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EECustom.Utils
+namespace EEC.Utils
 {
     public static class Rand
     {

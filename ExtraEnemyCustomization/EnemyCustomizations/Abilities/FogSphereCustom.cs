@@ -1,9 +1,9 @@
-﻿using EECustom.EnemyCustomizations.Shared;
-using EECustom.Utils.JsonElements;
+﻿using EEC.EnemyCustomizations.Shared;
+using EEC.Utils.JsonElements;
 using Enemies;
 using UnityEngine;
 
-namespace EECustom.EnemyCustomizations.Abilities
+namespace EEC.EnemyCustomizations.Abilities
 {
     public sealed class FogSphereCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyPrefabBuiltEvent
     {

@@ -1,7 +1,7 @@
 ﻿using Enemies;
 using HarmonyLib;
 
-namespace EECustom.Events.Inject
+namespace EEC.Events.Inject
 {
     [HarmonyPatch(typeof(ScoutAntennaDetection), nameof(ScoutAntennaDetection.OnSpawn))]
     internal static class Inject_ScoutAntennaDetection

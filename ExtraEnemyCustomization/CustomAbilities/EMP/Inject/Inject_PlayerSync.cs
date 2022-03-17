@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using Player;
 
-namespace EECustom.CustomAbilities.EMP.Inject
+namespace EEC.CustomAbilities.EMP.Inject
 {
     [HarmonyPatch(typeof(PlayerSync))]
     internal static class Inject_PlayerSync

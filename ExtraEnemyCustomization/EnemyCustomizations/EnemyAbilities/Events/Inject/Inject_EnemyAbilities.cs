@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 
-namespace EECustom.EnemyCustomizations.EnemyAbilities.Events.Inject
+namespace EEC.EnemyCustomizations.EnemyAbilities.Events.Inject
 {
     [HarmonyPatch(typeof(Enemies.EnemyAbilities))]
     internal static class Inject_EnemyAbilities

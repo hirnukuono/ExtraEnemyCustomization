@@ -1,6 +1,6 @@
 ﻿using Enemies;
 
-namespace EECustom.EnemyCustomizations.Detections
+namespace EEC.EnemyCustomizations.Detections
 {
     public sealed class ScreamingCustom : EnemyCustomBase, IEnemySpawnedEvent
     {

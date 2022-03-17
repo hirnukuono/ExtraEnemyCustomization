@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace EECustom.EnemyCustomizations.Shared
+namespace EEC.EnemyCustomizations.Shared
 {
     public sealed class EffectVolumeSetting
     {

@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-namespace EECustom.CustomAbilities.EMP.Handlers
+namespace EEC.CustomAbilities.EMP.Handlers
 {
     public class EMPGunSightHandler : EMPHandlerBase
     {

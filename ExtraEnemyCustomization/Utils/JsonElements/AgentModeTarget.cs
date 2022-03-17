@@ -3,7 +3,7 @@ using Enemies;
 using System;
 using System.Text.Json.Serialization;
 
-namespace EECustom.Utils.JsonElements
+namespace EEC.Utils.JsonElements
 {
     [JsonConverter(typeof(AgentModeTargetConverter))]
     public struct AgentModeTarget

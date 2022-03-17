@@ -1,7 +1,7 @@
 ﻿using Agents;
 using Enemies;
 
-namespace EECustom.EnemyCustomizations
+namespace EEC.EnemyCustomizations
 {
     public interface IEnemyAgentModeEvent : IEnemyEvent
     {

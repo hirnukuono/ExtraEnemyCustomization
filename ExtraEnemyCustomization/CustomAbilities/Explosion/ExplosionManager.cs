@@ -1,10 +1,10 @@
 ﻿using AK;
-using EECustom.Attributes;
-using EECustom.Events;
+using EEC.Attributes;
+using EEC.Events;
 using SNetwork;
 using UnityEngine;
 
-namespace EECustom.CustomAbilities.Explosion
+namespace EEC.CustomAbilities.Explosion
 {
     [CallConstructorOnLoad]
     public static class ExplosionManager

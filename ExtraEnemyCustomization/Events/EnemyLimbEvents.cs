@@ -1,4 +1,4 @@
-﻿namespace EECustom.Events
+﻿namespace EEC.Events
 {
     public delegate void EnemyLimbHandler(Dam_EnemyDamageLimb limb);
 

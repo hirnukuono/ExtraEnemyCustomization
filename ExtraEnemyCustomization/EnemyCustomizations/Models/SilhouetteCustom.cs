@@ -1,11 +1,11 @@
 ﻿using AssetShards;
-using EECustom.EnemyCustomizations.Models.Handlers;
+using EEC.EnemyCustomizations.Models.Handlers;
 using Enemies;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace EECustom.EnemyCustomizations.Models
+namespace EEC.EnemyCustomizations.Models
 {
     //Original Code from Dex-EnemyGhosts
     public sealed class SilhouetteCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyPrefabBuiltEvent

@@ -1,9 +1,9 @@
-﻿using EECustom.Utils;
+﻿using EEC.Utils;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace EECustom.EnemyCustomizations.EnemyAbilities.Abilities
+namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 {
     public sealed class CloakAbility : AbilityBase<CloakBehaviour>
     {

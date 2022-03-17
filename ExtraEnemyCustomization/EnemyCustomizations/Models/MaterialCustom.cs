@@ -1,11 +1,11 @@
-﻿using EECustom.Managers.Assets;
+﻿using EEC.Managers.Assets;
 using Enemies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace EECustom.EnemyCustomizations.Models
+namespace EEC.EnemyCustomizations.Models
 {
     public sealed class MaterialCustom : EnemyCustomBase, IEnemyPrefabBuiltEvent
     {

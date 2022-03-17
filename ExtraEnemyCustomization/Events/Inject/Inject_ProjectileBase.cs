@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using UnityEngine;
 
-namespace EECustom.Events.Inject
+namespace EEC.Events.Inject
 {
     [HarmonyPatch(typeof(ProjectileBase), nameof(ProjectileBase.Collision))]
     internal static class Inject_ProjectileBase

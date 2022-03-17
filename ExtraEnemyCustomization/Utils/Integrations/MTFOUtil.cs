@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-namespace EECustom.Utils.Integrations
+namespace EEC.Utils.Integrations
 {
     public static class MTFOUtil
     {

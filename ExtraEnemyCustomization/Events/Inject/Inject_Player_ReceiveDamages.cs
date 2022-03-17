@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 
-namespace EECustom.Events.Inject
+namespace EEC.Events.Inject
 {
     [HarmonyPatch(typeof(Dam_PlayerDamageLocal))]
     internal static class Inject_Player_ReceiveDamages

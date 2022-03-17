@@ -1,11 +1,11 @@
-﻿using EECustom.Events;
-using EECustom.Utils;
+﻿using EEC.Events;
+using EEC.Utils;
 using Player;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace EECustom.CustomSettings.CustomProjectiles
+namespace EEC.CustomSettings.CustomProjectiles
 {
     public static class CustomProjectileManager
     {

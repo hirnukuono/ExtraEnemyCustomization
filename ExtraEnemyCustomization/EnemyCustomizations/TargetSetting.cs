@@ -1,9 +1,9 @@
-﻿using EECustom.Managers;
+﻿using EEC.Managers;
 using GameData;
 using System;
 using System.Linq;
 
-namespace EECustom.EnemyCustomizations
+namespace EEC.EnemyCustomizations
 {
     public sealed class TargetSetting
     {

@@ -1,9 +1,9 @@
-﻿using EECustom.Networking;
-using EECustom.Utils;
+﻿using EEC.Networking;
+using EEC.Utils;
 using Enemies;
 using SNetwork;
 
-namespace EECustom.EnemyCustomizations.Detections
+namespace EEC.EnemyCustomizations.Detections
 {
     public sealed class ScoutAnimSync : SyncedEvent<ScoutAnimSync.Packet>
     {

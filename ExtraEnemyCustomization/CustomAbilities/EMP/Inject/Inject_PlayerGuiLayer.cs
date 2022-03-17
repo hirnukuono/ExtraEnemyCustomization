@@ -1,7 +1,7 @@
-﻿using EECustom.CustomAbilities.EMP.Handlers;
+﻿using EEC.CustomAbilities.EMP.Handlers;
 using HarmonyLib;
 
-namespace EECustom.CustomAbilities.EMP.Inject
+namespace EEC.CustomAbilities.EMP.Inject
 {
     [HarmonyPatch(typeof(PlayerGuiLayer))]
     internal static class Inject_PlayerGuiLayer

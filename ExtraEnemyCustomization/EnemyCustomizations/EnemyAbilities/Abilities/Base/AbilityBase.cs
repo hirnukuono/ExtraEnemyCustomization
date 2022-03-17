@@ -1,11 +1,11 @@
 ﻿using BepInEx.Logging;
-using EECustom.Events;
+using EEC.Events;
 using Enemies;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using UnityEngine;
 
-namespace EECustom.EnemyCustomizations.EnemyAbilities.Abilities
+namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 {
     public abstract class AbilityBase<T> : IAbility where T : AbilityBehaviour, new()
     {

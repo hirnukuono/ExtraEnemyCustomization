@@ -1,10 +1,10 @@
-﻿using EECustom.Configs.Customizations;
-using EECustom.EnemyCustomizations;
+﻿using EEC.Configs.Customizations;
+using EEC.EnemyCustomizations;
 using GameData;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EECustom.Managers
+namespace EEC.Managers
 {
     public static partial class ConfigManager
     {

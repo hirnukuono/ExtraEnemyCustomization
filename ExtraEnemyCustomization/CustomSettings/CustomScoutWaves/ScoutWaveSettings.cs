@@ -1,9 +1,9 @@
-﻿using EECustom.EnemyCustomizations;
+﻿using EEC.EnemyCustomizations;
 using GameData;
 using LevelGeneration;
 using System;
 
-namespace EECustom.CustomSettings.CustomScoutWaves
+namespace EEC.CustomSettings.CustomScoutWaves
 {
     public class ExpeditionScoutSetting
     {

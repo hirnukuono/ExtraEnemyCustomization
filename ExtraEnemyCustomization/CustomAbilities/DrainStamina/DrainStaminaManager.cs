@@ -1,7 +1,7 @@
-﻿using EECustom.Attributes;
+﻿using EEC.Attributes;
 using Player;
 
-namespace EECustom.CustomAbilities.DrainStamina
+namespace EEC.CustomAbilities.DrainStamina
 {
     [CallConstructorOnLoad]
     public static class DrainStaminaManager

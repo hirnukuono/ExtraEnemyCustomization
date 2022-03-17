@@ -1,11 +1,11 @@
-﻿using EECustom.EnemyCustomizations.Shared;
-using EECustom.Events;
+﻿using EEC.EnemyCustomizations.Shared;
+using EEC.Events;
 using Enemies;
 using Player;
 using System;
 using UnityEngine;
 
-namespace EECustom.EnemyCustomizations.Abilities
+namespace EEC.EnemyCustomizations.Abilities
 {
     public sealed class ExplosiveAttackCustom : AttackCustomBase<ExplosionSetting>
     {

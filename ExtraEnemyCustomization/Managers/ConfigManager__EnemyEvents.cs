@@ -1,13 +1,13 @@
 ﻿using Agents;
-using EECustom.API;
-using EECustom.EnemyCustomizations;
-using EECustom.Utils;
+using EEC.API;
+using EEC.EnemyCustomizations;
+using EEC.Utils;
 using Enemies;
 using GameData;
 using System;
 using System.Collections.Generic;
 
-namespace EECustom.Managers
+namespace EEC.Managers
 {
     public static partial class ConfigManager
     {

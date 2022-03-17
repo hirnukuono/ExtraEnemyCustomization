@@ -2,7 +2,7 @@
 using HarmonyLib;
 using Player;
 
-namespace EECustom.Events.Inject
+namespace EEC.Events.Inject
 {
     [HarmonyPatch(typeof(PlayerAgent))]
     internal static class Inject_PlayerAgent_GivePack

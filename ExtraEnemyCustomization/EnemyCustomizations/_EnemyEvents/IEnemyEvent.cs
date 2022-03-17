@@ -1,4 +1,4 @@
-﻿namespace EECustom.EnemyCustomizations
+﻿namespace EEC.EnemyCustomizations
 {
     public interface IEnemyEvent
     {

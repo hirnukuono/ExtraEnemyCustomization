@@ -1,10 +1,10 @@
-﻿using EECustom.Attributes;
-using EECustom.Utils;
+﻿using EEC.Attributes;
+using EEC.Utils;
 using FX_EffectSystem;
 using System;
 using UnityEngine;
 
-namespace EECustom.CustomAbilities.Explosion.Handlers
+namespace EEC.CustomAbilities.Explosion.Handlers
 {
     [InjectToIl2Cpp]
     internal sealed class ExplosionEffectHandler : MonoBehaviour

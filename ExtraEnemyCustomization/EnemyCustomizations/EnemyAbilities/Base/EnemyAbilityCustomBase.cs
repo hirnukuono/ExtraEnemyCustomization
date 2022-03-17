@@ -1,9 +1,9 @@
-﻿using EECustom.EnemyCustomizations.EnemyAbilities.Abilities;
+﻿using EEC.EnemyCustomizations.EnemyAbilities.Abilities;
 using Enemies;
 using System;
 using System.Collections.Generic;
 
-namespace EECustom.EnemyCustomizations.EnemyAbilities
+namespace EEC.EnemyCustomizations.EnemyAbilities
 {
     public abstract class EnemyAbilityCustomBase<T> : EnemyCustomBase, IEnemySpawnedEvent where T : AbilitySettingBase
     {

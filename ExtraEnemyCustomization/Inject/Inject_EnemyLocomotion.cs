@@ -1,8 +1,8 @@
-﻿using EECustom.Utils;
+﻿using EEC.Utils;
 using Enemies;
 using HarmonyLib;
 
-namespace EECustom.Inject
+namespace EEC.Inject
 {
     [HarmonyPatch(typeof(EnemyLocomotion), nameof(EnemyLocomotion.HashAnimationParams))]
     internal static class Inject_EnemyLocomotion

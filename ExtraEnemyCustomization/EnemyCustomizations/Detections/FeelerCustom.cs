@@ -1,9 +1,9 @@
-﻿using EECustom.Events;
-using EECustom.Utils.JsonElements;
+﻿using EEC.Events;
+using EEC.Utils.JsonElements;
 using Enemies;
 using UnityEngine;
 
-namespace EECustom.EnemyCustomizations.Detections
+namespace EEC.EnemyCustomizations.Detections
 {
     public sealed class FeelerCustom : EnemyCustomBase
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace EECustom.CustomAbilities.EMP
+namespace EEC.CustomAbilities.EMP
 {
     public interface IEMPHandler
     {

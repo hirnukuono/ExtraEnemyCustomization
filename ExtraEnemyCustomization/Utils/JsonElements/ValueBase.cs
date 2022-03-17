@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.Json.Serialization;
 
-namespace EECustom.Utils.JsonElements
+namespace EEC.Utils.JsonElements
 {
     [JsonConverter(typeof(ValueBaseConverter))]
     public struct ValueBase

@@ -1,6 +1,6 @@
 ﻿using Enemies;
 
-namespace EECustom.EnemyCustomizations.EnemyAbilities.Abilities
+namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 {
     public interface IAbility
     {

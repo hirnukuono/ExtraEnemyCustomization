@@ -1,11 +1,11 @@
-﻿using EECustom.EnemyCustomizations.Shooters.Handlers;
-using EECustom.Utils.JsonElements;
+﻿using EEC.EnemyCustomizations.Shooters.Handlers;
+using EEC.Utils.JsonElements;
 using Enemies;
 using System;
 using System.Linq;
 using UnityEngine;
 
-namespace EECustom.EnemyCustomizations.Shooters
+namespace EEC.EnemyCustomizations.Shooters
 {
     public sealed class ShooterFireCustom : EnemyCustomBase, IEnemySpawnedEvent
     {

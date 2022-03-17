@@ -1,7 +1,7 @@
-﻿using EECustom.Utils;
+﻿using EEC.Utils;
 using UnityEngine;
 
-namespace EECustom.CustomAbilities.EMP
+namespace EEC.CustomAbilities.EMP
 {
     /// <summary>
     /// Contains utility methods and variables useful to EMPHandler's

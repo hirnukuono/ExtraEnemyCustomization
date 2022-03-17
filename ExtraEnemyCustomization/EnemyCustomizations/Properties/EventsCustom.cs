@@ -1,10 +1,10 @@
 ﻿using Agents;
-using EECustom.Utils.JsonElements;
+using EEC.Utils.JsonElements;
 using Enemies;
 using GameData;
 using System;
 
-namespace EECustom.EnemyCustomizations.Properties
+namespace EEC.EnemyCustomizations.Properties
 {
     public sealed class EventsCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyDeadEvent, IEnemyAgentModeEvent
     {

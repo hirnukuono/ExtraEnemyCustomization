@@ -1,10 +1,10 @@
-﻿using EECustom.Events;
+﻿using EEC.Events;
 using GTFO.API;
 using SNetwork;
 using System;
 using System.Collections.Generic;
 
-namespace EECustom.Networking
+namespace EEC.Networking
 {
     public struct ReplicatorPayload<S> where S : struct
     {

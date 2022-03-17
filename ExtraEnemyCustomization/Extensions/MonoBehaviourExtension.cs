@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace EECustom
+namespace EEC
 {
     public static class MonoBehaviourExtension
     {

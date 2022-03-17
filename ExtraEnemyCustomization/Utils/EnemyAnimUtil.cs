@@ -1,12 +1,12 @@
-﻿using EECustom.Networking;
-using EECustom.Networking.Events;
+﻿using EEC.Networking;
+using EEC.Networking.Events;
 using Enemies;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using UnhollowerBaseLib;
 
-namespace EECustom.Utils
+namespace EEC.Utils
 {
     public static class EnemyAnimUtil
     {

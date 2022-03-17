@@ -1,6 +1,6 @@
 ﻿using Enemies;
 
-namespace EECustom.Events
+namespace EEC.Events
 {
     public delegate void ScoutDetectionHandler(EnemyAgent enemyAgent, ScoutAntennaDetection detection);
 

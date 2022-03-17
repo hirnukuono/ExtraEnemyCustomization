@@ -1,10 +1,10 @@
-﻿using EECustom.EnemyCustomizations;
-using EECustom.Managers;
+﻿using EEC.EnemyCustomizations;
+using EEC.Managers;
 using HarmonyLib;
 using System;
 using UnityEngine;
 
-namespace EECustom.Inject
+namespace EEC.Inject
 {
     [HarmonyPatch(typeof(EnemyAppearance))]
     internal static class Inject_EnemyAppearance_InterpolateGlows

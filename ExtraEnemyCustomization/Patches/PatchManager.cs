@@ -1,11 +1,11 @@
-﻿using EECustom.Attributes;
-using EECustom.Events;
-using EECustom.Managers;
-using EECustom.Patches.Handlers;
+﻿using EEC.Attributes;
+using EEC.Events;
+using EEC.Managers;
+using EEC.Patches.Handlers;
 using Enemies;
 using SNetwork;
 
-namespace EECustom.Patches
+namespace EEC.Patches
 {
     [CallConstructorOnLoad]
     public static class PatchManager

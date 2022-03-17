@@ -1,7 +1,7 @@
 ﻿using Enemies;
 using UnityEngine;
 
-namespace EECustom.EnemyCustomizations
+namespace EEC.EnemyCustomizations
 {
     public interface IEnemyGlowEvent : IEnemyEvent
     {

@@ -1,8 +1,8 @@
-﻿using EECustom.CustomAbilities.Explosion;
+﻿using EEC.CustomAbilities.Explosion;
 using System;
 using UnityEngine;
 
-namespace EECustom.Utils
+namespace EEC.Utils
 {
     [Obsolete("Will be moved to ExplosionManager")]
     public static class ExplosionUtil

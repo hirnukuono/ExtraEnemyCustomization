@@ -1,9 +1,9 @@
-﻿using EECustom.Attributes;
-using EECustom.Utils;
+﻿using EEC.Attributes;
+using EEC.Utils;
 using System.Linq;
 using UnityEngine;
 
-namespace EECustom.EnemyCustomizations.Shooters.Handlers
+namespace EEC.EnemyCustomizations.Shooters.Handlers
 {
     [InjectToIl2Cpp]
     internal sealed class ShooterDistSettingHandler : MonoBehaviour

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 
-namespace EECustom.EnemyCustomizations
+namespace EEC.EnemyCustomizations
 {
     public abstract class EnemyCustomBase
     {

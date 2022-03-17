@@ -1,7 +1,7 @@
 ﻿using Agents;
 using Player;
 
-namespace EECustom.Events
+namespace EEC.Events
 {
     public delegate void PlayerTakeDamageHandler(PlayerAgent playerAgent, Agent inflictor, float damage);
 

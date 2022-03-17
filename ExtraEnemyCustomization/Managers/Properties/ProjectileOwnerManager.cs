@@ -1,8 +1,8 @@
-﻿using EECustom.Events;
+﻿using EEC.Events;
 using Enemies;
 using System.Collections.Generic;
 
-namespace EECustom.Managers.Properties
+namespace EEC.Managers.Properties
 {
     public static class ProjectileOwnerManager
     {

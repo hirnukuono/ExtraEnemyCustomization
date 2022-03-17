@@ -1,8 +1,8 @@
-﻿using EECustom.Utils.JsonElements;
+﻿using EEC.Utils.JsonElements;
 using Enemies;
 using GameData;
 
-namespace EECustom.EnemyCustomizations.Abilities
+namespace EEC.EnemyCustomizations.Abilities
 {
     public sealed class BirthingCustom : EnemyCustomBase, IEnemySpawnedEvent
     {

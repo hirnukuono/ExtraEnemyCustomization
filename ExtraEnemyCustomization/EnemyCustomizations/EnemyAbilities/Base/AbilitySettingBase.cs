@@ -1,6 +1,6 @@
-﻿using EECustom.EnemyCustomizations.EnemyAbilities.Abilities;
+﻿using EEC.EnemyCustomizations.EnemyAbilities.Abilities;
 
-namespace EECustom.EnemyCustomizations.EnemyAbilities
+namespace EEC.EnemyCustomizations.EnemyAbilities
 {
     public class AbilitySettingBase
     {

@@ -3,7 +3,7 @@ using HarmonyLib;
 using System;
 using System.Reflection;
 
-namespace EECustom.Utils.Integrations.Inject
+namespace EEC.Utils.Integrations.Inject
 {
     [HarmonyPatch(typeof(CM_PageRundown_New), nameof(CM_PageRundown_New.OnEnable))]
     internal static class Inject_CM_PageRundown_New

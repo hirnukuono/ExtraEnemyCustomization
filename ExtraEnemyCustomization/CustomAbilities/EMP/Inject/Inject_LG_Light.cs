@@ -1,8 +1,8 @@
-﻿using EECustom.CustomAbilities.EMP.Handlers;
+﻿using EEC.CustomAbilities.EMP.Handlers;
 using HarmonyLib;
 using LevelGeneration;
 
-namespace EECustom.CustomAbilities.EMP.Inject
+namespace EEC.CustomAbilities.EMP.Inject
 {
     [HarmonyPatch(typeof(LG_Light))]
     internal static class Inject_LG_Light

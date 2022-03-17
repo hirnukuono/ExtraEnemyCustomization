@@ -1,9 +1,9 @@
-﻿using EECustom.Utils;
+﻿using EEC.Utils;
 using Enemies;
 using HarmonyLib;
 using LevelGeneration;
 
-namespace EECustom.EnemyCustomizations.Abilities.Inject
+namespace EEC.EnemyCustomizations.Abilities.Inject
 {
     [HarmonyPatch(typeof(EB_InCombat_MoveToNextNode_DestroyDoor), nameof(EB_InCombat_MoveToNextNode_DestroyDoor.UpdateBehaviour))]
     internal static class Inject_EB_DestroyDoor

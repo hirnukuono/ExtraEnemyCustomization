@@ -1,8 +1,8 @@
-﻿using EECustom.EnemyCustomizations.Shared;
+﻿using EEC.EnemyCustomizations.Shared;
 using Enemies;
 using Player;
 
-namespace EECustom.EnemyCustomizations.Abilities
+namespace EEC.EnemyCustomizations.Abilities
 {
     public sealed class DrainStaminaAttackCustom : AttackCustomBase<DrainStaminaSetting>
     {

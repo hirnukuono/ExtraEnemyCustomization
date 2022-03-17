@@ -1,4 +1,4 @@
-﻿namespace EECustom.CustomSettings.CustomTentacles
+﻿namespace EEC.CustomSettings.CustomTentacles
 {
     public class CustomTentacle
     {
