@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace EEC.Utils.JsonElements
+namespace EEC.Utils.Json.Elements
 {
     internal sealed class EventWrapperConverter : JsonConverter<EventWrapper>
     {

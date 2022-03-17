@@ -1,4 +1,5 @@
 ﻿using EEC.Utils;
+using EEC.Utils.Unity;
 using UnityEngine;
 using UnityEngine.AI;
 

@@ -1,5 +1,5 @@
 ﻿using EEC.EnemyCustomizations.Shared;
-using EEC.Utils.JsonElements;
+using EEC.Utils.Json.Elements;
 using Player;
 using UnityEngine;
 

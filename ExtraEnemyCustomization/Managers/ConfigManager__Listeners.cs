@@ -1,4 +1,4 @@
-﻿using EEC.Utils;
+﻿using GTFO.API.Utilities;
 using System.IO;
 
 namespace EEC.Managers
@@ -17,7 +17,7 @@ namespace EEC.Managers
 
         private static void EnqueueJob(string path)
         {
-            ThreadDispatcher.Enqueue(() =>
+            ThreadDispatcher.Dispatch(() =>
             {
                 var filename = Path.GetFileNameWithoutExtension(path);
                 if (_configFileNameToType.TryGetValue(filename.ToLowerInvariant(), out var type))

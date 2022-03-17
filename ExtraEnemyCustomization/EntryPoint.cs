@@ -5,8 +5,8 @@ using EEC.Events;
 using EEC.Managers;
 using EEC.Managers.Assets;
 using EEC.Networking;
-using EEC.Utils;
 using EEC.Utils.Integrations;
+using EEC.Utils.Unity;
 using HarmonyLib;
 using System;
 using System.Collections.Generic;
@@ -61,7 +61,7 @@ namespace EEC
         private void AllAssetLoaded()
         {
             SpriteManager.Initialize();
-            ThreadDispatcher.Initialize();
+            HeavyJobWorker.Initialize();
             AssetCacheManager.AssetLoaded();
 
             ConfigManager.FireAssetLoaded();

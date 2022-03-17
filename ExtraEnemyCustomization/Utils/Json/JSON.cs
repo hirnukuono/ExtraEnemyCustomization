@@ -1,10 +1,10 @@
 ﻿using EEC.Utils.Integrations;
-using EEC.Utils.JsonConverters;
+using EEC.Utils.Json.Converters;
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace EEC.Utils
+namespace EEC.Utils.Json
 {
     public static class JSON
     {

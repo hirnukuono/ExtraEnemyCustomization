@@ -1,5 +1,5 @@
 ﻿using EEC.EnemyCustomizations.Shooters.Handlers;
-using EEC.Utils.JsonElements;
+using EEC.Utils.Json.Elements;
 using Enemies;
 using System;
 using System.Linq;

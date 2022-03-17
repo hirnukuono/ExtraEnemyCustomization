@@ -1,6 +1,6 @@
 ﻿using EEC.CustomAbilities.Bleed;
 using EEC.Utils;
-using EEC.Utils.JsonElements;
+using EEC.Utils.Json.Elements;
 using Player;
 
 namespace EEC.EnemyCustomizations.Shared

@@ -1,6 +1,6 @@
 ﻿using EEC.EnemyCustomizations.EnemyAbilities.Abilities;
 using EEC.EnemyCustomizations.EnemyAbilities.Handlers;
-using EEC.Utils.JsonElements;
+using EEC.Utils.Json.Elements;
 using Enemies;
 using System;
 using System.Linq;

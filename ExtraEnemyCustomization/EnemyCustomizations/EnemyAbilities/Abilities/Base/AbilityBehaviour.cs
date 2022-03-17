@@ -1,7 +1,7 @@
 ﻿using BepInEx.Logging;
 using EEC.EnemyCustomizations.EnemyAbilities.Events;
 using EEC.Events;
-using EEC.Utils;
+using EEC.Utils.Unity;
 using Enemies;
 using SNetwork;
 using UnityEngine;

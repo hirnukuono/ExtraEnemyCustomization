@@ -1,6 +1,6 @@
 ﻿using EEC.EnemyCustomizations.Models.Handlers;
 using EEC.Utils;
-using EEC.Utils.JsonElements;
+using EEC.Utils.Json.Elements;
 using Enemies;
 using System;
 using System.Collections.Generic;

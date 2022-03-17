@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
 
-namespace EEC.Utils.JsonElements
+namespace EEC.Utils.Json.Elements
 {
     public sealed class CurveWrapper : Collection<CurveKeyFrame>
     {

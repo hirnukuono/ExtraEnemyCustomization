@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace EEC.Utils
+namespace EEC.Utils.Unity
 {
     public struct LazyTimer
     {

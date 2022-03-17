@@ -1,5 +1,5 @@
 ﻿using Agents;
-using EEC.Utils;
+using EEC.Utils.Unity;
 using Enemies;
 using SNetwork;
 

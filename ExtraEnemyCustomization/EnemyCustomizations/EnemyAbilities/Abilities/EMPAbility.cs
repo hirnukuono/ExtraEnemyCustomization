@@ -1,5 +1,6 @@
 ﻿using EEC.CustomAbilities.EMP;
 using EEC.Utils;
+using EEC.Utils.Unity;
 using UnityEngine;
 
 namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities

@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace EEC.Utils.JsonElements
+namespace EEC.Utils.Json.Elements
 {
     public sealed class AgentModeTargetConverter : JsonConverter<AgentModeTarget>
     {

@@ -1,5 +1,5 @@
 ﻿using EEC.Events;
-using EEC.Utils.JsonElements;
+using EEC.Utils.Json.Elements;
 using Enemies;
 using UnityEngine;
 

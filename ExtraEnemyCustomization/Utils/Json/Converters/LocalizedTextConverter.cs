@@ -4,7 +4,7 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace EEC.Utils.JsonConverters
+namespace EEC.Utils.Json.Converters
 {
     public sealed class LocalizedTextConverter : JsonConverter<LocalizedText>
     {

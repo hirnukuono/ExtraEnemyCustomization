@@ -1,7 +1,7 @@
 ﻿using Agents;
 using EEC.Attributes;
 using EEC.Events;
-using EEC.Utils;
+using EEC.Utils.Unity;
 using Enemies;
 using SNetwork;
 using UnhollowerBaseLib.Attributes;

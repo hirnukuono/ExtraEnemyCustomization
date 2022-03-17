@@ -1,4 +1,4 @@
-﻿using EEC.Utils;
+﻿using EEC.Utils.Unity;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;

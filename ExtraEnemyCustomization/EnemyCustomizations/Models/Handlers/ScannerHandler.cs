@@ -1,6 +1,6 @@
 ﻿using Agents;
 using EEC.Attributes;
-using EEC.Utils;
+using EEC.Utils.Unity;
 using Enemies;
 using System.Collections;
 using UnhollowerBaseLib.Attributes;

@@ -2,7 +2,7 @@
 using AIGraph;
 using EEC.CustomAbilities.Explosion;
 using EEC.Utils;
-using EEC.Utils.JsonElements;
+using EEC.Utils.Json.Elements;
 using LevelGeneration;
 using UnityEngine;
 

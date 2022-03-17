@@ -1,5 +1,5 @@
 ﻿using EEC.Attributes;
-using EEC.Utils;
+using EEC.Utils.Unity;
 using System.Linq;
 using UnityEngine;
 

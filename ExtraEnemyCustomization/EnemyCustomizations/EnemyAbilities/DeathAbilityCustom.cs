@@ -1,7 +1,7 @@
 ﻿using EEC.EnemyCustomizations.EnemyAbilities.Abilities;
-using EEC.Utils;
-using EEC.Utils.JsonElements;
+using EEC.Utils.Json.Elements;
 using Enemies;
+using GTFO.API.Utilities;
 using System;
 using System.Threading.Tasks;
 
@@ -28,7 +28,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities
         private static async Task DoTriggerDelayed(IAbility ability, EnemyAgent agent, float delay)
         {
             await Task.Delay((int)Math.Round(delay * 1000.0f));
-            ThreadDispatcher.Enqueue(() =>
+            ThreadDispatcher.Dispatch(() =>
             {
                 ability?.TriggerSync(agent);
             });

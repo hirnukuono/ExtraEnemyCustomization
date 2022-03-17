@@ -1,7 +1,7 @@
 ﻿using Agents;
 using EEC.API;
 using EEC.EnemyCustomizations;
-using EEC.Utils;
+using EEC.Utils.Unity;
 using Enemies;
 using GameData;
 using System;
@@ -194,7 +194,7 @@ namespace EEC.Managers
         {
             if (Global.UsingLazySpawnedEvent)
             {
-                ThreadDispatcher.EnqueueHeavy(() =>
+                HeavyJobWorker.Enqueue(() =>
                 {
                     _enemySpawnedHolder.FireEvent(agent, (e) =>
                     {
