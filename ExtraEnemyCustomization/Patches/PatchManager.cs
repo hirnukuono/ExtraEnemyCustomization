@@ -1,8 +1,8 @@
 ﻿using EEC.Attributes;
-using EEC.Events;
 using EEC.Managers;
 using EEC.Patches.Handlers;
 using Enemies;
+using GameData;
 using SNetwork;
 
 namespace EEC.Patches
@@ -12,24 +12,23 @@ namespace EEC.Patches
     {
         static PatchManager()
         {
-            EnemyEvents.Spawned += Spawned_FlyerCheck;
+            ConfigManager.EnemyPrefabBuilt += PrefabBuilt;
         }
 
-        private static void Spawned_FlyerCheck(EnemyAgent agent)
+        private static void PrefabBuilt(EnemyAgent agent, EnemyDataBlock enemyData)
         {
             if (!ConfigManager.Global.UsingFlyerStuckCheck)
                 return;
 
-            if (!SNet.IsMaster)
+            var enemyBehaviourBlock = EnemyBehaviorDataBlock.GetBlock(enemyData.BehaviorDataId);
+            if (enemyBehaviourBlock == null)
                 return;
 
-            if (!agent.EnemyBehaviorData.IsFlyer)
+            if (!enemyBehaviourBlock.IsFlyer)
                 return;
 
-            var flyerHandler = agent.gameObject.AddComponent<FlyerStuckHandler>();
-            flyerHandler.Agent = agent;
-            flyerHandler.UpdateInterval = ConfigManager.Global.FlyerStuck_Interval;
-            flyerHandler.RetryCount = ConfigManager.Global.FlyerStuck_Retry;
+            agent.gameObject.AddComponent<FlyerStuckHandler>();
+            Logger.Debug($"Added Flyer Check to {enemyData.persistentID}");
         }
     }
 }

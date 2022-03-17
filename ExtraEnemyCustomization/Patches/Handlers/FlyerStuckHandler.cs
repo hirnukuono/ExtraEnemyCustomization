@@ -1,7 +1,9 @@
 ﻿using Agents;
 using EEC.Attributes;
+using EEC.Managers;
 using EEC.Utils.Unity;
 using Enemies;
+using SNetwork;
 using UnityEngine;
 
 namespace EEC.Patches.Handlers
@@ -10,14 +12,38 @@ namespace EEC.Patches.Handlers
     internal sealed class FlyerStuckHandler : MonoBehaviour
     {
         public EnemyAgent Agent;
-        public float UpdateInterval = 2.0f;
-        public int RetryCount = 4;
+        public float UpdateInterval = float.MaxValue;
+        public int RetryCount = int.MaxValue;
 
         private Vector3 _firstPosition;
         private Vector2 _lastGoalXZ;
         private Timer _timer;
         private int _tryCount = -1;
         private bool _shouldCheck = true;
+
+        private void Start()
+        {
+            if (!SNet.IsMaster)
+            {
+                enabled = false;
+                return;
+            }
+
+            if (!gameObject.TryGetComp(out Agent))
+            {
+                enabled = false;
+                return;
+            }
+
+            if (!Agent.EnemyBehaviorData.IsFlyer)
+            {
+                enabled = false;
+                return;
+            }
+
+            UpdateInterval = ConfigManager.Global.FlyerStuck_Interval;
+            RetryCount = ConfigManager.Global.FlyerStuck_Retry;
+        }
 
         private void FixedUpdate()
         {

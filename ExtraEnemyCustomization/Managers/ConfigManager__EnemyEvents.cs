@@ -11,6 +11,8 @@ namespace EEC.Managers
 {
     public static partial class ConfigManager
     {
+        public static event Action<EnemyAgent, EnemyDataBlock> EnemyPrefabBuilt;
+
         public sealed class EnemyEventHolder<T> where T : class, IEnemyEvent
         {
             public string EventName { get; set; } = string.Empty;
@@ -171,6 +173,8 @@ namespace EEC.Managers
                 RegisterTargetEnemyLookup(block);
                 CacheEnemyEventBuffer(block.persistentID);
                 FirePrefabBuiltEvent(enemyAgentComp);
+
+                EnemyPrefabBuilt?.Invoke(enemyAgentComp, block);
             }
 
             TargetEnemyLookupFullyBuilt();
