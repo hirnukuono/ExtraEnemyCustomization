@@ -55,25 +55,40 @@ namespace EECustom.Customizations.Abilities
 
         private void TriggerProjectileExplosion(ProjectileBase projectile)
         {
-            if (!projectile.TryGetOwner(out var agent))
-                return;
+            if (!IsOwnerDestroyed(projectile, out var owner))
+            {
+                if (!IsTarget(owner))
+                    return;
+
+                ProjectileData.DoExplode(projectile.transform.position);
+
+                if (ProjectileData.KillInflictor)
+                {
+                    var damage = owner.Damage;
+                    damage.ExplosionDamage(damage.HealthMax, Vector3.zero, Vector3.zero);
+                }
+            }
+            else if (projectile.TryGetOwnerEnemyDataID(out var ownerID))
+            {
+                if (!IsTarget(ownerID))
+                    return;
+
+                ProjectileData.DoExplode(projectile.transform.position);
+            }
+        }
+
+        private bool IsOwnerDestroyed(ProjectileBase projectile, out EnemyAgent agent)
+        {
+            if (!projectile.TryGetOwner(out agent))
+                return true;
 
             if (agent == null)
-                return;
+                return true;
 
             if (agent.WasCollected)
-                return;
+                return true;
 
-            if (!IsTarget(agent))
-                return;
-
-            ProjectileData.DoExplode(projectile.transform.position);
-
-            if (ProjectileData.KillInflictor)
-            {
-                var damage = agent.Damage;
-                damage.ExplosionDamage(damage.HealthMax, Vector3.zero, Vector3.zero);
-            }
+            return false;
         }
 
         protected override void OnApplyEffect(ExplosionSetting setting, PlayerAgent player, EnemyAgent inflictor)

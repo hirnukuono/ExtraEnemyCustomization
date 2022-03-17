@@ -8,6 +8,28 @@ namespace EECustom
 {
     public static class ProjectileTargetingExtension
     {
+        public static bool TryGetOwnerEnemyDataID(this ProjectileBase projectile, out uint id)
+        {
+            if (projectile == null)
+            {
+                id = 0u;
+                return false;
+            }
+
+            return ProjectileOwnerManager.TryGetDataID(projectile.gameObject.GetInstanceID(), out id);
+        }
+
+        public static bool TryGetOwnerEnemyDataID(this ProjectileTargeting projectile, out uint id)
+        {
+            if (projectile == null)
+            {
+                id = 0u;
+                return false;
+            }
+
+            return ProjectileOwnerManager.TryGetDataID(projectile.gameObject.GetInstanceID(), out id);
+        }
+
         public static bool TryGetOwner(this ProjectileBase projectile, out EnemyAgent agent)
         {
             if (projectile == null)
