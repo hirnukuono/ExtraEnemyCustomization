@@ -314,6 +314,7 @@
         "ChanceToBleed": 0.5,
         "Interval": 0.15,
         "Duration": 10.0,
+        "CanBeStacked": false,
         "HasLiquid": true,
         "LiquidSetting": "enemyBlood_SmallRandomStreak",
         "OverrideBleedingTextID": 0

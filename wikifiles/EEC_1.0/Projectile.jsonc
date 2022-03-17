@@ -133,8 +133,66 @@
       "GlowColor": "cyan", //Color: Glow Color
       "GlowRange": 1.0, //BasedValue Glow Range
       "Damage": "50% of default", //BasedValue: (Based on PlayerDataBlock.health, Has original Value): Damage to deal 
-      "Infection": "0%" //BasedValue: (Based on 1.0, Has Original Value): Add Infection On Hit
+      "Infection": "0%", //BasedValue: (Based on 1.0, Has Original Value): Add Infection On Hit
       //Editing Infection Will enable the Infection Bomb effect (Includes Particle Effect, Sound Effect), If you don't want it, use Ability/InfectionAttackCustom instead
+      "Explosion": {
+        //Also Possible to define this on ExplosiveAttackCustom
+        "Enabled": false,
+        "Damage": "0%", //BasedValue: (Based on PlayerDataBlock.health): Damage to deal with explosion
+        "LightColor": "#ff1500", //Color: LightFlash effect color
+        "EnemyDamageMulti": 1.0, //Multiplier when enemy is receiving explosion damage
+        "MinRange": 2.0, //How far it does maximum damage?
+        "MaxRange": 5.0, //How far it does damage?
+        "NoiseMinRange": 5.0, //How far it awake nearby enemies when it explodes
+        "NoiseMaxRange": 10.0, //How for it can be hear by nearby enemy when it explodes
+        "NoiseType": "Detectable" //InstaDetect, Detectable, PulseOnly
+      },
+      "Knockback": {
+        //Also Possible to define this on KnockbackAttackCustom
+        "Enabled": false,
+        "Velocity": 10.0, //Knockback Velocity from enemies to player
+        "VelocityZ": 6.0 //Z (Vertical) Velocity to apply (not affected by position)
+      },
+      "Bleed": {
+        //Also Possible to define this on BleedAttackCustom
+        "Enabled": false,
+        "Damage": "0.1%", //BasedValue: Based on PlayerMaxHealth, Damage for each interval
+        "ChanceToBleed": 0.5, //Chance to be bleed (0.0 = zero, 1.0 = always)
+        "Interval": 0.15, //Interval for each damage
+        "Duration": 10.0, //Duration for bleeding effect
+        "CanBeStacked": false, //Can Bleeding effect be stacked?
+        "HasLiquid": true, //Using Liquid Effect?
+        "LiquidSetting": "enemyBlood_SmallRandomStreak", //Name of Liquid effect you want to use (It will be sprayed for each damage)
+        /*
+        Possible Values for LiquidSetting:
+          enemyBlood_BigBloodBomb = 0,
+          enemyBlood_SmallRandomStreak = 1,
+          enemyBlood_Squirt = 2,
+          shooterGoo = 3,
+          spitterJizz = 4,
+          elevatorRain = 5,
+          waterDrizzle = 6,
+          waterDrip = 7,
+          playerBlood = 8,
+          disinfectionPack_Apply = 9,
+          disinfectionStation_Apply = 10,
+          infectionSweat = 11,
+          playerBlood_SmallDamage = 12,
+          playerBlood_BigDamage = 13,
+          playerBlood_Downed = 14,
+          anemoneGoo = 15
+				*/
+        "OverrideBleedingTextID": 0 //Override Bleeding HUD text to TextDataBlock you want ({0} is required for your text to show default health info text) - 0 to disable
+        //Default Text Format: "{0}\n<color=red><size=75%>BLEEDING</size></color>"
+      },
+      "DrainStamina": {
+        //Also Possible to define this on BleedAttackCustom
+        "Enabled": true,
+        "DrainAmount": 0.05,
+        "DrainAmountInCombat": 0.1,
+        "ResetRecoverTimer": false,
+        "ResetRecoverTimerInCombat": false
+      }
     }
   ]
 }
