@@ -18,8 +18,8 @@ namespace EECustom
             LogInstance = new ManualLogSource("EEC");
             BepInEx.Logging.Logger.Sources.Add(LogInstance);
 
-            UsingDevMessage = Configuration.UseDebugLog.Value;
-            UsingVerbose = Configuration.UseVerboseLog.Value;
+            UsingDevMessage = Configuration.UseDebugLog;
+            UsingVerbose = Configuration.UseVerboseLog;
         }
 
         public static void Log(string format, params object[] args) => Log(string.Format(format, args));

@@ -14,24 +14,30 @@ namespace EECustom
         public const int CONFIG_VERSION = 1;
 
         //USER CONFIGS
-        public static ConfigEntry<bool> ShowMarkerText { get; private set; }
-
-        public static ConfigEntry<bool> ShowMarkerDistance { get; private set; }
-        public static ConfigEntry<bool> ShowExplosionEffect { get; private set; }
+        public static bool ShowMarkerText { get; private set; }
+        public static bool ShowMarkerDistance { get; private set; }
+        public static bool ShowExplosionEffect { get; private set; }
+        private static ConfigEntry<bool> _showMarkerText;
+        private static ConfigEntry<bool> _showMarkerDistance;
+        private static ConfigEntry<bool> _showExplosionEffect;
 
         //RUNDOWN DEVELOPER CONFIGS
-        public static ConfigEntry<bool> UseLiveEdit { get; private set; }
-
-        public static ConfigEntry<bool> LinkMTFOHotReload { get; private set; }
+        public static bool UseLiveEdit { get; private set; }
+        public static bool LinkMTFOHotReload { get; private set; }
+        private static ConfigEntry<bool> _useLiveEdit;
+        private static ConfigEntry<bool> _linkMTFOHotReload;
 
         //LOGGING CONFIGS
-        public static ConfigEntry<bool> UseDebugLog { get; private set; }
-
-        public static ConfigEntry<bool> UseVerboseLog { get; private set; }
-        public static ConfigEntry<AssetCacheManager.OutputType> AssetCacheBehaviour { get; private set; }
+        public static bool UseDebugLog { get; private set; }
+        public static bool UseVerboseLog { get; private set; }
+        public static AssetCacheManager.OutputType AssetCacheBehaviour { get; private set; }
+        private static ConfigEntry<bool> _useDebugLog;
+        private static ConfigEntry<bool> _useVerboseLog;
+        private static ConfigEntry<AssetCacheManager.OutputType> _assetCacheBehaviour;
 
         //DEVELOPER CONFIGS
-        public static ConfigEntry<bool> DumpConfig { get; private set; }
+        public static bool DumpConfig { get; private set; }
+        private static ConfigEntry<bool> _dumpConfig;
 
         private static ConfigFile _currentContext;
 
@@ -54,18 +60,27 @@ namespace EECustom
         {
             _currentContext = context;
 
-            ShowMarkerText = BindUserConfig("Marker Text", "Display Enemy Marker Texts? (if set by rundown devs)", true);
-            ShowMarkerDistance = BindUserConfig("Marker Distance", "Display Enemy Marker Distance? (if set by rundown devs)", true);
-            ShowExplosionEffect = BindUserConfig("Explosion Flash", "(Accessibility) Display Light flash effect for explosion abilities?", true);
+            _showMarkerText = BindUserConfig("Marker Text", "Display Enemy Marker Texts? (if set by rundown devs)", true);
+            _showMarkerDistance = BindUserConfig("Marker Distance", "Display Enemy Marker Distance? (if set by rundown devs)", true);
+            _showExplosionEffect = BindUserConfig("Explosion Flash", "(Accessibility) Display Light flash effect for explosion abilities?", true);
+            ShowMarkerText = _showMarkerText.Value;
+            ShowMarkerDistance = _showMarkerDistance.Value;
+            ShowExplosionEffect = _showExplosionEffect.Value;
 
-            UseLiveEdit = BindRdwDevConfig("Live Edit", "Reload Config when they are edited while in-game", false);
-            LinkMTFOHotReload = BindRdwDevConfig("Reload on MTFO HotReload", "Reload Configs when MTFO's HotReload button has pressed?", true);
+            _useLiveEdit = BindRdwDevConfig("Live Edit", "Reload Config when they are edited while in-game", false);
+            _linkMTFOHotReload = BindRdwDevConfig("Reload on MTFO HotReload", "Reload Configs when MTFO's HotReload button has pressed?", true);
+            UseLiveEdit = _useLiveEdit.Value;
+            LinkMTFOHotReload = _linkMTFOHotReload.Value;
 
-            UseDebugLog = BindLoggingConfig("UseDevMessage", "Using Dev Message for Debugging your config?", false);
-            UseVerboseLog = BindLoggingConfig("Verbose", "Using Much more detailed Message for Debugging?", false);
-            AssetCacheBehaviour = BindLoggingConfig("Cached Asset Result Output", "How does your cached material/texture result be returned?", AssetCacheManager.OutputType.None);
+            _useDebugLog = BindLoggingConfig("UseDevMessage", "Using Dev Message for Debugging your config?", false);
+            _useVerboseLog = BindLoggingConfig("Verbose", "Using Much more detailed Message for Debugging?", false);
+            _assetCacheBehaviour = BindLoggingConfig("Cached Asset Result Output", "How does your cached material/texture result be returned?", AssetCacheManager.OutputType.None);
+            UseDebugLog = _useDebugLog.Value;
+            UseVerboseLog = _useVerboseLog.Value;
+            AssetCacheBehaviour = _assetCacheBehaviour.Value;
 
-            DumpConfig = BindDevConfig("DumpConfig", "Dump Empty Config file?", false);
+            _dumpConfig = BindDevConfig("DumpConfig", "Dump Empty Config file?", false);
+            DumpConfig = _dumpConfig.Value;
         }
 
         private static ConfigEntry<int> BindConfigVersion(ConfigFile context)

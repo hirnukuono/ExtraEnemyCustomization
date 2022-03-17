@@ -40,7 +40,7 @@ namespace EECustom.Customizations.Models
 
         public override void OnConfigLoaded()
         {
-            if (Configuration.ShowMarkerText.Value == true)
+            if (Configuration.ShowMarkerText)
             {
                 if (!string.IsNullOrEmpty(MarkerText))
                 {
@@ -53,7 +53,7 @@ namespace EECustom.Customizations.Models
                 }
             }
 
-            if (Configuration.ShowMarkerDistance.Value == false)
+            if (!Configuration.ShowMarkerDistance)
             {
                 ShowDistance = false;
             }

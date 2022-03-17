@@ -49,13 +49,13 @@ namespace EECustom
 
             NetworkManager.Initialize();
             ConfigManager.Initialize();
-            if (Configuration.DumpConfig.Value == true)
+            if (Configuration.DumpConfig)
             {
                 ConfigManager.DumpDefault();
             }
 
             AssetEvents.AllAssetLoaded += AllAssetLoaded;
-            AssetCacheManager.OutputMethod = Configuration.AssetCacheBehaviour.Value;
+            AssetCacheManager.OutputMethod = Configuration.AssetCacheBehaviour;
         }
 
         private void AllAssetLoaded()

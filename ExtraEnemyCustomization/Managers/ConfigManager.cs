@@ -58,8 +58,8 @@ namespace EECustom.Managers
 
         internal static void Initialize()
         {
-            UseLiveEdit = Configuration.UseLiveEdit.Value;
-            LinkMTFOHotReload = Configuration.LinkMTFOHotReload.Value;
+            UseLiveEdit = Configuration.UseLiveEdit;
+            LinkMTFOHotReload = Configuration.LinkMTFOHotReload;
 
             foreach (var configType in _configTypes)
             {

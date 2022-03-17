@@ -24,7 +24,7 @@ namespace EECustom.CustomAbilities.Explosion
         private static void AssetEvents_AllAssetLoaded()
         {
             ExplosionEffectPooling.Initialize();
-            _usingLightFlash = Configuration.ShowExplosionEffect.Value;
+            _usingLightFlash = Configuration.ShowExplosionEffect;
         }
 
         public static void DoExplosion(ExplosionData data)
