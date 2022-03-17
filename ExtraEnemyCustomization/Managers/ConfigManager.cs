@@ -9,11 +9,6 @@ using System.Reflection;
 
 namespace EECustom.Managers
 {
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
-    internal sealed class ConfigCacheAttribute : Attribute
-    {
-    }
-
     public static partial class ConfigManager
     {
         public static bool UseLiveEdit { get; private set; }
