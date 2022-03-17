@@ -32,6 +32,12 @@ namespace EECustom.Events.Inject
             ProjectileEvents.OnCollisionPlayer(__instance, playerAgent);
             if (__instance.TryGetOwner(out var owner))
             {
+                if (owner == null)
+                    return;
+
+                if (owner.WasCollected)
+                    return;
+
                 LocalPlayerDamageEvents.OnProjectileDamage(playerAgent, owner, __instance, __instance.m_maxDamage);
             }
         }

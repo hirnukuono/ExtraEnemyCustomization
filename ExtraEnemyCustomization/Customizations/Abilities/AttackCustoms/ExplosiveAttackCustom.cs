@@ -58,6 +58,12 @@ namespace EECustom.Customizations.Abilities
             if (!projectile.TryGetOwner(out var agent))
                 return;
 
+            if (agent == null)
+                return;
+
+            if (agent.WasCollected)
+                return;
+
             if (!IsTarget(agent))
                 return;
 
