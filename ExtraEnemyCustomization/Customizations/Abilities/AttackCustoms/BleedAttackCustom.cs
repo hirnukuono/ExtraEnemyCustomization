@@ -9,6 +9,8 @@ namespace EECustom.Customizations.Abilities
 {
     public sealed class BleedAttackCustom : AttackCustomBase<BleedSetting>
     {
+        public override bool DisableProjectileDamageEvent => false;
+
         public override string GetProcessName()
         {
             return "BleedAttack";

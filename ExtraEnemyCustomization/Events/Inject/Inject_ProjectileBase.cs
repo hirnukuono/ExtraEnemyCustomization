@@ -21,7 +21,6 @@ namespace EECustom.Events.Inject
                 ProjectileEvents.OnCollisionWorld(__instance, hit.collider.gameObject);
                 return;
             }
-            
 
             var baseAgent = damagable.GetBaseAgent();
             if (baseAgent == null)

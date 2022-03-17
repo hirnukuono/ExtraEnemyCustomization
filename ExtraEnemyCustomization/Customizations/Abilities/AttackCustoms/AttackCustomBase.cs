@@ -2,25 +2,23 @@
 using EECustom.Events;
 using Enemies;
 using Player;
+using System.Text.Json.Serialization;
 
 namespace EECustom.Customizations.Abilities
 {
     public abstract class AttackCustomBase<T> : EnemyCustomBase where T : class, new()
     {
+        [JsonIgnore] public abstract bool DisableProjectileDamageEvent { get; }
         public T MeleeData { get; set; } = new();
         public T TentacleData { get; set; } = new();
         public T ProjectileData { get; set; } = null;
-
-        protected bool DisallowMelee = false;
-        protected bool DisallowTentacle = false;
-        protected bool DisallowProjectile = false;
 
         public override void OnConfigLoaded()
         {
             LocalPlayerDamageEvents.MeleeDamage += OnMelee;
             LocalPlayerDamageEvents.TentacleDamage += OnTentacle;
 #warning Remove null check after 2.x.x
-            if (ProjectileData != null)
+            if (!DisableProjectileDamageEvent && ProjectileData != null)
                 LocalPlayerDamageEvents.ProjectileDamage += OnProjectile;
         }
 
@@ -28,26 +26,23 @@ namespace EECustom.Customizations.Abilities
         {
             LocalPlayerDamageEvents.MeleeDamage -= OnMelee;
             LocalPlayerDamageEvents.TentacleDamage -= OnTentacle;
-            if (ProjectileData != null)
+            if (!DisableProjectileDamageEvent && ProjectileData != null)
                 LocalPlayerDamageEvents.ProjectileDamage -= OnProjectile;
         }
 
         private void OnMelee(PlayerAgent player, Agent inflictor, float damage)
         {
-            if (!DisallowMelee)
-                Do(player, inflictor, MeleeData);
+            Do(player, inflictor, MeleeData);
         }
 
         private void OnTentacle(PlayerAgent player, Agent inflictor, float damage)
         {
-            if (!DisallowTentacle)
-                Do(player, inflictor, TentacleData);
+            Do(player, inflictor, TentacleData);
         }
 
         private void OnProjectile(PlayerAgent player, Agent inflictor, ProjectileBase projectile, float damage)
         {
-            if (!DisallowProjectile)
-                DoProjectile(player, inflictor, projectile, ProjectileData);
+            DoProjectile(player, inflictor, projectile, ProjectileData);
         }
 
         private void Do(PlayerAgent player, Agent inflictor, T setting)
@@ -73,6 +68,9 @@ namespace EECustom.Customizations.Abilities
         }
 
         protected abstract void OnApplyEffect(T setting, PlayerAgent player, EnemyAgent inflicator);
-        protected abstract void OnApplyProjectileEffect(T setting, PlayerAgent player, EnemyAgent inflictor, ProjectileBase projectile);
+        protected virtual void OnApplyProjectileEffect(T setting, PlayerAgent player, EnemyAgent inflictor, ProjectileBase projectile)
+        {
+
+        }
     }
 }

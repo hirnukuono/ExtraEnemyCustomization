@@ -9,6 +9,8 @@ namespace EECustom.Customizations.Abilities
 {
     public sealed class ExplosiveAttackCustom : AttackCustomBase<ExplosionSetting>
     {
+        public override bool DisableProjectileDamageEvent => true;
+
         public bool ProjectileExplodesOnWorld { get; set; } = false;
         public bool ProjectileExplodesOnPlayer { get; set; } = false;
 
@@ -53,7 +55,7 @@ namespace EECustom.Customizations.Abilities
 
         private void TriggerProjectileExplosion(ProjectileBase projectile)
         {
-            if (projectile.TryGetOwner(out var agent))
+            if (!projectile.TryGetOwner(out var agent))
                 return;
 
             if (!IsTarget(agent))
@@ -77,11 +79,6 @@ namespace EECustom.Customizations.Abilities
                 var damage = inflictor.Damage;
                 damage.ExplosionDamage(damage.HealthMax, Vector3.zero, Vector3.zero);
             }
-        }
-
-        protected override void OnApplyProjectileEffect(ExplosionSetting setting, PlayerAgent player, EnemyAgent inflictor, ProjectileBase projectile)
-        {
-            return;
         }
     }
 

@@ -6,6 +6,8 @@ namespace EECustom.Customizations.Abilities
 {
     public sealed class KnockbackAttackCustom : AttackCustomBase<KnockbackSetting>
     {
+        public override bool DisableProjectileDamageEvent => false;
+
         public override string GetProcessName()
         {
             return "KnockbackAttack";

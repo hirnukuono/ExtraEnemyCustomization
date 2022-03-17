@@ -7,6 +7,8 @@ namespace EECustom.Customizations.Abilities
 {
     public sealed class InfectionAttackCustom : AttackCustomBase<InfectionAttackCustom.AttackData>
     {
+        public override bool DisableProjectileDamageEvent => false;
+
         public override string GetProcessName()
         {
             return "InfectionAttack";

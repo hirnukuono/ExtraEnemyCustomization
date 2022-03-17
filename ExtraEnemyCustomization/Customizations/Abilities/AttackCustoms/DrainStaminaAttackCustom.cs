@@ -6,6 +6,8 @@ namespace EECustom.Customizations.Abilities
 {
     public sealed class DrainStaminaAttackCustom : AttackCustomBase<DrainStaminaSetting>
     {
+        public override bool DisableProjectileDamageEvent => false;
+
         public override string GetProcessName()
         {
             return "DrainStamina";
