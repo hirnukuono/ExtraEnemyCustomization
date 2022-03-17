@@ -12,8 +12,15 @@ namespace EECustom.CustomSettings.DTO
         public ProjectileType BaseProjectile { get; set; } = ProjectileType.TargetingSmall;
         public ValueBase Speed { get; set; } = ValueBase.Unchanged;
         public MultiplierShiftSetting SpeedChange { get; set; } = new();
+        public ValueBase CheckEvasiveDistance { get; set; } = ValueBase.Unchanged;
+        public ValueBase InitialHomingDuration { get; set; } = ValueBase.Unchanged;
+        public ValueBase InitialHomingStrength { get; set; } = ValueBase.Unchanged;
+        public ValueBase HomingDelay { get; set; } = ValueBase.Unchanged;
         public ValueBase HomingStrength { get; set; } = ValueBase.Unchanged;
         public MultiplierShiftSetting HomingStrengthChange { get; set; } = new();
+        public Color TrailColor { get; set; } = Color.yellow;
+        public ValueBase TrailTime { get; set; } = ValueBase.Unchanged;
+        public ValueBase TrailWidth { get; set; } = ValueBase.Unchanged;
         public Color GlowColor { get; set; } = Color.yellow;
         public ValueBase GlowRange { get; set; } = ValueBase.Unchanged;
         public ValueBase Damage { get; set; } = ValueBase.Unchanged;

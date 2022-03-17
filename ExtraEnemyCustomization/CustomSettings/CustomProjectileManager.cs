@@ -63,7 +63,11 @@ namespace EECustom.CustomSettings
                 if (targeting != null)
                 {
                     targeting.Speed = projInfo.Speed.GetAbsValue(targeting.Speed);
+                    targeting.m_checkEvasiveDis = projInfo.CheckEvasiveDistance.GetAbsValue(targeting.m_checkEvasiveDis);
                     targeting.TargetStrength = projInfo.HomingStrength.GetAbsValue(targeting.TargetStrength);
+                    targeting.m_targetingDelay = projInfo.HomingDelay.GetAbsValue(targeting.m_targetingDelay);
+                    targeting.m_initialTargetStrength = projInfo.InitialHomingStrength.GetAbsValue(targeting.m_initialTargetStrength);
+                    targeting.m_initialTargetingDuration = projInfo.InitialHomingDuration.GetAbsValue(targeting.m_initialTargetingDuration);
                     targeting.LightColor = projInfo.GlowColor;
                     targeting.LightRange = projInfo.GlowRange.GetAbsValue(targeting.LightRange);
                 }
@@ -75,6 +79,15 @@ namespace EECustom.CustomSettings
             else
             {
                 Logger.Error($"Projectile Base Prefab Doesn't have ProjectileBase, Are you sure?, ProjID: {projInfo.ID}, Name: {projInfo.DebugName}");
+            }
+
+            var trail = newPrefab.GetComponentInChildren<TrailRenderer>();
+            if (trail != null)
+            {
+                trail.startColor = projInfo.TrailColor;
+                trail.endColor = Color.clear;
+                trail.time = projInfo.TrailTime.GetAbsValue(trail.time);
+                trail.widthMultiplier = projInfo.TrailWidth.GetAbsValue(trail.widthMultiplier);
             }
             newPrefab.SetActive(false);
             newPrefab.name = "GeneratedProjectilePrefab_" + projInfo.ID;
