@@ -1,9 +1,8 @@
-﻿using EECustom.CustomSettings.DTO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace EECustom.CustomSettings
+namespace EECustom.Managers.CustomTentacles
 {
     public static class CustomTentacleManager
     {

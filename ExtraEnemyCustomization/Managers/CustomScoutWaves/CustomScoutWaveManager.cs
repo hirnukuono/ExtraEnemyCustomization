@@ -1,5 +1,4 @@
 ﻿using AIGraph;
-using EECustom.CustomSettings.DTO;
 using EECustom.Events;
 using EECustom.Utils;
 using Enemies;
@@ -9,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EECustom.CustomSettings
+namespace EECustom.Managers.CustomScoutWaves
 {
     public static class CustomScoutWaveManager
     {

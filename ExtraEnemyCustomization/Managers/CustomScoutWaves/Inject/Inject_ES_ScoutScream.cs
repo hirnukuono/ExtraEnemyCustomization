@@ -2,7 +2,7 @@
 using HarmonyLib;
 using SNetwork;
 
-namespace EECustom.CustomSettings.Inject
+namespace EECustom.Managers.CustomScoutWaves.Inject
 {
     [HarmonyPatch(typeof(ES_ScoutScream), nameof(ES_ScoutScream.CommonUpdate))]
     internal static class Inject_ES_ScoutScream

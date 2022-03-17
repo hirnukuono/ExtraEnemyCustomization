@@ -1,5 +1,5 @@
 ﻿using EECustom.Customizations.Strikers;
-using EECustom.CustomSettings.DTO;
+using EECustom.Managers.CustomTentacles;
 using System;
 
 namespace EECustom.Configs.Customizations

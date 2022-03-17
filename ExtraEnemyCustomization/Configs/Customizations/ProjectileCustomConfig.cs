@@ -1,6 +1,5 @@
 ﻿using EECustom.Customizations.Shooters;
-using EECustom.CustomSettings;
-using EECustom.CustomSettings.DTO;
+using EECustom.Managers.CustomProjectiles;
 using System;
 
 namespace EECustom.Configs.Customizations

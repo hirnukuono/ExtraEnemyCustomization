@@ -5,7 +5,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
-namespace EECustom.CustomSettings.DTO
+namespace EECustom.Managers.CustomProjectiles
 {
     public class CustomProjectile
     {

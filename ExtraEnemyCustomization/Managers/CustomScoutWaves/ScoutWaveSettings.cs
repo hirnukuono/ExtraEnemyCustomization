@@ -3,7 +3,7 @@ using GameData;
 using LevelGeneration;
 using System;
 
-namespace EECustom.CustomSettings.DTO
+namespace EECustom.Managers.CustomScoutWaves
 {
     public class ExpeditionScoutSetting
     {

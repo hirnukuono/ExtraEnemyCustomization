@@ -3,7 +3,7 @@ using HarmonyLib;
 using System;
 using UnityEngine;
 
-namespace EECustom.CustomSettings.Inject
+namespace EECustom.Managers.CustomProjectiles.Inject
 {
     [HarmonyPatch(typeof(ProjectileManager))]
     internal static class Inject_ProjectileManager

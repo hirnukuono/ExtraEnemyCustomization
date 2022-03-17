@@ -1,5 +1,4 @@
-﻿using EECustom.CustomSettings;
-using EECustom.CustomSettings.DTO;
+﻿using EECustom.Managers.CustomScoutWaves;
 using System;
 
 namespace EECustom.Configs
