@@ -1,6 +1,6 @@
 ﻿using Agents;
 using EECustom.API;
-using EECustom.Customizations;
+using EECustom.EnemyCustomizations;
 using EECustom.Utils;
 using Enemies;
 using GameData;

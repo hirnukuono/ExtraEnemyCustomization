@@ -1,5 +1,5 @@
-﻿using EECustom.Customizations.Shooters;
-using EECustom.Managers.CustomProjectiles;
+﻿using EECustom.CustomSettings.CustomProjectiles;
+using EECustom.EnemyCustomizations.Shooters;
 using System;
 
 namespace EECustom.Configs.Customizations

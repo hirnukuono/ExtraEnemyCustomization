@@ -1,4 +1,4 @@
-﻿using EECustom.Customizations.Abilities;
+﻿using EECustom.EnemyCustomizations.Abilities;
 using System;
 
 namespace EECustom.Configs.Customizations

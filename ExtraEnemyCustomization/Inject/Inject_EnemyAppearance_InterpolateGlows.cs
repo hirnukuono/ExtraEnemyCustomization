@@ -1,4 +1,4 @@
-﻿using EECustom.Customizations;
+﻿using EECustom.EnemyCustomizations;
 using EECustom.Managers;
 using HarmonyLib;
 using System;

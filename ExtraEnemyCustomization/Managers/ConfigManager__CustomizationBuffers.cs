@@ -1,5 +1,5 @@
 ﻿using EECustom.Configs.Customizations;
-using EECustom.Customizations;
+using EECustom.EnemyCustomizations;
 using GameData;
 using System.Collections.Generic;
 using System.Linq;

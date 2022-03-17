@@ -1,5 +1,5 @@
-﻿using EECustom.Customizations.Strikers;
-using EECustom.Managers.CustomTentacles;
+﻿using EECustom.CustomSettings.CustomTentacles;
+using EECustom.EnemyCustomizations.Strikers;
 using System;
 
 namespace EECustom.Configs.Customizations

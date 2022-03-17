@@ -1,4 +1,4 @@
-﻿using EECustom.Managers.CustomScoutWaves;
+﻿using EECustom.CustomSettings.CustomScoutWaves;
 using System;
 
 namespace EECustom.Configs

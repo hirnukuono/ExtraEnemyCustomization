@@ -1,5 +1,5 @@
-﻿using EECustom.Customizations.EnemyAbilities;
-using EECustom.Customizations.EnemyAbilities.Abilities;
+﻿using EECustom.EnemyCustomizations.EnemyAbilities;
+using EECustom.EnemyCustomizations.EnemyAbilities.Abilities;
 using System;
 using System.Collections.Generic;
 

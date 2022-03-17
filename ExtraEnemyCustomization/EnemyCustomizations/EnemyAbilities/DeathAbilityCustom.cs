@@ -1,0 +1,43 @@
+﻿using EECustom.EnemyCustomizations.EnemyAbilities.Abilities;
+using EECustom.Utils;
+using EECustom.Utils.JsonElements;
+using Enemies;
+using System;
+using System.Threading.Tasks;
+
+namespace EECustom.EnemyCustomizations.EnemyAbilities
+{
+    public sealed class DeathAbilityCustom : EnemyAbilityCustomBase<DeathAbilitySetting>, IEnemyDeadEvent
+    {
+        public override string GetProcessName()
+        {
+            return "DeathAbility";
+        }
+
+        public void OnDead(EnemyAgent agent)
+        {
+            foreach (var ab in Abilities)
+            {
+                if (!ab.AllowedMode.IsMatch(agent))
+                    return;
+
+                _ = DoTriggerDelayed(ab.Ability, agent, ab.Delay);
+            }
+        }
+
+        private static async Task DoTriggerDelayed(IAbility ability, EnemyAgent agent, float delay)
+        {
+            await Task.Delay((int)Math.Round(delay * 1000.0f));
+            ThreadDispatcher.Enqueue(() =>
+            {
+                ability?.TriggerSync(agent);
+            });
+        }
+    }
+
+    public sealed class DeathAbilitySetting : AbilitySettingBase
+    {
+        public AgentModeTarget AllowedMode { get; set; } = AgentModeTarget.Agressive;
+        public float Delay { get; set; } = 0.0f;
+    }
+}
