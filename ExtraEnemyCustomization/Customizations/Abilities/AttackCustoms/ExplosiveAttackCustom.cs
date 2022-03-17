@@ -77,7 +77,18 @@ namespace EECustom.Customizations.Abilities
             }
         }
 
-        private bool IsOwnerDestroyed(ProjectileBase projectile, out EnemyAgent agent)
+        protected override void OnApplyEffect(ExplosionSetting setting, PlayerAgent player, EnemyAgent inflictor)
+        {
+            setting.DoExplode(player);
+
+            if (setting.KillInflictor)
+            {
+                var damage = inflictor.Damage;
+                damage.ExplosionDamage(damage.HealthMax, Vector3.zero, Vector3.zero);
+            }
+        }
+
+        private static bool IsOwnerDestroyed(ProjectileBase projectile, out EnemyAgent agent)
         {
             if (!projectile.TryGetOwner(out agent))
                 return true;
@@ -89,17 +100,6 @@ namespace EECustom.Customizations.Abilities
                 return true;
 
             return false;
-        }
-
-        protected override void OnApplyEffect(ExplosionSetting setting, PlayerAgent player, EnemyAgent inflictor)
-        {
-            setting.DoExplode(player);
-
-            if (setting.KillInflictor)
-            {
-                var damage = inflictor.Damage;
-                damage.ExplosionDamage(damage.HealthMax, Vector3.zero, Vector3.zero);
-            }
         }
     }
 
