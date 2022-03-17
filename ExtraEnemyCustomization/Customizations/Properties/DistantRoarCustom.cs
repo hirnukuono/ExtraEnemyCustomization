@@ -1,4 +1,5 @@
-﻿using Enemies;
+﻿using Agents;
+using Enemies;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,6 +31,9 @@ namespace EECustom.Customizations.Properties
 
         public void OnSpawned(EnemyAgent agent)
         {
+            if (agent.GetSpawnData().mode != AgentMode.Agressive)
+                return;
+
             if (_timer <= Clock.Time)
             {
                 if (_soundPlayer != null)
