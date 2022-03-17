@@ -125,7 +125,7 @@ namespace EECustom.CustomAbilities.Explosion
             ExplosionEffectPooling.TryDoEffect(new ExplosionEffectData()
             {
                 position = pos,
-                flashColor = FlashColor,
+                flashColor = lightColor,
                 intensity = 5.0f,
                 range = 50.0f,
                 duration = 0.05f

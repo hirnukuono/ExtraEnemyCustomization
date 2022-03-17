@@ -192,6 +192,7 @@
     "Explosion": [
       {
         "Damage": "15%",
+        "LightColor": "#ff1500", //Color: LightFlash effect color
         "KillInflictor": true, //Kill Inflictor (Exploder)
         "UseExplosionCounter": true, //Using Counter, Can limit the Explosion count for each enemy
         "AllowedExplosionCount": 1, //Allowed Explosion count

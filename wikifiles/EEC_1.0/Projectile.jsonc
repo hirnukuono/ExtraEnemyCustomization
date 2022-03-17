@@ -103,32 +103,7 @@
         "Duration": 2.0, //Duration of full effect
         "StopAfterDuration": false, //Stop Changing speed after duration
         "StopMulti": 0.0, //Specify Multiplier
-        "EasingMode": "Linear", //Easing type for Min-Max Transition
-        /*Possible Ease Type
-				Preview: https://matthewlein.com/tools/ceaser
-          Linear = 0
-          EaseInQuad = 1
-          EaseOutQuad
-          EaseInOutQuad
-          EaseInCubic = 4
-          EaseOutCubic
-          EaseInOutCubic
-          EaseInQuart = 7
-          EaseOutQuart
-          EaseInOutQuart
-          EaseInQuint = 10
-          EaseOutQuint
-          EaseInOutQuint
-          EaseInSine = 13
-          EaseOutSine
-          EaseInOutSine
-          EaseInExpo = 16
-          EaseOutExpo
-          EaseInOutExpo
-          EaseInCirc = 19
-          EaseOutCirc
-          EaseInOutCirc
-				*/
+        "EasingMode": "Linear", //Easing: type for Min-Max Transition
         "Mode": "PingPong" //Min-Max transition movement
         /*
           Clamped = Min -> Max -> Keep exact Max value after Duration [Graph: /￣￣...]
@@ -137,6 +112,10 @@
           Repeat = Min -> Max -> go to Min without transition [Graph: //////...]
         */
       },
+      "CheckEvasiveDistance": 4.0, //BasedValue: Distance for checking if players doing Evasive Movement (dodge) - This will disable homing of projectile while doing evasive movement
+      "InitialHomingDuration": 2.0, //BasedValue: Initial Homing before it starts actual homing, It uses lot loosen check for homing the projectile
+      "InitialHomingStrength": 1.0, //BasedValue: Initial Homing strength
+      "HomingDelay": 0.0, //BasedValue: Delay before it starts second homing after it finished initial homing
       "HomingStrength": "120%", //BasedValue (Based on base projectile strength): How strong it should be Homing to Target?
       "HomingStrengthChange": {
         "Enabled": true,
@@ -148,60 +127,14 @@
         "EasingMode": "Linear", //Easing type for Min-Max Transition
         "Mode": "PingPong" //Min-Max transition movement
       },
+      "TrailColor": "cyan", //Color: Trail effect color
+      "TrailTime": "150%", //BasedValue: Trail effect lasting time (determines length of trail effect)
+      "TrailWidth": "100%", //BasedValue: Trail effect width (how thick?)
       "GlowColor": "cyan", //Color: Glow Color
       "GlowRange": 1.0, //BasedValue Glow Range
       "Damage": "50% of default", //BasedValue: (Based on PlayerDataBlock.health, Has original Value): Damage to deal 
-      "Infection": "0%", //BasedValue: (Based on 1.0, Has Original Value): Add Infection On Hit
-      "Explosion": {
-        "Enabled": true,
-        "Damage": "0%", //BasedValue: (Based on PlayerDataBlock.health): Damage to deal with explosion
-        "EnemyDamageMulti": 1.0, //Multiplier when enemy is receiving explosion damage
-        "MinRange": 2.0, //How far it does maximum damage?
-        "MaxRange": 5.0, //How far it does damage?
-        "NoiseMinRange": 5.0, //How far it awake nearby enemies when it explodes
-        "NoiseMaxRange": 10.0, //How for it can be hear by nearby enemy when it explodes
-        "NoiseType": "Detectable" //InstaDetect, Detectable, PulseOnly
-      },
-      "Knockback": {
-        "Enabled": true,
-        "Velocity": 10.0, //Knockback Velocity from enemies to player
-        "VelocityZ": 6.0 //Z (Vertical) Velocity to apply (not affected by position)
-      },
-      "Bleed": {
-        "Enabled": true,
-        "Damage": "0.1%", //BasedValue: Based on PlayerMaxHealth, Damage for each interval
-        "ChanceToBleed": 0.5, //Chance to be bleed (0.0 = zero, 1.0 = always)
-        "Interval": 0.15, //Interval for each damage
-        "Duration": 10.0, //Duration for bleeding effect
-        "CanBeStacked": false, //Can Bleeding effect be stacked?
-        "HasLiquid": true, //Using Liquid Effect?
-        "LiquidSetting": "enemyBlood_SmallRandomStreak" //Name of Liquid effect you want to use (It will be sprayed for each damage)
-        /*
-          enemyBlood_BigBloodBomb = 0,
-          enemyBlood_SmallRandomStreak = 1,
-          enemyBlood_Squirt = 2,
-          shooterGoo = 3,
-          spitterJizz = 4,
-          elevatorRain = 5,
-          waterDrizzle = 6,
-          waterDrip = 7,
-          playerBlood = 8,
-          disinfectionPack_Apply = 9,
-          disinfectionStation_Apply = 10,
-          infectionSweat = 11,
-          playerBlood_SmallDamage = 12,
-          playerBlood_BigDamage = 13,
-          playerBlood_Downed = 14,
-          anemoneGoo = 15
-				*/
-      },
-      "DrainStamina": {
-        "Enabled": true,
-        "DrainAmount": 0.25, //1.0 = full stamina
-        "DrainAmountInCombat": 0.25,
-        "ResetRecoverTimer": false,
-        "ResetRecoverTimerInCombat": false
-      }
+      "Infection": "0%" //BasedValue: (Based on 1.0, Has Original Value): Add Infection On Hit
+      //Editing Infection Will enable the Infection Bomb effect (Includes Particle Effect, Sound Effect), If you don't want it, use Ability/InfectionAttackCustom instead
     }
   ]
 }

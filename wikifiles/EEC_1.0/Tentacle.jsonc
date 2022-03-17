@@ -33,8 +33,8 @@
       ],
       "TentacleSettings": [
         {
-          "InEaseType": "EaseOutCirc", //Ease Type
-          "OutEaseType": "EaseInExpo", //Ease Type
+          "InEaseType": "EaseOutCirc", //Easing: Type of ease when pulling out the tentalce
+          "OutEaseType": "EaseInExpo", //Easing: Type of ease when pulling in the tentacle
           "InDuration": "50%", //BasedValue: How long it takes to pull out the tentacle?
           "OutDuration": "50%", //BasedValue: How long it takes to pull in the tentacle?
           "HangDuration": "200%", //BasedValue: How long does tentacle stay in air?
@@ -44,31 +44,6 @@
           "SplineHeightPos1": "100%", //BasedValue: How far tentacle be curvy in position 1 (Height)
           "SplineHeightPos2": "100%" //BasedValue: How far tentacle be curvy in position 2 (Height)
         }
-        /*Possible Ease Type
-				Preview: https://matthewlein.com/tools/ceaser
-          Linear = 0
-          EaseInQuad = 1
-          EaseOutQuad
-          EaseInOutQuad
-          EaseInCubic = 4
-          EaseOutCubic
-          EaseInOutCubic
-          EaseInQuart = 7
-          EaseOutQuart
-          EaseInOutQuart
-          EaseInQuint = 10
-          EaseOutQuint
-          EaseInOutQuint
-          EaseInSine = 13
-          EaseOutSine
-          EaseInOutSine
-          EaseInExpo = 16
-          EaseOutExpo
-          EaseInOutExpo
-          EaseInCirc = 19
-          EaseOutCirc
-          EaseInOutCirc
-				*/
       ]
     },
     {

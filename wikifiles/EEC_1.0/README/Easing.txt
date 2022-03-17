@@ -1,0 +1,26 @@
+Easing is a function to smooth out movement over time
+Preview: https://matthewlein.com/tools/ceaser
+
+Possible Values:
+  Linear = 0
+  EaseInQuad = 1
+  EaseOutQuad
+  EaseInOutQuad = 3
+  EaseInCubic
+  EaseOutCubic = 5
+  EaseInOutCubic
+  EaseInQuart = 7
+  EaseOutQuart
+  EaseInOutQuart
+  EaseInQuint = 10
+  EaseOutQuint
+  EaseInOutQuint
+  EaseInSine = 13
+  EaseOutSine
+  EaseInOutSine
+  EaseInExpo = 16
+  EaseOutExpo
+  EaseInOutExpo
+  EaseInCirc = 19
+  EaseOutCirc
+  EaseInOutCirc

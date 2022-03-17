@@ -13,14 +13,74 @@
         "nameIgnoreCase": true,
         "categories": []
       },
+      "ColorCurve": [ //Specify the Curve for this property, Time (0.0~1.0) and Value (0.0~1.0)
+        {
+          "Time": 0.0,
+          "Value": 0.0,
+          "OutEaseType": "EaseInCirc" //Easing: Out direction Easing Function
+        },
+        {
+          "Time": 1.0,
+          "Value": 1.0,
+          "OutEaseType": "Linear"
+        }
+      ],
       "ColorMin": "#A9F5F2",
       "ColorMax": "#A9F5F2",
+      "IntensityCurve": [
+        {
+          "Time": 0.0,
+          "Value": 0.0,
+          "OutEaseType": "EaseInCirc"
+        },
+        {
+          "Time": 1.0,
+          "Value": 1.0,
+          "OutEaseType": "Linear"
+        }
+      ],
       "IntensityMin": 1.0,
       "IntensityMax": 20.0,
+      "RangeCurve": [
+        {
+          "Time": 0.0,
+          "Value": 0.0,
+          "OutEaseType": "EaseInCirc"
+        },
+        {
+          "Time": 1.0,
+          "Value": 1.0,
+          "OutEaseType": "Linear"
+        }
+      ],
       "RangeMin": 10.0, //How far it spread in initial spawn?
       "RangeMax": 150.0, //How far it should be spread?
+      "DensityCurve": [
+        {
+          "Time": 0.0,
+          "Value": 0.0,
+          "OutEaseType": "EaseInCirc"
+        },
+        {
+          "Time": 1.0,
+          "Value": 1.0,
+          "OutEaseType": "Linear"
+        }
+      ],
       "DensityMin": 10.0,
       "DensityMax": 150.0,
+      "DensityAmountCurve": [
+        {
+          "Time": 0.0,
+          "Value": 0.0,
+          "OutEaseType": "EaseInCirc"
+        },
+        {
+          "Time": 1.0,
+          "Value": 1.0,
+          "OutEaseType": "Linear"
+        }
+      ],
       "DensityAmountMin": 0.0,
       "DensityAmountMax": 4.0,
       "Duration": 3.0,
@@ -116,8 +176,13 @@
         "SoundEventID": 676801566,
         "UseEffect": true,
         "ScreenLiquidRange": 5.0
+      },
+      "ProjectileData": {
+        "Infection": "8%",
+        "SoundEventID": 676801566,
+        "UseEffect": true,
+        "ScreenLiquidRange": 5.0
       }
-      //For Shooter Infection, Check 'Projectile.json' file
     }
   ],
   "ExplosiveAttackCustom": [
@@ -133,6 +198,7 @@
       },
       "MeleeData": {
         "Damage": "20%", //BasedValue: (Based on PlayerDataBlock.health): Damage to deal with explosion (0 to disable it)
+        "LightColor": "#ff1500", //Color: LightFlash effect color
         "KillInflictor": true, //Kill Inflictor (Exploder)
         "EnemyDamageMulti": 1.0, //Multiplier when enemy is receiving explosion damage
         "MinRange": 5.0, //How far it does maximum damage?
@@ -143,6 +209,20 @@
       },
       "TentacleData": {
         "Damage": "10%",
+        "LightColor": "#ff1500",
+        "KillInflictor": false,
+        "EnemyDamageMulti": 1.0,
+        "MinRange": 5.0,
+        "MaxRange": 10.0,
+        "NoiseMinRange": 10.0,
+        "NoiseMaxRange": 15.0,
+        "NoiseType": "Detectable"
+      },
+      "ProjectileExplodesOnWorld": true, //Do Projectile Explodes when it's collided with World?
+      "ProjectileExplodesOnPlayer": true, //Do Projectile Explodes when it's collided with Player?
+      "ProjectileData": {
+        "Damage": "10%",
+        "LightColor": "#ff1500",
         "KillInflictor": false,
         "EnemyDamageMulti": 1.0,
         "MinRange": 5.0,
@@ -151,7 +231,6 @@
         "NoiseMaxRange": 15.0,
         "NoiseType": "Detectable"
       }
-      //For Shooter Explosion, Check 'Projectile.json' file
     }
   ],
   "KnockbackAttackCustom": [
@@ -174,6 +253,12 @@
         "DoMultDistanceZ": false //Z Velocity will be affected by distance? (longer = stronger)
       },
       "TentacleData": {
+        "Velocity": -1.5, //Allows Negative values to drag player instead of push it
+        "VelocityZ": 9.0,
+        "DoMultDistance": true,
+        "DoMultDistanceZ": false
+      },
+      "ProjectileData": {
         "Velocity": -1.5, //Allows Negative values to drag player instead of push it
         "VelocityZ": 9.0,
         "DoMultDistance": true,
@@ -201,7 +286,7 @@
         "Duration": 10.0, //Duration for bleeding effect
         "CanBeStacked": false, //Can Bleeding effect be stacked?
         "HasLiquid": true, //Using Liquid Effect?
-        "LiquidSetting": "enemyBlood_SmallRandomStreak" //Name of Liquid effect you want to use (It will be sprayed for each damage)
+        "LiquidSetting": "enemyBlood_SmallRandomStreak", //Name of Liquid effect you want to use (It will be sprayed for each damage)
         /*
         Possible Values for LiquidSetting:
           enemyBlood_BigBloodBomb = 0,
@@ -221,6 +306,8 @@
           playerBlood_Downed = 14,
           anemoneGoo = 15
 				*/
+        "OverrideBleedingTextID": 0 //Override Bleeding HUD text to TextDataBlock you want ({0} is required for your text to show default health info text) - 0 to disable
+        //Default Text Format: "{0}\n<color=red><size=75%>BLEEDING</size></color>"
       },
       "TentacleData": {
         "Damage": "0.1%",
@@ -228,7 +315,18 @@
         "Interval": 0.15,
         "Duration": 10.0,
         "HasLiquid": true,
-        "LiquidSetting": "enemyBlood_SmallRandomStreak"
+        "LiquidSetting": "enemyBlood_SmallRandomStreak",
+        "OverrideBleedingTextID": 0
+      },
+      "ProjectileData": {
+        "Damage": "0.1%",
+        "ChanceToBleed": 0.5,
+        "Interval": 0.15,
+        "Duration": 10.0,
+        "CanBeStacked": false,
+        "HasLiquid": true,
+        "LiquidSetting": "enemyBlood_SmallRandomStreak",
+        "OverrideBleedingTextID": 0
       }
     }
   ],
@@ -252,6 +350,12 @@
         "ResetRecoverTimerInCombat": false
       },
       "TentacleData": {
+        "DrainAmount": 0.05,
+        "DrainAmountInCombat": 0.1,
+        "ResetRecoverTimer": false,
+        "ResetRecoverTimerInCombat": false
+      },
+      "ProjectileData": {
         "DrainAmount": 0.05,
         "DrainAmountInCombat": 0.1,
         "ResetRecoverTimer": false,

@@ -63,5 +63,22 @@
       },
       "TriggerOnBossDeathEventOnDead": true //Trigger SpawnedZone's OnBossDeathEvent?
     }
+  ],
+  "DistantRoarCustom": [
+    {
+      "Enabled": false,
+      "DebugName": "Tank",
+      "Target": {
+        "Mode": "NameContains",
+        "persistentIDs": [],
+        "nameParam": "Tank",
+        "nameIgnoreCase": true,
+        "categories": []
+      },
+      "SoundID": 3912366267, //Sound ID to use
+      "Interval": 5.0, //Minimum Interval between this distant roar sound plays
+      "IsGlobal": true, //Override other WaveSpawning Roar sound?
+      "OnlyForSurvivalWave": true //Does this distant roar sound only plays when it's survival wave spawned enemies?
+    }
   ]
 }
