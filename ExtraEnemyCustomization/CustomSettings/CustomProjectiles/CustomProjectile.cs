@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace EEC.CustomSettings.CustomProjectiles
 {
-    public class CustomProjectile
+    public sealed class CustomProjectile
     {
         public string DebugName { get; set; } = string.Empty;
         public byte ID { get; set; } = 10;

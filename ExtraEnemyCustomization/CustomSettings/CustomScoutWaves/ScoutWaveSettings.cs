@@ -5,7 +5,7 @@ using System;
 
 namespace EEC.CustomSettings.CustomScoutWaves
 {
-    public class ExpeditionScoutSetting
+    public sealed class ExpeditionScoutSetting
     {
         public string[] Targets { get; set; } = Array.Empty<string>(); //A* //*1 //A1
         public ScoutWaveSet[] ScoutSettings { get; set; } = Array.Empty<ScoutWaveSet>();
@@ -68,26 +68,26 @@ namespace EEC.CustomSettings.CustomScoutWaves
         }
     }
 
-    public class ScoutWaveSet
+    public sealed class ScoutWaveSet
     {
         public string TargetSetting { get; set; } = string.Empty;
         public string WaveSetting { get; set; } = string.Empty;
     }
 
-    public class ScoutTargetSetting
+    public sealed class ScoutTargetSetting
     {
         public string Name { get; set; } = string.Empty;
         public TargetSetting Target { get; set; } = new TargetSetting();
     }
 
-    public class ScoutWaveSetting
+    public sealed class ScoutWaveSetting
     {
         public string Name { get; set; } = string.Empty;
         public WaveSetting[][] Waves { get; set; } = Array.Empty<WaveSetting[]>();
         public float[] WeightsOverride { get; set; } = Array.Empty<float>();
     }
 
-    public class WaveSetting
+    public sealed class WaveSetting
     {
         public uint WaveSettingID { get; set; } = 0u;
         public uint WavePopulationID { get; set; } = 0u;
@@ -101,7 +101,7 @@ namespace EEC.CustomSettings.CustomScoutWaves
         };
     }
 
-    public class SpawnNodeSetting
+    public sealed class SpawnNodeSetting
     {
         public WaveSpawnType SpawnType { get; set; } = WaveSpawnType.ClosestAlive;
         public SpawnNodeType NodeType { get; set; } = SpawnNodeType.Scout;

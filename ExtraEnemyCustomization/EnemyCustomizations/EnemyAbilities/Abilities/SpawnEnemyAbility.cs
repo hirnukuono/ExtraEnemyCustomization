@@ -5,7 +5,7 @@ using SNetwork;
 
 namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 {
-    public class SpawnEnemyAbility : AbilityBase<SpawnEnemyBehaviour>
+    public sealed class SpawnEnemyAbility : AbilityBase<SpawnEnemyBehaviour>
     {
         public bool StopAgent { get; set; } = false;
         public float Delay { get; set; } = 0.0f;
@@ -31,7 +31,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         }
     }
 
-    public class SpawnEnemyBehaviour : AbilityBehaviour<SpawnEnemyAbility>
+    public sealed class SpawnEnemyBehaviour : AbilityBehaviour<SpawnEnemyAbility>
     {
         private int _remainingSpawn = 0;
 

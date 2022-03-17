@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 {
-    public class ChainedAbility : AbilityBase<ChainedBehaviour>
+    public sealed class ChainedAbility : AbilityBase<ChainedBehaviour>
     {
         public EventBlock[] Abilities { get; set; } = Array.Empty<EventBlock>();
 
@@ -42,7 +42,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         }
     }
 
-    public class ChainedBehaviour : AbilityBehaviour<ChainedAbility>
+    public sealed class ChainedBehaviour : AbilityBehaviour<ChainedAbility>
     {
         public override bool RunUpdateOnlyWhileExecuting => true;
         public override bool AllowEABAbilityWhileExecuting => true;

@@ -1,6 +1,6 @@
 ﻿namespace EEC.CustomSettings.CustomTentacles
 {
-    public class CustomTentacle
+    public sealed class CustomTentacle
     {
         public string DebugName { get; set; } = string.Empty;
         public int ID { get; set; } = 15;

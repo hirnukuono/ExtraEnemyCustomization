@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 {
-    public class EMPAbility : AbilityBase<EMPBehaviour>
+    public sealed class EMPAbility : AbilityBase<EMPBehaviour>
     {
         public uint ChargeUpSoundId { get; set; } = 0u;
         public uint ActivateSoundId { get; set; } = 0u;
@@ -19,7 +19,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         public Color ScreamColor { get; set; } = new Color(0.525f, 0.956f, 0.886f, 1.0f) * 20.0f;
     }
 
-    public class EMPBehaviour : AbilityBehaviour<EMPAbility>
+    public sealed class EMPBehaviour : AbilityBehaviour<EMPAbility>
     {
         private EMPState _state = EMPState.None;
         private Timer _stateTimer;

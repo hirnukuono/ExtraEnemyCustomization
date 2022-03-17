@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 {
-    public class FogSphereAbility : AbilityBase<FogSphereBehaviour>
+    public sealed class FogSphereAbility : AbilityBase<FogSphereBehaviour>
     {
         public const string EAB_FOG_PREFAB = "Assets/AssetPrefabs/Characters/Enemies/Abilities/EAB_FogSphere.prefab";
 
@@ -54,7 +54,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         }
     }
 
-    public class FogSphereBehaviour : AbilityBehaviour<FogSphereAbility>
+    public sealed class FogSphereBehaviour : AbilityBehaviour<FogSphereAbility>
     {
         private readonly List<FogSphereHandler> _fogSphereHandlers = new();
 

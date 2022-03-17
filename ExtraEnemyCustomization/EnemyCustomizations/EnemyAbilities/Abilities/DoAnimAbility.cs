@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 {
-    public class DoAnimAbility : AbilityBase<DoAnimBehaviour>
+    public sealed class DoAnimAbility : AbilityBase<DoAnimBehaviour>
     {
         public EnemyAnimType Animation { get; set; } = EnemyAnimType.Screams;
         public uint SoundEvent { get; set; } = 0u;
@@ -16,7 +16,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         public bool StandStill { get; set; } = true;
     }
 
-    public class DoAnimBehaviour : AbilityBehaviour<DoAnimAbility>
+    public sealed class DoAnimBehaviour : AbilityBehaviour<DoAnimAbility>
     {
         public override bool RunUpdateOnlyWhileExecuting => true;
         public override bool AllowEABAbilityWhileExecuting => Ability.AllowUsingEABWhileExecuting;

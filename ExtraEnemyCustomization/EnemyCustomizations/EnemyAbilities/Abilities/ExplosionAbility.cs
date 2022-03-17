@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 {
-    public class ExplosionAbility : AbilityBase<ExplosionBehaviour>
+    public sealed class ExplosionAbility : AbilityBase<ExplosionBehaviour>
     {
         public ValueBase Damage { get; set; } = ValueBase.Zero;
         public Color LightColor { get; set; } = new(1, 0.2f, 0, 1);
@@ -20,7 +20,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         public NM_NoiseType NoiseType { get; set; } = NM_NoiseType.Detectable;
     }
 
-    public class ExplosionBehaviour : AbilityBehaviour<ExplosionAbility>
+    public sealed class ExplosionBehaviour : AbilityBehaviour<ExplosionAbility>
     {
         public override bool RunUpdateOnlyWhileExecuting => true;
         public override bool AllowEABAbilityWhileExecuting => true;
@@ -101,7 +101,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         }
     }
 
-    public class ExplosionCounter
+    public sealed class ExplosionCounter
     {
         public int Count = 0;
     }

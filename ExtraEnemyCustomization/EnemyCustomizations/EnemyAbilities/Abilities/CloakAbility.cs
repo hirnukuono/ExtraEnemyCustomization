@@ -22,7 +22,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         }
     }
 
-    public class CloakBehaviour : AbilityBehaviour<CloakAbility>
+    public sealed class CloakBehaviour : AbilityBehaviour<CloakAbility>
     {
         public override bool RunUpdateOnlyWhileExecuting => false;
         public override bool AllowEABAbilityWhileExecuting => Ability.AllowEABAbilityWhileCloaking;
