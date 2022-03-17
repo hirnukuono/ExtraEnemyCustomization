@@ -27,7 +27,7 @@ namespace EECustom.CustomAbilities.Bleed.Inject
                 if (!string.IsNullOrEmpty(text))
                 {
                     _hasOverrideText = true;
-                    _overrideText = string.Empty;
+                    _overrideText = text;
                 }
                 else
                 {
