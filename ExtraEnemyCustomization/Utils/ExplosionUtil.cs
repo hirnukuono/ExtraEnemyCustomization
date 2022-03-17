@@ -15,7 +15,8 @@ namespace EECustom.Utils
                 damage = damage,
                 enemyMulti = enemyMulti,
                 minRange = minRange,
-                maxRange = maxRange
+                maxRange = maxRange,
+                lightColor = ExplosionManager.FlashColor
             });
         }
     }

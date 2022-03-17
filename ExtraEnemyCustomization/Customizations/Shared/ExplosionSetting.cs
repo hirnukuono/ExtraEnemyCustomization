@@ -12,6 +12,7 @@ namespace EECustom.Customizations.Shared
     {
         public bool Enabled { get; set; } = false;
         public ValueBase Damage { get; set; } = ValueBase.Zero;
+        public Color LightColor { get; set; } = new(1, 0.2f, 0, 1);
         public bool KillInflictor { get; set; } = true;
         public float EnemyDamageMulti { get; set; } = 1.0f;
         public float MinRange { get; set; } = 2.0f;
@@ -61,7 +62,8 @@ namespace EECustom.Customizations.Shared
                     damage = maxDamage,
                     enemyMulti = EnemyDamageMulti,
                     minRange = MinRange,
-                    maxRange = MaxRange
+                    maxRange = MaxRange,
+                    lightColor = LightColor
                 });
 
                 var newPos = position;

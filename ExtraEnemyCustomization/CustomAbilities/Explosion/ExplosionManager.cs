@@ -33,12 +33,12 @@ namespace EECustom.CustomAbilities.Explosion
             Sync.Send(data);
         }
 
-        internal static void Internal_TriggerExplosion(Vector3 position, float damage, float enemyMulti, float minRange, float maxRange)
+        internal static void Internal_TriggerExplosion(Vector3 position, Color lightColor, float damage, float enemyMulti, float minRange, float maxRange)
         {
             CellSound.Post(EVENTS.STICKYMINEEXPLODE, position);
 
             if (_usingLightFlash)
-                LightFlash(position);
+                LightFlash(position, lightColor);
 
             if (!SNet.IsMaster)
                 return;
@@ -120,7 +120,7 @@ namespace EECustom.CustomAbilities.Explosion
             return newDamage;
         }
 
-        public static void LightFlash(Vector3 pos)
+        public static void LightFlash(Vector3 pos, Color lightColor)
         {
             ExplosionEffectPooling.TryDoEffect(new ExplosionEffectData()
             {
@@ -140,5 +140,6 @@ namespace EECustom.CustomAbilities.Explosion
         public float enemyMulti;
         public float minRange;
         public float maxRange;
+        public Color lightColor;
     }
 }

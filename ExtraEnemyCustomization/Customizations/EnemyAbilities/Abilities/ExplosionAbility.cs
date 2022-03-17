@@ -8,6 +8,7 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
     public class ExplosionAbility : AbilityBase<ExplosionBehaviour>
     {
         public ValueBase Damage { get; set; } = ValueBase.Zero;
+        public Color LightColor { get; set; } = new(1, 0.2f, 0, 1);
         public bool KillInflictor { get; set; } = true;
         public bool UseExplosionCounter { get; set; } = false;
         public int AllowedExplosionCount { get; set; } = 1;
@@ -60,7 +61,8 @@ namespace EECustom.Customizations.EnemyAbilities.Abilities
                 damage = damage,
                 enemyMulti = Ability.EnemyDamageMulti,
                 minRange = Ability.MinRange,
-                maxRange = Ability.MaxRange
+                maxRange = Ability.MaxRange,
+                lightColor = Ability.LightColor
             });
 
             var noise = new NM_NoiseData()
