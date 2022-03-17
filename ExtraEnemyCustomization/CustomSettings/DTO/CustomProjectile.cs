@@ -27,12 +27,10 @@ namespace EECustom.CustomSettings.DTO
         public ValueBase GlowRange { get; set; } = ValueBase.Unchanged;
         public ValueBase Damage { get; set; } = ValueBase.Unchanged;
         public ValueBase Infection { get; set; } = ValueBase.Unchanged;
-        [Obsolete("Will be merged to AttackCustoms")] public ExplosionSetting Explosion { get; set; } = new();
-        [Obsolete("Will be merged to AttackCustoms")] public KnockbackSetting Knockback { get; set; } = new();
-        [Obsolete("Will be merged to AttackCustoms")] public BleedSetting Bleed { get; set; } = new();
-        [Obsolete("Will be merged to AttackCustoms")] public DrainStaminaSetting DrainStamina { get; set; } = new();
-
-        [Obsolete("Will be merged to AttackCustoms")]
+        public ExplosionSetting Explosion { get; set; } = new();
+        public KnockbackSetting Knockback { get; set; } = new();
+        public BleedSetting Bleed { get; set; } = new();
+        public DrainStaminaSetting DrainStamina { get; set; } = new();
 
         public void Collision(Vector3 projectilePosition, PlayerAgent player = null)
         {

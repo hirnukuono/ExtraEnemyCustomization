@@ -11,14 +11,13 @@ namespace EECustom.Customizations.Abilities
         [JsonIgnore] public abstract bool DisableProjectileDamageEvent { get; }
         public T MeleeData { get; set; } = new();
         public T TentacleData { get; set; } = new();
-        public T ProjectileData { get; set; } = null;
+        public T ProjectileData { get; set; } = new();
 
         public override void OnConfigLoaded()
         {
             LocalPlayerDamageEvents.MeleeDamage += OnMelee;
             LocalPlayerDamageEvents.TentacleDamage += OnTentacle;
-#warning Remove null check after 2.x.x
-            if (!DisableProjectileDamageEvent && ProjectileData != null)
+            if (!DisableProjectileDamageEvent)
                 LocalPlayerDamageEvents.ProjectileDamage += OnProjectile;
         }
 
@@ -26,7 +25,7 @@ namespace EECustom.Customizations.Abilities
         {
             LocalPlayerDamageEvents.MeleeDamage -= OnMelee;
             LocalPlayerDamageEvents.TentacleDamage -= OnTentacle;
-            if (!DisableProjectileDamageEvent && ProjectileData != null)
+            if (!DisableProjectileDamageEvent)
                 LocalPlayerDamageEvents.ProjectileDamage -= OnProjectile;
         }
 
