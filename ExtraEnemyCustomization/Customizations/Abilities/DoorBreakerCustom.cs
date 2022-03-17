@@ -1,6 +1,9 @@
 ﻿using EECustom.Customizations.Abilities.Inject;
 using EECustom.Events;
+using EECustom.Networking;
+using EECustom.Utils;
 using Enemies;
+using SNetwork;
 
 namespace EECustom.Customizations.Abilities
 {
@@ -24,16 +27,28 @@ namespace EECustom.Customizations.Abilities
             Inject_EB_DestroyDoor.ShouldOverride = true;
 
             LevelEvents.LevelCleanup += LevelCleanup;
+            SNetEvents.RecallComplete += RecallComplete;
         }
 
         public override void OnConfigUnloaded()
         {
+            EB_InCombat_MoveToNextNode_DestroyDoor.s_globalRetryTimer = 0.0f;
             LevelEvents.LevelCleanup -= LevelCleanup;
+            SNetEvents.RecallComplete -= RecallComplete;
         }
 
         private void LevelCleanup()
         {
-            EB_InCombat_MoveToNextNode_DestroyDoor.s_globalRetryTimer = 0.0f;
+            _globalTimer = 0.0f;
+        }
+
+        private void RecallComplete(eBufferType _)
+        {
+            var properties = EnemyProperty<DoorBreakerProperty>.Properties;
+            foreach (var property in properties)
+            {
+                property.Timer = 0.0f;
+            }
             _globalTimer = 0.0f;
         }
 

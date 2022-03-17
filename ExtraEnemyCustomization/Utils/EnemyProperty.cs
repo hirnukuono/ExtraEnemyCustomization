@@ -9,6 +9,8 @@ namespace EECustom.Utils
     {
         private static readonly Dictionary<ushort, T> _properties = new();
 
+        public static IEnumerable<T> Properties => _properties.Values;
+
         static EnemyProperty()
         {
             LevelEvents.LevelCleanup += OnLevelCleanup;
