@@ -9,6 +9,8 @@ namespace EECustom.Customizations.Abilities
 {
     public sealed class BleedAttackCustom : AttackCustomBase<BleedSetting>
     {
+        public override bool DisableProjectileDamageEvent => false;
+
         public override string GetProcessName()
         {
             return "BleedAttack";
@@ -32,13 +34,12 @@ namespace EECustom.Customizations.Abilities
 
         protected override void OnApplyEffect(BleedSetting setting, PlayerAgent player, EnemyAgent inflictor)
         {
-            if (inflictor.TryCastToEnemyAgent(out var enemy))
-            {
-                if (IsTarget(enemy))
-                {
-                    setting.DoBleed(player);
-                }
-            }
+            setting.DoBleed(player);
+        }
+
+        protected override void OnApplyProjectileEffect(BleedSetting setting, PlayerAgent player, EnemyAgent inflictor, ProjectileBase projectile)
+        {
+            OnApplyEffect(setting, player, inflictor);
         }
 
         private static void RecieveMedi(iResourcePackReceiver receiver, float _)

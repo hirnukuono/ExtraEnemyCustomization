@@ -33,7 +33,6 @@ namespace EECustom.CustomAbilities.Explosion
             Sync.Send(data);
         }
 
-        [SuppressMessage("Type Safety", "UNT0014:Invalid type for call to GetComponent", Justification = "IDamagable IS Unity Component Interface")]
         internal static void Internal_TriggerExplosion(Vector3 position, float damage, float enemyMulti, float minRange, float maxRange)
         {
             CellSound.Post(EVENTS.STICKYMINEEXPLODE, position);
@@ -53,7 +52,13 @@ namespace EECustom.CustomAbilities.Explosion
 
             foreach (var target in targets)
             {
-                if (!target.TryGetComponent<IDamageable>(out var targetDamagable))
+                if (target == null)
+                    continue;
+
+                if (target.gameObject == null)
+                    continue;
+
+                if (!target.gameObject.TryGetComp<IDamageable>(out var targetDamagable))
                     continue;
 
                 targetDamagable = targetDamagable.GetBaseDamagable();
@@ -78,9 +83,16 @@ namespace EECustom.CustomAbilities.Explosion
                 targetDamagable.TempSearchID = searchID;
 
                 var distance = Vector3.Distance(position, targetPosition);
-                if (Physics.Linecast(position, targetPosition, out RaycastHit _, LayerManager.MASK_WORLD))
+                if (Physics.Linecast(position, targetPosition, out RaycastHit hit, LayerManager.MASK_EXPLOSION_BLOCKERS))
                 {
-                    continue;
+                    if (hit.collider == null)
+                        continue;
+
+                    if (hit.collider.gameObject == null)
+                        continue;
+
+                    if (hit.collider.gameObject.GetInstanceID() != target.gameObject.GetInstanceID())
+                        continue;
                 }
 
                 var newDamage = CalcRangeDamage(damage, distance, minRange, maxRange);
@@ -90,7 +102,6 @@ namespace EECustom.CustomAbilities.Explosion
                     newDamage *= enemyMulti;
                 }
                 Logger.Verbose($"Explosive damage: {newDamage} out of max: {damage}, Dist: {distance}, min: {minRange}, max: {maxRange}");
-
                 targetDamagable.ExplosionDamage(newDamage, position, Vector3.up * 1000);
             }
         }

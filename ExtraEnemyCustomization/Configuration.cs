@@ -1,6 +1,6 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
-using EECustom.Managers;
+using EECustom.Managers.Assets;
 using System.IO;
 
 namespace EECustom

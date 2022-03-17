@@ -2,7 +2,7 @@
 using System.IO;
 using UnityEngine;
 
-namespace EECustom.Managers
+namespace EECustom.Managers.Assets
 {
     public static class SpriteManager
     {

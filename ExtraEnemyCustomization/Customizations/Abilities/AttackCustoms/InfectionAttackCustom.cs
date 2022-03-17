@@ -7,6 +7,8 @@ namespace EECustom.Customizations.Abilities
 {
     public sealed class InfectionAttackCustom : AttackCustomBase<InfectionAttackCustom.AttackData>
     {
+        public override bool DisableProjectileDamageEvent => false;
+
         public override string GetProcessName()
         {
             return "InfectionAttack";
@@ -39,6 +41,11 @@ namespace EECustom.Customizations.Abilities
                 effect = pInfectionEffect.None,
                 mode = pInfectionMode.Add
             }, true, true);
+        }
+
+        protected override void OnApplyProjectileEffect(AttackData setting, PlayerAgent player, EnemyAgent inflictor, ProjectileBase projectile)
+        {
+            OnApplyEffect(setting, player, inflictor);
         }
 
         public sealed class AttackData

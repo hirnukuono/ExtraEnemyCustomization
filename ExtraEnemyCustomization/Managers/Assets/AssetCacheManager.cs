@@ -3,7 +3,7 @@ using System.IO;
 using UnhollowerRuntimeLib;
 using UnityEngine;
 
-namespace EECustom.Managers
+namespace EECustom.Managers.Assets
 {
     public static class AssetCacheManager
     {

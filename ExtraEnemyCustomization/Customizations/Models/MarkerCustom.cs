@@ -1,6 +1,6 @@
 ﻿using EECustom.Customizations.Models.Handlers;
 using EECustom.Events;
-using EECustom.Managers;
+using EECustom.Managers.Assets;
 using Enemies;
 using System;
 using UnityEngine;
