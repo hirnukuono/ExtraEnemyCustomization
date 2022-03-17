@@ -1,5 +1,4 @@
-﻿using BepInEx.IL2CPP.Utils;
-using EECustom.Attributes;
+﻿using EECustom.Attributes;
 using EECustom.Utils;
 using Enemies;
 using System;
@@ -98,9 +97,9 @@ namespace EECustom.Customizations.Models.Handlers
             StopAllCoroutines();
             if (_shouldUpdateRainbow)
             {
-                MonoBehaviourExtensions.StartCoroutine(this, GamingMoment());
+                this.StartCoroutine(GamingMoment());
             }
-            MonoBehaviourExtensions.StartCoroutine(this, UpdateText());
+            this.StartCoroutine(UpdateText());
         }
 
         [HideFromIl2Cpp]

@@ -1,5 +1,4 @@
 ﻿using Agents;
-using BepInEx.IL2CPP.Utils;
 using EECustom.Attributes;
 using EECustom.Utils;
 using Enemies;
@@ -43,7 +42,7 @@ namespace EECustom.Customizations.Models.Handlers
                 _ownerAgent.ScannerColor = GetStateColor(state);
                 TryDisable();
 
-                MonoBehaviourExtensions.StartCoroutine(this, UpdateLoop());
+                this.StartCoroutine(UpdateLoop());
             }
             else
             {
@@ -98,7 +97,7 @@ namespace EECustom.Customizations.Models.Handlers
                 {
                     StopCoroutine(_colorInterpolationCoroutine);
                 }
-                _colorInterpolationCoroutine = MonoBehaviourExtensions.StartCoroutine(this, ColorInterpolation());
+                _colorInterpolationCoroutine = this.StartCoroutine(ColorInterpolation());
             }
         }
 

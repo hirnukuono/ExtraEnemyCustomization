@@ -1,5 +1,4 @@
-﻿using BepInEx.IL2CPP.Utils;
-using EECustom.Attributes;
+﻿using EECustom.Attributes;
 using EECustom.CustomAbilities.Bleed.Inject;
 using EECustom.Utils;
 using Player;
@@ -30,7 +29,7 @@ namespace EECustom.CustomAbilities.Bleed.Handlers
 
             if (bleedData.doStack)
             {
-                MonoBehaviourExtensions.StartCoroutine(this, DoStackableBleed(bleedData));
+                this.StartCoroutine(DoStackableBleed(bleedData));
             }
             else
             {
@@ -38,7 +37,7 @@ namespace EECustom.CustomAbilities.Bleed.Handlers
                 {
                     StopCoroutine(_globalBleedRoutine);
                 }
-                _globalBleedRoutine = MonoBehaviourExtensions.StartCoroutine(this, DoGlobalBleed(bleedData));
+                _globalBleedRoutine = this.StartCoroutine(DoGlobalBleed(bleedData));
             }
         }
 
