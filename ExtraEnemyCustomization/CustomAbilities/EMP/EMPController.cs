@@ -51,6 +51,12 @@ namespace EECustom.CustomAbilities.EMP
         }
 
         [HideFromIl2Cpp]
+        public void ClearTime()
+        {
+            _duration = Clock.Time - 1.0f;
+        }
+
+        [HideFromIl2Cpp]
         public void AssignHandler(IEMPHandler handler)
         {
             if (_handler != null)
@@ -63,6 +69,15 @@ namespace EECustom.CustomAbilities.EMP
             _handler.Setup(gameObject, this);
             _hasHandler = true;
             _setup = true;
+        }
+
+        [HideFromIl2Cpp]
+        public void ForceState(EMPState state)
+        {
+            if (_handler != null)
+            {
+                _handler.ForceState(state);
+            }
         }
 
         private void OnDestroy()

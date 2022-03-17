@@ -27,14 +27,14 @@ namespace EECustom.Customizations.Abilities
             Inject_EB_DestroyDoor.ShouldOverride = true;
 
             LevelEvents.LevelCleanup += LevelCleanup;
-            SNetEvents.RecallComplete += RecallComplete;
+            SNetEvents.PrepareRecall += PrepareRecall;
         }
 
         public override void OnConfigUnloaded()
         {
             EB_InCombat_MoveToNextNode_DestroyDoor.s_globalRetryTimer = 0.0f;
             LevelEvents.LevelCleanup -= LevelCleanup;
-            SNetEvents.RecallComplete -= RecallComplete;
+            SNetEvents.RecallComplete -= PrepareRecall;
         }
 
         private void LevelCleanup()
@@ -42,7 +42,7 @@ namespace EECustom.Customizations.Abilities
             _globalTimer = 0.0f;
         }
 
-        private void RecallComplete(eBufferType _)
+        private void PrepareRecall(eBufferType _)
         {
             var properties = EnemyProperty<DoorBreakerProperty>.Properties;
             foreach (var property in properties)

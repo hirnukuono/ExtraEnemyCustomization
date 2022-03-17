@@ -12,19 +12,22 @@ namespace EECustom.Networking
     public static class SNetEvents
     {
         public static event SNetPlayerEvent AgentSpawned;
+        public static event SNetRecallEvent PrepareRecall;
         public static event SNetRecallEvent RecallComplete;
-
-        static SNetEvents()
-        {
-            SNet_Events.OnRecallComplete += new Action<eBufferType>((bufferType) =>
-            {
-                RecallComplete?.Invoke(bufferType);
-            });
-        }
 
         internal static void OnAgentSpawned(SNet_Player player)
         {
             AgentSpawned?.Invoke(player);
+        }
+
+        internal static void OnPrepareRecall(eBufferType bufferType)
+        {
+            PrepareRecall?.Invoke(bufferType);
+        }
+
+        internal static void OnRecallComplete(eBufferType bufferType)
+        {
+            RecallComplete?.Invoke(bufferType);
         }
     }
 }

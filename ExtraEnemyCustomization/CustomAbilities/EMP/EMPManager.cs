@@ -1,6 +1,7 @@
 ﻿using EECustom.Attributes;
 using EECustom.CustomAbilities.EMP.Inject;
 using EECustom.Events;
+using EECustom.Networking;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,6 +18,17 @@ namespace EECustom.CustomAbilities.EMP
             LevelEvents.LevelCleanup += () =>
             {
                 _empTargets.Clear();
+                EMPHandlerBase.Cleanup();
+            };
+
+            SNetEvents.PrepareRecall += (bufferType) =>
+            { 
+                foreach (var target in _empTargets)
+                {
+                    target.ClearTime();
+                    target.ForceState(EMPState.On);
+                }
+
                 EMPHandlerBase.Cleanup();
             };
 
