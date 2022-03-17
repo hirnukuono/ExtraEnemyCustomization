@@ -1,8 +1,6 @@
 ﻿using EECustom.Customizations.Shared;
 using EECustom.Utils.JsonElements;
 using Player;
-using System;
-using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
 namespace EECustom.Managers.CustomProjectiles

@@ -22,7 +22,7 @@ namespace EECustom.CustomAbilities.EMP
             };
 
             SNetEvents.PrepareRecall += (bufferType) =>
-            { 
+            {
                 foreach (var target in _empTargets)
                 {
                     target.ClearTime();

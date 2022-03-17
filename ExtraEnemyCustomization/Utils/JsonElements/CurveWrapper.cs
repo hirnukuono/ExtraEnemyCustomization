@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
@@ -26,14 +25,13 @@ namespace EECustom.Utils.JsonElements
                 return false;
             }
 
-            var sorted = this.OrderBy(x=>x.Time).ToArray();
+            var sorted = this.OrderBy(x => x.Time).ToArray();
             _keys.Clear();
 
-            
-            for (int i = 0; i < Count-1; i++)
+            for (int i = 0; i < Count - 1; i++)
             {
                 var item = sorted[i];
-                var nextItem = sorted[i+1];
+                var nextItem = sorted[i + 1];
 
                 if (item.Time > 1.0f || item.Time < 0.0f)
                 {

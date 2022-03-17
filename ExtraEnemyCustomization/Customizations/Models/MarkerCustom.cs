@@ -83,7 +83,7 @@ namespace EECustom.Customizations.Models
             if (_hasText)
             {
                 option |= NavMarkerOption.Title;
-                
+
                 if (_textRequiresAutoUpdate)
                 {
                     if (!marker.gameObject.TryGetComp<MarkerTextHandler>(out var handler))
@@ -107,7 +107,6 @@ namespace EECustom.Customizations.Models
             }
 
             marker.SetVisualStates(option, option, NavMarkerOption.Empty, NavMarkerOption.Empty);
-
 
             if (_sprite != null)
             {

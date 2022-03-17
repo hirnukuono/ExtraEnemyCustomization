@@ -2,10 +2,7 @@
 using Enemies;
 using HarmonyLib;
 using SNetwork;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 
 namespace EECustom.Managers.Properties.Inject
 {

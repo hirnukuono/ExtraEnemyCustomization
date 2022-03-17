@@ -1,5 +1,4 @@
-﻿using GameData;
-using HarmonyLib;
+﻿using HarmonyLib;
 using Localization;
 
 namespace EECustom.CustomAbilities.Bleed.Inject

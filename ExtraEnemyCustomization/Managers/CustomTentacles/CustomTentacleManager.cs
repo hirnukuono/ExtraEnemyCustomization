@@ -43,7 +43,7 @@ namespace EECustom.Managers.CustomTentacles
             //TODO: For some reason, it's broken. Fix it
             var prefab = new GameObject();
             UnityEngine.Object.DontDestroyOnLoad(prefab);
-            
+
             var setup = prefab.AddComponent<GPUC_Setup>();
             setup.m_bodyPrefab = GetSetup(tentInfo.BodyPrefab).m_bodyPrefab;
             setup.m_bodyTileMaterial = GetSetup(tentInfo.BodyMaterial).m_bodyTileMaterial;

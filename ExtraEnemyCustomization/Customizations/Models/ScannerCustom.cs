@@ -131,6 +131,7 @@ namespace EECustom.Customizations.Models
                         return;
                     }
                     break;
+
                 case AgentMode.Scout:
                     if (agent.ScannerData.m_soundIndex == -1)
                     {

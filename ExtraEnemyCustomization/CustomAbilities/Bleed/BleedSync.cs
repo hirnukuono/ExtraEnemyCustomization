@@ -30,7 +30,7 @@ namespace EECustom.CustomAbilities.Bleed
                 {
                     GetHandler(agent).StopBleed();
                 }
-            } 
+            }
         }
 
         private static BleedHandler GetHandler(PlayerAgent agent)

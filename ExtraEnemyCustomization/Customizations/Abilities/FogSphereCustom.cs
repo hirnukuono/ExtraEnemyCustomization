@@ -39,7 +39,7 @@ namespace EECustom.Customizations.Abilities
             var fogPrefab = eabFog.m_fogSpherePrefab;
 
             var newFogPrefab = fogPrefab.Instantiate(agent.gameObject.transform, "newFogPrefab");
-            
+
             if (newFogPrefab.TryGetComp<FogSphereHandler>(out var fogHandler))
             {
                 fogHandler.m_colorMin = ColorMin;

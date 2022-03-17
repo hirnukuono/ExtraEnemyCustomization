@@ -1,5 +1,4 @@
 ﻿using SNetwork;
-using System;
 
 namespace EECustom.Networking
 {
@@ -12,7 +11,9 @@ namespace EECustom.Networking
     public static class SNetEvents
     {
         public static event SNetPlayerEvent AgentSpawned;
+
         public static event SNetRecallEvent PrepareRecall;
+
         public static event SNetRecallEvent RecallComplete;
 
         internal static void OnAgentSpawned(SNet_Player player)

@@ -4,6 +4,7 @@ using Player;
 namespace EECustom.Events
 {
     public delegate void PlayerTakeDamageHandler(PlayerAgent playerAgent, Agent inflictor, float damage);
+
     public delegate void PlayerTakeDamageFromProjectileHandler(PlayerAgent playerAgent, Agent inflictor, ProjectileBase projectile, float damage);
 
     public static class LocalPlayerDamageEvents

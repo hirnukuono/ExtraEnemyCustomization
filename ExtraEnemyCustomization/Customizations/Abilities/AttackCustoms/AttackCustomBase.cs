@@ -67,9 +67,9 @@ namespace EECustom.Customizations.Abilities
         }
 
         protected abstract void OnApplyEffect(T setting, PlayerAgent player, EnemyAgent inflicator);
+
         protected virtual void OnApplyProjectileEffect(T setting, PlayerAgent player, EnemyAgent inflictor, ProjectileBase projectile)
         {
-
         }
     }
 }

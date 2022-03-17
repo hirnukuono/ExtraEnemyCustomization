@@ -1,5 +1,4 @@
-﻿using EECustom.Managers;
-using HarmonyLib;
+﻿using HarmonyLib;
 using System;
 
 namespace EECustom.Managers.CustomTentacles.Inject

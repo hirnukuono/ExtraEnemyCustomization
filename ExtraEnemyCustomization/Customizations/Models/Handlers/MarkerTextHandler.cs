@@ -4,7 +4,6 @@ using EECustom.Utils;
 using Enemies;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnhollowerBaseLib.Attributes;
@@ -169,6 +168,7 @@ namespace EECustom.Customizations.Models.Handlers
             _hasFormat = null;
         }
     }
+
     public enum MarkerFormatText
     {
         None,

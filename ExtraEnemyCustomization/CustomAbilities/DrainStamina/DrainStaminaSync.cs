@@ -1,5 +1,4 @@
 ﻿using EECustom.Networking;
-using Player;
 using SNetwork;
 
 namespace EECustom.CustomAbilities.DrainStamina

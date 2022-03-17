@@ -1,9 +1,6 @@
 ﻿using GTFO.API;
 using Player;
 using SNetwork;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EECustom.Networking
 {
@@ -60,7 +57,6 @@ namespace EECustom.Networking
             agent = player.m_playerAgent.TryCast<PlayerAgent>();
             return agent != null;
         }
-
 
         public void SendToPlayers(T packetData, params PlayerAgent[] agents)
         {
@@ -179,7 +175,6 @@ namespace EECustom.Networking
 
         protected virtual void Receive(T packet, SNet_Player receivedPlayer)
         {
-
         }
 
         public event ReceiveHandler OnReceive;

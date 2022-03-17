@@ -15,15 +15,18 @@ namespace EECustom
 
         //USER CONFIGS
         public static ConfigEntry<bool> ShowMarkerText { get; private set; }
+
         public static ConfigEntry<bool> ShowMarkerDistance { get; private set; }
         public static ConfigEntry<bool> ShowExplosionEffect { get; private set; }
 
         //RUNDOWN DEVELOPER CONFIGS
         public static ConfigEntry<bool> UseLiveEdit { get; private set; }
+
         public static ConfigEntry<bool> LinkMTFOHotReload { get; private set; }
 
         //LOGGING CONFIGS
         public static ConfigEntry<bool> UseDebugLog { get; private set; }
+
         public static ConfigEntry<bool> UseVerboseLog { get; private set; }
         public static ConfigEntry<AssetCacheManager.OutputType> AssetCacheBehaviour { get; private set; }
 

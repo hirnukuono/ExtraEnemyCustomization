@@ -2,7 +2,6 @@
 using EECustom.Attributes;
 using EECustom.Events;
 using SNetwork;
-using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
 namespace EECustom.CustomAbilities.Explosion
