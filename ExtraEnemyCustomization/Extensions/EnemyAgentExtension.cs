@@ -1,6 +1,7 @@
 ﻿using AIGraph;
 using EECustom.Utils;
 using Enemies;
+using SNetwork;
 using System;
 
 namespace EECustom
@@ -33,6 +34,31 @@ namespace EECustom
         public static pEnemySpawnData GetSpawnData(this EnemyAgent agent)
         {
             return agent.Sync.Replicator.Cast<EnemyReplicator>().GetSpawnData();
+        }
+
+        public static bool TryGetEnemyGroup(this EnemyAgent agent, out EnemyGroup group)
+        {
+            var spawnData = agent.GetSpawnData();
+            if (spawnData.groupReplicatorKey == 0)
+            {
+                group = null;
+                return false;
+            }
+
+            if (SNet_Replication.TryGetReplicator(spawnData.groupReplicatorKey, out var replicator))
+            {
+                group = null;
+                return false;
+            }
+
+            if (replicator.ReplicatorSupplier == null)
+            {
+                group = null;
+                return false;
+            }
+
+            group = replicator.ReplicatorSupplier.TryCast<EnemyGroup>();
+            return group != null;
         }
 
         public static AIG_CourseNode GetSpawnedNode(this EnemyAgent agent)

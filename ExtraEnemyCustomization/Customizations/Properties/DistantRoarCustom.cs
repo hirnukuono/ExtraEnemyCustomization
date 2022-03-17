@@ -3,6 +3,7 @@ using Enemies;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using UnityEngine;
 
 namespace EECustom.Customizations.Properties
 {
@@ -10,6 +11,8 @@ namespace EECustom.Customizations.Properties
     {
         public uint SoundID { get; set; } = 0u;
         public float Interval { get; set; } = 0.0f;
+        public bool OnlyForSurvivalWave { get; set; } = true;
+        public bool IsGlobal { get; set; } = true;
 
         private float _timer = 0.0f;
         private CellSoundPlayer _soundPlayer;
@@ -19,14 +22,15 @@ namespace EECustom.Customizations.Properties
             return "DistantRoar";
         }
 
-        public override void OnConfigLoaded()
+        public override void OnAssetLoaded()
         {
-            _soundPlayer = new();
+            _soundPlayer = new(Vector3.zero);
         }
 
         public override void OnConfigUnloaded()
         {
             _soundPlayer?.Recycle();
+            _soundPlayer = null;
         }
 
         public void OnSpawned(EnemyAgent agent)
@@ -34,12 +38,21 @@ namespace EECustom.Customizations.Properties
             if (agent.GetSpawnData().mode != AgentMode.Agressive)
                 return;
 
+            if (OnlyForSurvivalWave)
+            {
+                if (!agent.TryGetEnemyGroup(out var group))
+                    return;
+
+                if (group.SurvivalWave == null)
+                    return;
+            }
+
             if (_timer <= Clock.Time)
             {
                 if (_soundPlayer != null)
                 {
                     _soundPlayer.UpdatePosition(agent.Position);
-                    _soundPlayer.Post(SoundID, isGlobal: true);
+                    _soundPlayer.Post(SoundID, IsGlobal);
                 }
                 _timer = Clock.Time + Interval;
             }
