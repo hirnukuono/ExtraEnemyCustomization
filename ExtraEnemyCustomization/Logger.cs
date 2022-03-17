@@ -62,11 +62,13 @@ namespace EECustom
         [Conditional("DEBUG")]
 #if RELEASE
         [Obsolete("Logger.Dev call will be removed in release mode!")]
+#endif
         public static void Dev(string format, params object[] args) => Dev(string.Format(format, args));
 
         [Conditional("DEBUG")]
 #if RELEASE
         [Obsolete("Logger.Dev call will be removed in release mode!")]
+#endif
         public static void Dev(string str)
         {
             LogInstance?.Log(LogLevel.Message, $"[DEV] {str}");
