@@ -1,73 +1,73 @@
 ﻿using Agents;
-using EEC.Attributes;
 using EEC.Utils.Unity;
 using Enemies;
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace EEC.EnemyCustomizations.Models.Handlers
 {
-    [InjectToIl2Cpp]
-    internal sealed class PulseHandler : MonoBehaviour
+    public class PulseRoutine
     {
+        public EnemyAgent Agent;
         public PulseEffectData PulseData;
         public float StartDelay = 0.0f;
 
-        private EnemyAgent _ownerAgent;
-        private Timer _timer;
-        private float _updateTimerDelay = 0.0f;
+        private float _updateDelay = 0.0f;
         private Color _defaultColor;
         private int _currentPatternIndex = 0;
         private int _patternLength = 0;
 
-        private void Start()
+        public IEnumerator Routine()
         {
             if (PulseData.PatternData == null)
             {
-                enabled = false;
-                return;
+                yield break;
             }
 
             _patternLength = PulseData.PatternData.Length;
             if (_patternLength <= 1)
             {
-                enabled = false;
-                return;
+                yield break;
             }
 
-            _ownerAgent = GetComponentInParent<EnemyAgent>();
-            _defaultColor = _ownerAgent.MaterialHandler.m_defaultGlowColor;
+            _defaultColor = Agent.MaterialHandler.m_defaultGlowColor;
 
             var interval = Math.Max(0.0f, PulseData.Duration);
-            _updateTimerDelay = interval / _patternLength;
-            _timer.Reset(StartDelay);
+            _updateDelay = interval / _patternLength;
+
+            yield return WaitFor.Seconds[StartDelay];
+
+            var yielder = WaitFor.Seconds[_updateDelay];
+            while (true)
+            {
+                DoUpdate();
+                yield return yielder;
+            }
         }
 
-        private void FixedUpdate()
+        private void DoUpdate()
         {
-            if (!_timer.TickAndCheckDone())
+            if (!PulseData.Target.IsMatch(Agent))
                 return;
 
-            if (!PulseData.Target.IsMatch(_ownerAgent))
-                return;
-
-            if (!_ownerAgent.Alive && !PulseData.KeepOnDead)
+            if (!Agent.Alive && !PulseData.KeepOnDead)
                 return;
 
             if (!PulseData.AlwaysPulse)
             {
-                switch (_ownerAgent.AI.Mode)
+                switch (Agent.AI.Mode)
                 {
                     case AgentMode.Hibernate:
-                        if (_ownerAgent.IsHibernationDetecting)
+                        if (Agent.IsHibernationDetecting)
                             return;
                         break;
 
                     case AgentMode.Agressive:
-                        if (_ownerAgent.Locomotion.IsAttacking())
+                        if (Agent.Locomotion.IsAttacking())
                             return;
 
-                        switch (_ownerAgent.Locomotion.CurrentStateEnum)
+                        switch (Agent.Locomotion.CurrentStateEnum)
                         {
                             case ES_StateEnum.ShooterAttack:
                             case ES_StateEnum.StrikerAttack:
@@ -79,7 +79,7 @@ namespace EEC.EnemyCustomizations.Models.Handlers
                         break;
 
                     case AgentMode.Scout:
-                        var detection = _ownerAgent.Locomotion.ScoutDetection.m_antennaDetection;
+                        var detection = Agent.Locomotion.ScoutDetection.m_antennaDetection;
                         if (detection == null)
                             break;
 
@@ -95,19 +95,13 @@ namespace EEC.EnemyCustomizations.Models.Handlers
             }
 
             var patternData = PulseData.PatternData[_currentPatternIndex++];
-            var duration = patternData.StepDuration * _updateTimerDelay;
+            var duration = patternData.StepDuration * _updateDelay;
 
             if (patternData.Progression >= 0.0f)
             {
                 var newColor = Color.Lerp(_defaultColor, PulseData.GlowColor, patternData.Progression);
-                _ownerAgent.Appearance.InterpolateGlow(newColor, duration);
+                Agent.Appearance.InterpolateGlow(newColor, duration);
             }
-            _timer.Reset(duration);
-        }
-
-        private void OnDestroy()
-        {
-            _ownerAgent = null;
         }
     }
 }

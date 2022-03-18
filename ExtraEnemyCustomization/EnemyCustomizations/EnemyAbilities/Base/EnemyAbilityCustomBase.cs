@@ -37,10 +37,14 @@ namespace EEC.EnemyCustomizations.EnemyAbilities
 
         public void OnSpawned(EnemyAgent agent)
         {
-            foreach (var ab in Abilities)
+            var length = Abilities.Length;
+            T ability;
+            AbilityBehaviour newBehaviour;
+            for (int i = 0; i < length; i++)
             {
-                var newBehaviour = ab.Ability.RegisterBehaviour(agent);
-                OnBehaviourAssigned(agent, newBehaviour, ab);
+                ability = Abilities[i];
+                newBehaviour = ability.Ability.RegisterBehaviour(agent);
+                OnBehaviourAssigned(agent, newBehaviour, ability);
             }
 
             OnSpawnedPost(agent);

@@ -37,12 +37,23 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         {
             SyncID = syncID;
             OnAbilityLoaded();
+            EnemyEvents.Despawn += EnemyDespawn;
+        }
+
+        private void EnemyDespawn(EnemyAgent agent)
+        {
+            if (_behaviourLookup.TryGetValue(agent.GlobalID, out var behaviour))
+            {
+                behaviour.Unload();
+                _behaviourLookup.Remove(agent.GlobalID);
+            }
         }
 
         public void Unload()
         {
             _behaviours.Clear();
             OnAbilityUnloaded();
+            EnemyEvents.Despawn -= EnemyDespawn;
         }
 
         #region ABILITY CALLER
@@ -105,9 +116,9 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         {
             var id = agent.GlobalID;
 
-            if (_behaviourLookup.ContainsKey(id))
+            if (_behaviourLookup.TryGetValue(id, out var cachedBehaviour))
             {
-                return _behaviourLookup[id];
+                return cachedBehaviour;
             }
 
             var behaviour = new T();
@@ -117,12 +128,6 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
             _behaviourLookup[id] = behaviour;
 
             OnBehaviourAssigned(agent, behaviour);
-
-            MonoBehaviourEventHandler.AttatchToObject(agent.gameObject, onDestroyed: (GameObject _) =>
-            {
-                behaviour.Unload();
-                _behaviourLookup.Remove(id);
-            });
 
             return behaviour;
         }

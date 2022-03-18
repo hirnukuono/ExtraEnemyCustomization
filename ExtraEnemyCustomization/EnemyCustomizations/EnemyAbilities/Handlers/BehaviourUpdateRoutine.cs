@@ -1,17 +1,18 @@
 ﻿using Agents;
-using EEC.Attributes;
 using EEC.EnemyCustomizations.EnemyAbilities.Abilities;
 using EEC.Utils.Unity;
 using Enemies;
 using Player;
 using SNetwork;
-using UnhollowerBaseLib.Attributes;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 namespace EEC.EnemyCustomizations.EnemyAbilities.Handlers
 {
-    [InjectToIl2Cpp]
-    internal sealed class BehaviourUpdateHandler : MonoBehaviour
+    public sealed class BehaviourUpdateRoutine
     {
         public EnemyAgent Agent;
         public AbilityBehaviour Behaviour;
@@ -20,24 +21,24 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Handlers
         private AgentMode _latestMode;
         private LazyTimer _modeTransitionTimer;
         private LazyTimer _cooldownTimer;
-        private Timer _updateTimer;
         private bool _hasInitialTimerDone = false;
 
-        private void Start()
+        public IEnumerator Routine()
         {
-            _updateTimer.Reset(Setting.UpdateInterval);
             _latestMode = Agent.AI.Mode;
+
+            var yielder = WaitFor.Seconds[Setting.UpdateInterval];
+            while (true)
+            {
+                DoUpdate();
+                yield return yielder;
+            }
         }
 
-        private void FixedUpdate()
+        private void DoUpdate()
         {
-            if (!_updateTimer.TickAndCheckDone())
-                return;
-
             if (!SNet.IsMaster)
                 return;
-
-            _updateTimer.Reset();
 
             var canUseAbility = true;
             canUseAbility &= Setting.KeepOnDead || Agent.Alive;
@@ -73,7 +74,6 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Handlers
             Behaviour.DoTriggerSync();
         }
 
-        [HideFromIl2Cpp]
         private bool CheckAllowedModeCondition()
         {
             if (_latestMode != Agent.AI.Mode)
@@ -89,19 +89,16 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Handlers
             return Setting.AllowedMode.IsMatch(Agent);
         }
 
-        [HideFromIl2Cpp]
         private bool CheckAllowedStateCondition()
         {
             return Setting.State.CanUseAbility(Agent.Locomotion.CurrentStateEnum);
         }
 
-        [HideFromIl2Cpp]
         private bool CheckAttackingCondition()
         {
             return Setting.AllowWhileAttack || (!Agent.Locomotion.IsAttacking());
         }
 
-        [HideFromIl2Cpp]
         private bool CheckDistanceCondition()
         {
             var hasLos = false;
@@ -138,13 +135,6 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Handlers
 
             var distSettingToUse = hasLos ? Setting.DistanceWithLOS : Setting.DistanceWithoutLOS;
             return distSettingToUse.CanUseAbility(hasLos, distance);
-        }
-
-        private void OnDestroy()
-        {
-            Agent = null;
-            Behaviour = null;
-            Setting = null;
         }
     }
 }

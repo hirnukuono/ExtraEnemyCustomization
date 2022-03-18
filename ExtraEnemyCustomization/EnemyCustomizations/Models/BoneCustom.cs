@@ -1,4 +1,4 @@
-﻿using EEC.Events;
+﻿using EEC.EnemyCustomizations.Models.Handlers;
 using Enemies;
 using GTFO.API;
 using System;
@@ -36,14 +36,10 @@ namespace EEC.EnemyCustomizations.Models
                 var transform = agent.Anim.GetBoneTransform(boneTransform.Bone);
                 if (boneTransform.Offset != Vector3.zero || boneTransform.Offset != Vector3.zero)
                 {
-                    MonoBehaviourEventHandler.AttatchToObject(transform.gameObject, onLateUpdate: (GameObject g) =>
-                    {
-                        if (agent.Locomotion.m_animator.enabled)
-                        {
-                            transform.localPosition += boneTransform.Offset;
-                            transform.localEulerAngles += boneTransform.RotationOffset;
-                        }
-                    });
+                    var handler = transform.gameObject.AddComponent<BoneOffsetHandler>();
+                    handler.Animator = agent.Anim;
+                    handler.Offset = boneTransform.Offset;
+                    handler.RotationOffset = boneTransform.RotationOffset;
                 }
 
                 if (boneTransform.UsingRelativeScale)
