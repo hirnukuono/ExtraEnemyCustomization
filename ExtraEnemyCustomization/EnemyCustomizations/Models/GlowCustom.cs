@@ -61,14 +61,20 @@ namespace EEC.EnemyCustomizations.Models
 
             foreach (var pulse in PulseEffects)
             {
-                var manager = agent.gameObject.AddComponent<PulseHandler>();
-                manager.PulseData = pulse;
+                var routine = new PulseRoutine()
+                {
+                    Agent = agent,
+                    PulseData = pulse
+                };
+
                 if (pulse.RandomizeTime)
                 {
                     var interval = Math.Max(0.0f, pulse.Duration);
                     var rand = Rand.NextFloat() * interval;
-                    manager.StartDelay = rand;
+                    routine.StartDelay = rand;
                 }
+
+                agent.AI.StartCoroutine(routine.Routine());
             }
 
             //And this is static LMAO

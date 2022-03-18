@@ -25,10 +25,13 @@ namespace EEC.EnemyCustomizations.EnemyAbilities
 
         public override void OnBehaviourAssigned(EnemyAgent agent, AbilityBehaviour behaviour, BehaviourAbilitySetting setting)
         {
-            var updater = agent.gameObject.AddComponent<BehaviourUpdateHandler>();
-            updater.Agent = agent;
-            updater.Behaviour = behaviour;
-            updater.Setting = setting;
+            var updater = new BehaviourUpdateRoutine()
+            {
+                Agent = agent,
+                Behaviour = behaviour,
+                Setting = setting
+            };
+            agent.AI.StartCoroutine(updater.Routine());
         }
     }
 

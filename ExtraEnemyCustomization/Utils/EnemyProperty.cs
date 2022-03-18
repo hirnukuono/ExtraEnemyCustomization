@@ -13,7 +13,13 @@ namespace EEC.Utils
 
         static EnemyProperty()
         {
+            EnemyEvents.Despawn += EnemyDespawn;
             LevelEvents.LevelCleanup += OnLevelCleanup;
+        }
+
+        private static void EnemyDespawn(EnemyAgent agent)
+        {
+            _properties.Remove(agent.GlobalID);
         }
 
         private static void OnLevelCleanup()
@@ -41,12 +47,6 @@ namespace EEC.Utils
 
             var newProp = new T();
             _properties.Add(id, newProp);
-
-            MonoBehaviourEventHandler.AttatchToObject(agent.gameObject, onDestroyed: (GameObject _) =>
-            {
-                _properties.Remove(id);
-            });
-
             return newProp;
         }
 

@@ -1,9 +1,11 @@
-﻿using BepInEx.Logging;
+﻿using BepInEx.IL2CPP.Utils;
+using BepInEx.Logging;
 using EEC.EnemyCustomizations.EnemyAbilities.Events;
 using EEC.Events;
 using EEC.Utils.Unity;
 using Enemies;
 using SNetwork;
+using System.Collections;
 using UnityEngine;
 
 namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
@@ -110,15 +112,10 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
             BaseAbility = baseAbility;
             Agent = agent;
 
-            var mbEventHandler = Agent.gameObject.AddComponent<MonoBehaviourEventHandler>();
-            mbEventHandler.OnUpdate += Update_Del;
-            mbEventHandler.OnDestroyed += (_) =>
-            {
-                AgentDestroyed = true;
-            };
-
+            Agent.AI.StartCoroutine(Update());
             Agent.Locomotion.AddState(ES_StateEnum.StandStill, new ES_StandStill());
 
+            EnemyEvents.Despawn += Despawn_Del;
             EnemyAbilitiesEvents.TakeDamage += TakeDamage_Del;
             EnemyAbilitiesEvents.Dead += Dead_Del;
             EnemyAbilitiesEvents.Hitreact += Hitreact_Del;
@@ -128,6 +125,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 
         public void Unload()
         {
+            EnemyEvents.Despawn -= Despawn_Del;
             EnemyAbilitiesEvents.TakeDamage -= TakeDamage_Del;
             EnemyAbilitiesEvents.Dead -= Dead_Del;
             EnemyAbilitiesEvents.Hitreact -= Hitreact_Del;
@@ -135,9 +133,19 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 
         #region EVENT DELEGATES
 
-        private void Update_Del(GameObject _)
+        private IEnumerator Update()
         {
-            DoUpdate();
+            while (true)
+            {
+                DoUpdate();
+                yield return null;
+            }
+        }
+
+        private void Despawn_Del(EnemyAgent agent)
+        {
+            if (agent.GlobalID == Agent.GlobalID)
+                AgentDestroyed = true;
         }
 
         private void TakeDamage_Del(Enemies.EnemyAbilities abilities, float damage)

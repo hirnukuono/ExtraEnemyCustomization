@@ -1,7 +1,6 @@
 ﻿using Agents;
 using EEC.API;
 using EEC.EnemyCustomizations;
-using EEC.Utils.Unity;
 using Enemies;
 using GameData;
 using System;
@@ -196,12 +195,31 @@ namespace EEC.Managers
 
         internal static void FireSpawnedEvent(EnemyAgent agent)
         {
-            _enemySpawnedHolder.FireEvent(agent, (e) =>
+            if (Configuration.Profiler)
             {
-                e.OnSpawned(agent);
-            });
+                var stopwatch = new Stopwatch();
+                stopwatch.Restart();
 
-            CustomizationAPI.OnSpawnCustomizationDone_Internal(agent);
+                var innerStopwatch = new Stopwatch();
+                _enemySpawnedHolder.FireEvent(agent, (e) =>
+                {
+                    innerStopwatch.Restart();
+                    e.OnSpawned(agent);
+                    Logger.Log($" - {e.Base.GetProcessName()} ElapsedTick: {innerStopwatch.ElapsedTicks}({innerStopwatch.ElapsedMilliseconds}ms)");
+                });
+                Logger.Log($"FireSpawned Event ElapsedTick: {stopwatch.ElapsedTicks}({stopwatch.ElapsedMilliseconds}ms) {agent.name}");
+
+                CustomizationAPI.OnSpawnCustomizationDone_Internal(agent);
+            }
+            else
+            {
+                _enemySpawnedHolder.FireEvent(agent, (e) =>
+                {
+                    e.OnSpawned(agent);
+                });
+                CustomizationAPI.OnSpawnCustomizationDone_Internal(agent);
+            }
+            
             return;
         }
 

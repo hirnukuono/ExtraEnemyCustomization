@@ -37,7 +37,9 @@ namespace EEC
 
         //DEVELOPER CONFIGS
         public static bool DumpConfig { get; private set; }
+        public static bool Profiler { get; private set; }
         private static ConfigEntry<bool> _dumpConfig;
+        private static ConfigEntry<bool> _profiler;
 
         private static ConfigFile _currentContext;
 
@@ -80,7 +82,9 @@ namespace EEC
             AssetCacheBehaviour = _assetCacheBehaviour.Value;
 
             _dumpConfig = BindDevConfig("DumpConfig", "Dump Empty Config file?", false);
+            _profiler = BindDevConfig("Profiler", "Show Profiler Info for Spawned Event", false);
             DumpConfig = _dumpConfig.Value;
+            Profiler = _profiler.Value;
         }
 
         private static ConfigEntry<int> BindConfigVersion(ConfigFile context)
