@@ -11,7 +11,7 @@ namespace EEC.EnemyCustomizations.Models.Inject
         [HarmonyWrapSafe]
         internal static void Prefix(ES_PathMove __instance)
         {
-            if (__instance.m_enemyAgent.gameObject.TryGetComp<ScannerHandler>(out var scannerManager))
+            if (__instance.m_enemyAgent.gameObject.TryGetComp<ScannerHandler>(out _))
             {
                 __instance.m_enemyAgent.ScannerData.m_soundIndex = 0;
             }
@@ -38,7 +38,7 @@ namespace EEC.EnemyCustomizations.Models.Inject
         [HarmonyWrapSafe]
         internal static void Prefix(ES_HibernateWakeUp __instance)
         {
-            if (__instance.m_enemyAgent.gameObject.TryGetComp<ScannerHandler>(out var scannerManager))
+            if (__instance.m_enemyAgent.gameObject.TryGetComp<ScannerHandler>(out _))
             {
                 __instance.m_enemyAgent.ScannerData.m_soundIndex = 0;
             }

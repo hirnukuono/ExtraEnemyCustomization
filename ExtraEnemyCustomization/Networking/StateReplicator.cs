@@ -12,11 +12,16 @@ namespace EEC.Networking
         public S state;
     }
 
+    public sealed class StateContext<S> where S : struct
+    {
+        public bool Registered = false;
+        public Action<S> OnStateChanged = null;
+        public S State;
+    }
+
     public abstract class StateReplicator<S> where S : struct
     {
-        private static readonly HashSet<ushort> _listeningKeys = new(500);
-        private static readonly Dictionary<ushort, Action<S>> _onStateChangeLookup = new(500);
-        private static readonly Dictionary<ushort, S> _stateDataLookup = new(500);
+        private static readonly Dictionary<ushort, StateContext<S>> _lookup = new(500);
 
         public abstract bool ClearOnLevelCleanup { get; }
 
@@ -49,12 +54,12 @@ namespace EEC.Networking
         {
             if (SNet.IsMaster)
             {
-                foreach (var state in _stateDataLookup)
+                foreach (var state in _lookup)
                 {
                     var newState = new ReplicatorPayload<S>()
                     {
                         key = state.Key,
-                        state = state.Value
+                        state = state.Value.State
                     };
 
                     NetworkAPI.InvokeEvent(SetStateName, newState, player, SNet_ChannelType.GameOrderCritical);
@@ -64,44 +69,48 @@ namespace EEC.Networking
 
         public void Register(ushort id, S startState, Action<S> onChanged = null)
         {
-            if (IsRegistered(id))
-                return;
-
-            _listeningKeys.Add(id);
-            _onStateChangeLookup[id] = onChanged;
-            if (_stateDataLookup.TryGetValue(id, out var savedState))
+            if (TryGetContext(id, out var context))
             {
-                _onStateChangeLookup[id]?.Invoke(savedState);
-                OnStateChange(id, savedState);
+                if (context.Registered)
+                    return;
+
+                context.Registered = true;
+                context.OnStateChanged = onChanged;
             }
             else
             {
-                _stateDataLookup[id] = startState;
-                _onStateChangeLookup[id]?.Invoke(startState);
-                OnStateChange(id, startState);
+                context = new StateContext<S>
+                {
+                    Registered = true,
+                    OnStateChanged = onChanged,
+                    State = startState
+                };
+                _lookup[id] = context;
             }
+
+            context.OnStateChanged?.Invoke(context.State);
+            OnStateChange(id, context.State);
         }
 
         public void Deregister(ushort id)
         {
-            if (!IsRegistered(id))
-                return;
+            if (TryGetContext(id, out var context))
+            {
+                if (!context.Registered)
+                    return;
 
-            _listeningKeys.Remove(id);
-            _onStateChangeLookup.Remove(id);
-            _stateDataLookup.Remove(id);
+                _lookup.Remove(id);
+            }
         }
 
         private void Clear()
         {
-            _listeningKeys.Clear();
-            _onStateChangeLookup.Clear();
-            _stateDataLookup.Clear();
+            _lookup.Clear();
         }
 
         public void SetState(ushort id, S state)
         {
-            if (!IsRegistered(id))
+            if (!TryGetContext(id, out var context) || !context.Registered)
                 return;
 
             var newState = new ReplicatorPayload<S>()
@@ -113,31 +122,27 @@ namespace EEC.Networking
             if (SNet.IsMaster)
             {
                 NetworkAPI.InvokeEvent(SetStateName, newState, SNet_ChannelType.GameOrderCritical);
-                _stateDataLookup[id] = state;
+                context.State = state;
 
                 ReceiveSetState_FromMaster(SNet.Master.Lookup, newState);
             }
             else if (SNet.HasMaster)
             {
                 NetworkAPI.InvokeEvent(ChangeRequestName, newState, SNet.Master, SNet_ChannelType.GameOrderCritical);
-                _stateDataLookup[id] = state;
+                context.State = state;
             }
         }
 
         public bool TryGetState(ushort id, out S state)
         {
-            if (!IsRegistered(id))
+            if (!TryGetContext(id, out var context) || !context.Registered)
             {
                 Logger.Error($"KEY: {id} has not registered!");
                 state = default;
                 return false;
             }
 
-            if (!_stateDataLookup.TryGetValue(id, out state))
-            {
-                Logger.Error($"KEY: {id} has not registered!");
-                return false;
-            }
+            state = context.State;
             return true;
         }
 
@@ -145,16 +150,24 @@ namespace EEC.Networking
         {
             var key = statePacket.key;
             var newState = statePacket.state;
-            if (_stateDataLookup.TryGetValue(key, out var savedState))
+            if (TryGetContext(key, out var context))
             {
-                if (IsRegistered(statePacket.key))
+                context.State = newState;
+
+                if (context.Registered)
                 {
-                    _onStateChangeLookup[key]?.Invoke(newState);
+                    context.OnStateChanged?.Invoke(newState);
                     OnStateChange(key, newState);
                 }
-                _stateDataLookup[key] = newState;
             }
-            _stateDataLookup[key] = newState;
+            else
+            {
+                _lookup[key] = new StateContext<S>()
+                {
+                    Registered = false,
+                    State = newState
+                };
+            }
         }
 
         private void ReceiveSetState_FromClient(ulong sender, ReplicatorPayload<S> statePacket)
@@ -165,9 +178,9 @@ namespace EEC.Networking
             SetState(statePacket.key, statePacket.state);
         }
 
-        public bool IsRegistered(ushort id)
+        public bool TryGetContext(ushort id, out StateContext<S> context)
         {
-            return _listeningKeys.Contains(id);
+            return _lookup.TryGetValue(id, out context);
         }
 
         public virtual void OnStateChange(ushort id, S newState)
