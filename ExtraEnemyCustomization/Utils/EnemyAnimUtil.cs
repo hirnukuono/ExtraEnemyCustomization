@@ -10,8 +10,13 @@ namespace EEC.Utils
 {
     public static class EnemyAnimUtil
     {
-        private static readonly Dictionary<EnemyAnimType, int[]> _animHashsLookup = new();
+        private static readonly Dictionary<EnemyAnimType, int[]> _animHashsLookup;
         private static bool _initialized = false;
+
+        static EnemyAnimUtil()
+        {
+            _animHashsLookup = new(Enum.GetValues(typeof(EnemyAnimType)).Length);
+        }
 
         internal static void Initialize()
         {

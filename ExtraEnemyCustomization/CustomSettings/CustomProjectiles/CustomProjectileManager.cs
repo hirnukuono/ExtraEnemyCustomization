@@ -11,8 +11,8 @@ namespace EEC.CustomSettings.CustomProjectiles
     {
         public static bool AssetLoaded { get; internal set; } = false;
 
-        private static readonly Dictionary<byte, ProjectileData> _projDataLookup = new();
-        private static readonly Dictionary<int, ProjectileData> _instanceProjLookup = new();
+        private static readonly Dictionary<byte, ProjectileData> _projDataLookup = new(200);
+        private static readonly Dictionary<int, ProjectileData> _instanceProjLookup = new(200);
 
         static CustomProjectileManager()
         {

@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace EEC.EnemyCustomizations.Models
 {
-    public sealed class ScannerCustom : EnemyCustomBase, IEnemyPrefabBuiltEvent, IEnemySpawnedEvent, IEnemyAgentModeEvent
+    public sealed class ScannerCustom : EnemyCustomBase, IEnemyPrefabBuiltEvent, IEnemyAgentModeEvent
     {
         internal static readonly Dictionary<uint, ScannerColorData> _colorLookup = new();
 
@@ -114,46 +114,12 @@ namespace EEC.EnemyCustomizations.Models
             agent.gameObject.AddOrGetComponent<ScannerHandler>();
         }
 
-        public void OnSpawned(EnemyAgent agent)
-        {
-            var spawnData = agent.GetSpawnData();
-            switch (spawnData.mode)
-            {
-                //Disallow PathMove ES's Color change
-                case AgentMode.Agressive:
-                    if (agent.ScannerData.m_soundIndex == -1)
-                    {
-                        agent.ScannerData.m_soundIndex = 0;
-                    }
-                    if (OptimizeAfterAwake)
-                    {
-                        agent.ScannerColor = ColorData.WakeupColor;
-                        return;
-                    }
-                    break;
-
-                case AgentMode.Scout:
-                    if (agent.ScannerData.m_soundIndex == -1)
-                    {
-                        agent.ScannerData.m_soundIndex = 0;
-                    }
-                    break;
-            }
-
-            if (agent.gameObject.TryGetComp<ScannerHandler>(out var scannerManager))
-            {
-                if (scannerManager.CurrentMode == AgentMode.Off)
-                {
-                    scannerManager.UpdateAgentMode(spawnData.mode, forceUpdateWithoutTransition: true);
-                }
-            }
-        }
-
         public void OnAgentModeChanged(EnemyAgent agent, AgentMode newMode)
         {
             if (agent.gameObject.TryGetComp<ScannerHandler>(out var scannerManager))
             {
-                scannerManager.UpdateAgentMode(newMode);
+                var forceUpdate = scannerManager.CurrentMode == AgentMode.Off;
+                scannerManager.UpdateAgentMode(newMode, forceUpdate);
             }
         }
     }

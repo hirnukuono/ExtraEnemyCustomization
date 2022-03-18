@@ -35,13 +35,15 @@ namespace EEC.EnemyCustomizations.Models.Handlers
 
         private void OnEnable()
         {
-            _ownerAgent = GetComponent<EnemyAgent>();
+            if (!gameObject.TryGetComp(out _ownerAgent))
+            {
+                Logger.Error("EnemyAgent was missing! - Unable to start ScannerHandler!");
+                Destroy(this);
+                return;
+            }
+
             if (ScannerCustom._colorLookup.TryGetValue(_ownerAgent.EnemyDataID, out _data))
             {
-                UpdateState(out var state);
-                _ownerAgent.ScannerColor = GetStateColor(state);
-                TryDisable();
-
                 this.StartCoroutine(UpdateLoop());
             }
             else

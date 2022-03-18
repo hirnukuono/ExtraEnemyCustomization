@@ -16,6 +16,7 @@ namespace EEC.Networking
         internal static void Initialize()
         {
             EnemyEvents.Spawned += EnemySpawned;
+            EnemyEvents.Despawn += EnemyDespawn;
 
             EnemyAgentModeState.Initialize();
             EnemyAnim.Setup();
@@ -23,10 +24,23 @@ namespace EEC.Networking
 
         private static void EnemySpawned(EnemyAgent agent)
         {
-            EnemyAgentModeState.Register(agent.GlobalID, default, (newState) =>
+            if (agent.TryGetSpawnData(out var spawnData))
             {
-                ConfigManager.FireAgentModeChangedEvent(agent, newState.mode);
-            });
+                var defaultState = new EnemyAgentModeReplicator.State()
+                {
+                    mode = spawnData.mode
+                };
+
+                EnemyAgentModeState.Register(agent.GlobalID, defaultState, (newState) =>
+                {
+                    ConfigManager.FireAgentModeChangedEvent(agent, newState.mode);
+                });
+            }
+        }
+
+        private static void EnemyDespawn(EnemyAgent agent)
+        {
+            EnemyAgentModeState.Deregister(agent.GlobalID);
         }
     }
 }

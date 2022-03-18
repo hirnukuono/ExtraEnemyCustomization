@@ -9,11 +9,11 @@ namespace EEC.Inject
     internal static class Inject_EnemyAgent_Setup
     {
         [HarmonyWrapSafe]
-        internal static void Prefix(EnemyAgent __instance)
+        internal static void Prefix(EnemyAgent __instance, pEnemySpawnData spawnData)
         {
             if (!__instance.m_isSetup)
             {
-                EnemyEvents.OnSpawn(__instance);
+                EnemyEvents.OnSpawn(__instance, spawnData);
             }
             else
             {

@@ -13,7 +13,6 @@ namespace EEC.EnemyCustomizations.Models.Inject
         {
             if (__instance.m_enemyAgent.gameObject.TryGetComp<ScannerHandler>(out var scannerManager))
             {
-                scannerManager.UpdateAgentMode(AgentMode.Agressive);
                 __instance.m_enemyAgent.ScannerData.m_soundIndex = 0;
             }
         }
@@ -41,7 +40,6 @@ namespace EEC.EnemyCustomizations.Models.Inject
         {
             if (__instance.m_enemyAgent.gameObject.TryGetComp<ScannerHandler>(out var scannerManager))
             {
-                scannerManager.UpdateAgentMode(AgentMode.Agressive);
                 __instance.m_enemyAgent.ScannerData.m_soundIndex = 0;
             }
         }

@@ -6,6 +6,7 @@ using Enemies;
 using GameData;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace EEC.Managers
 {
@@ -89,7 +90,6 @@ namespace EEC.Managers
             {
                 if (doAction == null)
                     return;
-
                 if (!_eventsEnemyCache.TryGetValue(agent.EnemyDataID, out var handlers))
                     return;
 
@@ -196,30 +196,13 @@ namespace EEC.Managers
 
         internal static void FireSpawnedEvent(EnemyAgent agent)
         {
-            if (Global.UsingLazySpawnedEvent)
+            _enemySpawnedHolder.FireEvent(agent, (e) =>
             {
-                HeavyJobWorker.Enqueue(() =>
-                {
-                    _enemySpawnedHolder.FireEvent(agent, (e) =>
-                    {
-                        if (agent == null || agent.WasCollected || !agent.Alive)
-                            return;
+                e.OnSpawned(agent);
+            });
 
-                        e.OnSpawned(agent);
-                    });
-
-                    CustomizationAPI.OnSpawnCustomizationDone_Internal(agent);
-                });
-            }
-            else
-            {
-                _enemySpawnedHolder.FireEvent(agent, (e) =>
-                {
-                    e.OnSpawned(agent);
-                });
-
-                CustomizationAPI.OnSpawnCustomizationDone_Internal(agent);
-            }
+            CustomizationAPI.OnSpawnCustomizationDone_Internal(agent);
+            return;
         }
 
         internal static void FireDeadEvent(EnemyAgent agent)

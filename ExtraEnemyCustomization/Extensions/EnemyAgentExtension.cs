@@ -1,4 +1,5 @@
 ﻿using AIGraph;
+using EEC.Managers.Properties;
 using EEC.Utils;
 using Enemies;
 using SNetwork;
@@ -31,14 +32,19 @@ namespace EEC
             return EnemyProperty<T>.TryGet(agent, out property);
         }
 
-        public static pEnemySpawnData GetSpawnData(this EnemyAgent agent)
+        public static bool TryGetSpawnData(this EnemyAgent agent, out pEnemySpawnData spawnData)
         {
-            return agent.Sync.Replicator.Cast<EnemyReplicator>().GetSpawnData();
+            return EnemySpawnDataManager.TryGet(agent.GlobalID, out spawnData);
         }
 
         public static bool TryGetEnemyGroup(this EnemyAgent agent, out EnemyGroup group)
         {
-            var spawnData = agent.GetSpawnData();
+            if (!agent.TryGetSpawnData(out var spawnData))
+            {
+                group = null;
+                return false;
+            }
+
             if (spawnData.groupReplicatorKey == 0)
             {
                 group = null;

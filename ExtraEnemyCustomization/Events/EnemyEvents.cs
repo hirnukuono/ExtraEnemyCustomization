@@ -2,11 +2,12 @@
 
 namespace EEC.Events
 {
+    public delegate void EnemyAgentHandlerWithSpawnData(EnemyAgent agent, pEnemySpawnData spawnData);
     public delegate void EnemyAgentHandler(EnemyAgent agent);
 
     public static class EnemyEvents
     {
-        public static event EnemyAgentHandler Spawn;
+        public static event EnemyAgentHandlerWithSpawnData Spawn;
 
         public static event EnemyAgentHandler Spawned;
 
@@ -14,9 +15,9 @@ namespace EEC.Events
 
         public static event EnemyAgentHandler Despawned;
 
-        internal static void OnSpawn(EnemyAgent agent)
+        internal static void OnSpawn(EnemyAgent agent, pEnemySpawnData spawnData)
         {
-            Spawn?.Invoke(agent);
+            Spawn?.Invoke(agent, spawnData);
         }
 
         internal static void OnSpawned(EnemyAgent agent)

@@ -32,7 +32,10 @@ namespace EEC.EnemyCustomizations.Properties
 
         public void OnSpawned(EnemyAgent agent)
         {
-            if (agent.GetSpawnData().mode != AgentMode.Agressive)
+            if (!agent.TryGetSpawnData(out var spawnData))
+                return;
+
+            if (spawnData.mode != AgentMode.Agressive)
                 return;
 
             if (OnlyForSurvivalWave)

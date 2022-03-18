@@ -14,9 +14,9 @@ namespace EEC.Networking
 
     public abstract class StateReplicator<S> where S : struct
     {
-        private static readonly HashSet<ushort> _listeningKeys = new();
-        private static readonly Dictionary<ushort, Action<S>> _onStateChangeLookup = new();
-        private static readonly Dictionary<ushort, S> _stateDataLookup = new();
+        private static readonly HashSet<ushort> _listeningKeys = new(500);
+        private static readonly Dictionary<ushort, Action<S>> _onStateChangeLookup = new(500);
+        private static readonly Dictionary<ushort, S> _stateDataLookup = new(500);
 
         public abstract bool ClearOnLevelCleanup { get; }
 

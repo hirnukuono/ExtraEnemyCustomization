@@ -29,7 +29,7 @@ namespace EEC.Utils.Unity
 
     public abstract class WaitForCollection<T>
     {
-        private readonly Dictionary<float, T> _lookup = new();
+        private readonly Dictionary<float, T> _lookup = new(50);
         private T _temp;
 
         public T this[float time]
