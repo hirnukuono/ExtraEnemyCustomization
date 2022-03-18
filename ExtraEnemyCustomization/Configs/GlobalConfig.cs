@@ -4,13 +4,6 @@ namespace EEC.Configs
 {
     public sealed class GlobalConfig : Config
     {
-        #region Performance
-
-        [JsonPropertyName("Performance.LazySpawnedEvent")]
-        public bool UsingLazySpawnedEvent { get; set; } = false;
-
-        #endregion Performance
-
         #region FlyerStuck
 
         [JsonPropertyName("Flyer.StuckCheck.Enabled")]
