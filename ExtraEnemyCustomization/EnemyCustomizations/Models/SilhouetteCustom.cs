@@ -1,6 +1,7 @@
 ﻿using AssetShards;
 using EEC.EnemyCustomizations.Models.Handlers;
 using Enemies;
+using GameData;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -39,7 +40,7 @@ namespace EEC.EnemyCustomizations.Models
             }
         }
 
-        public void OnPrefabBuilt(EnemyAgent agent)
+        public void OnPrefabBuilt(EnemyAgent agent, EnemyDataBlock enemyData)
         {
             var renderers = agent.GetComponentsInChildren<Renderer>(true);
             var rendererList = new List<Renderer>();

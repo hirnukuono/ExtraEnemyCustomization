@@ -1,4 +1,5 @@
 ﻿using Enemies;
+using GameData;
 using System;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ namespace EEC.EnemyCustomizations.Models
             return "MedelRef";
         }
 
-        public void OnPrefabBuilt(EnemyAgent agent)
+        public void OnPrefabBuilt(EnemyAgent agent, EnemyDataBlock enemyData)
         {
             var modelRef = agent.ModelRef;
             var changeCache = new ModelRefCache();

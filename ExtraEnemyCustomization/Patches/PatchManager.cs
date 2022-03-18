@@ -20,8 +20,7 @@ namespace EEC.Patches
             if (!ConfigManager.Global.UsingFlyerStuckCheck)
                 return;
 
-            var enemyBehaviourBlock = EnemyBehaviorDataBlock.GetBlock(enemyData.BehaviorDataId);
-            if (enemyBehaviourBlock == null)
+            if (!enemyData.TryGetBehaviourBlock(out var enemyBehaviourBlock))
                 return;
 
             if (!enemyBehaviourBlock.IsFlyer)

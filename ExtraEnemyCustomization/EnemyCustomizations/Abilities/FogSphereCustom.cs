@@ -1,6 +1,7 @@
 ﻿using EEC.EnemyCustomizations.Shared;
 using EEC.Utils.Json.Elements;
 using Enemies;
+using GameData;
 using UnityEngine;
 
 namespace EEC.EnemyCustomizations.Abilities
@@ -30,7 +31,7 @@ namespace EEC.EnemyCustomizations.Abilities
             return "FogSphere";
         }
 
-        public void OnPrefabBuilt(EnemyAgent agent)
+        public void OnPrefabBuilt(EnemyAgent agent, EnemyDataBlock enemyData)
         {
             var eabFog = agent.GetComponentInChildren<EAB_FogSphere>(true);
             if (eabFog == null)

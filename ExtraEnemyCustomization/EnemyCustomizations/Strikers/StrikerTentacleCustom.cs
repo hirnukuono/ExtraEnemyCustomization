@@ -1,12 +1,13 @@
 ﻿using EEC.Utils.Json.Elements;
 using Enemies;
+using GameData;
 using System;
 
 namespace EEC.EnemyCustomizations.Strikers
 {
     using EaseFunc = Func<float, float, float, float, float>;
 
-    public sealed class StrikerTentacleCustom : EnemyCustomBase, IEnemySpawnedEvent
+    public sealed class StrikerTentacleCustom : EnemyCustomBase, IEnemyPrefabBuiltEvent
     {
         public GPUCurvyType[] TentacleTypes { get; set; } = Array.Empty<GPUCurvyType>();
         public TentacleSettingData[] TentacleSettings { get; set; } = Array.Empty<TentacleSettingData>();
@@ -16,7 +17,7 @@ namespace EEC.EnemyCustomizations.Strikers
             return "Tentacle";
         }
 
-        public void OnSpawned(EnemyAgent agent)
+        public void OnPrefabBuilt(EnemyAgent agent, EnemyDataBlock enemyData)
         {
             var tentacleComps = agent.GetComponentsInChildren<MovingEnemyTentacleBase>(true);
             var isTypeEnabled = TentacleTypes.Length > 0;

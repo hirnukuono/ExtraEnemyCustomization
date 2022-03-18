@@ -1,5 +1,6 @@
 ﻿using EEC.Managers.Assets;
 using Enemies;
+using GameData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace EEC.EnemyCustomizations.Models
             MaterialSets = list.ToArray();
         }
 
-        public void OnPrefabBuilt(EnemyAgent agent)
+        public void OnPrefabBuilt(EnemyAgent agent, EnemyDataBlock enemyData)
         {
             var charMats = agent.GetComponentInChildren<CharacterMaterialHandler>().m_materialRefs;
             foreach (var matRef in charMats)

@@ -172,7 +172,7 @@ namespace EEC.Managers
 
                 RegisterTargetEnemyLookup(block);
                 CacheEnemyEventBuffer(block.persistentID);
-                FirePrefabBuiltEvent(enemyAgentComp);
+                FirePrefabBuiltEvent(enemyAgentComp, block);
 
                 EnemyPrefabBuilt?.Invoke(enemyAgentComp, block);
             }
@@ -186,11 +186,11 @@ namespace EEC.Managers
             }
         }
 
-        internal static void FirePrefabBuiltEvent(EnemyAgent agent)
+        internal static void FirePrefabBuiltEvent(EnemyAgent agent, EnemyDataBlock enemyData)
         {
             _enemyPrefabBuiltHolder.FireEvent(agent, (e) =>
             {
-                e.OnPrefabBuilt(agent);
+                e.OnPrefabBuilt(agent, enemyData);
             });
         }
 

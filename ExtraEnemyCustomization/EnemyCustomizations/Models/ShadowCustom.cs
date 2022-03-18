@@ -1,4 +1,5 @@
 ﻿using Enemies;
+using GameData;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -15,7 +16,7 @@ namespace EEC.EnemyCustomizations.Models
             return "Shadow";
         }
 
-        public void OnPrefabBuilt(EnemyAgent agent)
+        public void OnPrefabBuilt(EnemyAgent agent, EnemyDataBlock enemyData)
         {
             agent.RequireTagForDetection = RequireTagForDetection;
 

@@ -1,6 +1,7 @@
 ﻿using Agents;
 using EEC.EnemyCustomizations.Models.Handlers;
 using Enemies;
+using GameData;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using UnityEngine;
@@ -109,7 +110,7 @@ namespace EEC.EnemyCustomizations.Models
             _colorLookup.Clear();
         }
 
-        public void OnPrefabBuilt(EnemyAgent agent)
+        public void OnPrefabBuilt(EnemyAgent agent, EnemyDataBlock enemyData)
         {
             agent.gameObject.AddOrGetComponent<ScannerHandler>();
         }

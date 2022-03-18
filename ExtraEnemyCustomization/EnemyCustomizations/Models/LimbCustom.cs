@@ -1,11 +1,12 @@
 ﻿using EEC.Utils.Json.Elements;
 using Enemies;
+using GameData;
 using System;
 using System.Linq;
 
 namespace EEC.EnemyCustomizations.Models
 {
-    public sealed class LimbCustom : EnemyCustomBase, IEnemySpawnedEvent
+    public sealed class LimbCustom : EnemyCustomBase, IEnemyPrefabBuiltEvent
     {
         public LimbData[] Limbs { get; set; } = Array.Empty<LimbData>();
 
@@ -14,11 +15,18 @@ namespace EEC.EnemyCustomizations.Models
             return "Limb";
         }
 
-        public void OnSpawned(EnemyAgent agent)
+        public void OnPrefabBuilt(EnemyAgent agent, EnemyDataBlock enemyData)
         {
-            var allLimbData = Limbs.SingleOrDefault(x => x.LimbName.InvariantEquals("All", ignoreCase: true));
+            var damageBase = agent.GetComponentInChildren<Dam_EnemyDamageBase>();
+            if (damageBase == null)
+                return;
 
-            foreach (var limb in agent.Damage.DamageLimbs)
+            if (!enemyData.TryGetBalancingBlock(out var balancingBlock))
+                return;
+
+            var allLimbData = Limbs.SingleOrDefault(x => x.LimbName.InvariantEquals("All", ignoreCase: true));
+            var healthData = balancingBlock.Health;
+            foreach (var limb in damageBase.DamageLimbs)
             {
                 if (Logger.VerboseLogAllowed)
                     LogVerbose($" - Found Limb: {limb.name}");
@@ -40,7 +48,6 @@ namespace EEC.EnemyCustomizations.Models
                 limb.m_healthMax = newHealth;
 
                 var isCustom = (limbCustomData.LimbType == LimbDamageType.ArmorCustom || limbCustomData.LimbType == LimbDamageType.WeakspotCustom);
-                var healthData = agent.EnemyBalancingData.Health;
                 switch (limbCustomData.LimbType)
                 {
                     case LimbDamageType.Normal:
