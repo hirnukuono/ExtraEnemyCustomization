@@ -18,6 +18,7 @@ namespace EEC.CustomSettings.CustomProjectiles
         public ValueBase HomingDelay { get; set; } = ValueBase.Unchanged;
         public ValueBase HomingStrength { get; set; } = ValueBase.Unchanged;
         public MultiplierShiftSetting HomingStrengthChange { get; set; } = new();
+        public ValueBase LifeTime { get; set; } = ValueBase.Unchanged;
         public Color TrailColor { get; set; } = Color.yellow;
         public ValueBase TrailTime { get; set; } = ValueBase.Unchanged;
         public ValueBase TrailWidth { get; set; } = ValueBase.Unchanged;
