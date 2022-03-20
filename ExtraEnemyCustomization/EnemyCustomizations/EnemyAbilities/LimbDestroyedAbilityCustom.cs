@@ -1,13 +1,9 @@
 ﻿using EEC.EnemyCustomizations.EnemyAbilities.Abilities;
 using EEC.Utils.Json.Elements;
 using Enemies;
-using GTFO.API.Utilities;
 using SNetwork;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EEC.EnemyCustomizations.EnemyAbilities
 {
