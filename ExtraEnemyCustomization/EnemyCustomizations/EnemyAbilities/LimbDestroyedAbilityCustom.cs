@@ -42,10 +42,13 @@ namespace EEC.EnemyCustomizations.EnemyAbilities
 
                 limb.add_OnLimbDestroyed(new Action(() =>
                 {
-                    if (SNet.IsMaster && setting.AllowedMode.IsMatch(agent))
-                    {
-                        DoTriggerDelayed(setting.Ability, agent, setting.Delay);
-                    }
+                    if (!SNet.IsMaster)
+                        return;
+
+                    if (!setting.AllowedMode.IsMatch(agent))
+                        return;
+
+                    DoTriggerDelayed(setting.Ability, agent, setting.Delay);
                 }));
             }
         }

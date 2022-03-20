@@ -2,6 +2,7 @@
 using EEC.Utils.Json.Elements;
 using Enemies;
 using GTFO.API.Utilities;
+using SNetwork;
 using System;
 using System.Threading.Tasks;
 
@@ -18,6 +19,9 @@ namespace EEC.EnemyCustomizations.EnemyAbilities
         {
             foreach (var ab in Abilities)
             {
+                if (!SNet.IsMaster)
+                    return;
+
                 if (!ab.AllowedMode.IsMatch(agent))
                     return;
 
