@@ -38,11 +38,10 @@ namespace EEC.EnemyCustomizations.Models.Handlers
 
             yield return WaitFor.Seconds[StartDelay];
 
-            var yielder = WaitFor.Seconds[_updateDelay];
             while (true)
             {
                 DoUpdate();
-                yield return yielder;
+                yield return WaitFor.Seconds[_updateDelay];
             }
         }
 
