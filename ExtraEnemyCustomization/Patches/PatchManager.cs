@@ -3,7 +3,6 @@ using EEC.Managers;
 using EEC.Patches.Handlers;
 using Enemies;
 using GameData;
-using SNetwork;
 
 namespace EEC.Patches
 {
