@@ -26,6 +26,9 @@ namespace EEC.CustomSettings.CustomProjectiles
         public ValueBase GlowRange { get; set; } = ValueBase.Unchanged;
         public ValueBase Damage { get; set; } = ValueBase.Unchanged;
         public ValueBase Infection { get; set; } = ValueBase.Unchanged;
+        public SpawnProjectileSetting SpawnProjectileOnCollideWorld { get; set; } = new();
+        public SpawnProjectileSetting SpawnProjectileOnCollidePlayer { get; set; } = new();
+        public SpawnProjectileSetting SpawnProjectileOnLifeTimeDone { get; set; } = new();
         public ExplosionSetting Explosion { get; set; } = new();
         public KnockbackSetting Knockback { get; set; } = new();
         public BleedSetting Bleed { get; set; } = new();

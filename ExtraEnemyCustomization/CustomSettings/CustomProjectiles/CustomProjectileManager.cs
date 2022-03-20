@@ -21,18 +21,35 @@ namespace EEC.CustomSettings.CustomProjectiles
                 _instanceProjLookup.Clear();
             };
 
-            ProjectileEvents.CollidedWorld += (ProjectileBase proj, GameObject _) =>
+            ProjectileEvents.CollidedWorld += (ProjectileBase proj, GameObject obj) =>
             {
                 var instanceID = proj.gameObject.GetInstanceID();
                 var data = GetInstanceData(instanceID);
-                data?.Settings?.Collision(proj.transform.position);
+                if (data != null && data.Settings != null)
+                {
+                    var settings = data.Settings;
+                    settings.Collision(proj.transform.position);
+                    settings.SpawnProjectileOnCollideWorld?.DoSpawn(proj, (obj.transform.position - proj.transform.position).normalized);
+                }
             };
 
             ProjectileEvents.CollidedPlayer += (ProjectileBase proj, PlayerAgent agent) =>
             {
                 var instanceID = proj.gameObject.GetInstanceID();
                 var data = GetInstanceData(instanceID);
-                data?.Settings?.Collision(proj.transform.position, agent);
+                if (data != null && data.Settings != null)
+                {
+                    var settings = data.Settings;
+                    settings.Collision(proj.transform.position, agent);
+                    settings?.SpawnProjectileOnCollidePlayer?.DoSpawn(proj, (agent.Position - proj.transform.position).normalized);
+                }
+            };
+
+            ProjectileEvents.LifeTimeDone += (ProjectileTargeting proj) =>
+            {
+                var instanceID = proj.gameObject.GetInstanceID();
+                var data = GetInstanceData(instanceID);
+                data?.Settings?.SpawnProjectileOnLifeTimeDone?.DoSpawn(proj, proj.TravelDirection);
             };
         }
 
