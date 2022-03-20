@@ -20,7 +20,6 @@ namespace EEC.Utils.Json.Elements
         {
             if (Count < 2)
             {
-                Logger.Error($"Item Count was below 2!");
                 curve = null;
                 return false;
             }
