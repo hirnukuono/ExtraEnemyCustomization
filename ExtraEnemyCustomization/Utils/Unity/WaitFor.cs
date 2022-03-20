@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace EEC.Utils.Unity
@@ -29,19 +30,29 @@ namespace EEC.Utils.Unity
 
     public abstract class WaitForCollection<T>
     {
-        private readonly Dictionary<float, T> _lookup = new(50);
+        private readonly Dictionary<int, T> _lookup = new(100);
         private T _temp;
 
         public T this[float time]
         {
             get
             {
-                if (_lookup.TryGetValue(time, out _temp))
+                int ms;
+                if (time <= 0.0f)
+                {
+                    ms = 0; 
+                }
+                else
+                {
+                    ms = Mathf.RoundToInt(time * 1000.0f);
+                }
+
+                if (_lookup.TryGetValue(ms, out _temp))
                 {
                     return _temp;
                 }
                 _temp = CreateInstance(time);
-                _lookup[time] = _temp;
+                _lookup[ms] = _temp;
                 return _temp;
             }
         }
