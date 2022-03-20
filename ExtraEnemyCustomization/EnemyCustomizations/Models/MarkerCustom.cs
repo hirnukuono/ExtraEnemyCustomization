@@ -1,6 +1,7 @@
 ﻿using EEC.EnemyCustomizations.Models.Handlers;
 using EEC.Events;
 using EEC.Managers.Assets;
+using EEC.Utils;
 using Enemies;
 using System;
 using UnityEngine;
@@ -125,8 +126,8 @@ namespace EEC.EnemyCustomizations.Models
                 if (BlinkMinDelay >= 0.0f && BlinkMinDelay < BlinkMaxDelay)
                 {
                     float duration = Math.Min(BlinkDuration, agent.EnemyBalancingData.TagTime);
-                    float time = 0.4f + UnityEngine.Random.RandomRange(BlinkMinDelay, BlinkMaxDelay);
-                    for (; time <= duration; time += UnityEngine.Random.RandomRange(BlinkMinDelay, BlinkMaxDelay))
+                    float time = 0.4f + Rand.Range(BlinkMinDelay, BlinkMaxDelay);
+                    for (; time <= duration; time += Rand.Range(BlinkMinDelay, BlinkMaxDelay))
                     {
                         CoroutineManager.BlinkIn(marker.m_enemySubObj.gameObject, time);
                     }
