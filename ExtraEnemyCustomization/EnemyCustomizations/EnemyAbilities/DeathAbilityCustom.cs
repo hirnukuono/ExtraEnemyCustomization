@@ -21,17 +21,8 @@ namespace EEC.EnemyCustomizations.EnemyAbilities
                 if (!ab.AllowedMode.IsMatch(agent))
                     return;
 
-                _ = DoTriggerDelayed(ab.Ability, agent, ab.Delay);
+                DoTriggerDelayed(ab.Ability, agent, ab.Delay);
             }
-        }
-
-        private static async Task DoTriggerDelayed(IAbility ability, EnemyAgent agent, float delay)
-        {
-            await Task.Delay((int)Math.Round(delay * 1000.0f));
-            ThreadDispatcher.Dispatch(() =>
-            {
-                ability?.TriggerSync(agent);
-            });
         }
     }
 

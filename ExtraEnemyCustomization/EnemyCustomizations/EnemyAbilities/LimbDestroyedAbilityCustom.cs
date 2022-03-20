@@ -44,19 +44,10 @@ namespace EEC.EnemyCustomizations.EnemyAbilities
                 {
                     if (SNet.IsMaster && setting.AllowedMode.IsMatch(agent))
                     {
-                        _ = DoTriggerDelayed(setting.Ability, agent, setting.Delay);
+                        DoTriggerDelayed(setting.Ability, agent, setting.Delay);
                     }
                 }));
             }
-        }
-
-        private static async Task DoTriggerDelayed(IAbility ability, EnemyAgent agent, float delay)
-        {
-            await Task.Delay((int)Math.Round(delay * 1000.0f));
-            ThreadDispatcher.Dispatch(() =>
-            {
-                ability?.TriggerSync(agent);
-            });
         }
     }
 
