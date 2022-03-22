@@ -1,6 +1,7 @@
 ﻿using EEC.EnemyCustomizations.Shared;
 using EEC.Utils.Json.Elements;
 using Player;
+using System.Text.Json.Serialization;
 using UnityEngine;
 
 namespace EEC.CustomSettings.CustomProjectiles
@@ -26,15 +27,18 @@ namespace EEC.CustomSettings.CustomProjectiles
         public ValueBase GlowRange { get; set; } = ValueBase.Unchanged;
         public ValueBase Damage { get; set; } = ValueBase.Unchanged;
         public ValueBase Infection { get; set; } = ValueBase.Unchanged;
-        public SpawnProjectileSetting SpawnProjectileOnCollideWorld { get; set; } = new();
-        public SpawnProjectileSetting SpawnProjectileOnCollidePlayer { get; set; } = new();
-        public SpawnProjectileSetting SpawnProjectileOnLifeTimeDone { get; set; } = new();
+        [JsonPropertyName("SpawnProjectileOnCollideWorld")]
+        public SpawnProjectileSetting SpawnProjColWorld { get; set; } = new();
+        [JsonPropertyName("SpawnProjectileOnCollidePlayer")]
+        public SpawnProjectileSetting SpawnProjColPlayer { get; set; } = new();
+        [JsonPropertyName("SpawnProjectileOnLifeTimeDone")]
+        public SpawnProjectileSetting SpawnProjLifeDone { get; set; } = new();
         public ExplosionSetting Explosion { get; set; } = new();
         public KnockbackSetting Knockback { get; set; } = new();
         public BleedSetting Bleed { get; set; } = new();
         public DrainStaminaSetting DrainStamina { get; set; } = new();
 
-        public void Collision(Vector3 projectilePosition, PlayerAgent player = null)
+        public void DoCollisionEffect(Vector3 projectilePosition, PlayerAgent player = null)
         {
             if (Explosion?.Enabled ?? false)
                 Explosion.DoExplode(projectilePosition);
@@ -51,5 +55,33 @@ namespace EEC.CustomSettings.CustomProjectiles
             if (DrainStamina?.Enabled ?? false)
                 DrainStamina.DoDrain(player);
         }
+
+        public void DoDestroyEffect(ProjectileBase projectile, ProjectileDestroyedReason reason)
+        {
+            if (projectile.TryGetOwner(out var owner))
+            {
+                switch (reason)
+                {
+                    case ProjectileDestroyedReason.CollideWorld:
+                        SpawnProjColWorld?.DoSpawn(owner, projectile.m_targetAgent, projectile.transform, keepTrack: false);
+                        break;
+
+                    case ProjectileDestroyedReason.CollidePlayer:
+                        SpawnProjColPlayer?.DoSpawn(owner, projectile.m_targetAgent, projectile.transform, keepTrack: false);
+                        break;
+
+                    case ProjectileDestroyedReason.LifeTimeDone:
+                        SpawnProjLifeDone?.DoSpawn(owner, projectile.m_targetAgent, projectile.transform, keepTrack: false);
+                        break;
+                }
+            }
+        }
+    }
+
+    public enum ProjectileDestroyedReason
+    {
+        CollideWorld,
+        CollidePlayer,
+        LifeTimeDone
     }
 }

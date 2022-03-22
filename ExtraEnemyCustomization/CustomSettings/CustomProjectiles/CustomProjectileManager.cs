@@ -25,31 +25,31 @@ namespace EEC.CustomSettings.CustomProjectiles
             {
                 var instanceID = proj.gameObject.GetInstanceID();
                 var data = GetInstanceData(instanceID);
-                if (data != null && data.Settings != null)
-                {
-                    var settings = data.Settings;
-                    settings.Collision(proj.transform.position);
-                    settings.SpawnProjectileOnCollideWorld?.DoSpawn(proj, (obj.transform.position - proj.transform.position).normalized);
-                }
+                if (data == null || data.Settings == null)
+                    return;
+
+                var settings = data.Settings;
+                settings.DoCollisionEffect(proj.transform.position);
+                settings.DoDestroyEffect(proj, ProjectileDestroyedReason.CollideWorld);
             };
 
             ProjectileEvents.CollidedPlayer += (ProjectileBase proj, PlayerAgent agent) =>
             {
                 var instanceID = proj.gameObject.GetInstanceID();
                 var data = GetInstanceData(instanceID);
-                if (data != null && data.Settings != null)
-                {
-                    var settings = data.Settings;
-                    settings.Collision(proj.transform.position, agent);
-                    settings?.SpawnProjectileOnCollidePlayer?.DoSpawn(proj, (agent.Position - proj.transform.position).normalized);
-                }
+                if (data == null || data.Settings == null)
+                    return;
+
+                var settings = data.Settings;
+                settings.DoCollisionEffect(proj.transform.position, agent);
+                settings.DoDestroyEffect(proj, ProjectileDestroyedReason.CollidePlayer);
             };
 
             ProjectileEvents.LifeTimeDone += (ProjectileTargeting proj) =>
             {
                 var instanceID = proj.gameObject.GetInstanceID();
                 var data = GetInstanceData(instanceID);
-                data?.Settings?.SpawnProjectileOnLifeTimeDone?.DoSpawn(proj, proj.TravelDirection);
+                data?.Settings?.DoDestroyEffect(proj, ProjectileDestroyedReason.LifeTimeDone);
             };
         }
 

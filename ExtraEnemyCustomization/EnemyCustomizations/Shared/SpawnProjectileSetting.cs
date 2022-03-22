@@ -25,7 +25,7 @@ namespace EEC.EnemyCustomizations.Shared
         public float ShotSpreadYMin { get; set; } = 0.0f;
         public float ShotSpreadYMax { get; set; } = 0.0f;
 
-        public void DoSpawn(EnemyAgent owner, Agent target, Transform fireAlign)
+        public void DoSpawn(EnemyAgent owner, Agent target, Transform fireAlign, bool keepTrack)
         {
             if (!Enabled)
                 return;
@@ -37,7 +37,8 @@ namespace EEC.EnemyCustomizations.Shared
             InLevelCoroutine.Start(SpawnProjectiles(new SpawnProjectileData()
             {
                 Target = target,
-                Position = fireAlign.position,
+                Align = fireAlign,
+                KeepTrackAlign = keepTrack,
                 BaseDirection = direction,
                 OwnerID = owner.GlobalID,
                 UpVector = fireAlign.up,
@@ -45,68 +46,16 @@ namespace EEC.EnemyCustomizations.Shared
             }));
         }
 
-        public void DoSpawn(ProjectileBase projectile, Vector3 direction)
-        {
-            if (!Enabled)
-                return;
-
-            if (!SNet.IsMaster)
-                return;
-
-            if (BackwardDirection)
-            {
-                direction *= -1.0f;
-            }
-
-            ushort ownerID = 1;
-            if (projectile.TryGetOwner(out var agent))
-            {
-                ownerID = agent.GlobalID;
-            }
-
-            InLevelCoroutine.Start(SpawnProjectiles(new SpawnProjectileData()
-            {
-                Target = projectile.m_targetAgent,
-                Position = projectile.transform.position,
-                BaseDirection = direction,
-                OwnerID = ownerID,
-                UpVector = projectile.transform.up,
-                RightVector = projectile.transform.right
-            }));
-        }
-
-        public void DoSpawn(ProjectileTargeting projectile, Vector3 direction)
-        {
-            if (!Enabled)
-                return;
-
-            if (!SNet.IsMaster)
-                return;
-
-            if (BackwardDirection)
-            {
-                direction *= -1.0f;
-            }
-
-            ushort ownerID = 1;
-            if (projectile.TryGetOwner(out var agent))
-            {
-                ownerID = agent.GlobalID;
-            }
-
-            InLevelCoroutine.Start(SpawnProjectiles(new SpawnProjectileData()
-            {
-                Target = projectile.m_targetAgent,
-                Position = projectile.transform.position,
-                BaseDirection = direction,
-                OwnerID = ownerID,
-                UpVector = projectile.transform.up,
-                RightVector = projectile.transform.right
-            }));
-        }
-
         private IEnumerator SpawnProjectiles(SpawnProjectileData data)
         {
+            if (data.Align == null)
+                yield break;
+
+            if (data.KeepTrackAlign)
+            {
+                data.LastSavedPosition = data.Align.position;
+            }
+
             bool shouldWaitDelay = Delay > 0.0f;
             bool burstMode = BurstCount > 1;
             for (int i = 0; i < Count; i++)
@@ -150,10 +99,27 @@ namespace EEC.EnemyCustomizations.Shared
     public struct SpawnProjectileData
     {
         public Agent Target;
-        public Vector3 Position;
+        public Transform Align;
+        public Vector3 LastSavedPosition;
+        public bool KeepTrackAlign;
         public Vector3 BaseDirection;
         public ushort OwnerID;
         public Vector3 UpVector;
         public Vector3 RightVector;
+
+        public Vector3 Position
+        {
+            get
+            {
+                if (KeepTrackAlign && Align != null)
+                {
+                    return Align.position;
+                }
+                else
+                {
+                    return LastSavedPosition;
+                }
+            }
+        }
     }
 }
