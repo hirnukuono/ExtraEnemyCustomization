@@ -11,6 +11,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         public ValueBase Damage { get; set; } = ValueBase.Zero;
         public Color LightColor { get; set; } = new(1, 0.2f, 0, 1);
         public bool KillInflictor { get; set; } = true;
+        public bool UseRagdollPosition { get; set; } = true;
         public bool UseExplosionCounter { get; set; } = false;
         public int AllowedExplosionCount { get; set; } = 1;
         public float EnemyDamageMulti { get; set; } = 1.0f;
@@ -47,39 +48,13 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
                 counter.Count++;
             }
 
-            if (Ability.KillInflictor && Agent.Alive)
-            {
-                Agent.Damage.ExplosionDamage(Agent.Damage.HealthMax, Vector3.zero, Vector3.zero);
-            }
-
-            var damage = Ability.Damage.GetAbsValue(PlayerData.MaxHealth);
-
             var position = Agent.EyePosition;
-            GetRagdollPosition(ref position);
-            ExplosionManager.DoExplosion(new ExplosionData()
+            if (Ability.UseRagdollPosition)
             {
-                position = position,
-                damage = damage,
-                enemyMulti = Ability.EnemyDamageMulti,
-                minRange = Ability.MinRange,
-                maxRange = Ability.MaxRange,
-                lightColor = Ability.LightColor
-            });
-
-            var noise = new NM_NoiseData()
-            {
-                noiseMaker = null,
-                position = position,
-                radiusMin = Ability.NoiseMinRange,
-                radiusMax = Ability.NoiseMaxRange,
-                yScale = 1,
-                node = Agent.CourseNode,
-                type = Ability.NoiseType,
-                includeToNeightbourAreas = true,
-                raycastFirstNode = false
-            };
-            NoiseManager.MakeNoise(noise);
-
+                GetRagdollPosition(ref position);
+            }
+            Ability.DoExplode(Agent.CourseNode, position);
+            Ability.TryKillInflictor(Agent);
             DoExit();
         }
 

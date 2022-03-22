@@ -75,12 +75,7 @@ namespace EEC.EnemyCustomizations.Abilities
                     return;
 
                 ProjectileData.DoExplode(projectile.transform.position);
-
-                if (ProjectileData.KillInflictor)
-                {
-                    var damage = owner.Damage;
-                    damage.ExplosionDamage(damage.HealthMax, Vector3.zero, Vector3.zero);
-                }
+                ProjectileData.TryKillInflictor(owner);
             }
             else if (projectile.TryGetOwnerEnemyDataID(out var ownerID))
             {
@@ -94,12 +89,7 @@ namespace EEC.EnemyCustomizations.Abilities
         protected override void OnApplyEffect(ExplosionSetting setting, PlayerAgent player, EnemyAgent inflictor)
         {
             setting.DoExplode(player);
-
-            if (setting.KillInflictor)
-            {
-                var damage = inflictor.Damage;
-                damage.ExplosionDamage(damage.HealthMax, Vector3.zero, Vector3.zero);
-            }
+            setting.TryKillInflictor(inflictor);
         }
 
         private static bool IsOwnerDestroyed(ProjectileBase projectile, out EnemyAgent agent)
@@ -115,12 +105,5 @@ namespace EEC.EnemyCustomizations.Abilities
 
             return false;
         }
-    }
-
-    [Flags]
-    public enum ProjectileExplosionTarget
-    {
-        Player = 1,
-        World = 2
     }
 }
