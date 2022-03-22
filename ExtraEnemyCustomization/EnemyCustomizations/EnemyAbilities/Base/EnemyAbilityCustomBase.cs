@@ -1,7 +1,9 @@
 ﻿using EEC.EnemyCustomizations.EnemyAbilities.Abilities;
 using Enemies;
+using GTFO.API.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EEC.EnemyCustomizations.EnemyAbilities
 {
@@ -48,6 +50,18 @@ namespace EEC.EnemyCustomizations.EnemyAbilities
             }
 
             OnSpawnedPost(agent);
+        }
+
+        public static void DoTriggerDelayed(IAbility ability, EnemyAgent agent, float delay)
+        {
+            Task.Factory.StartNew(async () =>
+            {
+                await Task.Delay((int)Math.Round(delay * 1000.0f));
+                ThreadDispatcher.Dispatch(() =>
+                {
+                    ability?.TriggerSync(agent);
+                });
+            });
         }
 
         public virtual void OnBehaviourAssigned(EnemyAgent agent, AbilityBehaviour behaviour, T setting)

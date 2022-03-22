@@ -1,9 +1,6 @@
-﻿using EEC.EnemyCustomizations.EnemyAbilities.Abilities;
-using EEC.Utils.Json.Elements;
+﻿using EEC.Utils.Json.Elements;
 using Enemies;
-using GTFO.API.Utilities;
-using System;
-using System.Threading.Tasks;
+using SNetwork;
 
 namespace EEC.EnemyCustomizations.EnemyAbilities
 {
@@ -18,20 +15,14 @@ namespace EEC.EnemyCustomizations.EnemyAbilities
         {
             foreach (var ab in Abilities)
             {
+                if (!SNet.IsMaster)
+                    return;
+
                 if (!ab.AllowedMode.IsMatch(agent))
                     return;
 
-                _ = DoTriggerDelayed(ab.Ability, agent, ab.Delay);
+                DoTriggerDelayed(ab.Ability, agent, ab.Delay);
             }
-        }
-
-        private static async Task DoTriggerDelayed(IAbility ability, EnemyAgent agent, float delay)
-        {
-            await Task.Delay((int)Math.Round(delay * 1000.0f));
-            ThreadDispatcher.Dispatch(() =>
-            {
-                ability?.TriggerSync(agent);
-            });
         }
     }
 
