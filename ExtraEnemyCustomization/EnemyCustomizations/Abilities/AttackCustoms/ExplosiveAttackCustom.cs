@@ -13,6 +13,7 @@ namespace EEC.EnemyCustomizations.Abilities
 
         public bool ProjectileExplodesOnWorld { get; set; } = false;
         public bool ProjectileExplodesOnPlayer { get; set; } = false;
+        public bool ProjectileExplodesOnLifeTimeDone { get; set; } = false;
 
         public override string GetProcessName()
         {
@@ -31,6 +32,11 @@ namespace EEC.EnemyCustomizations.Abilities
             {
                 ProjectileEvents.CollidedPlayer += ProjectileEvents_CollidedPlayer;
             }
+
+            if (ProjectileExplodesOnLifeTimeDone)
+            {
+                ProjectileEvents.LifeTimeDone += ProjectileEvents_LifeTimeDone;
+            }
         }
 
         public override void OnConfigUnloaded()
@@ -45,6 +51,11 @@ namespace EEC.EnemyCustomizations.Abilities
             {
                 ProjectileEvents.CollidedPlayer -= ProjectileEvents_CollidedPlayer;
             }
+
+            if (ProjectileExplodesOnLifeTimeDone)
+            {
+                ProjectileEvents.LifeTimeDone -= ProjectileEvents_LifeTimeDone;
+            }
         }
 
         private void ProjectileEvents_CollidedWorld(ProjectileBase projectile, GameObject _)
@@ -52,6 +63,9 @@ namespace EEC.EnemyCustomizations.Abilities
 
         private void ProjectileEvents_CollidedPlayer(ProjectileBase projectile, PlayerAgent _)
             => TriggerProjectileExplosion(projectile);
+
+        private void ProjectileEvents_LifeTimeDone(ProjectileTargeting projectile)
+            => TriggerProjectileExplosion(projectile.Cast<ProjectileBase>());
 
         private void TriggerProjectileExplosion(ProjectileBase projectile)
         {
