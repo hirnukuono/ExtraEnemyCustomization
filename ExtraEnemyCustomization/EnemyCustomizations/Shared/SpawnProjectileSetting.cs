@@ -25,16 +25,16 @@ namespace EEC.EnemyCustomizations.Shared
         public float ShotSpreadYMin { get; set; } = 0.0f;
         public float ShotSpreadYMax { get; set; } = 0.0f;
 
-        public void DoSpawn(EnemyAgent owner, Agent target, Transform fireAlign, bool keepTrack)
+        public Coroutine DoSpawn(EnemyAgent owner, Agent target, Transform fireAlign, bool keepTrack)
         {
             if (!Enabled)
-                return;
+                return null;
 
             if (!SNet.IsMaster)
-                return;
+                return null;
 
             var direction = BackwardDirection ? -fireAlign.forward : fireAlign.forward;
-            InLevelCoroutine.Start(SpawnProjectiles(new SpawnProjectileData()
+            return InLevelCoroutine.Start(SpawnProjectiles(new SpawnProjectileData()
             {
                 Target = target,
                 Align = fireAlign,
