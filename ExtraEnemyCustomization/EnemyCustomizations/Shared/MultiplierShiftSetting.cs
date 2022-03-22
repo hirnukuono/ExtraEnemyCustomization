@@ -2,7 +2,26 @@
 
 namespace EEC.EnemyCustomizations.Shared
 {
-    public sealed class MultiplierShiftSetting
+    public enum RepeatMode
+    {
+        Clamped,
+        Unclamped,
+        PingPong,
+        Repeat
+    }
+
+    public interface IMultiplierShiftSetting
+    {
+        public float MinMulti { get; set; }
+        public float MaxMulti { get; set; }
+        public float Duration { get; set; }
+        public bool StopAfterDuration { get; set; }
+        public float StopMulti { get; set; }
+        public eEasingType EasingMode { get; set; }
+        public RepeatMode Mode { get; set; }
+    }
+
+    public sealed class MultiplierShiftSetting : IMultiplierShiftSetting
     {
         public bool Enabled { get; set; } = false;
         public float MinMulti { get; set; } = 1.0f;
@@ -27,14 +46,6 @@ namespace EEC.EnemyCustomizations.Shared
         private float Ease(float p)
         {
             return Easing.GetEasingValue(EasingMode, p, false);
-        }
-
-        public enum RepeatMode
-        {
-            Clamped,
-            Unclamped,
-            PingPong,
-            Repeat
         }
     }
 }

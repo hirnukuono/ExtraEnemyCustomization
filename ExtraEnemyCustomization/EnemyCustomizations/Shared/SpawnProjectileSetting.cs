@@ -11,7 +11,21 @@ using UnityEngine;
 
 namespace EEC.EnemyCustomizations.Shared
 {
-    public sealed class SpawnProjectileSetting
+    public interface ISpawnProjectileSetting
+    {
+        public ProjectileType ProjectileType { get; set; }
+        public bool BackwardDirection { get; set; }
+        public int Count { get; set; }
+        public int BurstCount { get; set; }
+        public float Delay { get; set; }
+        public float BurstDelay { get; set; }
+        public float ShotSpreadXMin { get; set; }
+        public float ShotSpreadXMax { get; set; }
+        public float ShotSpreadYMin { get; set; }
+        public float ShotSpreadYMax { get; set; }
+    }
+
+    public sealed class SpawnProjectileSetting : ISpawnProjectileSetting
     {
         public bool Enabled { get; set; } = false;
         public ProjectileType ProjectileType { get; set; } = ProjectileType.TargetingSmall;

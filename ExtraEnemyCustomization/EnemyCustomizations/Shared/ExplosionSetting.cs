@@ -8,7 +8,20 @@ using UnityEngine;
 
 namespace EEC.EnemyCustomizations.Shared
 {
-    public sealed class ExplosionSetting
+    public interface IExplosionSetting
+    {
+        public ValueBase Damage { get; set; }
+        public Color LightColor { get; set; }
+        public bool KillInflictor { get; set; }
+        public float EnemyDamageMulti { get; set; }
+        public float MinRange { get; set; }
+        public float MaxRange { get; set; }
+        public float NoiseMinRange { get; set; }
+        public float NoiseMaxRange { get; set; }
+        public NM_NoiseType NoiseType { get; set; }
+    }
+
+    public sealed class ExplosionSetting : IExplosionSetting
     {
         public bool Enabled { get; set; } = false;
         public ValueBase Damage { get; set; } = ValueBase.Zero;

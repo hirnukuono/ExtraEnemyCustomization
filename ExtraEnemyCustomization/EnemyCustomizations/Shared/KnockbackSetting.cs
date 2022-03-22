@@ -4,7 +4,15 @@ using UnityEngine;
 
 namespace EEC.EnemyCustomizations.Shared
 {
-    public sealed class KnockbackSetting
+    public interface IKnockbackSetting
+    {
+        public float Velocity { get; set; }
+        public float VelocityZ { get; set; }
+        public bool DoMultDistance { get; set; }
+        public bool DoMultDistanceZ { get; set; }
+    }
+
+    public sealed class KnockbackSetting : IKnockbackSetting
     {
         public bool Enabled { get; set; } = false;
         public float Velocity { get; set; } = 0.0f;

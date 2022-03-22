@@ -3,7 +3,15 @@ using Player;
 
 namespace EEC.EnemyCustomizations.Shared
 {
-    public sealed class DrainStaminaSetting
+    public interface IDrainStaminaSetting
+    {
+        public float DrainAmount { get; set; }
+        public float DrainAmountInCombat { get; set; }
+        public bool ResetRecoverTimer { get; set; }
+        public bool ResetRecoverTimerInCombat { get; set; }
+    }
+
+    public sealed class DrainStaminaSetting : IDrainStaminaSetting
     {
         public bool Enabled { get; set; } = false;
         public float DrainAmount { get; set; } = 0.0f;

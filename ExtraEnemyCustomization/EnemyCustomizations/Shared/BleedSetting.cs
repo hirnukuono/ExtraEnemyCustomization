@@ -5,6 +5,18 @@ using Player;
 
 namespace EEC.EnemyCustomizations.Shared
 {
+    public interface IBleedSetting
+    {
+        public ValueBase Damage { get; set; }
+        public float ChanceToBleed { get; set; }
+        public float Interval { get; set; }
+        public float Duration { get; set; }
+        public bool HasLiquid { get; set; }
+        public bool CanBeStacked { get; set; }
+        public ScreenLiquidSettingName LiquidSetting { get; set; }
+        public uint OverrideBleedingTextID { get; set; }
+    }
+
     public sealed class BleedSetting
     {
         public bool Enabled { get; set; } = false;

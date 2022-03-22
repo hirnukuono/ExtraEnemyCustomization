@@ -1,11 +1,12 @@
 ﻿using EEC.CustomAbilities.Explosion;
+using EEC.EnemyCustomizations.Shared;
 using EEC.Utils;
 using EEC.Utils.Json.Elements;
 using UnityEngine;
 
 namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 {
-    public sealed class ExplosionAbility : AbilityBase<ExplosionBehaviour>
+    public sealed class ExplosionAbility : AbilityBase<ExplosionBehaviour>, IExplosionSetting
     {
         public ValueBase Damage { get; set; } = ValueBase.Zero;
         public Color LightColor { get; set; } = new(1, 0.2f, 0, 1);

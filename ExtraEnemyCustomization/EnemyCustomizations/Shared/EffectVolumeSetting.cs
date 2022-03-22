@@ -2,7 +2,15 @@
 
 namespace EEC.EnemyCustomizations.Shared
 {
-    public sealed class EffectVolumeSetting
+    public interface IEffectVolumeSetting
+    {
+        public bool Enabled { get; set; }
+        public eEffectVolumeContents Contents { get; set; }
+        public eEffectVolumeModification Modification { get; set; }
+        public float Scale { get; set; }
+    }
+
+    public sealed class EffectVolumeSetting : IEffectVolumeSetting
     {
         public bool Enabled { get; set; } = false;
         public eEffectVolumeContents Contents { get; set; } = eEffectVolumeContents.Infection;
