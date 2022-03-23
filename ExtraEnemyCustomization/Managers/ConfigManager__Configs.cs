@@ -98,7 +98,7 @@ namespace EEC.Managers
                     _configInstances[name] = config;
                     config.Loaded();
                 }
-                else
+                else if (!Attribute.IsDefined(configType, typeof(ObsoleteAttribute)))
                 {
                     Logger.Warning($"Config file for '{name}' is not exist, ignoring this config...");
                 }
