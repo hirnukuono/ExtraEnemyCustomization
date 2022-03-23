@@ -127,6 +127,7 @@
         "EasingMode": "Linear", //Easing type for Min-Max Transition
         "Mode": "PingPong" //Min-Max transition movement
       },
+      "LifeTime": "100%", //BasedValue: Life time until projectile automatically destroyed
       "TrailColor": "cyan", //Color: Trail effect color
       "TrailTime": "150%", //BasedValue: Trail effect lasting time (determines length of trail effect)
       "TrailWidth": "100%", //BasedValue: Trail effect width (how thick?)
@@ -135,6 +136,45 @@
       "Damage": "50% of default", //BasedValue: (Based on PlayerDataBlock.health, Has original Value): Damage to deal 
       "Infection": "0%", //BasedValue: (Based on 1.0, Has Original Value): Add Infection On Hit
       //Editing Infection Will enable the Infection Bomb effect (Includes Particle Effect, Sound Effect), If you don't want it, use Ability/InfectionAttackCustom instead
+      "SpawnProjectileOnCollideWorld": { //Spawn Projectile when it's collide with world
+        "Enabled": false,
+        "ProjectileType": 71, //Projectile to spawn
+        "BackwardDirection": false, //Projectile spawned from backward direction of projectile
+        "Count": 8, //How many times should burst be fired? (total projectile = count * burst count)
+        "BurstCount": 2, //Burst fire count
+        "Delay": 0.3, //Delay between shot
+        "BurstDelay": 0.1, //Delay between burst shot
+        "ShotSpreadXMin": -60.0,
+        "ShotSpreadXMax": 60.0,
+        "ShotSpreadYMin": -60.0,
+        "ShotSpreadYMax": 60.0
+      },
+      "SpawnProjectileOnCollidePlayer": { //Spawn Projectile when it's collide with players
+        "Enabled": false,
+        "ProjectileType": 71,
+        "BackwardDirection": false,
+        "Count": 8,
+        "BurstCount": 2,
+        "Delay": 0.3,
+        "BurstDelay": 0.1,
+        "ShotSpreadXMin": -60.0,
+        "ShotSpreadXMax": 60.0,
+        "ShotSpreadYMin": -60.0,
+        "ShotSpreadYMax": 60.0
+      },
+      "SpawnProjectileOnLifeTimeDone": { //Spawn Projectile when projectile has destroyed mid-air
+        "Enabled": false,
+        "ProjectileType": 71,
+        "BackwardDirection": false,
+        "Count": 8,
+        "BurstCount": 2,
+        "Delay": 0.3,
+        "BurstDelay": 0.1,
+        "ShotSpreadXMin": -60.0,
+        "ShotSpreadXMax": 60.0,
+        "ShotSpreadYMin": -60.0,
+        "ShotSpreadYMax": 60.0
+      },
       "Explosion": {
         //Also Possible to define this on ExplosiveAttackCustom
         "Enabled": false,

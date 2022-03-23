@@ -220,6 +220,7 @@
       },
       "ProjectileExplodesOnWorld": true, //Do Projectile Explodes when it's collided with World?
       "ProjectileExplodesOnPlayer": true, //Do Projectile Explodes when it's collided with Player?
+      "ProjectileExplodesOnLifeTimeDone": true, //Do Projectile Explodes when it's destroyed mid-air?
       "ProjectileData": {
         "Damage": "10%",
         "LightColor": "#ff1500",

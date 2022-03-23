@@ -126,6 +126,28 @@
       ]
     }
   ],
+  "LimbDestroyedAbilityCustom": [
+    {
+      "Enabled": false,
+      "DebugName": "Itsnotachaosabilityiswear",
+      "Target": {
+        "Mode": "Everything",
+        "persistentIDs": [],
+        "nameParam": "Everything",
+        "nameIgnoreCase": true
+      },
+      "Abilities": [
+        {
+          "Limbs": [
+            "Head" //Same as Model.jsonc / LimbCustom
+          ],
+          "AllowedMode": "Hibernate | Combat", //AgentTarget: Allowed AgentModes
+          "Delay": 0.0, //Delay
+          "AbilityName": "Spawn Projectile"
+        }
+      ]
+    }
+  ],
   "DeathAbilityCustom": [
     {
       "Enabled": false,
@@ -235,6 +257,21 @@
         "SpawnDelay": 0.0,
         "PlayDistantRoar": true,
         "Name": "Spawn ScoutWave"
+      }
+    ],
+    "SpawnProjectile": [
+      {
+        "ProjectileType": 3, //Projectile to spawn
+        "BackwardDirection": false, //Projectile spawned from backward direction of projectile
+        "Count": 8, //How many times should burst be fired? (total projectile = count * burst count)
+        "BurstCount": 2, //Burst fire count
+        "Delay": 0.3, //Delay between shot
+        "BurstDelay": 0.1, //Delay between burst shot
+        "ShotSpreadXMin": -60.0,
+        "ShotSpreadXMax": 60.0,
+        "ShotSpreadYMin": -60.0,
+        "ShotSpreadYMax": 60.0,
+        "Name": "Spawn Projectile"
       }
     ],
     "DoAnim": [

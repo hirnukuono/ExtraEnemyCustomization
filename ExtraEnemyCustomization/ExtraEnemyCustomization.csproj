@@ -13,7 +13,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <LangVersion>Latest</LangVersion>
     <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
-    <Version>1.4.4</Version>
+    <Version>1.5.0</Version>
     <RootNamespace>EEC</RootNamespace>
     <Configurations>Debug;Release</Configurations>
     <Platforms>x64</Platforms>
