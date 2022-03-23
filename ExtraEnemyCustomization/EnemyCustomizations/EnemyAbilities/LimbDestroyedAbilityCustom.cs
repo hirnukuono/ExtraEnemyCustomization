@@ -1,4 +1,5 @@
 ﻿using EEC.EnemyCustomizations.EnemyAbilities.Abilities;
+using EEC.Events;
 using EEC.Utils.Json.Elements;
 using Enemies;
 using SNetwork;

@@ -27,7 +27,8 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 
         protected override void OnEnter()
         {
-            Ability.DoSpawn(Agent, Agent.AI.Target.m_agent, Agent.ModelRef.m_shooterFireAlign, true);
+            var target = Agent.AI.IsTargetValid ? Agent.AI.Target.m_agent : null;
+            Ability.DoSpawn(Agent, target, Agent.ModelRef.m_shooterFireAlign, true);
             DoExit();
         }
     }

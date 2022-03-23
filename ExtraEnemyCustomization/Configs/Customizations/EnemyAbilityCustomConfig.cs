@@ -8,6 +8,7 @@ namespace EEC.Configs.Customizations
     public sealed class EnemyAbilityCustomConfig : CustomizationConfig
     {
         public BehaviourAbilityCustom[] BehaviourAbilityCustom { get; set; } = Array.Empty<BehaviourAbilityCustom>();
+        public LimbDestroyedAbilityCustom[] LimbDestroyedAbilityCustom { get; set; } = Array.Empty<LimbDestroyedAbilityCustom>();
         public DeathAbilityCustom[] DeathAbilityCustom { get; set; } = Array.Empty<DeathAbilityCustom>();
         public EnemyAbilitiesSetting Abilities { get; set; } = new EnemyAbilitiesSetting();
 
@@ -32,6 +33,7 @@ namespace EEC.Configs.Customizations
         public ExplosionAbility[] Explosion { get; set; } = Array.Empty<ExplosionAbility>();
         public SpawnEnemyAbility[] SpawnEnemy { get; set; } = Array.Empty<SpawnEnemyAbility>();
         public SpawnWaveAbility[] SpawnWave { get; set; } = Array.Empty<SpawnWaveAbility>();
+        public SpawnProjectileAbility[] SpawnProjectile { get; set; } = Array.Empty<SpawnProjectileAbility>();
         public DoAnimAbility[] DoAnim { get; set; } = Array.Empty<DoAnimAbility>();
         public EMPAbility[] EMP { get; set; } = Array.Empty<EMPAbility>();
         public CloakAbility[] Cloak { get; set; } = Array.Empty<CloakAbility>();
@@ -44,6 +46,7 @@ namespace EEC.Configs.Customizations
             list.AddRange(Explosion);
             list.AddRange(SpawnEnemy);
             list.AddRange(SpawnWave);
+            list.AddRange(SpawnProjectile);
             list.AddRange(DoAnim);
             list.AddRange(EMP);
             list.AddRange(Cloak);

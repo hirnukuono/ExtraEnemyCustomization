@@ -19,6 +19,7 @@ namespace EEC.EnemyCustomizations.Shared
             {
                 Target = target,
                 Align = fireAlign,
+                LastSavedPosition = fireAlign.position,
                 KeepTrackAlign = keepTrack,
                 BaseDirection = direction,
                 OwnerID = owner.GlobalID,
@@ -31,11 +32,6 @@ namespace EEC.EnemyCustomizations.Shared
         {
             if (data.Align == null)
                 yield break;
-
-            if (data.KeepTrackAlign)
-            {
-                data.LastSavedPosition = data.Align.position;
-            }
 
             bool shouldWaitDelay = setting.Delay > 0.0f;
             bool burstMode = setting.BurstCount > 1;
