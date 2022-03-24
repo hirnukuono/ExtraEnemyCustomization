@@ -331,6 +331,48 @@
       ]
     }
   ],
+  "AnimHandleCustom": [
+    {
+      "Enabled": false,
+      "DebugName": "Shooter-AnimModify",
+      "Target": {
+        "Mode": "NameContains",
+        "persistentIDs": [],
+        "nameParam": "Shooter",
+        "nameIgnoreCase": true,
+        "categories": []
+      },
+      "TentacleAttackWindUpLen": "Unchanged", //BasedValue: Striker+Shooter Attacking wind up animation length
+      "JumpMoveSpeed": "Unchanged", //BasedValue: Jump
+      "JumpLandLen": "Unchanged", //BasedValue: JumpLanding Animation Length
+      "JumpStartLen": "Unchanged", //BasedValue: JumpStart Animation Length
+      "AllowMelee180": "Unchanged", //BasedBool: Allow 180 Melee?
+      "NeedsArmsToMove": "Unchanged", //BasedBool: Arm is required for animation? (true will disable limb destruction on arm parts)
+      "TwitchHit": "Unchanged", //BasedBool: Has twitch animations?
+      "StrafeRunSpeed": "Unchanged", //BasedValue: Run speed for strafe state
+      "StrafeWalkSpeed": "Unchanged", //BasedValue: Walk speed for strafe state
+      "InPlayerRoomSpeed": "Unchanged", //BasedValue: Speed in Player Room
+      "RunSpeed": "Unchanged", //BasedValue: Run speed for normal state
+      "WalkSpeed": "Unchanged", //BasedValue: Walk speed for normal state
+      "ClimbSpeed": "Unchanged", //BasedValue: Climbing Speed (Not used in game)
+      "MeleeAttackFwd": {
+        //Forward Melee Properties
+        "Duration": "Unchanged", //BasedValue: Melee Animation Length
+        "DamageStart": "Unchanged", //BasedValue: Start time of Damage range calcuation
+        "DamageEnd": "Unchanged", //BasedValue: End time of Damage range calculation
+        "ChangeSFX": false, //Override SFX?
+        "SFXId": 0 //SFX ID
+      },
+      "MeleeAttackBwd": {
+        //Backward Melee Properties
+        "Duration": "Unchanged",
+        "DamageStart": "Unchanged",
+        "DamageEnd": "Unchanged",
+        "ChangeSFX": false,
+        "SFXId": 0
+      }
+    }
+  ],
   "ModelRefCustom": [
     {
       "Enabled": false,
