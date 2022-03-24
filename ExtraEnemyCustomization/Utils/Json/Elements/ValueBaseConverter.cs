@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using UnityEngine;
 
 namespace EEC.Utils.Json.Elements
 {
@@ -92,8 +93,15 @@ namespace EEC.Utils.Json.Elements
             switch (value.Mode)
             {
                 case ValueMode.Rel:
-                    string format = value.FromDefault ? "{0}% of default" : "{0}%";
-                    writer.WriteStringValue(string.Format(format, value.Value * 100.0f));
+                    if (Mathf.Approximately(value.Value, 1.0f))
+                    {
+                        writer.WriteStringValue("Unchanged");
+                    }
+                    else
+                    {
+                        string format = value.FromDefault ? "{0}% of default" : "{0}%";
+                        writer.WriteStringValue(string.Format(format, value.Value * 100.0f));
+                    }
                     break;
 
                 case ValueMode.Abs:
