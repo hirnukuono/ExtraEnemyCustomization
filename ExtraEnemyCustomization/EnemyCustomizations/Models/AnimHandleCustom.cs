@@ -22,8 +22,8 @@ namespace EEC.EnemyCustomizations.Models
         public ValueBase RunSpeed { get; set; } = ValueBase.Unchanged;
         public ValueBase WalkSpeed { get; set; } = ValueBase.Unchanged;
         public ValueBase ClimbSpeed { get; set; } = ValueBase.Unchanged;
-        public MeleeAttackData MeleeAttackFwd { get; set; }
-        public MeleeAttackData MeleeAttackBwd { get; set; }
+        public MeleeAttackData MeleeAttackFwd { get; set; } = new();
+        public MeleeAttackData MeleeAttackBwd { get; set; } = new();
 
         public override string GetProcessName()
         {
