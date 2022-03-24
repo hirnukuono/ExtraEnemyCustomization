@@ -12,7 +12,7 @@ namespace EEC.Utils.Json.Elements
 
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(ValueBase);
+            return objectType == typeof(BoolBase);
         }
 
         public override BoolBase Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
