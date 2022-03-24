@@ -48,6 +48,7 @@ namespace EEC.EnemyCustomizations.Models
             handle.ClimbSpeed = ClimbSpeed.GetAbsValue(handle.ClimbSpeed);
             handle.MeleeAttackFwd = MeleeAttackFwd.GetData(handle.MeleeAttackFwd);
             handle.MeleeAttackBwd = MeleeAttackBwd.GetData(handle.MeleeAttackBwd);
+            agent.Locomotion.AnimHandle = handle;
         }
     }
 
