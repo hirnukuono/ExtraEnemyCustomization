@@ -14,6 +14,7 @@ namespace EEC.Configs.Customizations
         public ScannerCustom[] ScannerCustom { get; set; } = Array.Empty<ScannerCustom>();
         public SilhouetteCustom[] SilhouetteCustom { get; set; } = Array.Empty<SilhouetteCustom>();
         public BoneCustom[] BoneCustom { get; set; } = Array.Empty<BoneCustom>();
+        public AnimHandleCustom[] AnimHandleCustom { get; set; } = Array.Empty<AnimHandleCustom>();
 
         public override string FileName => "Model";
         public override CustomizationConfigType Type => CustomizationConfigType.Model;
