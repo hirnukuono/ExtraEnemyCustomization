@@ -23,10 +23,6 @@ namespace EEC.EnemyCustomizations.Detections
         public Color NormalColor { get; set; } = Color.black;
         public Color DetectColor { get; set; } = Color.red;
 
-        private Mesh _resizedMesh = null;
-
-        private static readonly WaitForSeconds _antUpdateYielder = WaitFor.Seconds[0.2f];
-
         public override string GetProcessName()
         {
             return "Feeler";
@@ -40,11 +36,6 @@ namespace EEC.EnemyCustomizations.Detections
 
         public override void OnConfigUnloaded()
         {
-            if (_resizedMesh != null)
-            {
-                Object.Destroy(_resizedMesh);
-            }
-
             ScoutAntennaSpawnEvent.DetectionSpawn -= OnDetectionSpawn;
             ScoutAntennaSpawnEvent.AntennaSpawn -= OnAntennaSpawn;
         }
