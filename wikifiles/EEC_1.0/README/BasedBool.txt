@@ -1,0 +1,11 @@
+What is ##BasedBool?
+
+Smiliar stuff to BasedValue, but only have three conditions,
+True, False, Unchanged
+
+
+Supported Input with Examples:
+"OverrideSound": true,
+"OverrideSound": false,
+"OverrideSound": "Unchanged",
+"OverrideSound": "true", //Also Allowed but why?????????????????
