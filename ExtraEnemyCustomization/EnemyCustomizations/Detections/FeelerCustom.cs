@@ -77,7 +77,7 @@ namespace EEC.EnemyCustomizations.Detections
             var meshFilter = ant.GetComponent<MeshFilter>();
             var bound = meshFilter.mesh.bounds;
             bound.Expand(5000.0f); //¯\_(ツ)_/¯ Scout antenna mesh isn't that expensive, who cares if it's always been rendered or not?
-            meshFilter.sharedMesh.bounds = bound;
+            meshFilter.mesh.bounds = bound;
         }
     }
 }
