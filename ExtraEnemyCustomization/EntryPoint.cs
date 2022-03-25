@@ -23,7 +23,7 @@ namespace EEC
     //TODO: - Patrolling Hibernation : Too many works to do with this one, this is one of the long term goal
     //TODO: Refactor the CustomBase to support Phase Setting
 
-    [BepInPlugin("GTFO.EECustomization", "EECustom", "1.5.0")]
+    [BepInPlugin("GTFO.EECustomization", "EECustom", "1.6.0")]
     [BepInProcess("GTFO.exe")]
     [BepInDependency(MTFOUtil.PLUGIN_GUID, BepInDependency.DependencyFlags.HardDependency)]
     [BepInDependency("dev.gtfomodding.gtfo-api", BepInDependency.DependencyFlags.HardDependency)]
