@@ -31,10 +31,13 @@ namespace EEC.EnemyCustomizations.Shooters
 
                 if (FireSettings.Length > 1)
                 {
-                    var ability = agent.gameObject.AddComponent<ShooterDistSettingHandler>();
-                    ability.DefaultValue = defaultValue;
-                    ability.EAB_Shooter = projectileSetting;
-                    ability.FireSettings = FireSettings;
+                    var routine = new ShooterDistSettingRoutine()
+                    {
+                        EAB_Shooter = projectileSetting,
+                        DefaultValue = defaultValue,
+                        FireSettings = FireSettings
+                    };
+                    agent.AI.StartCoroutine(routine.Routine());
                 }
                 else if (FireSettings.Length == 1)
                 {
