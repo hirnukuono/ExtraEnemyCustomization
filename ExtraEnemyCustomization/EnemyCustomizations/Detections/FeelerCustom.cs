@@ -1,6 +1,8 @@
 ﻿using EEC.Events;
 using EEC.Utils.Json.Elements;
+using EEC.Utils.Unity;
 using Enemies;
+using System.Collections;
 using UnityEngine;
 
 namespace EEC.EnemyCustomizations.Detections
@@ -21,6 +23,10 @@ namespace EEC.EnemyCustomizations.Detections
         public Color NormalColor { get; set; } = Color.black;
         public Color DetectColor { get; set; } = Color.red;
 
+        private Mesh _resizedMesh = null;
+
+        private static readonly WaitForSeconds _antUpdateYielder = WaitFor.Seconds[0.2f];
+
         public override string GetProcessName()
         {
             return "Feeler";
@@ -34,6 +40,11 @@ namespace EEC.EnemyCustomizations.Detections
 
         public override void OnConfigUnloaded()
         {
+            if (_resizedMesh != null)
+            {
+                Object.Destroy(_resizedMesh);
+            }
+
             ScoutAntennaSpawnEvent.DetectionSpawn -= OnDetectionSpawn;
             ScoutAntennaSpawnEvent.AntennaSpawn -= OnAntennaSpawn;
         }
@@ -62,6 +73,11 @@ namespace EEC.EnemyCustomizations.Detections
             ant.m_moveInTimeDetected = RetractTimeDetected.GetAbsValue(ant.m_moveInTimeDetected);
             ant.m_maxDistance = Distance.GetAbsValue(ant.m_maxDistance);
             ant.m_stepDistance = StepDistance.GetAbsValue(ant.m_stepDistance);
+
+            var meshFilter = ant.GetComponent<MeshFilter>();
+            var bound = meshFilter.mesh.bounds;
+            bound.Expand(5000.0f); //¯\_(ツ)_/¯ Scout antenna mesh isn't that expensive, who cares if it's always been rendered or not?
+            meshFilter.sharedMesh.bounds = bound;
         }
     }
 }
