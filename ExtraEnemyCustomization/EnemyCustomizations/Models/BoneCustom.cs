@@ -1,12 +1,13 @@
 ﻿using EEC.EnemyCustomizations.Models.Handlers;
 using Enemies;
+using GameData;
 using GTFO.API;
 using System;
 using UnityEngine;
 
 namespace EEC.EnemyCustomizations.Models
 {
-    public sealed class BoneCustom : EnemyCustomBase, IEnemySpawnedEvent
+    public sealed class BoneCustom : EnemyCustomBase, IEnemyPrefabBuiltEvent, IEnemySpawnedEvent
     {
         public BoneTransform[] Bones { get; set; } = Array.Empty<BoneTransform>();
         public BonePrefab[] Prefabs { get; set; } = Array.Empty<BonePrefab>();
@@ -16,16 +17,19 @@ namespace EEC.EnemyCustomizations.Models
             return "Bone";
         }
 
+        public void OnPrefabBuilt(EnemyAgent agent, EnemyDataBlock enemyData)
+        {
+            foreach (var bonePrefab in Prefabs)
+            {
+                TryApplyBonePrefab(agent, bonePrefab);
+            }
+        }
+
         public void OnSpawned(EnemyAgent agent)
         {
             foreach (var boneTransform in Bones)
             {
                 TryApplyBoneTransform(agent, boneTransform);
-            }
-
-            foreach (var bonePrefab in Prefabs)
-            {
-                TryApplyBonePrefab(agent, bonePrefab);
             }
         }
 
