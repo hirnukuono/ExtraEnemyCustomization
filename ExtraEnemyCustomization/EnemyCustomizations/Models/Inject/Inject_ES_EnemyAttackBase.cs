@@ -1,21 +1,14 @@
 ﻿using Enemies;
 using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using EEC.Managers;
-using System.Linq;
-using EEC.EnemyCustomizations.Models;
-using EEC.Configs.Customizations;
-using EEC.API;
 
-namespace EEC.Patches
+namespace EEC.EnemyCustomizations.Models.Inject
 {
     [HarmonyPatch(typeof(ES_EnemyAttackBase))]
-    internal class TentacleAttackPatches // Need to know where to move this
+    internal static class Inject_ES_EnemyAttackBase
     {
         [HarmonyPatch(nameof(ES_EnemyAttackBase.DoStartAttack))]
         [HarmonyPrefix]
+        [HarmonyWrapSafe]
         public static void OnStartAttack(ES_EnemyAttackBase __instance)
         {
             if (__instance.m_enemyAgent.TryGetProperty<TentacleAttackSpeedProperty>(out var attackSpeedProperty))
@@ -29,6 +22,7 @@ namespace EEC.Patches
 
         [HarmonyPatch(nameof(ES_EnemyAttackBase.SyncExit))]
         [HarmonyPrefix]
+        [HarmonyWrapSafe]
         public static void OnEndAttack(ES_EnemyAttackBase __instance)
         {
             if (__instance.m_enemyAgent.TryGetProperty<TentacleAttackSpeedProperty>(out var attackSpeedProperty))
