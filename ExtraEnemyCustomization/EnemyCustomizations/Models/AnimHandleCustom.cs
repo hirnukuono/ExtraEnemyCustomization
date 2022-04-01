@@ -1,8 +1,5 @@
 ﻿using EEC.Utils.Json.Elements;
 using Enemies;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using static Enemies.EnemyLocomotion;
 
 namespace EEC.EnemyCustomizations.Models
@@ -48,6 +45,10 @@ namespace EEC.EnemyCustomizations.Models
             handle.ClimbSpeed = ClimbSpeed.GetAbsValue(handle.ClimbSpeed);
             handle.MeleeAttackFwd = MeleeAttackFwd.GetData(handle.MeleeAttackFwd);
             handle.MeleeAttackBwd = MeleeAttackBwd.GetData(handle.MeleeAttackBwd);
+
+            var setting = agent.RegisterOrGetProperty<TentacleAttackSpeedProperty>();
+            setting.TentacleAttackSpeedAdjustmentMult = agent.Locomotion.AnimHandle.TentacleAttackWindUpLen / handle.TentacleAttackWindUpLen;
+
             agent.Locomotion.AnimHandle = handle;
         }
     }
@@ -70,5 +71,10 @@ namespace EEC.EnemyCustomizations.Models
                 SFXId = ChangeSFX ? SFXId : original.SFXId
             };
         }
+    }
+
+    internal sealed class TentacleAttackSpeedProperty
+    {
+        public float TentacleAttackSpeedAdjustmentMult;
     }
 }
