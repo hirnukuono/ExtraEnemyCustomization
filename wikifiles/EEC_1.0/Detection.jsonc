@@ -55,7 +55,7 @@
   ],
   "ScoutAnimCustom": [
     {
-      "Enabled": true,
+      "Enabled": false,
       "DebugName": "Scout_Randomly Bend",
       "Target": {
         "Mode": "NameContains",
