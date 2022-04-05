@@ -85,7 +85,7 @@ namespace EEC
             _showMarkerText = BindUserConfig("Marker Text", "Display Enemy Marker Texts? (if set by rundown devs)", true);
             _showMarkerDistance = BindUserConfig("Marker Distance", "Display Enemy Marker Distance? (if set by rundown devs)", true);
             _showExplosionEffect = BindUserConfig("Explosion Flash", "(Accessibility) Display Light flash effect for explosion abilities?", true);
-            _shitpostType = BindUserConfig("Shitposting", "Shitpost mode to use use comma to use multiple", ShitpostType.ForceOff);
+            _shitpostType = BindUserConfig("Shitposting", "Shitpost mode use comma to enable multiple stuffs", ShitpostType.ForceOff);
             ShowMarkerText = _showMarkerText.Value;
             ShowMarkerDistance = _showMarkerDistance.Value;
             ShowExplosionEffect = _showExplosionEffect.Value;
