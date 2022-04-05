@@ -12,13 +12,11 @@ using UnityEngine;
 namespace EEC.Patches.Handlers.Yes.Yes.Yes.Yes
 {
     [CallConstructorOnLoad]
-    public static class Yes
+    public static class Shitpost2022
     {
-        private static readonly DateTime _dtWhat = new(2022, 4, 1);
-
-        static Yes()
+        static Shitpost2022()
         {
-            if (DateTime.Today.Equals(_dtWhat.Date))
+            if (Configuration.CanShitpostOf(ShitpostType.Dinnerbone))
             {
                 EnemyEvents.Spawned += EnemyEvents_Spawned;
             }

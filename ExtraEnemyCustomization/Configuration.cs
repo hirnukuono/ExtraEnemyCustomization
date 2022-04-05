@@ -1,6 +1,8 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
 using EEC.Managers.Assets;
+using EEC.Patches.Handlers;
+using System;
 using System.IO;
 
 namespace EEC
@@ -17,9 +19,11 @@ namespace EEC
         public static bool ShowMarkerText { get; private set; }
         public static bool ShowMarkerDistance { get; private set; }
         public static bool ShowExplosionEffect { get; private set; }
+        public static ShitpostType ShitpostType { get; private set; }
         private static ConfigEntry<bool> _showMarkerText;
         private static ConfigEntry<bool> _showMarkerDistance;
         private static ConfigEntry<bool> _showExplosionEffect;
+        private static ConfigEntry<ShitpostType> _shitpostType;
 
         //RUNDOWN DEVELOPER CONFIGS
         public static bool UseLiveEdit { get; private set; }
@@ -43,6 +47,22 @@ namespace EEC
 
         private static ConfigFile _currentContext;
 
+        public static bool CanShitpostOf(ShitpostType type)
+        {
+            switch (ShitpostType)
+            {
+                case ShitpostType.ForceOff:
+                    return false;
+
+                case ShitpostType.Enable:
+                    var now = DateTime.Now;
+                    return now.Month == 4 && now.Day == 1;
+
+                default:
+                    return ShitpostType.HasFlag(type);
+            }
+        }
+
         public static void CreateAndBindAll()
         {
             var path = Path.Combine(Paths.ConfigPath, "EEC.cfg");
@@ -65,9 +85,11 @@ namespace EEC
             _showMarkerText = BindUserConfig("Marker Text", "Display Enemy Marker Texts? (if set by rundown devs)", true);
             _showMarkerDistance = BindUserConfig("Marker Distance", "Display Enemy Marker Distance? (if set by rundown devs)", true);
             _showExplosionEffect = BindUserConfig("Explosion Flash", "(Accessibility) Display Light flash effect for explosion abilities?", true);
+            _shitpostType = BindUserConfig("Shitposting", "Shitpost mode to use use comma to use multiple", ShitpostType.ForceOff);
             ShowMarkerText = _showMarkerText.Value;
             ShowMarkerDistance = _showMarkerDistance.Value;
             ShowExplosionEffect = _showExplosionEffect.Value;
+            ShitpostType = _shitpostType.Value;
 
             _useLiveEdit = BindRdwDevConfig("Live Edit", "Reload Config when they are edited while in-game", false);
             _linkMTFOHotReload = BindRdwDevConfig("Reload on MTFO HotReload", "Reload Configs when MTFO's HotReload button has pressed?", true);
