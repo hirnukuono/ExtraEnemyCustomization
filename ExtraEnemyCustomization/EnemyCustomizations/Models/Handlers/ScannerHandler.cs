@@ -2,8 +2,8 @@
 using EEC.Attributes;
 using EEC.Utils.Unity;
 using Enemies;
+using Il2CppInterop.Runtime.Attributes;
 using System.Collections;
-using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 
 namespace EEC.EnemyCustomizations.Models.Handlers

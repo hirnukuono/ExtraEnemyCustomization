@@ -3,8 +3,8 @@ using EEC.Attributes;
 using EEC.Events;
 using EEC.Utils.Unity;
 using Enemies;
+using Il2CppInterop.Runtime.Attributes;
 using SNetwork;
-using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 
 namespace EEC.EnemyCustomizations.Abilities.Handlers

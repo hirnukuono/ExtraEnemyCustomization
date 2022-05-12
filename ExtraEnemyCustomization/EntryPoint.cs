@@ -7,12 +7,12 @@ using EEC.Managers.Assets;
 using EEC.Networking;
 using EEC.Utils.Integrations;
 using HarmonyLib;
+using Il2CppInterop.Runtime.Injection;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using UnhollowerRuntimeLib;
 
 namespace EEC
 {

@@ -1,10 +1,10 @@
 ﻿using EEC.Networking;
 using EEC.Networking.Events;
 using Enemies;
+using Il2CppInterop.Runtime;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using UnhollowerBaseLib;
 
 namespace EEC.Utils
 {

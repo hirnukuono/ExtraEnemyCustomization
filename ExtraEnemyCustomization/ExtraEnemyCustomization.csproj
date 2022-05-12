@@ -9,8 +9,8 @@
     <BIELibsFolder>$(GameFolder)/BepInEx/core</BIELibsFolder>
     <UnhollowedLibsFolder>$(GameFolder)/BepInEx/unhollowed</UnhollowedLibsFolder>
     <PluginsFolder>$(GameFolder)/BepInEx/plugins</PluginsFolder>
-    <MonoManagedFolder>$(GameFolder)/mono/Managed</MonoManagedFolder>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <CorLibsFolder>$(GameFolder)/dotnet/corlib</CorLibsFolder>
+    <TargetFramework>net6</TargetFramework>
     <LangVersion>Latest</LangVersion>
     <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
     <Version>1.6.0</Version>
@@ -25,11 +25,9 @@
   <ItemGroup>
     <Reference Include="$(BIELibsFolder)/BepInEx.*.dll" Private="false" />
     <Reference Include="$(BIELibsFolder)/0Harmony.dll" Private="false" />
-    <Reference Include="$(BIELibsFolder)/UnhollowerBaseLib.dll" Private="false" />
-    <Reference Include="$(BIELibsFolder)/UnhollowerRuntimeLib.dll" Private="false" />
+    <Reference Include="$(BIELibsFolder)/Il2CppInterop.Runtime.dll" Private="false" />
     <Reference Include="$(BIELibsFolder)/SemanticVersioning.dll" Private="false" />
-    <Reference Include="$(MonoManagedFolder)/Microsoft.CSharp.dll" Private="false" />
-    <Reference Include="$(MonoManagedFolder)/System.Text.Json.dll" Private="false" />
+    <Reference Include="$(CorLibsFolder)/*.dll" Private="false" />
     <Reference Include="$(UnhollowedLibsFolder)/*.dll" Private="false" />
     <Reference Include="$(PluginsFolder)/GTFO-API.dll" Private="false" />
     <Reference Remove="$(UnhollowedLibsFolder)/Newtonsoft.Json.dll" />
