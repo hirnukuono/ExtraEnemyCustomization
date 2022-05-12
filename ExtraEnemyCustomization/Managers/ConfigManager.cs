@@ -15,16 +15,16 @@ namespace EEC.Managers
         public static bool LinkMTFOHotReload { get; private set; }
         public static string BasePath => EntryPoint.BasePath;
 
-        [ConfigCache] public static GlobalConfig Global { get; private set; }
-        [ConfigCache] public static CategoryConfig Categories { get; private set; }
-        [ConfigCache] public static ModelCustomConfig ModelCustom { get; private set; }
-        [ConfigCache] public static AbilityCustomConfig AbilityCustom { get; private set; }
-        [ConfigCache] public static ProjectileCustomConfig ProjectileCustom { get; private set; }
-        [ConfigCache] public static TentacleCustomConfig TentacleCustom { get; private set; }
-        [ConfigCache] public static DetectionCustomConfig DetectionCustom { get; private set; }
-        [ConfigCache] public static PropertyCustomConfig PropertyCustom { get; private set; }
-        [ConfigCache] public static SpawnCostCustomConfig SpawnCostCustom { get; private set; }
-        [ConfigCache] public static EnemyAbilityCustomConfig EnemyAbilityCustom { get; private set; }
+        [ConfigCache] public static GlobalConfig Global { get; private set; } = new();
+        [ConfigCache] public static CategoryConfig Categories { get; private set; } = new();
+        [ConfigCache] public static ModelCustomConfig ModelCustom { get; private set; } = new();
+        [ConfigCache] public static AbilityCustomConfig AbilityCustom { get; private set; } = new();
+        [ConfigCache] public static ProjectileCustomConfig ProjectileCustom { get; private set; } = new();
+        [ConfigCache] public static TentacleCustomConfig TentacleCustom { get; private set; } = new();
+        [ConfigCache] public static DetectionCustomConfig DetectionCustom { get; private set; } = new();
+        [ConfigCache] public static PropertyCustomConfig PropertyCustom { get; private set; } = new();
+        [ConfigCache] public static SpawnCostCustomConfig SpawnCostCustom { get; private set; } = new();
+        [ConfigCache] public static EnemyAbilityCustomConfig EnemyAbilityCustom { get; private set; } = new();
 
         private static readonly Type[] _configTypes = new Type[]
         {
