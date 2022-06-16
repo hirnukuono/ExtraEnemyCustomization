@@ -7,7 +7,7 @@
 
   <PropertyGroup>
     <BIELibsFolder>$(GameFolder)/BepInEx/core</BIELibsFolder>
-    <UnhollowedLibsFolder>$(GameFolder)/BepInEx/unhollowed</UnhollowedLibsFolder>
+    <InteropLibsFolder>$(GameFolder)/BepInEx/interop</InteropLibsFolder>
     <PluginsFolder>$(GameFolder)/BepInEx/plugins</PluginsFolder>
     <CorLibsFolder>$(GameFolder)/dotnet/corlib</CorLibsFolder>
     <TargetFramework>net6</TargetFramework>
@@ -25,13 +25,14 @@
   <ItemGroup>
     <Reference Include="$(BIELibsFolder)/BepInEx.*.dll" Private="false" />
     <Reference Include="$(BIELibsFolder)/0Harmony.dll" Private="false" />
-    <Reference Include="$(BIELibsFolder)/Il2CppInterop.Runtime.dll" Private="false" />
+    <Reference Include="$(BIELibsFolder)/Il2CppInterop.*.dll" Private="false" />
     <Reference Include="$(BIELibsFolder)/SemanticVersioning.dll" Private="false" />
     <Reference Include="$(CorLibsFolder)/*.dll" Private="false" />
-    <Reference Include="$(UnhollowedLibsFolder)/*.dll" Private="false" />
+    <Reference Include="$(CorLibsFolder)/../System.Private.CoreLib.dll" Private="false" />
+    <Reference Include="$(InteropLibsFolder)/*.dll" Private="false" />
     <Reference Include="$(PluginsFolder)/GTFO-API.dll" Private="false" />
-    <Reference Remove="$(UnhollowedLibsFolder)/Newtonsoft.Json.dll" />
-    <Reference Remove="$(UnhollowedLibsFolder)/netstandard.dll" />
+    <Reference Remove="$(InteropLibsFolder)/Newtonsoft.Json.dll" />
+    <Reference Remove="$(InteropLibsFolder)/netstandard.dll" />
   </ItemGroup>
 
   <ItemGroup>

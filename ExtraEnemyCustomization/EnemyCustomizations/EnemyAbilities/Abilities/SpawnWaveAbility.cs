@@ -23,7 +23,7 @@
                 out _,
                 Ability.SpawnType,
                 Ability.SpawnDelay,
-                Ability.PlayDistantRoar);
+                playScreamOnSpawn: Ability.PlayDistantRoar);
             DoExit();
         }
     }
