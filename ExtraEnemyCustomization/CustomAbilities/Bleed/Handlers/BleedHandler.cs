@@ -2,10 +2,10 @@
 using EEC.CustomAbilities.Bleed.Inject;
 using EEC.Utils;
 using EEC.Utils.Unity;
+using Il2CppInterop.Runtime.Attributes;
 using Player;
 using System;
 using System.Collections;
-using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 
 namespace EEC.CustomAbilities.Bleed.Handlers

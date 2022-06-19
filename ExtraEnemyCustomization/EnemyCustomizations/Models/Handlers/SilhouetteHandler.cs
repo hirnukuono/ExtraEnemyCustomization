@@ -1,7 +1,7 @@
 ﻿using EEC.Attributes;
 using EEC.Events;
 using Enemies;
-using UnhollowerBaseLib.Attributes;
+using Il2CppInterop.Runtime.Attributes;
 using UnityEngine;
 using UnityEngine.Rendering;
 

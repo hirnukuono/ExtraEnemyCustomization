@@ -1,11 +1,11 @@
 ﻿using EEC.Attributes;
 using EEC.Utils.Unity;
 using Enemies;
+using Il2CppInterop.Runtime.Attributes;
 using System;
 using System.Collections;
 using System.Linq;
 using System.Text;
-using UnhollowerBaseLib.Attributes;
 using UnityEngine;
 
 namespace EEC.EnemyCustomizations.Models.Handlers

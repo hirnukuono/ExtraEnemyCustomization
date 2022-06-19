@@ -1,6 +1,7 @@
 ﻿using EEC.Utils.Json.Elements;
 using Enemies;
 using GameData;
+using Il2CppInterop.Runtime;
 using System;
 
 namespace EEC.EnemyCustomizations.Strikers
@@ -38,8 +39,8 @@ namespace EEC.EnemyCustomizations.Strikers
                 if (isSettingEnabled)
                 {
                     var setting = TentacleSettings[i % TentacleSettings.Length];
-                    tentacle.m_easingIn = setting.GetInEaseFunction();
-                    tentacle.m_easingOut = setting.GetOutEaseFunction();
+                    tentacle.m_easingIn = DelegateSupport.ConvertDelegate<DelEasingFunction>(setting.GetInEaseFunction());
+                    tentacle.m_easingOut = DelegateSupport.ConvertDelegate<DelEasingFunction>(setting.GetOutEaseFunction());
                     tentacle.m_attackInDuration = setting.InDuration.GetAbsValue(tentacle.m_attackInDuration);
                     tentacle.m_attackOutDuration = setting.OutDuration.GetAbsValue(tentacle.m_attackOutDuration);
                     tentacle.m_attackHangDuration = setting.HangDuration.GetAbsValue(tentacle.m_attackHangDuration);

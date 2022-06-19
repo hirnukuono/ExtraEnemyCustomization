@@ -1,5 +1,5 @@
 ﻿using EEC.Attributes;
-using UnhollowerBaseLib.Attributes;
+using Il2CppInterop.Runtime.Attributes;
 using UnityEngine;
 
 namespace EEC.CustomAbilities.EMP

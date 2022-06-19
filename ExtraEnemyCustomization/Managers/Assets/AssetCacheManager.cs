@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Il2CppInterop.Runtime;
+using System.Collections.Generic;
 using System.IO;
-using UnhollowerRuntimeLib;
 using UnityEngine;
 
 namespace EEC.Managers.Assets
