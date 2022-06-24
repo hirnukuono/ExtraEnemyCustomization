@@ -3,13 +3,52 @@ using GTFO.API;
 using SNetwork;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace EEC.Networking
 {
-    public struct ReplicatorPayload<S> where S : struct
+    internal struct ReplicatorPayload
     {
         public ushort key;
-        public S state;
+        
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 30)]
+        public byte[] stateBytes;
+
+        public void Serialize<T>(T stateData) where T : struct
+        {
+            int size = Marshal.SizeOf(stateData);
+
+            if (size >= 30)
+            {
+                throw new ArgumentException("StateData Exceed size of 30 : Unable to Serialize", nameof(T));
+            }
+
+            byte[] bytes = new byte[size];
+
+            IntPtr ptr = Marshal.AllocHGlobal(size);
+
+            Marshal.StructureToPtr(stateData, ptr, false);
+            Marshal.Copy(ptr, bytes, 0, size);
+            Marshal.FreeHGlobal(ptr);
+
+            stateBytes = bytes;
+        }
+
+        public T Deserialize<T>()
+        {
+            int size = Marshal.SizeOf(typeof(T));
+
+            if (size > stateBytes.Length)
+            {
+                throw new ArgumentException("StateData Exceed size of 30 : Unable to Deserialize", nameof(T));
+            }
+
+            IntPtr ptr = Marshal.AllocHGlobal(size);
+            Marshal.Copy(stateBytes, 0, ptr, size);
+            T obj = (T)Marshal.PtrToStructure(ptr, typeof(T));
+            Marshal.FreeHGlobal(ptr);
+            return obj;
+        }
     }
 
     public sealed class StateContext<S> where S : struct
@@ -45,8 +84,8 @@ namespace EEC.Networking
 
             SetStateName = $"EECRp{GUID}S";
             ChangeRequestName = $"EECRp{GUID}R";
-            NetworkAPI.RegisterEvent<ReplicatorPayload<S>>(SetStateName, ReceiveSetState_FromMaster);
-            NetworkAPI.RegisterEvent<ReplicatorPayload<S>>(ChangeRequestName, ReceiveSetState_FromClient);
+            NetworkAPI.RegisterEvent<ReplicatorPayload>(SetStateName, ReceiveSetState_FromMaster);
+            NetworkAPI.RegisterEvent<ReplicatorPayload>(ChangeRequestName, ReceiveSetState_FromClient);
             _isInitialized = true;
         }
 
@@ -56,11 +95,11 @@ namespace EEC.Networking
             {
                 foreach (var state in _lookup)
                 {
-                    var newState = new ReplicatorPayload<S>()
+                    var newState = new ReplicatorPayload()
                     {
-                        key = state.Key,
-                        state = state.Value.State
+                        key = state.Key
                     };
+                    newState.Serialize(state.Value.State);
 
                     NetworkAPI.InvokeEvent(SetStateName, newState, player, SNet_ChannelType.GameOrderCritical);
                 }
@@ -113,11 +152,11 @@ namespace EEC.Networking
             if (!TryGetContext(id, out var context) || !context.Registered)
                 return;
 
-            var newState = new ReplicatorPayload<S>()
+            var newState = new ReplicatorPayload()
             {
-                key = id,
-                state = state
+                key = id
             };
+            newState.Serialize(state);
 
             if (SNet.IsMaster)
             {
@@ -146,10 +185,10 @@ namespace EEC.Networking
             return true;
         }
 
-        private void ReceiveSetState_FromMaster(ulong sender, ReplicatorPayload<S> statePacket)
+        private void ReceiveSetState_FromMaster(ulong sender, ReplicatorPayload statePacket)
         {
             var key = statePacket.key;
-            var newState = statePacket.state;
+            var newState = statePacket.Deserialize<S>();
             if (TryGetContext(key, out var context))
             {
                 context.State = newState;
@@ -170,12 +209,12 @@ namespace EEC.Networking
             }
         }
 
-        private void ReceiveSetState_FromClient(ulong sender, ReplicatorPayload<S> statePacket)
+        private void ReceiveSetState_FromClient(ulong sender, ReplicatorPayload statePacket)
         {
             if (!SNet.IsMaster)
                 return;
 
-            SetState(statePacket.key, statePacket.state);
+            SetState(statePacket.key, statePacket.Deserialize<S>());
         }
 
         public bool TryGetContext(ushort id, out StateContext<S> context)

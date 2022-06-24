@@ -1,13 +1,53 @@
 ﻿using GTFO.API;
 using Player;
 using SNetwork;
+using System;
+using System.Runtime.InteropServices;
 
 namespace EEC.Networking
 {
-    public struct SyncedPlayerEventPayload<T> where T : struct
+    internal struct SyncedPlayerEventPayload
     {
         public ulong lookup;
-        public T packet;
+
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 30)]
+        public byte[] packetBytes;
+
+        public void Serialize<T>(T packet) where T : struct
+        {
+            int size = Marshal.SizeOf(packet);
+
+            if (size >= 30)
+            {
+                throw new ArgumentException("PacketData Exceed size of 30 : Unable to Serialize", nameof(T));
+            }
+
+            byte[] bytes = new byte[size];
+
+            IntPtr ptr = Marshal.AllocHGlobal(size);
+
+            Marshal.StructureToPtr(packet, ptr, false);
+            Marshal.Copy(ptr, bytes, 0, size);
+            Marshal.FreeHGlobal(ptr);
+
+            packetBytes = bytes;
+        }
+
+        public T Deserialize<T>()
+        {
+            int size = Marshal.SizeOf(typeof(T));
+
+            if (size > packetBytes.Length)
+            {
+                throw new ArgumentException("Packet Exceed size of 30 : Unable to Deserialize", nameof(T));
+            }
+
+            IntPtr ptr = Marshal.AllocHGlobal(size);
+            Marshal.Copy(packetBytes, 0, ptr, size);
+            T obj = (T)Marshal.PtrToStructure(ptr, typeof(T));
+            Marshal.FreeHGlobal(ptr);
+            return obj;
+        }
 
         public bool TryGetPlayer(out SNet_Player player)
         {
@@ -42,7 +82,7 @@ namespace EEC.Networking
                 return;
 
             EventName = $"EECp{GUID}";
-            NetworkAPI.RegisterEvent<SyncedPlayerEventPayload<T>>(EventName, Received_Callback);
+            NetworkAPI.RegisterEvent<SyncedPlayerEventPayload>(EventName, Received_Callback);
             _isSetup = true;
         }
 
@@ -99,11 +139,11 @@ namespace EEC.Networking
                 return;
             }
 
-            var payload = new SyncedPlayerEventPayload<T>()
+            var payload = new SyncedPlayerEventPayload()
             {
-                lookup = player.Lookup,
-                packet = packetData
+                lookup = player.Lookup
             };
+            payload.Serialize(packetData);
 
             if (player.IsBot)
             {
@@ -139,7 +179,7 @@ namespace EEC.Networking
             }
         }
 
-        private void Received_Callback(ulong sender, SyncedPlayerEventPayload<T> payload)
+        private void Received_Callback(ulong sender, SyncedPlayerEventPayload payload)
         {
             if (!payload.TryGetPlayer(out var player))
                 return;
@@ -163,7 +203,7 @@ namespace EEC.Networking
 
             if (shouldProcess)
             {
-                Received(payload.packet, player);
+                Received(payload.Deserialize<T>(), player);
             }
         }
 
