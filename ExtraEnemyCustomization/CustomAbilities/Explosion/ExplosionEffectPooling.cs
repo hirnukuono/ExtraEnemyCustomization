@@ -22,6 +22,7 @@ namespace EEC.CustomAbilities.Explosion
             Object.DontDestroyOnLoad(newObject);
 
             var effectHandler = newObject.AddComponent<ExplosionEffectHandler>();
+            newObject.AddComponent<EffectLight>();
             newObject.SetActive(false);
             return effectHandler;
         }

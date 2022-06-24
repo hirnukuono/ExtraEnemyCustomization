@@ -11,33 +11,32 @@ namespace EEC.CustomAbilities.Explosion.Handlers
     {
         public Action EffectDoneOnce;
 
-        private bool _lightAllocated = false;
-        private FX_PointLight _light;
+        private EffectLight _light;
         private Timer _timer;
+        private bool _effectOnGoing = false;
 
         internal void DoEffect(ExplosionEffectData data)
         {
-            if (FX_Manager.TryAllocateFXLight(out _light, important: false))
+            transform.position = data.position;
+
+            if (_light == null)
             {
-                _light.SetColor(data.flashColor);
-                _light.SetRange(data.range);
-                _light.m_intensity = data.intensity;
-                _light.m_position = data.position;
-                _light.m_isOn = true;
-                _light.UpdateData();
-                _light.UpdateTransform();
-                _lightAllocated = true;
-                _timer.Reset(data.duration);
+                _light = gameObject.GetComponent<EffectLight>();
+                _light.Setup();
             }
-            else
-            {
-                OnDone();
-            }
+
+            _light.UpdateVisibility(true);
+
+            _light.Color = data.flashColor;
+            _light.Range = data.range;
+            _light.Intensity = data.intensity;
+            _timer.Reset(data.duration);
+            _effectOnGoing = true;
         }
 
         private void FixedUpdate()
         {
-            if (_lightAllocated && _timer.TickAndCheckDone())
+            if (_effectOnGoing && _timer.TickAndCheckDone())
             {
                 OnDone();
             }
@@ -45,15 +44,15 @@ namespace EEC.CustomAbilities.Explosion.Handlers
 
         private void OnDone()
         {
-            if (_lightAllocated)
+            if (_light != null)
             {
-                FX_Manager.DeallocateFXLight(_light);
+                _light.UpdateVisibility(false);
             }
 
             EffectDoneOnce?.Invoke();
             EffectDoneOnce = null;
             _light = null;
-            _lightAllocated = false;
+            _effectOnGoing = false;
         }
     }
 }

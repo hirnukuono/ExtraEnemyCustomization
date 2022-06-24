@@ -1,6 +1,7 @@
 ﻿using AK;
 using EEC.Attributes;
 using EEC.Events;
+using Player;
 using SNetwork;
 using UnityEngine;
 
@@ -37,7 +38,7 @@ namespace EEC.CustomAbilities.Explosion
             CellSound.Post(EVENTS.STICKYMINEEXPLODE, position);
 
             if (_usingLightFlash)
-                LightFlash(position, lightColor);
+                LightFlash(position, maxRange, lightColor);
 
             if (!SNet.IsMaster)
                 return;
@@ -119,16 +120,27 @@ namespace EEC.CustomAbilities.Explosion
             return newDamage;
         }
 
-        public static void LightFlash(Vector3 pos, Color lightColor)
+        public static void LightFlash(Vector3 pos, float range, Color lightColor)
         {
             ExplosionEffectPooling.TryDoEffect(new ExplosionEffectData()
             {
                 position = pos,
                 flashColor = lightColor,
                 intensity = 5.0f,
-                range = 50.0f,
+                range = range,
                 duration = 0.05f
             });
+
+            if (PlayerManager.HasLocalPlayerAgent())
+            {
+                var localAgent = PlayerManager.GetLocalPlayerAgent();
+                var dist = (localAgent.Position - pos).magnitude;
+                var amp = 6.0f * Mathf.Max(0.0f, Mathf.InverseLerp(range, 0, dist));
+                if (amp > 0.01f)
+                {
+                    PlayerManager.GetLocalPlayerAgent().FPSCamera.Shake(1.5f, amp, 0.09f);
+                }
+            }
         }
     }
 
