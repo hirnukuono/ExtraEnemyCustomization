@@ -22,7 +22,7 @@ namespace EEC.Networking
                 throw new ArgumentException("PacketData Exceed size of 30 : Unable to Serialize", nameof(T));
             }
 
-            byte[] bytes = new byte[size];
+            byte[] bytes = new byte[30];
 
             IntPtr ptr = Marshal.AllocHGlobal(size);
 
