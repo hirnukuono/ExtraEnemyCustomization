@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace EEC.EnemyCustomizations.Models
 {
-    public sealed class BoneCustom : EnemyCustomBase, IEnemyPrefabBuiltEvent, IEnemySpawnedEvent
+    public sealed class BoneCustom : EnemyCustomBase, IEnemyPrefabBuiltEvent
     {
         public BoneTransform[] Bones { get; set; } = Array.Empty<BoneTransform>();
         public BonePrefab[] Prefabs { get; set; } = Array.Empty<BonePrefab>();
@@ -19,17 +19,14 @@ namespace EEC.EnemyCustomizations.Models
 
         public void OnPrefabBuilt(EnemyAgent agent, EnemyDataBlock enemyData)
         {
-            foreach (var bonePrefab in Prefabs)
-            {
-                TryApplyBonePrefab(agent, bonePrefab);
-            }
-        }
-
-        public void OnSpawned(EnemyAgent agent)
-        {
             foreach (var boneTransform in Bones)
             {
                 TryApplyBoneTransform(agent, boneTransform);
+            }
+
+            foreach (var bonePrefab in Prefabs)
+            {
+                TryApplyBonePrefab(agent, bonePrefab);
             }
         }
 
@@ -37,11 +34,12 @@ namespace EEC.EnemyCustomizations.Models
         {
             try
             {
-                var transform = agent.Anim.GetBoneTransform(boneTransform.Bone);
+                var animator = agent.GetComponent<Animator>();
+                var transform = animator.GetBoneTransform(boneTransform.Bone);
                 if (boneTransform.Offset != Vector3.zero || boneTransform.Offset != Vector3.zero)
                 {
                     var handler = transform.gameObject.AddComponent<BoneOffsetHandler>();
-                    handler.Animator = agent.Anim;
+                    handler.Animator = animator;
                     handler.Offset = boneTransform.Offset;
                     handler.RotationOffset = boneTransform.RotationOffset;
                 }

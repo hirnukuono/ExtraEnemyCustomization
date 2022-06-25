@@ -10,8 +10,6 @@ namespace EEC.EnemyCustomizations.Models
 {
     public sealed class ScannerCustom : EnemyCustomBase, IEnemyPrefabBuiltEvent, IEnemyAgentModeEvent
     {
-        internal static readonly Dictionary<uint, ScannerColorData> _colorLookup = new();
-
         [JsonPropertyName("DefaultColor")]
         public Color Internal_DefaultColor { get; set; } = new(0.7f, 0.7f, 0.7f);
 
@@ -97,22 +95,11 @@ namespace EEC.EnemyCustomizations.Models
             }
         }
 
-        public override void OnTargetIDLookupBuilt()
-        {
-            foreach (var id in TargetEnemyIDs)
-            {
-                _colorLookup[id] = ColorData;
-            }
-        }
-
-        public override void OnConfigUnloaded()
-        {
-            _colorLookup.Clear();
-        }
-
         public void OnPrefabBuilt(EnemyAgent agent, EnemyDataBlock enemyData)
         {
-            agent.gameObject.AddOrGetComponent<ScannerHandler>();
+            var handler = agent.gameObject.AddOrGetComponent<ScannerHandler>();
+            handler.OwnerAgent = agent;
+            handler.ColorData = ColorData;
         }
 
         public void OnAgentModeChanged(EnemyAgent agent, AgentMode newMode)

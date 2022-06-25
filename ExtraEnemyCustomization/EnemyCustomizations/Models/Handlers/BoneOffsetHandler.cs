@@ -1,4 +1,5 @@
 ﻿using EEC.Attributes;
+using Il2CppInterop.Runtime.InteropTypes.Fields;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,16 +10,16 @@ namespace EEC.EnemyCustomizations.Models.Handlers
     [InjectToIl2Cpp]
     public sealed class BoneOffsetHandler : MonoBehaviour
     {
-        public Animator Animator;
-        public Vector3 Offset;
-        public Vector3 RotationOffset;
+        public Il2CppReferenceField<Animator> Animator;
+        public Il2CppValueField<Vector3> Offset;
+        public Il2CppValueField<Vector3> RotationOffset;
 
         private void LateUpdate()
         {
-            if (Animator.enabled)
+            if (Animator.Get().enabled)
             {
-                transform.localPosition += Offset;
-                transform.localEulerAngles += RotationOffset;
+                transform.localPosition += Offset.Get();
+                transform.localEulerAngles += RotationOffset.Get();
             }
         }
     }
