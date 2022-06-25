@@ -1,4 +1,5 @@
 ﻿using EEC.Attributes;
+using EEC.Networking;
 using EEC.Utils.Unity;
 using Enemies;
 using Il2CppInterop.Runtime.Attributes;
@@ -15,6 +16,7 @@ namespace EEC.EnemyCustomizations.Models.Handlers
     {
         public EnemyAgent Agent;
         public NavMarker Marker;
+        public HealthBarFormat.Worker Worker;
         private string _baseText;
         private bool[] _hasFormat = null;
         private bool _shouldUpdateRainbow = false;
@@ -110,6 +112,10 @@ namespace EEC.EnemyCustomizations.Models.Handlers
 
             while (true)
             {
+                NetworkManager.EnemyHealthState.TryGetState(Agent.GlobalID, out var healthState);
+                var maxHealth = healthState.maxHealth;
+                var health = healthState.health;
+
                 for (int i = 1 /*Skips None*/; i < _valuesOfEnum.Length; i++)
                 {
                     if (!_hasFormat[i])
@@ -119,12 +125,13 @@ namespace EEC.EnemyCustomizations.Models.Handlers
                     {
                         MarkerFormatText.None => string.Empty,
                         MarkerFormatText.NAME => string.Empty,
-                        MarkerFormatText.HP => Agent.Damage.Health.ToString("0.00"),
-                        MarkerFormatText.HP_ROUND => Mathf.RoundToInt(Agent.Damage.Health).ToString(),
-                        MarkerFormatText.HP_MAX => Agent.Damage.HealthMax.ToString("0.00"),
-                        MarkerFormatText.HP_MAX_ROUND => Mathf.RoundToInt(Agent.Damage.HealthMax).ToString(),
-                        MarkerFormatText.HP_PERCENT => (Agent.Damage.Health / Agent.Damage.HealthMax * 100.0f).ToString("0.00"),
-                        MarkerFormatText.HP_PERCENT_ROUND => Mathf.RoundToInt(Agent.Damage.Health / Agent.Damage.HealthMax * 100.0f).ToString(),
+                        MarkerFormatText.HP => health.ToString("0.00"),
+                        MarkerFormatText.HP_ROUND => Mathf.RoundToInt(health).ToString(),
+                        MarkerFormatText.HP_MAX => maxHealth.ToString("0.00"),
+                        MarkerFormatText.HP_MAX_ROUND => Mathf.RoundToInt(maxHealth).ToString(),
+                        MarkerFormatText.HP_PERCENT => (health / maxHealth * 100.0f).ToString("0.00"),
+                        MarkerFormatText.HP_PERCENT_ROUND => Mathf.RoundToInt(health / maxHealth * 100.0f).ToString(),
+                        MarkerFormatText.HP_BAR => Worker.BuildString(maxHealth, health),
                         MarkerFormatText.GAMING => ColorUtility.ToHtmlStringRGB(_rainbow),
                         _ => string.Empty,
                     };
@@ -163,6 +170,7 @@ namespace EEC.EnemyCustomizations.Models.Handlers
         {
             Agent = null;
             Marker = null;
+            Worker = null;
             _baseText = null;
             _hasFormat = null;
         }
@@ -178,6 +186,7 @@ namespace EEC.EnemyCustomizations.Models.Handlers
         HP_MAX_ROUND,
         HP_PERCENT,
         HP_PERCENT_ROUND,
+        HP_BAR,
         GAMING //yes
     }
 }
