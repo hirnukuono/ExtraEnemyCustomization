@@ -19,7 +19,8 @@
     <Platforms>x64</Platforms>
     <AnalysisLevel>5.0</AnalysisLevel>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <GenerateDocumentationFile>false</GenerateDocumentationFile> <!--soon (tm)-->
+    <GenerateDocumentationFile>false</GenerateDocumentationFile><!--soon (tm)-->
+	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
