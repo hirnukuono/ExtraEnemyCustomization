@@ -98,8 +98,21 @@ namespace EEC.EnemyCustomizations.Models
         public void OnPrefabBuilt(EnemyAgent agent, EnemyDataBlock enemyData)
         {
             var handler = agent.gameObject.AddOrGetComponent<ScannerHandler>();
-            handler.OwnerAgent = agent;
-            handler.ColorData = ColorData;
+            handler.OwnerAgent.Value = agent;
+            handler.DefaultColor.Value = ColorData.DefaultColor;
+            handler.WakeupColor.Value = ColorData.WakeupColor;
+            handler.DetectionColor.Value = ColorData.DetectionColor;
+            handler.HeartbeatColor.Value = ColorData.HeartbeatColor;
+            handler.PatrolColor.Value = ColorData.PatrolColor;
+            handler.FeelerOutColor.Value = ColorData.FeelerOutColor;
+
+            handler.UsingDetectionColor.Value = ColorData.UsingDetectionColor;
+            handler.UsingScoutColor.Value = ColorData.UsingScoutColor;
+
+            handler.InterpDuration.Value = ColorData.InterpDuration;
+            handler.UpdateInterval.Value = ColorData.UpdateInterval;
+
+            handler.OptimizeOnAwake.Value = ColorData.OptimizeOnAwake;
         }
 
         public void OnAgentModeChanged(EnemyAgent agent, AgentMode newMode)

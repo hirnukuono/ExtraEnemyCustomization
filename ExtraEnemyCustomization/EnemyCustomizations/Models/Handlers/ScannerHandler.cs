@@ -4,6 +4,7 @@ using EEC.Utils.Unity;
 using Enemies;
 using Il2CppInterop.Runtime.Attributes;
 using Il2CppInterop.Runtime.InteropTypes.Fields;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -26,20 +27,32 @@ namespace EEC.EnemyCustomizations.Models.Handlers
         public AgentMode CurrentMode => _agentMode;
 
         public Il2CppReferenceField<EnemyAgent> OwnerAgent;
-        public Il2CppValueField<ScannerColorData> ColorData;
+        public Il2CppValueField<Color> DefaultColor;
+        public Il2CppValueField<Color> WakeupColor;
+        public Il2CppValueField<Color> DetectionColor;
+        public Il2CppValueField<Color> HeartbeatColor;
+        public Il2CppValueField<Color> PatrolColor;
+        public Il2CppValueField<Color> FeelerOutColor;
+
+        public Il2CppValueField<bool> UsingDetectionColor;
+        public Il2CppValueField<bool> UsingScoutColor;
+
+        public Il2CppValueField<float> InterpDuration;
+        public Il2CppValueField<float> UpdateInterval;
+
+        public Il2CppValueField<bool> OptimizeOnAwake;
 
         private EnemyAgent _ownerAgent;
-        private ScannerColorData _colorData;
         private Coroutine _colorInterpolationCoroutine;
         private AgentMode _agentMode = AgentMode.Off;
         private EnemyState _currentState = EnemyState.Initial;
         private Color _previousColor = Color.white;
         private Color _doneColor = Color.white;
         private bool _disableScriptAfterDone = false;
+        private Coroutine _updateRoutine = null;
 
         private void OnEnable()
         {
-            _colorData = ColorData;
             _ownerAgent = OwnerAgent;
             if (_ownerAgent == null)
             {
@@ -47,21 +60,27 @@ namespace EEC.EnemyCustomizations.Models.Handlers
                 Destroy(this);
                 return;
             }
+
+            if (_updateRoutine != null)
+            {
+                StopCoroutine(_updateRoutine);
+            }
+            _updateRoutine = this.StartCoroutine(UpdateLoop());
         }
 
         [HideFromIl2Cpp]
         private IEnumerator UpdateLoop()
         {
-            var currentUpdateInterval = _colorData.UpdateInterval;
-            var yielder = WaitFor.Seconds[_colorData.UpdateInterval];
+            var currentUpdateInterval = UpdateInterval;
+            var yielder = WaitFor.Seconds[UpdateInterval];
 
             while (true)
             {
                 DoUpdate();
 
-                if (currentUpdateInterval != _colorData.UpdateInterval)
+                if (currentUpdateInterval != UpdateInterval)
                 {
-                    yielder = WaitFor.Seconds[_colorData.UpdateInterval];
+                    yielder = WaitFor.Seconds[UpdateInterval];
                 }
                 yield return yielder;
             }
@@ -102,7 +121,7 @@ namespace EEC.EnemyCustomizations.Models.Handlers
         [HideFromIl2Cpp]
         private IEnumerator ColorInterpolation()
         {
-            var interpTimer = new Timer(_colorData.InterpDuration);
+            var interpTimer = new Timer(InterpDuration);
 
             while (!interpTimer.TickAndCheckDone())
             {
@@ -141,7 +160,7 @@ namespace EEC.EnemyCustomizations.Models.Handlers
                 }
             }
 
-            if (_colorData.OptimizeOnAwake)
+            if (OptimizeOnAwake)
             {
                 if (_agentMode == AgentMode.Agressive)
                 {
@@ -172,7 +191,7 @@ namespace EEC.EnemyCustomizations.Models.Handlers
             switch (_agentMode)
             {
                 case AgentMode.Hibernate:
-                    if (!_colorData.UsingDetectionColor)
+                    if (!UsingDetectionColor)
                     {
                         state = EnemyState.Hibernate;
                         return;
@@ -207,7 +226,7 @@ namespace EEC.EnemyCustomizations.Models.Handlers
                     return;
 
                 case AgentMode.Scout:
-                    if (!_colorData.UsingScoutColor)
+                    if (!UsingScoutColor)
                     {
                         state = EnemyState.Wakeup;
                         return;
@@ -248,13 +267,13 @@ namespace EEC.EnemyCustomizations.Models.Handlers
         {
             return state switch
             {
-                EnemyState.Hibernate => _colorData.DefaultColor,
-                EnemyState.Detect => _colorData.DetectionColor,
-                EnemyState.Heartbeat => _colorData.HeartbeatColor,
-                EnemyState.Wakeup => _colorData.WakeupColor,
-                EnemyState.Scout => _colorData.PatrolColor,
-                EnemyState.ScoutDetect => _colorData.FeelerOutColor,
-                _ => _colorData.DefaultColor
+                EnemyState.Hibernate => DefaultColor,
+                EnemyState.Detect => DetectionColor,
+                EnemyState.Heartbeat => HeartbeatColor,
+                EnemyState.Wakeup => WakeupColor,
+                EnemyState.Scout => PatrolColor,
+                EnemyState.ScoutDetect => FeelerOutColor,
+                _ => DefaultColor
             };
         }
 
