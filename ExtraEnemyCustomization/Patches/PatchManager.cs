@@ -25,7 +25,9 @@ namespace EEC.Patches
             if (!enemyBehaviourBlock.IsFlyer)
                 return;
 
-            agent.gameObject.AddComponent<FlyerStuckHandler>();
+            var handler = agent.gameObject.AddComponent<FlyerStuckHandler>();
+            handler.Agent.Value = agent;
+
             Logger.Debug($"Added Flyer Check to {enemyData.persistentID}");
         }
     }

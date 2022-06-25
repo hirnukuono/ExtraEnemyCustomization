@@ -3,6 +3,7 @@ using EEC.Attributes;
 using EEC.Managers;
 using EEC.Utils.Unity;
 using Enemies;
+using Il2CppInterop.Runtime.InteropTypes.Fields;
 using SNetwork;
 using UnityEngine;
 
@@ -11,10 +12,11 @@ namespace EEC.Patches.Handlers
     [InjectToIl2Cpp]
     internal sealed class FlyerStuckHandler : MonoBehaviour
     {
-        public EnemyAgent Agent;
+        public Il2CppReferenceField<EnemyAgent> Agent;
         public float UpdateInterval = float.MaxValue;
         public int RetryCount = int.MaxValue;
 
+        private EnemyAgent _agent;
         private Vector3 _firstPosition;
         private Vector2 _lastGoalXZ;
         private Timer _timer;
@@ -29,13 +31,14 @@ namespace EEC.Patches.Handlers
                 return;
             }
 
-            if (!gameObject.TryGetComp(out Agent))
+            _agent = Agent;
+            if (_agent == null)
             {
                 enabled = false;
                 return;
             }
 
-            if (!Agent.EnemyBehaviorData.IsFlyer)
+            if (!_agent.EnemyBehaviorData.IsFlyer)
             {
                 enabled = false;
                 return;
@@ -49,7 +52,7 @@ namespace EEC.Patches.Handlers
         {
             if (_shouldCheck)
             {
-                if (Agent.AI.Mode != AgentMode.Agressive)
+                if (_agent.AI.Mode != AgentMode.Agressive)
                     return;
 
                 if (!_timer.TickAndCheckDone())
@@ -59,19 +62,19 @@ namespace EEC.Patches.Handlers
 
                 if (_tryCount == -1)
                 {
-                    _firstPosition = Agent.Position;
+                    _firstPosition = _agent.Position;
                     _tryCount = 0;
                     return;
                 }
 
-                if (Vector3.Distance(_firstPosition, Agent.Position) < 0.1f)
+                if (Vector3.Distance(_firstPosition, _agent.Position) < 0.1f)
                 {
                     _tryCount++;
 
                     if (_tryCount >= RetryCount)
                     {
                         Logger.Debug("Flyer was stuck in Place!");
-                        Agent.m_replicator.Despawn();
+                        _agent.m_replicator.Despawn();
                     }
                 }
                 else
@@ -81,12 +84,12 @@ namespace EEC.Patches.Handlers
             }
             else
             {
-                var goal = Agent.AI.NavmeshAgentGoal;
+                var goal = _agent.AI.NavmeshAgentGoal;
                 var goalXZ = new Vector2(goal.x, goal.z);
                 var goalDeltaSqr = (goalXZ - _lastGoalXZ).sqrMagnitude;
                 if (goalDeltaSqr < 0.1f)
                 {
-                    var state = (EB_States)Agent.AI.m_behaviour.CurrentState.ENUM_ID;
+                    var state = (EB_States)_agent.AI.m_behaviour.CurrentState.ENUM_ID;
                     if (state == EB_States.InCombat) //Possibly Stuck
                     {
                         _tryCount = -1;
