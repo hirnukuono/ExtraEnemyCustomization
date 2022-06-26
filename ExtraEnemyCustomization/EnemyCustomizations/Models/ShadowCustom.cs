@@ -46,6 +46,7 @@ namespace EEC.EnemyCustomizations.Models
                 {
                     comp.castShadows = true;
                     comp.shadowCastingMode = ShadowCastingMode.ShadowsOnly;
+                    comp.gameObject.AddComponent<ShadowEnemyRenderer>(); //Love you mccad00 from gtfo unofficial modding
                 }
             }
         }
