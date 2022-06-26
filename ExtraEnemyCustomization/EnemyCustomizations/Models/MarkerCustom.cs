@@ -4,6 +4,7 @@ using EEC.Managers.Assets;
 using EEC.Utils;
 using Enemies;
 using System;
+using System.Text;
 using UnityEngine;
 
 namespace EEC.EnemyCustomizations.Models
@@ -13,6 +14,7 @@ namespace EEC.EnemyCustomizations.Models
         public string SpriteName { get; set; } = string.Empty;
         public Color MarkerColor { get; set; } = new Color(0.8235f, 0.1843f, 0.1176f);
         public string MarkerText { get; set; } = string.Empty;
+        public HealthBarFormat MarkerTextHealthBarFormat { get; set; } = new();
         public bool ShowDistance { get; set; } = false;
         public bool BlinkIn { get; set; } = false;
         public bool Blink { get; set; } = false;
@@ -91,6 +93,7 @@ namespace EEC.EnemyCustomizations.Models
                     {
                         handler = marker.gameObject.AddComponent<MarkerTextHandler>();
                         handler.Agent = agent;
+                        handler.Worker = MarkerTextHealthBarFormat.CreateWorker();
                     }
 
                     handler.Marker = marker;
@@ -132,6 +135,68 @@ namespace EEC.EnemyCustomizations.Models
                         CoroutineManager.BlinkIn(marker.m_enemySubObj.gameObject, time);
                     }
                 }
+            }
+        }
+    }
+
+    public sealed class HealthBarFormat
+    {
+        public int Count { get; set; } = 8;
+        public string FilledBarText { get; set; } = "|";
+        public string EmptyBarText { get; set; } = " ";
+
+        public Worker CreateWorker()
+        {
+            return new Worker()
+            {
+                Count = Count,
+                FilledBarText = FilledBarText,
+                EmptyBarText = EmptyBarText
+            };
+        }
+
+        public sealed class Worker
+        {
+            public int Count;
+            public string FilledBarText;
+            public string EmptyBarText;
+
+            private StringBuilder _stringBuilder;
+            private int _lastFilledBar = -1;
+            private string _lastBarText = string.Empty;
+
+            public string BuildString(float maxHealth, float health)
+            {
+                var filledBarCount = Mathf.RoundToInt(Mathf.Lerp(0, Count, health / maxHealth));
+                if (filledBarCount == _lastFilledBar)
+                {
+                    return _lastBarText;
+                }
+
+                _lastFilledBar = filledBarCount;
+                if (_stringBuilder == null)
+                {
+                    _stringBuilder = new();
+                }
+                else
+                {
+                    _stringBuilder.Clear();
+                }
+
+                for (int i = 0; i < Count; i++)
+                {
+                    if (i < filledBarCount)
+                    {
+                        _stringBuilder.Append(FilledBarText);
+                    }
+                    else
+                    {
+                        _stringBuilder.Append(EmptyBarText);
+                    }
+                }
+
+                _lastBarText = _stringBuilder.ToString();
+                return _lastBarText;
             }
         }
     }
