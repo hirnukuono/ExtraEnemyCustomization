@@ -444,6 +444,11 @@
       "SpriteName": "marker_shadow.png", //FileName for icon, Leave it as blank if you want default sprite, image files should placed in ExtraEnemyCustomization/icons folder
       "MarkerColor": "#d22f1e", //Color for Marker: Official one is #d22f1e
       "MarkerText": "BIO_PROVE::[HP]", //Display text for Marker
+      "MarkerTextHealthBarFormat": {
+        "Count": 10,
+        "FilledBarText": "|",
+        "EmptyBarText": " "
+      },
       /* Allowed Formatting
         [NAME] - EnemyDataBlock Name
         [HP] - Enemy Health (0.00 format)
@@ -452,6 +457,7 @@
         [HP_MAX_ROUND] - Max Enemy Health (Rounded Integer format)
         [HP_PERCENT] - Enemy Health Percentage (0.00 format)
         [HP_PERCENT_ROUND] - Enemy Health Percentage (Rounded Integer format)
+        [HP_BAR] - Enemy HealthBar (Follow the format of MarkerTextHealthBarFormat setting)
         [GAMING] - ?
       */
       "ShowDistance": false, //Show meter distance indicator for Marker
