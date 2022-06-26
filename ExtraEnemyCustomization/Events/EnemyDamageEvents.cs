@@ -1,5 +1,6 @@
 ﻿using Agents;
 using Enemies;
+using System;
 
 namespace EEC.Events
 {
@@ -9,10 +10,13 @@ namespace EEC.Events
     {
         public static event EnemyTakeDamageHandler Damage;
 
+        [Obsolete("Disabled Due to Patching Error", true)]
         public static event EnemyTakeDamageHandler MeleeDamage;
 
+        [Obsolete("Disabled Due to Patching Error", true)]
         public static event EnemyTakeDamageHandler BulletDamage;
 
+        [Obsolete("Disabled Due to Patching Error", true)]
         public static event EnemyTakeDamageHandler ExplosionDamage;
 
         internal static void OnDamage(EnemyAgent enemyAgent, Agent inflictor, float damage)
