@@ -5,6 +5,7 @@ using EEC.Networking.Events;
 using EEC.Networking.Replicators;
 using EEC.Utils.Unity;
 using Enemies;
+using SNetwork;
 using System.Collections;
 using UnityEngine;
 
@@ -63,10 +64,13 @@ namespace EEC.Networking
             var health = agent.Damage.Health;
             while (true)
             {
-                var newHealth = agent.Damage.Health;
-                if (!Mathf.Approximately(health, newHealth))
+                if (SNet.IsMaster)
                 {
-                    EnemyHealthState.UpdateInfo(agent);
+                    var newHealth = agent.Damage.Health;
+                    if (!Mathf.Approximately(health, newHealth))
+                    {
+                        EnemyHealthState.UpdateInfo(agent);
+                    }
                 }
                 yield return fixedUpdateYielder;
             }
