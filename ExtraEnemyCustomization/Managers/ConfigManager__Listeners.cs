@@ -7,44 +7,41 @@ namespace EEC.Managers
     {
         private static void LiveEdit_FileChanged(LiveEditEventArgs e)
         {
+            
+
             var fileExtension = Path.GetExtension(e.FullPath);
             if (fileExtension.InvariantEquals(".json", ignoreCase: true) ||
                 fileExtension.InvariantEquals(".jsonc", ignoreCase: true))
             {
-                EnqueueJob(e.FullPath);
-            }
-        }
-
-        private static void EnqueueJob(string path)
-        {
-            ThreadDispatcher.Dispatch(() =>
-            {
-                var filename = Path.GetFileNameWithoutExtension(path);
-                if (_configFileNameToType.TryGetValue(filename.ToLowerInvariant(), out var type))
+                LiveEdit.TryReadFileContent(e.FullPath, (content) =>
                 {
-                    filename = _configTypeToFileName[type];
-
-                    Logger.Log($"Config File Changed: {filename}");
-
-                    ReloadConfig();
-
-                    //TODO: Implement Reload Individual File
-
-                    /*
-                    _configInstances[filename].Unloaded();
-                    if (_configInstances[filename] is CustomizationConfig custom)
+                    var filename = Path.GetFileNameWithoutExtension(e.FullPath);
+                    if (_configFileNameToType.TryGetValue(filename.ToLowerInvariant(), out var type))
                     {
-                        var settings = custom.GetAllSettings();
-                        foreach (var setting in settings)
+                        filename = _configTypeToFileName[type];
+
+                        Logger.Log($"Config File Changed: {filename}");
+
+                        ReloadConfig();
+
+                        //TODO: Implement Reload Individual File
+
+                        /*
+                        _configInstances[filename].Unloaded();
+                        if (_configInstances[filename] is CustomizationConfig custom)
                         {
-                            setting.OnConfigUnloaded();
+                            var settings = custom.GetAllSettings();
+                            foreach (var setting in settings)
+                            {
+                                setting.OnConfigUnloaded();
+                            }
                         }
+                        LoadConfig(type);
+                        Current.GenerateBuffer();
+                        */
                     }
-                    LoadConfig(type);
-                    Current.GenerateBuffer();
-                    */
-                }
-            });
+                });
+            }
         }
     }
 }
