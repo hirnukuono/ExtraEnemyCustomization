@@ -5,13 +5,13 @@ namespace EEC.Managers
 {
     public static partial class ConfigManager
     {
-        private static void OnConfigFileEdited_ReloadConfig(object sender, FileSystemEventArgs e)
+        private static void LiveEdit_FileChanged(LiveEditEventArgs e)
         {
-            var fileExtension = Path.GetExtension(e.Name);
+            var fileExtension = Path.GetExtension(e.FullPath);
             if (fileExtension.InvariantEquals(".json", ignoreCase: true) ||
                 fileExtension.InvariantEquals(".jsonc", ignoreCase: true))
             {
-                EnqueueJob(e.Name);
+                EnqueueJob(e.FullPath);
             }
         }
 

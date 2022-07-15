@@ -1,6 +1,7 @@
 ﻿using EEC.Configs;
 using EEC.Configs.Customizations;
 using EEC.Utils.Integrations;
+using GTFO.API.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -81,15 +82,9 @@ namespace EEC.Managers
 
             if (UseLiveEdit)
             {
-                var watcher = new FileSystemWatcher
-                {
-                    Path = BasePath,
-                    IncludeSubdirectories = false,
-                    NotifyFilter = NotifyFilters.LastWrite,
-                    Filter = "*.*"
-                };
-                watcher.Changed += new FileSystemEventHandler(OnConfigFileEdited_ReloadConfig);
-                watcher.EnableRaisingEvents = true;
+                var liveEdit = LiveEdit.CreateListener(BasePath, "*.*", true);
+                liveEdit.FileChanged += LiveEdit_FileChanged;
+                liveEdit.StartListen();
             }
         }
 
