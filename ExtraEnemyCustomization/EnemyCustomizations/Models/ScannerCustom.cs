@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace EEC.EnemyCustomizations.Models
 {
-    public sealed class ScannerCustom : EnemyCustomBase, IEnemyPrefabBuiltEvent, IEnemyAgentModeEvent
+    public sealed class ScannerCustom : EnemyCustomBase, IEnemyPrefabBuiltEvent
     {
         [JsonPropertyName("DefaultColor")]
         public Color Internal_DefaultColor { get; set; } = new(0.7f, 0.7f, 0.7f);
@@ -113,15 +113,6 @@ namespace EEC.EnemyCustomizations.Models
             handler.UpdateInterval.Value = ColorData.UpdateInterval;
 
             handler.OptimizeOnAwake.Value = ColorData.OptimizeOnAwake;
-        }
-
-        public void OnAgentModeChanged(EnemyAgent agent, AgentMode newMode)
-        {
-            if (agent.gameObject.TryGetComp<ScannerHandler>(out var scannerManager))
-            {
-                var forceUpdate = scannerManager.CurrentMode == AgentMode.Off;
-                scannerManager.UpdateAgentMode(newMode, forceUpdate);
-            }
         }
     }
 

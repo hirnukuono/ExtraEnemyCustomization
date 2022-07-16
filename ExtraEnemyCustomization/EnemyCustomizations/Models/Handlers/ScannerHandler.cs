@@ -24,8 +24,6 @@ namespace EEC.EnemyCustomizations.Models.Handlers
     [InjectToIl2Cpp]
     internal sealed class ScannerHandler : MonoBehaviour
     {
-        public AgentMode CurrentMode => _agentMode;
-
         public Il2CppReferenceField<EnemyAgent> OwnerAgent;
         public Il2CppValueField<Color> DefaultColor;
         public Il2CppValueField<Color> WakeupColor;
@@ -44,7 +42,6 @@ namespace EEC.EnemyCustomizations.Models.Handlers
 
         private EnemyAgent _ownerAgent;
         private Coroutine _colorInterpolationCoroutine;
-        private AgentMode _agentMode = AgentMode.Off;
         private EnemyState _currentState = EnemyState.Initial;
         private Color _previousColor = Color.white;
         private Color _doneColor = Color.white;
@@ -89,6 +86,8 @@ namespace EEC.EnemyCustomizations.Models.Handlers
         [HideFromIl2Cpp]
         private void DoUpdate()
         {
+            EnemyState oldState = EnemyState.Initial;
+
             if (!_ownerAgent.IsInDetectedList)
             {
                 //NOT Visible on Bio-Tracker
@@ -96,7 +95,7 @@ namespace EEC.EnemyCustomizations.Models.Handlers
                 if (_ownerAgent.UpdateMode != NodeUpdateMode.Close)
                     return;
 
-                if (HasNewState())
+                if (HasNewState(ref oldState))
                 {
                     _ownerAgent.ScannerColor = GetStateColor(_currentState);
                     TryDisable();
@@ -105,33 +104,46 @@ namespace EEC.EnemyCustomizations.Models.Handlers
             }
 
             //Visible on Bio-Tracker
-            if (HasNewState())
+            if (HasNewState(ref oldState))
             {
-                _previousColor = _ownerAgent.m_scannerColor;
-                _doneColor = GetStateColor(_currentState);
-
-                if (_colorInterpolationCoroutine != null)
+                if (oldState == EnemyState.Initial)
                 {
-                    StopCoroutine(_colorInterpolationCoroutine);
+                    _previousColor = GetStateColor(_currentState);
+                    _doneColor = _previousColor;
                 }
-                _colorInterpolationCoroutine = this.StartCoroutine(ColorInterpolation());
+                else
+                {
+                    _previousColor = _ownerAgent.m_scannerColor;
+                    _doneColor = GetStateColor(_currentState);
+                }
+                StartColorInterpolation(_previousColor, _doneColor);
             }
         }
 
         [HideFromIl2Cpp]
-        private IEnumerator ColorInterpolation()
+        private void StartColorInterpolation(Color fromColor, Color toColor)
+        {
+            if (_colorInterpolationCoroutine != null)
+            {
+                StopCoroutine(_colorInterpolationCoroutine);
+            }
+            _colorInterpolationCoroutine = this.StartCoroutine(ColorInterpolation(fromColor, toColor));
+        }
+
+        [HideFromIl2Cpp]
+        private IEnumerator ColorInterpolation(Color fromColor, Color toColor)
         {
             var interpTimer = new Timer(InterpDuration);
 
             while (!interpTimer.TickAndCheckDone())
             {
                 var progress = interpTimer.Progress;
-                var newColor = Color.Lerp(_previousColor, _doneColor, progress);
+                var newColor = Color.Lerp(fromColor, toColor, progress);
                 _ownerAgent.ScannerColor = newColor;
                 yield return null;
             }
 
-            _ownerAgent.ScannerColor = _doneColor;
+            _ownerAgent.ScannerColor = toColor;
             _colorInterpolationCoroutine = null;
             TryDisable();
             yield return null;
@@ -148,37 +160,12 @@ namespace EEC.EnemyCustomizations.Models.Handlers
         }
 
         [HideFromIl2Cpp]
-        internal void UpdateAgentMode(AgentMode mode, bool forceUpdateWithoutTransition = false)
-        {
-            _agentMode = mode;
-
-            if (forceUpdateWithoutTransition)
-            {
-                if (HasNewState())
-                {
-                    _ownerAgent.ScannerColor = GetStateColor(_currentState);
-                }
-            }
-
-            if (OptimizeOnAwake)
-            {
-                if (_agentMode == AgentMode.Agressive)
-                {
-                    _disableScriptAfterDone = true;
-                }
-                else if (!enabled)
-                {
-                    enabled = true;
-                }
-            }
-        }
-
-        [HideFromIl2Cpp]
-        private bool HasNewState()
+        private bool HasNewState(ref EnemyState oldState)
         {
             UpdateState(out var newState);
             if (_currentState != newState)
             {
+                oldState = _currentState;
                 _currentState = newState;
                 return true;
             }
@@ -188,77 +175,48 @@ namespace EEC.EnemyCustomizations.Models.Handlers
         [HideFromIl2Cpp]
         private void UpdateState(out EnemyState state)
         {
-            switch (_agentMode)
+            var loco = _ownerAgent.Locomotion;
+            switch (loco.CurrentStateEnum)
             {
-                case AgentMode.Hibernate:
-                    if (!UsingDetectionColor)
-                    {
-                        state = EnemyState.Hibernate;
-                        return;
-                    }
+                case ES_StateEnum.ClimbLadder:
+                    state = _currentState;
+                    break;
 
-                    if (_ownerAgent.IsHibernationDetecting)
+                case ES_StateEnum.StuckInGlue:
+                    state = EnemyState.Hibernate;
+                    break;
+
+                case ES_StateEnum.Hibernate:
+                    if (loco.Hibernate.m_heartbeatActive)
                     {
-                        if (_ownerAgent.Locomotion.Hibernate.m_heartbeatActive)
-                        {
-                            state = EnemyState.Heartbeat;
-                            return;
-                        }
-                        else
-                        {
-                            state = EnemyState.Detect;
-                            return;
-                        }
+                        state = EnemyState.Heartbeat;
+                        break;
                     }
-                    else if (_ownerAgent.Locomotion.CurrentStateEnum == ES_StateEnum.HibernateWakeUp)
+                    state = _ownerAgent.IsHibernationDetecting ? EnemyState.Detect : EnemyState.Hibernate;
+                    break;
+
+                case ES_StateEnum.ScoutDetection:
+                    state = EnemyState.ScoutDetect;
+                    break;
+
+                case ES_StateEnum.PathMove:
+                    if (_ownerAgent.AI.m_scoutPath == null)
                     {
                         state = EnemyState.Wakeup;
-                        return;
-                    }
-                    else
-                    {
-                        state = EnemyState.Hibernate;
-                        return;
+                        break;
                     }
 
-                case AgentMode.Agressive:
-                    state = EnemyState.Wakeup;
-                    return;
-
-                case AgentMode.Scout:
-                    if (!UsingScoutColor)
+                    if (loco.ScoutScream.m_state == ES_ScoutScream.ScoutScreamState.Done)
                     {
                         state = EnemyState.Wakeup;
-                        return;
+                        break;
                     }
-
-                    if (_ownerAgent.Locomotion.CurrentStateEnum == ES_StateEnum.ScoutScream)
-                    {
-                        state = EnemyState.Wakeup;
-                        return;
-                    }
-
-                    var detection = _ownerAgent.Locomotion.ScoutDetection.m_antennaDetection;
-                    if (detection == null)
-                    {
-                        state = EnemyState.Scout;
-                        return;
-                    }
-
-                    if (detection.m_wantsToHaveTendrils)
-                    {
-                        state = EnemyState.ScoutDetect;
-                        return;
-                    }
-                    else
-                    {
-                        state = EnemyState.Scout;
-                        return;
-                    }
+                    state = EnemyState.Scout;
+                    break;
 
                 default:
-                    state = EnemyState.Hibernate;
-                    return;
+                    state = EnemyState.Wakeup;
+                    break;
             }
         }
 
