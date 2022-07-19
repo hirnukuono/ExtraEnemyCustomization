@@ -45,7 +45,7 @@ namespace EEC.EnemyCustomizations.Abilities
         private static void RecieveMedi(iResourcePackReceiver receiver, float _)
         {
             var player = receiver.TryCast<PlayerAgent>();
-            if (player != null && player.IsLocallyOwned)
+            if (player != null)
             {
                 BleedSetting.StopBleed(player);
             }

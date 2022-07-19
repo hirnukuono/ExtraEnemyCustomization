@@ -9,7 +9,7 @@
     <BIELibsFolder>$(GameFolder)/BepInEx/core</BIELibsFolder>
     <InteropLibsFolder>$(GameFolder)/BepInEx/interop</InteropLibsFolder>
     <PluginsFolder>$(GameFolder)/BepInEx/plugins</PluginsFolder>
-    <CorLibsFolder>$(GameFolder)/dotnet/corlib</CorLibsFolder>
+    <CorLibsFolder>$(GameFolder)/dotnet</CorLibsFolder>
     <TargetFramework>net6</TargetFramework>
     <LangVersion>Latest</LangVersion>
     <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
@@ -29,7 +29,6 @@
     <Reference Include="$(BIELibsFolder)/Il2CppInterop.*.dll" Private="false" />
     <Reference Include="$(BIELibsFolder)/SemanticVersioning.dll" Private="false" />
     <Reference Include="$(CorLibsFolder)/*.dll" Private="false" />
-    <Reference Include="$(CorLibsFolder)/../System.Private.CoreLib.dll" Private="false" />
     <Reference Include="$(InteropLibsFolder)/*.dll" Private="false" />
     <Reference Include="$(PluginsFolder)/GTFO-API.dll" Private="false" />
     <Reference Remove="$(InteropLibsFolder)/Newtonsoft.Json.dll" />
