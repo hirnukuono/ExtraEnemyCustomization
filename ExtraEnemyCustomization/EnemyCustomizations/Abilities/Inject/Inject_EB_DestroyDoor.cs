@@ -15,6 +15,8 @@ namespace EEC.EnemyCustomizations.Abilities.Inject
         public const float MaxTime = 1.0f;
         public const float Range = MaxTime - MinTime;
 
+        public static float DefaultRandomDelay => (Rand.NextFloat() * Range) + MinTime;
+
         [HarmonyWrapSafe]
         internal static void Postfix(EB_InCombat_MoveToNextNode_DestroyDoor __instance)
         {
@@ -22,17 +24,16 @@ namespace EEC.EnemyCustomizations.Abilities.Inject
                 return;
 
             var enemyAgent = __instance.m_ai.m_enemyAgent;
-
             if (enemyAgent.TryGetProperty<DoorBreakerProperty>(out var breakerProp))
             {
                 if (breakerProp.UseGlobalTimer && breakerProp.Config._globalTimer < Clock.ExpeditionProgressionTime)
                 {
-                    if (DoDamageDoor(__instance, breakerProp.Damage))
+                    if (TryDamageDoor(__instance, breakerProp.Damage))
                         breakerProp.Config._globalTimer = Clock.ExpeditionProgressionTime + Rand.Range(breakerProp.MinDelay, breakerProp.MaxDelay);
                 }
                 else if (!breakerProp.UseGlobalTimer && breakerProp.Timer < Clock.ExpeditionProgressionTime)
                 {
-                    if (DoDamageDoor(__instance, breakerProp.Damage))
+                    if (TryDamageDoor(__instance, breakerProp.Damage))
                         breakerProp.Timer = Clock.ExpeditionProgressionTime + Rand.Range(breakerProp.MinDelay, breakerProp.MaxDelay);
                 }
             }
@@ -41,12 +42,12 @@ namespace EEC.EnemyCustomizations.Abilities.Inject
                 if (GlobalTimer >= Clock.ExpeditionProgressionTime)
                     return;
 
-                if (DoDamageDoor(__instance, 1.0f))
-                    GlobalTimer = Clock.ExpeditionProgressionTime + (Rand.NextFloat() * Range) + MinTime;
+                if (TryDamageDoor(__instance, 1.0f))
+                    GlobalTimer = Clock.ExpeditionProgressionTime + DefaultRandomDelay;
             }
         }
 
-        private static bool DoDamageDoor(EB_InCombat_MoveToNextNode_DestroyDoor context, float damage)
+        private static bool TryDamageDoor(EB_InCombat_MoveToNextNode_DestroyDoor context, float damage)
         {
             var enemyAgent = context.m_ai.Agent;
             context.m_ai.Agent.TargetLookDir = context.m_ai.m_courseNavigation.m_onPortalPosition - enemyAgent.Position;
