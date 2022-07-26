@@ -1,4 +1,5 @@
-﻿using EEC.Events;
+﻿using EEC.Attributes;
+using EEC.Events;
 using EEC.Utils;
 using Player;
 using System;
@@ -7,6 +8,7 @@ using UnityEngine;
 
 namespace EEC.CustomSettings.CustomProjectiles
 {
+    [CallConstructorOnLoad]
     public static class CustomProjectileManager
     {
         public static bool AssetLoaded { get; internal set; } = false;

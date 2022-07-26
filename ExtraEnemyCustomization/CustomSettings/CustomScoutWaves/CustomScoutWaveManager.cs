@@ -1,4 +1,5 @@
 ﻿using AIGraph;
+using EEC.Attributes;
 using EEC.Events;
 using EEC.Utils;
 using Enemies;
@@ -10,6 +11,7 @@ using System.Linq;
 
 namespace EEC.CustomSettings.CustomScoutWaves
 {
+    [CallConstructorOnLoad]
     public static class CustomScoutWaveManager
     {
         private static readonly List<ExpeditionScoutSetting> _scoutSettings = new();

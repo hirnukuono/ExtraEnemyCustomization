@@ -1,4 +1,5 @@
-﻿using EEC.EnemyCustomizations.EnemyAbilities.Abilities;
+﻿using EEC.Attributes;
+using EEC.EnemyCustomizations.EnemyAbilities.Abilities;
 using EEC.Events;
 using EEC.Networking;
 using SNetwork;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 
 namespace EEC.EnemyCustomizations.EnemyAbilities
 {
+    [CallConstructorOnLoad]
     public static class EnemyAbilityManager
     {
         private static ushort _syncIDBuffer = 1;

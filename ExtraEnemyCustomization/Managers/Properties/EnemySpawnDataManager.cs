@@ -1,4 +1,5 @@
-﻿using EEC.Events;
+﻿using EEC.Attributes;
+using EEC.Events;
 using Enemies;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Text;
 
 namespace EEC.Managers.Properties
 {
+    [CallConstructorOnLoad]
     public static class EnemySpawnDataManager
     {
         private static readonly Dictionary<ushort, pEnemySpawnData> _lookup = new(500);
