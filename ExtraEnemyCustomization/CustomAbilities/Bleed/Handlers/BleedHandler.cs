@@ -1,5 +1,4 @@
-﻿using EEC.Attributes;
-using EEC.CustomAbilities.Bleed.Inject;
+﻿using EEC.CustomAbilities.Bleed.Inject;
 using EEC.Utils;
 using EEC.Utils.Unity;
 using Il2CppInterop.Runtime.Attributes;

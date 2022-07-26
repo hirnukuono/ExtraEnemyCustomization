@@ -1,5 +1,4 @@
-﻿using EEC.Attributes;
-using Player;
+﻿using Player;
 
 namespace EEC.CustomAbilities.DrainStamina
 {

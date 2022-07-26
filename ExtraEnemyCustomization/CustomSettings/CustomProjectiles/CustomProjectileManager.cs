@@ -1,5 +1,4 @@
-﻿using EEC.Attributes;
-using EEC.Events;
+﻿using EEC.Events;
 using EEC.Utils;
 using Player;
 using System;

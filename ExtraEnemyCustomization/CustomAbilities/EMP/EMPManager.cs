@@ -1,5 +1,4 @@
-﻿using EEC.Attributes;
-using EEC.CustomAbilities.EMP.Inject;
+﻿using EEC.CustomAbilities.EMP.Inject;
 using EEC.Events;
 using EEC.Networking;
 using System.Collections.Generic;

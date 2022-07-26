@@ -1,5 +1,4 @@
-﻿using EEC.Attributes;
-using EEC.Events;
+﻿using EEC.Events;
 using Enemies;
 using System;
 using System.Collections.Generic;

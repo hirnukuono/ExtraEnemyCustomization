@@ -1,5 +1,4 @@
-﻿using EEC.Attributes;
-using EEC.Utils.Unity;
+﻿using EEC.Utils.Unity;
 using UnityEngine;
 
 namespace EEC.EnemyCustomizations.Shared.Handlers

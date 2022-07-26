@@ -1,5 +1,4 @@
 ﻿using Agents;
-using EEC.Attributes;
 using EEC.Utils.Unity;
 using Enemies;
 using Il2CppInterop.Runtime.Attributes;

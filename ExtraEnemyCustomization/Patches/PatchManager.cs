@@ -1,5 +1,4 @@
-﻿using EEC.Attributes;
-using EEC.Managers;
+﻿using EEC.Managers;
 using EEC.Patches.Handlers;
 using Enemies;
 using GameData;

@@ -1,5 +1,4 @@
 ﻿using Agents;
-using EEC.Attributes;
 using EEC.Managers;
 using EEC.Utils.Unity;
 using Enemies;

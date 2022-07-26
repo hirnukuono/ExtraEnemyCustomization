@@ -1,5 +1,4 @@
-﻿using EEC.Attributes;
-using EEC.Networking;
+﻿using EEC.Networking;
 using EEC.Utils.Unity;
 using Enemies;
 using Il2CppInterop.Runtime.Attributes;

@@ -1,5 +1,4 @@
-﻿using EEC.Attributes;
-using EEC.EnemyCustomizations.EnemyAbilities.Abilities;
+﻿using EEC.EnemyCustomizations.EnemyAbilities.Abilities;
 using EEC.Events;
 using EEC.Networking;
 using SNetwork;

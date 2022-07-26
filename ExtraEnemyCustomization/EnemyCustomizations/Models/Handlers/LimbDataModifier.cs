@@ -1,5 +1,4 @@
-﻿using EEC.Attributes;
-using Enemies;
+﻿using Enemies;
 using Il2CppInterop.Runtime.InteropTypes.Fields;
 using System;
 using System.Collections.Generic;

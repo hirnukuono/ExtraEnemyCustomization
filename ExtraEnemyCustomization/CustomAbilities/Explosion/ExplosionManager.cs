@@ -1,5 +1,4 @@
 ﻿using AK;
-using EEC.Attributes;
 using EEC.Events;
 using Player;
 using SNetwork;

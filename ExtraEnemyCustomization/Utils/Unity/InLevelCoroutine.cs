@@ -1,5 +1,4 @@
 ﻿using BepInEx.IL2CPP.Utils.Collections;
-using EEC.Attributes;
 using EEC.Events;
 using EEC.Networking;
 using SNetwork;

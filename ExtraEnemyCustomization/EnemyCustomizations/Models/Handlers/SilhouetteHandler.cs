@@ -1,5 +1,4 @@
-﻿using EEC.Attributes;
-using EEC.Events;
+﻿using EEC.Events;
 using Enemies;
 using Il2CppInterop.Runtime.Attributes;
 using UnityEngine;

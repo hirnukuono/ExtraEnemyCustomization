@@ -1,5 +1,4 @@
-﻿using EEC.Attributes;
-using EEC.EnemyCustomizations.Models.Handlers;
+﻿using EEC.EnemyCustomizations.Models.Handlers;
 using EEC.Events;
 using EEC.Utils.Unity;
 using Enemies;
