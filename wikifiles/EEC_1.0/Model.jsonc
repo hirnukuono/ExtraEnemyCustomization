@@ -460,6 +460,9 @@
         [HP_BAR] - Enemy HealthBar (Follow the format of MarkerTextHealthBarFormat setting)
         [GAMING] - ?
       */
+      "SpriteScale": 1.0, //Scale Factor of Ping Icon
+      "TextScale": 1.0, //Scale Factor of Ping Text
+      "DistanceTextScale": 1.0, //Scale Factor of Distance Text
       "ShowDistance": false, //Show meter distance indicator for Marker
       "BlinkIn": true, //Use Blink Effect when first spawned?
       "Blink": true, //Use Random Blink Effect?
