@@ -70,6 +70,7 @@ namespace EEC.Networking
         public string ChangeRequestName { get; private set; } = string.Empty;
 
         private bool _isInitialized = false;
+        private S _DefaultState;
 
         public void Initialize()
         {
@@ -108,6 +109,8 @@ namespace EEC.Networking
 
         public void Register(ushort id, S startState, Action<S> onChanged = null)
         {
+            _DefaultState = startState;
+
             if (TryGetContext(id, out var context))
             {
                 if (context.Registered)
@@ -176,8 +179,8 @@ namespace EEC.Networking
         {
             if (!TryGetContext(id, out var context) || !context.Registered)
             {
-                Logger.Error($"KEY: {id} has not registered!");
-                state = default;
+                Logger.Warning($"KEY: {id} has not registered; backing to DefaultState");
+                state = _DefaultState;
                 return false;
             }
 

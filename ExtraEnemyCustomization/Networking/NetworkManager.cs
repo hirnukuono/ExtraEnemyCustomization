@@ -70,6 +70,7 @@ namespace EEC.Networking
                     if (!Mathf.Approximately(health, newHealth))
                     {
                         EnemyHealthState.UpdateInfo(agent);
+                        health = newHealth;
                     }
                 }
                 yield return fixedUpdateYielder;
