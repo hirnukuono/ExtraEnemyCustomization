@@ -11,10 +11,17 @@ namespace EEC.EnemyCustomizations.Models
 {
     public sealed class MarkerCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
+        public static readonly Vector3 EnemyTextScale = new(1.0f, 1.0f, 1.0f);
+        public static readonly Vector3 EnemyDistanceTextScale = new(0.6f, 0.6f, 0.6f);
+        public static readonly Vector3 EnemySpriteScale = new(54.0f, 54.0f, 54.0f);
+
         public string SpriteName { get; set; } = string.Empty;
         public Color MarkerColor { get; set; } = new Color(0.8235f, 0.1843f, 0.1176f);
         public string MarkerText { get; set; } = string.Empty;
         public HealthBarFormat MarkerTextHealthBarFormat { get; set; } = new();
+        public float SpriteScale { get; set; } = 1.0f;
+        public float TextScale { get; set; } = 1.0f;
+        public float DistanceTextScale { get; set; } = 1.0f;
         public bool ShowDistance { get; set; } = false;
         public bool BlinkIn { get; set; } = false;
         public bool Blink { get; set; } = false;
@@ -103,15 +110,17 @@ namespace EEC.EnemyCustomizations.Models
                 {
                     marker.SetTitle(MarkerText);
                 }
+                marker.m_titleSubObj.transform.localScale = EnemyTextScale * TextScale;
             }
 
             if (ShowDistance)
             {
                 option |= NavMarkerOption.Distance;
+                marker.m_distanceSubObj.transform.localScale = EnemyDistanceTextScale * DistanceTextScale;
             }
 
             marker.SetVisualStates(option, option, NavMarkerOption.Empty, NavMarkerOption.Empty);
-
+            marker.m_enemySubObj.transform.localScale = EnemySpriteScale * SpriteScale;
             if (_sprite != null)
             {
                 var renderer = marker.m_enemySubObj.GetComponentInChildren<SpriteRenderer>();
@@ -167,7 +176,7 @@ namespace EEC.EnemyCustomizations.Models
 
             public string BuildString(float maxHealth, float health)
             {
-                var filledBarCount = Mathf.RoundToInt(Mathf.Lerp(0, Count, health / maxHealth));
+                var filledBarCount = Mathf.CeilToInt(Mathf.Lerp(0, Count, health / maxHealth));
                 if (filledBarCount == _lastFilledBar)
                 {
                     return _lastBarText;

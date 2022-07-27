@@ -42,20 +42,21 @@ namespace EEC.Networking
                 {
                     ConfigManager.FireAgentModeChangedEvent(agent, newState.mode);
                 });
-
-                var agentHealthState = new EnemyHealthInfoReplicator.State()
-                {
-                    maxHealth = agent.Damage.HealthMax,
-                    health = agent.Damage.Health
-                };
-
-                EnemyHealthState.Register(agent.GlobalID, agentHealthState, (newState) =>
-                {
-                    EnemyDamageEvents.OnHealthUpdated(agent, newState.maxHealth, newState.health);
-                });
-
-                agent.AI.StartCoroutine(CheckHealth(agent));
             }
+
+
+            var agentHealthState = new EnemyHealthInfoReplicator.State()
+            {
+                maxHealth = agent.Damage.HealthMax,
+                health = agent.Damage.Health
+            };
+
+            EnemyHealthState.Register(agent.GlobalID, agentHealthState, (newState) =>
+            {
+                EnemyDamageEvents.OnHealthUpdated(agent, newState.maxHealth, newState.health);
+            });
+
+            agent.AI.StartCoroutine(CheckHealth(agent));
         }
 
         private static IEnumerator CheckHealth(EnemyAgent agent)
@@ -70,6 +71,7 @@ namespace EEC.Networking
                     if (!Mathf.Approximately(health, newHealth))
                     {
                         EnemyHealthState.UpdateInfo(agent);
+                        health = newHealth;
                     }
                 }
                 yield return fixedUpdateYielder;

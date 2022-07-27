@@ -176,7 +176,7 @@ namespace EEC.Networking
         {
             if (!TryGetContext(id, out var context) || !context.Registered)
             {
-                Logger.Error($"KEY: {id} has not registered!");
+                Logger.Warning($"KEY: {id} has not registered; backing to Default");
                 state = default;
                 return false;
             }
