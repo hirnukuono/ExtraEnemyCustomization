@@ -108,6 +108,8 @@ namespace EEC.Utils.Json.Elements
                     writer.WriteStringValue(value.Value.ToString());
                     break;
             }
+
+            writer.WriteCommentValue("ValueBase");
         }
     }
 }
