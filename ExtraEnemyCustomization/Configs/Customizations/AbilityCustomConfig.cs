@@ -15,6 +15,7 @@ namespace EEC.Configs.Customizations
         public DrainStaminaAttackCustom[] DrainStaminaAttackCustom { get; set; } = Array.Empty<DrainStaminaAttackCustom>();
         public DoorBreakerCustom[] DoorBreakerCustom { get; set; } = Array.Empty<DoorBreakerCustom>();
         public ScoutScreamingCustom[] ScoutScreamingCustom { get; set; } = Array.Empty<ScoutScreamingCustom>();
+        public PouncerCustom[] PouncerCustom { get; set; } = Array.Empty<PouncerCustom>();
 
         public override string FileName => "Ability";
         public override CustomizationConfigType Type => CustomizationConfigType.Ability;
