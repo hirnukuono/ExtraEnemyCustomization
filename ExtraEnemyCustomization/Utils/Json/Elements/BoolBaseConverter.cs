@@ -58,6 +58,8 @@ namespace EEC.Utils.Json.Elements
                     writer.WriteStringValue("Unchanged");
                     break;
             }
+
+            writer.WriteCommentValue("BoolBase");
         }
     }
 }
