@@ -1,4 +1,4 @@
-﻿using BepInEx.IL2CPP.Utils;
+﻿using BepInEx.Unity.IL2CPP.Utils;
 using BepInEx.Logging;
 using EEC.EnemyCustomizations.EnemyAbilities.Events;
 using EEC.Events;
