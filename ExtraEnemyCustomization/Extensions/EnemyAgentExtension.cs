@@ -51,7 +51,7 @@ namespace EEC
                 return false;
             }
 
-            if (SNet_Replication.TryGetReplicator(spawnData.groupReplicatorKey, out var replicator))
+            if (!SNet_Replication.TryGetReplicator(spawnData.groupReplicatorKey, out var replicator))
             {
                 group = null;
                 return false;

@@ -39,6 +39,7 @@ namespace EEC
 
             ClassInjector.RegisterTypeInIl2Cpp<EnemyCustomizations.Models.ShadowCustom.FixEnemySER>();
             ClassInjector.RegisterTypeInIl2Cpp<EnemyCustomizations.Models.ShadowCustom.FixShadows>();
+
             InjectAllIl2CppType();
             CallAllAutoConstructor();
 

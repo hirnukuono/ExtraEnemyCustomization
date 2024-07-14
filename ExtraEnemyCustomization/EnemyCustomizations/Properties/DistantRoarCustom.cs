@@ -4,16 +4,30 @@ using UnityEngine;
 
 namespace EEC.EnemyCustomizations.Properties
 {
+    public enum WaveRoars : byte
+    {
+        None,
+        Striker,
+        Shooter,
+        Bullrush,
+        Shadow,
+        Flyer,
+        Birther,
+        Tank,
+        Pouncer
+    }
+
     public sealed class DistantRoarCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
         public uint SoundID { get; set; } = 0u;
         public float Interval { get; set; } = 0.0f;
         public bool OnlyForSurvivalWave { get; set; } = true;
         public bool IsGlobal { get; set; } = true;
+        public WaveRoars WaveRoarOverride { get; set; } = WaveRoars.None;
 
         private float _timer = 0.0f;
         private CellSoundPlayer _soundPlayer;
-
+        
         public override string GetProcessName()
         {
             return "DistantRoar";
@@ -39,7 +53,7 @@ namespace EEC.EnemyCustomizations.Properties
                 return;
 
             if (OnlyForSurvivalWave)
-            {
+            {                
                 if (!agent.TryGetEnemyGroup(out var group))
                     return;
 

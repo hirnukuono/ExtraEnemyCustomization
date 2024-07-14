@@ -64,7 +64,7 @@ namespace EEC.EnemyCustomizations.Models
                 {
                     comp.castShadows = true;
                     comp.shadowCastingMode = ShadowCastingMode.ShadowsOnly;
-                    Debug.Log("fd eec uus shadowenemyrenderer menee sisään");
+                    //Debug.Log("fd eec uus shadowenemyrenderer menee sisään");
                     comp.gameObject.AddComponent<ShadowEnemyRenderer>(); //Love you mccad00 from gtfo unofficial modding
                 }
             }
@@ -72,7 +72,7 @@ namespace EEC.EnemyCustomizations.Models
 
         public void OnSpawned(EnemyAgent agent)
         {
-            Debug.Log($"fd eec onprefabbuilt {Type} {IncludeThermals}");
+            //Debug.Log($"fd eec onprefabbuilt {Type} {IncludeThermals}");
             if (Type == ShadowType.LegacyShadows)
             {
                 agent.MovingCuller.m_disableAnimatorCullingWhenRenderingShadow = true;
@@ -116,10 +116,9 @@ namespace EEC.EnemyCustomizations.Models
                     if (g_SER.Contains(skinnedMeshRenderer.gameObject.name.ToLower()))
                         skinnedMeshRenderer.updateWhenOffscreen = true;
 
-                if (comp.enabled)
-                    comp.shadowCastingMode = ShadowCastingMode.ShadowsOnly;
+                comp.shadowCastingMode = ShadowCastingMode.ShadowsOnly;
 
-                if (!comp.name.ToLower().Contains("egg", StringComparison.InvariantCultureIgnoreCase) && !comp.name.ToLower().Contains("fleshsack", StringComparison.InvariantCultureIgnoreCase))
+                if (!comp.name.InvariantContains("Egg", ignoreCase: true) && !comp.name.InvariantContains("FleshSack", ignoreCase: true))
                     continue;
 
                 agent.MovingCuller.m_disableAnimatorCullingWhenRenderingShadow = true;
@@ -212,22 +211,24 @@ namespace EEC.EnemyCustomizations.Models
 
             public void Attach(EnemyAgent enemy, bool thermalShadows)
             {
-                Debug.Log("fd eec enemyser attach");
+                //Debug.Log("fd eec enemyser attach");
                 this.enemy = enemy;
                 var tmpoerr = enemy.GetComponentsInChildren<ShadowEnemyRenderer>();
                 if (tmpoerr != null) foreach (var oerr in tmpoerr) sers.Add(oerr);
                 if (sers.Count > 0)
                 {
                     // natural shadow
-                    Debug.Log($"fd eec naturalshadow!");
+                    //Debug.Log($"fd eec naturalshadow!");
                     this.initialized = true;
                     return;
                 }
+
                 // unnatural shadows
-                var gaaa = enemy.GetComponentsInChildren<MeshRenderer>();
-                foreach (var guuu in gaaa) if (guuu.gameObject.name.ToLower() == "infested") sammuta.Add(guuu);
-                var list = enemy.GetComponentsInChildren<SkinnedMeshRenderer>();
-                foreach (var skinmeshrenderer in list)
+                foreach (var guuu in enemy.GetComponentsInChildren<MeshRenderer>()) 
+                    if (guuu.gameObject.name.ToLower() == "infested") 
+                        sammuta.Add(guuu);
+
+                foreach (var skinmeshrenderer in enemy.GetComponentsInChildren<SkinnedMeshRenderer>())
                 {
                     if (skinmeshrenderer.gameObject.name.ToLower() == "g_pouncer") sammuta2.Add(skinmeshrenderer);
                     if (skinmeshrenderer.gameObject.name.ToLower() == "g_body") sammuta2.Add(skinmeshrenderer);
@@ -238,21 +239,21 @@ namespace EEC.EnemyCustomizations.Models
 
                 if (thermalShadows)
                 {
-                    Debug.Log($"fd eec unnatural thermalshadow {thermalShadows}");
+                    //Debug.Log($"fd eec unnatural thermalshadow {thermalShadows}");
 
                     var list2 = this.enemy.GetComponentsInChildren<SkinnedMeshRenderer>(true);
                     foreach (var tmp in list2)
                     {
                         if (g_SER.Contains(tmp.gameObject.name.ToLower()))
                         {
-                            Debug.Log($"fd eec name match {tmp.gameObject.name.ToLower()}");
+                            //Debug.Log($"fd eec name match {tmp.gameObject.name.ToLower()}");
                             tmp.shadowCastingMode = ShadowCastingMode.ShadowsOnly;
                             this.ser = tmp.gameObject.AddComponent<ShadowEnemyRenderer>();
                             this.ser.Renderer = tmp;
                             this.sers.Add(this.ser);
                         }
                     }
-                    Debug.Log($"fd eec sers count {this.sers.Count}");
+                    //Debug.Log($"fd eec sers count {this.sers.Count}");
                     if (this.sers.Count > 0)
                     {
                         this.ser.MovingCuller = this.enemy.MovingCuller;
@@ -281,7 +282,7 @@ namespace EEC.EnemyCustomizations.Models
 
             public void Attach(EnemyAgent enemy, Renderer rend, Renderer sphere, Renderer shadow, bool visibleFromBehind)
             {
-                Debug.Log("fd eec tumor attach");
+                //Debug.Log("fd eec tumor attach");
                 this.jee = Time.realtimeSinceStartup;
                 this.enemy = enemy;
                 this.mr1 = sphere;

@@ -5,7 +5,7 @@ namespace EEC.CustomAbilities.EMP
     public interface IEMPHandler
     {
         /// <summary>
-        /// This method is called during the Update cycle when the EMP effect is active
+        /// This method is called during the Attach cycle when the EMP effect is active
         /// </summary>
         void Tick(bool enabled);
 
