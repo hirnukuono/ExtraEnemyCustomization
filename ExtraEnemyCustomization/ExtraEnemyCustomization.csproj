@@ -1,46 +1,31 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" InitialTargets="ValidateGamePath">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
 
-  <Import Project="GameFolder.props" Condition="Exists('./GameFolder.props')" />
-  <Target Name="ValidateGamePath">
-    <Error Text="The GameFolder property must be set to the GTFO game folder." Condition="'$(GameFolder)' == '' or !Exists('$(GameFolder)')" />
-  </Target>
+		<!--
+		Use the following property to set your preferred r2modman profile
+		-->
+		<Profile>hirnuplugins</Profile>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<TargetFramework>net6</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<DebugType>None</DebugType>
+		<AssemblyName>$(SolutionName)</AssemblyName>
+		<RootNamespace>$(SolutionName)</RootNamespace>
+		<BepInEx>$(AppData)\r2modmanPlus-local\GTFO\profiles\$(Profile)\BepInEx</BepInEx>
+		<BuildDirectory>$(BepInEx)\plugins\hirnukuono-$(SolutionName)\</BuildDirectory>
+		<OutputPath>$(BuildDirectory)</OutputPath>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<Platforms>AnyCPU;x64</Platforms>
+	</PropertyGroup>
+	<Target Name="PostBuild" BeforeTargets="PostBuildEvent">
+		<Delete Files="$(OutputPath)$(AssemblyName).deps.json" />
+	</Target>
 
-  <PropertyGroup>
-    <BIELibsFolder>$(GameFolder)/BepInEx/core</BIELibsFolder>
-    <InteropLibsFolder>$(GameFolder)/BepInEx/interop</InteropLibsFolder>
-    <PluginsFolder>$(GameFolder)/BepInEx/plugins</PluginsFolder>
-    <CorLibsFolder>$(GameFolder)/dotnet</CorLibsFolder>
-    <TargetFramework>net6</TargetFramework>
-    <LangVersion>Latest</LangVersion>
-    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
-    <Version>1.6.0</Version>
-    <RootNamespace>EEC</RootNamespace>
-    <Configurations>Debug;Release</Configurations>
-    <Platforms>x64</Platforms>
-    <AnalysisLevel>5.0</AnalysisLevel>
-    <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <GenerateDocumentationFile>false</GenerateDocumentationFile><!--soon (tm)-->
-	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-	<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-  </PropertyGroup>
+	<Import Project="Dependencies.props" />
 
-  <ItemGroup>
-    <Reference Include="$(BIELibsFolder)/BepInEx.*.dll" Private="false" />
-    <Reference Include="$(BIELibsFolder)/0Harmony.dll" Private="false" />
-    <Reference Include="$(BIELibsFolder)/Il2CppInterop.*.dll" Private="false" />
-    <Reference Include="$(BIELibsFolder)/SemanticVersioning.dll" Private="false" />
-    <Reference Include="$(CorLibsFolder)/*.dll" Private="false" />
-    <Reference Include="$(InteropLibsFolder)/*.dll" Private="false" />
-    <Reference Include="$(PluginsFolder)/GTFO-API.dll" Private="false" />
-    <Reference Remove="$(InteropLibsFolder)/Newtonsoft.Json.dll" />
-    <Reference Remove="$(InteropLibsFolder)/netstandard.dll" />
-  </ItemGroup>
+	<ItemGroup>
+	  <PackageReference Include="SemanticVersioning" Version="2.0.2" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Unity.Analyzers" Version="1.12.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
 </Project>

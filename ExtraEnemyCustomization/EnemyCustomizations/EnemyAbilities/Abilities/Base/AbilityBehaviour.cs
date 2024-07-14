@@ -3,6 +3,7 @@ using BepInEx.Logging;
 using EEC.EnemyCustomizations.EnemyAbilities.Events;
 using EEC.Events;
 using EEC.Utils.Unity;
+using Timer = EEC.Utils.Unity.Timer;
 using Enemies;
 using SNetwork;
 using System.Collections;

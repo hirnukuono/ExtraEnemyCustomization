@@ -1,5 +1,6 @@
 ﻿using Agents;
 using EEC.Utils.Unity;
+using Timer = EEC.Utils.Unity.Timer;
 using Enemies;
 using Il2CppInterop.Runtime.Attributes;
 using Il2CppInterop.Runtime.InteropTypes.Fields;
