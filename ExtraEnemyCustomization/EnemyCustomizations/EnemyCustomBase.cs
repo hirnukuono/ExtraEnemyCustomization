@@ -32,7 +32,7 @@ namespace EEC.EnemyCustomizations
         }
 
         [JsonIgnore]
-        public IEnumerable<uint> TargetEnemyIDs => _isTargetLookup.ToArray().Where(x => x.Value == true).Select(x => x.Key);
+        public IEnumerable<uint> TargetEnemyIDs => _isTargetLookup.Where(x => x.Value == true).Select(x => x.Key);
 
         public EnemyCustomBase Base => this;
 

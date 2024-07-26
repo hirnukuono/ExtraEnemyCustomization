@@ -1,49 +1,65 @@
-﻿using EEC.Managers;
+﻿using AK;
 using Enemies;
 using HarmonyLib;
-using UnityEngine;
 
-namespace EEC.EnemyCustomizations.Properties.Inject
+namespace ExtraEnemyCustomization.EnemyCustomizations.Properties.Inject
 {
-    [HarmonyPatch(typeof(EnemyGroup), nameof(EnemyGroup.TryGetAKSwitchIDFromEnemyType))]
+    [HarmonyPatch]
     internal static class Inject_EnemyGroup
     {
-        private static readonly Dictionary<string, uint> v_WaveRoars = new()
-        {
-            { "None", 0u },
-            { "Striker", 3129078391u },
-            { "Shooter", 2586696975u },
-            { "Bullrush", 2175837293u },
-            { "Shadow", 3140781661u },
-            { "Flyer", 918167457u },
-            { "Tank", 3206747537u },
-            { "Birther", 2995743377u },
-            { "Pouncer", 4217125911u }
-        };
-
+        [HarmonyPatch(typeof(EnemyGroup), nameof(EnemyGroup.TryGetAKSwitchIDFromEnemyType))]
+        [HarmonyPrefix]
         [HarmonyWrapSafe]
-        public static bool Prefix(EnemyAgent agent, out uint switchID)
+        public static bool OverrideSwitchID(ref bool __result, EnemyAgent agent, out uint switchID)
         {
-            try
-            {
-                var roar = ConfigManager.PropertyCustom.DistantRoarCustom
-                    .FirstOrDefault(q => q.IsTarget(agent.EnemyData.persistentID));
+            switchID = 0u;
 
-                if (roar != null && v_WaveRoars.TryGetValue(roar.WaveRoarOverride.ToString(), out switchID))
-                {
-                    Debug.Log($"[EEC] - Custom EnemyAgent: {agent.ToString()}, new switchID: {switchID}");
-                    return switchID == 0u; 
-                }
-
-                switchID = 0u;
-                return true; 
-            }
-            catch (Exception e)
+            if (SharedRoarData.Dict.TryGetValue(agent.EnemyData.persistentID, out var roarData))
             {
-                Debug.LogError($"[EEC] - Something somewhere went wrong...\n{e}");
-                switchID = 0u;
-                return true; 
+                switchID = roarData.SwitchID;
+                __result = true;
             }
+
+            return switchID == 0u;   
+        }
+
+        [HarmonyPatch(typeof(EnemyGroup), nameof(EnemyGroup.GetByteFromEnemyType))]
+        [HarmonyPrefix]
+        [HarmonyWrapSafe]
+        public static bool AppendAKEnemyTypes(ref byte __result, uint enemyType)
+        {
+            if (enemyType == SWITCHES.ENEMY_TYPE.SWITCH.POUNCER)
+            {
+                __result = 8;
+                return false;
+            }
+            if (enemyType == SWITCHES.ENEMY_TYPE.SWITCH.STRIKER_BERSERK)
+            {
+                __result = 9;
+                return false;
+            }
+            if (enemyType == SWITCHES.ENEMY_TYPE.SWITCH.SHOOTER_SPREAD)
+            {
+                __result = 10;
+                return false;
+            }
+            if (enemyType == 99900u)
+            {
+                __result = 11;
+                return false;
+            }
+            if (enemyType == 99901u)
+            {
+                __result = 12;
+                return false;
+            }
+            if (enemyType == 99902u)
+            {
+                __result = 13;
+                return false;
+            }
+
+            return true;
         }
     }
 }

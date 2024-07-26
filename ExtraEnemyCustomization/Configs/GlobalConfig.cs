@@ -31,6 +31,13 @@ namespace EEC.Configs
 
         #endregion Bleeding
 
+        #region WaveRoarFix
+
+        [JsonPropertyName("WaveRoarFix.AutoAddUnused")]
+        public bool AddUnusedVanillaRoars { get; set; } = false;
+
+        #endregion WaveRoarFix
+
         public override string FileName => "Global";
     }
 }
