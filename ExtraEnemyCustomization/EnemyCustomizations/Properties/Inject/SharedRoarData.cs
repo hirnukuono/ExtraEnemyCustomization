@@ -11,6 +11,10 @@ namespace ExtraEnemyCustomization.EnemyCustomizations.Properties.Inject
             if (filter == null || !filter.Any())
                 return null;
 
+            foreach (var entry in filter)
+                if (Dict.TryGetValue(entry.Key, out var roarData))
+                    roarData.IsInWave = false;
+
             return filter.OrderByDescending(entry => entry.Value.RoarSettings.RoarSize).FirstOrDefault().Value.RoarSettings;
         }
 
@@ -19,6 +23,7 @@ namespace ExtraEnemyCustomization.EnemyCustomizations.Properties.Inject
             public DistantRoarCustom RoarSettings { get; set; } = new();
             public uint SwitchID { get; set; }
             public byte EnemyType { get; set; }
+            public bool IsInWave { get; set; } = false;
         }
     }
 }

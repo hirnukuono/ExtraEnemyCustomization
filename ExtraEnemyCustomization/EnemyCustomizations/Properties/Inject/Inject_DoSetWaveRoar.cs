@@ -11,11 +11,10 @@ namespace ExtraEnemyCustomization.EnemyCustomizations.Properties.Inject
     [HarmonyPatch(typeof(LG_LevelInteractionManager), nameof(LG_LevelInteractionManager.DoSetWaveRoarSoundInformation))]
     internal static class Inject_DoSetWaveRoar
     {
-
         [HarmonyWrapSafe]
         public static bool Prefix(LG_LevelInteractionManager.pWaveRoarSettings settings)
         {
-            DistantRoarCustom? largest = SharedRoarData.Condense(SharedRoarData.Dict.Where(entry => entry.Value.EnemyType == settings.enemyType).ToList());
+            DistantRoarCustom? largest = SharedRoarData.Condense(SharedRoarData.Dict.Where(entry => entry.Value.EnemyType == settings.enemyType && entry.Value.IsInWave).ToList());
             if (largest == null)
                 return true;
             

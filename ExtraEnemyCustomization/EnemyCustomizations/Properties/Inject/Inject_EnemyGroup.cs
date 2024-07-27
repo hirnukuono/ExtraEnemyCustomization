@@ -17,9 +17,10 @@ namespace ExtraEnemyCustomization.EnemyCustomizations.Properties.Inject
             if (SharedRoarData.Dict.TryGetValue(agent.EnemyData.persistentID, out var roarData))
             {
                 switchID = roarData.SwitchID;
+                SharedRoarData.Dict[agent.EnemyData.persistentID].IsInWave = true;
                 __result = true;
             }
-
+                
             return switchID == 0u;   
         }
 

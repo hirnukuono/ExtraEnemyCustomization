@@ -77,17 +77,18 @@ namespace EEC.EnemyCustomizations.Properties
         public override void OnConfigLoaded()
         {
             base.OnConfigLoaded();
+            SharedRoarData.Dict.Clear();
 
             if (ConfigManager.Global.AddUnusedVanillaRoars)
             {
-                SharedRoarData.Dict.Add(46u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Pouncer }, SwitchID = SwitchID.POUNCER, EnemyType = 8 });
-                SharedRoarData.Dict.Add(47u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Immortal }, SwitchID = SwitchID.IMMORTAL, EnemyType = 6 });
-                SharedRoarData.Dict.Add(55u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Birther }, SwitchID = SwitchID.BIRTHER, EnemyType = 2 });
-                SharedRoarData.Dict.Add(53u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Striker_Berserk }, SwitchID = SwitchID.STRIKER_BERSERK, EnemyType = 9 });
-                SharedRoarData.Dict.Add(62u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Striker_Berserk }, SwitchID = SwitchID.STRIKER_BERSERK, EnemyType = 9 });
-                SharedRoarData.Dict.Add(63u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Striker_Berserk }, SwitchID = SwitchID.STRIKER_BERSERK, EnemyType = 9 });
-                SharedRoarData.Dict.Add(52U, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Shooter_Spread }, SwitchID = SwitchID.SHOOTER_SPREAD, EnemyType = 10 });
-                SharedRoarData.Dict.Add(56U, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Shooter_Spread }, SwitchID = SwitchID.SHOOTER_SPREAD, EnemyType = 10 });
+                SharedRoarData.Dict.TryAdd(46u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Pouncer }, SwitchID = SwitchID.POUNCER, EnemyType = 8 });
+                SharedRoarData.Dict.TryAdd(47u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Immortal }, SwitchID = SwitchID.IMMORTAL, EnemyType = 6 });
+                SharedRoarData.Dict.TryAdd(55u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Birther }, SwitchID = SwitchID.BIRTHER, EnemyType = 2 });
+                SharedRoarData.Dict.TryAdd(53u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Striker_Berserk }, SwitchID = SwitchID.STRIKER_BERSERK, EnemyType = 9 });
+                SharedRoarData.Dict.TryAdd(62u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Striker_Berserk }, SwitchID = SwitchID.STRIKER_BERSERK, EnemyType = 9 });
+                SharedRoarData.Dict.TryAdd(63u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Striker_Berserk }, SwitchID = SwitchID.STRIKER_BERSERK, EnemyType = 9 });
+                SharedRoarData.Dict.TryAdd(52U, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Shooter_Spread }, SwitchID = SwitchID.SHOOTER_SPREAD, EnemyType = 10 });
+                SharedRoarData.Dict.TryAdd(56U, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Shooter_Spread }, SwitchID = SwitchID.SHOOTER_SPREAD, EnemyType = 10 });
             } 
         }
 
