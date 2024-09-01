@@ -30,7 +30,10 @@
       },
       "IncludeEggSack": false, //WARNING: Shadow Eggsack is completely Invisible, not even a single shadow!
       "RequireTagForDetection": true,
-      "FullyInvisible": false //Fully Invisible Shadows (Ghosts)! You can't see them even with flashlight.
+      "FullyInvisible": false, //Fully Invisible Shadows (Ghosts)! You can't see them even with flashlight.
+      "Type": "LegacyShadows", // Accepted enums: LegacyShadows, NewShadows
+      "IncludeThermals": true, // If "NewShadows", is visible in thermal sights
+      "TumorVisibleFromBehind": true // If "NewShadows", tumors will become visible when viewed from the back
     }
   ],
   //Material Customization

@@ -1,0 +1,16 @@
+{
+  "BehaviourAbilityCustom": [],
+  "LimbDestroyedAbilityCustom": [],
+  "DeathAbilityCustom": [],
+  "Abilities": {
+    "Chain": [],
+    "FogSphere": [],
+    "Explosion": [],
+    "SpawnEnemy": [],
+    "SpawnWave": [],
+    "SpawnProjectile": [],
+    "DoAnim": [],
+    "Cloak": [],
+    "EMP": []
+  }
+}

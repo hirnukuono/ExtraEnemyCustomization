@@ -1,0 +1,8 @@
+{
+    "Flyer.StuckCheck.Enabled": true,
+    "Flyer.StuckCheck.RetryCount": 5,
+    "Flyer.StuckCheck.RetryInterval": 1.5,
+    "Material.CacheAll": false,
+    "Bleeding.UseMediToStop": false,
+    "WaveRoarFix.AutoAddUnused": false
+}

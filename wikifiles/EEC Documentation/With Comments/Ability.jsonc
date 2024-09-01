@@ -409,5 +409,71 @@
         "Scale": 1
       }
     }
+  ],
+  "PouncerCustom": [ // i'm not gonna begin to try to understand all this, look at unity ig for default values
+    {
+      "DashCooldownMin": "Unchanged", // all ValueBase downwards, unless otherwise stated
+      "DashCooldownMax": "Unchanged",
+      "DashMaxTime": "Unchanged",
+      "ChargeDuration": "Unchanged",
+      "ConsumeDuration": "Unchanged",
+      "DashEndPhaseDistance": "Unchanged",
+      "DashEndAnimationLength": "Unchanged",
+      "ChargeStaggerDamageThreshold": "Unchanged",
+      "DashStaggerDamageThreshold": "Unchanged",
+      "StaggerDuration": "Unchanged",
+      "FaceToTargetDuringProwlingDistance": "Unchanged",
+      "StaggerLeadsToAfterHeld": "Unchanged", // all BoolBase downwards, unless otherwise stated
+      "EnableOffMeshLinkDash": "Unchanged",
+      "LOSRequiredForDash": "Unchanged",
+      "DashStaggerUsesHeavyHitreaction": "Unchanged",
+      "Enable1PConsumeVFX": "Unchanged",
+      "Enable3PConsumeVFX": "Unchanged",
+      "DashMovementModifier": {
+        "SpeedModifier": "Unchanged", // ValueBase
+        "AccelerationModifier": "Unchanged" // ValueBase
+      },
+      "HeldStateData": {
+        "HeldStartAnimationDuration": "Unchanged", // ValueBase
+        "MaxHeldDuration": "Unchanged",
+        "DamageToPlayerPerSecond": "Unchanged",
+        "DamageOnStartHolding": "Unchanged",
+        "AfterHeldRunAwayDuration": "Unchanged",
+        "SpitOutStateDuration": "Unchanged",
+        "ValidatePlayerDimension": "Unchanged", // BoolBase
+        "PathingData": {
+          "DstChangeRate": "Unchanged", // ValueBase
+          "TryToKeepDistance": "Unchanged", // ValueBase
+          "RecursiveReachableNodeSearch": "Unchanged", // BoolBase
+          "MovementModifier": {
+            "SpeedModifier": "Unchanged", // ValueBase
+            "AccelerationModifier": "Unchanged" // ValueBase
+          }
+        }
+      },
+      "DamageShapeData": {
+        "Radius": "Unchanged", // ValueBase
+        "Angle": "Unchanged" // ValueBase
+      },
+      "PouncerSoundData": {
+        "AttackCharge": 2040824805,
+        "AttackHit": 1034385728,
+        "AttackMiss": 1149851817,
+        "DashStart": 3726964003,
+        "HeldIdle": 376939216,
+        "HeldSpitOut": 2870456237,
+        "IdleGrowl": 3799706438,
+        "TentacleLoop": 3217748688
+      },
+      "CombatStatePathingData": {
+        "DstChangeRate": "Unchanged", // ValueBase
+        "TryToKeepDistance": "Unchanged", // ValueBase
+        "RecursiveReachableNodeSearch": "Unchanged", // BoolBase
+        "MovementModifier": {
+          "SpeedModifier": "Unchanged", // ValueBase
+          "AccelerationModifier": "Unchanged" // ValueBase
+        }
+      }
+    }
   ]
 }

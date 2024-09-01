@@ -78,7 +78,11 @@
       "SoundID": 3912366267, //Sound ID to use
       "Interval": 5.0, //Minimum Interval between this distant roar sound plays
       "IsGlobal": true, //Override other WaveSpawning Roar sound?
-      "OnlyForSurvivalWave": true //Does this distant roar sound only plays when it's survival wave spawned enemies?
+      "OnlyForSurvivalWave": true, //Does this distant roar sound only plays when it's survival wave spawned enemies?
+      "OnlyUseOverrides": false, // Only use WaveRoarFix's implemenation, ignore legacy method
+      "RoarSound": "Striker", // Accepted enums: Striker, Shooter, Birther, Shadow, Tank, Flyer, Immortal, Bullrush, Pouncer, Striker_Berserk, Shooter_Spread, None, OldDistantRoar, Custom
+      "RoarSize": "Unchanged", // Accepted enums: Unchanged, Small, Medium, Big
+      "IsOutside": "Unchanged" // BoolBase: "Unchanged", true, false
     }
   ]
 }
