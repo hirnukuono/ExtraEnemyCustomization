@@ -1,6 +1,7 @@
 ﻿using EEC.EnemyCustomizations.Shared;
 using EEC.Utils.Json.Elements;
 using Player;
+using SNetwork;
 using System.Text.Json.Serialization;
 using UnityEngine;
 
@@ -40,10 +41,10 @@ namespace EEC.CustomSettings.CustomProjectiles
 
         public void DoCollisionEffect(Vector3 projectilePosition, PlayerAgent player = null)
         {
-            if (Explosion?.Enabled ?? false)
+            if (SNet.IsMaster && (Explosion?.Enabled ?? false))
                 Explosion.DoExplode(projectilePosition);
 
-            if (player == null)
+            if (player == null || !player.IsLocallyOwned)
                 return;
 
             if (Knockback?.Enabled ?? false)
