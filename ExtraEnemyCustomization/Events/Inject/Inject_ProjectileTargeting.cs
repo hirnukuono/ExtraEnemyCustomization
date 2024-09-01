@@ -11,7 +11,7 @@ namespace EEC.Events.Inject
         [HarmonyWrapSafe]
         internal static void Prefix(ProjectileTargeting __instance)
         {
-            if (__instance.m_endLifeTime < Clock.Time)
+            if (!__instance.m_active && __instance.m_endLifeTime < Clock.Time)
             {
                 ProjectileEvents.OnLifeTimeDone(__instance);
             }
