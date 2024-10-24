@@ -1,5 +1,6 @@
 ﻿using EEC.Utils.Integrations;
 using EEC.Utils.Json.Converters;
+using ExtraEnemyCustomization.Utils.Integrations;
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -29,6 +30,11 @@ namespace EEC.Utils.Json
             {
                 _setting.Converters.Add(MTFOPartialDataUtil.PersistentIDConverter);
                 Logger.Log("PartialData Support Found!");
+            }
+            if (InjectLibUtil.IsLoaded)
+            {
+                _setting.Converters.Add(InjectLibUtil.InjectLibConnector);
+                Logger.Log("InjectLib found!");
             }
         }
 

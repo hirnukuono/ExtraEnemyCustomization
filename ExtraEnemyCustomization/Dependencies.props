@@ -52,5 +52,6 @@
 	<!--Other plugin dependencies -->
 	<ItemGroup>
 		<Reference Include="$(PluginsFolder)/GTFO-API.dll" Private="False"/>
+		<Reference Include="$(PluginsFolder)\**\InjectLib.dll" Private="false" />
 	</ItemGroup>	
 </Project>

@@ -1,5 +1,5 @@
 ﻿using GameData;
-using System;
+using InjectLib.JsonNETInjection.Supports;
 using System.Text.Json.Serialization;
 
 namespace EEC.Utils.Json.Elements
@@ -18,7 +18,7 @@ namespace EEC.Utils.Json.Elements
 
         public void Cache()
         {
-            _cached = JSON.Deserialize<WardenObjectiveEventData>(_json);
+            _cached = InjectLibJSON.Deserialize<WardenObjectiveEventData>(_json);
             _json = string.Empty;
         }
 

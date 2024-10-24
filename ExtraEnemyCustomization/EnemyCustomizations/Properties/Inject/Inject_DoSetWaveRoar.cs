@@ -71,32 +71,24 @@ namespace ExtraEnemyCustomization.EnemyCustomizations.Properties.Inject
             }
 
             int size = (int)largest.RoarSize == 0 ? settings.roarSize : (int)largest.RoarSize;
+            if (useOldRoar)
+            {
+                csPlayer.Post(size < 3 ? EVENTS.DISTANT_ROAR_MEDIUM : EVENTS.DISTANT_ROAR_LARGE, largest.IsGlobal);
+                return false;
+            }
             switch (size)
             {
                 case 1:
                     csPlayer.SetSwitch(SWITCHES.ROAR_SIZE.GROUP, SWITCHES.ROAR_SIZE.SWITCH.SMALL);
-                    if (useOldRoar)
-                    {
-                        csPlayer.Post(EVENTS.DISTANT_ROAR_MEDIUM, largest.IsGlobal);
-                        return false;
-                    }
                     break;
                 case 2:
                     csPlayer.SetSwitch(SWITCHES.ROAR_SIZE.GROUP, SWITCHES.ROAR_SIZE.SWITCH.MEDIUM);
-                    if (useOldRoar)
-                    {
-                        csPlayer.Post(EVENTS.DISTANT_ROAR_MEDIUM, largest.IsGlobal);
-                        return false;
-                    }
                     break;
                 case 3:
                     csPlayer.SetSwitch(SWITCHES.ROAR_SIZE.GROUP, SWITCHES.ROAR_SIZE.SWITCH.BIG);
-                    if (useOldRoar)
-                    {
-                        csPlayer.Post(EVENTS.DISTANT_ROAR_LARGE, largest.IsGlobal);
-                        return false;
-                    }
                     break;
+                default:
+                    return true;
             }
 
             csPlayer.SetSwitch(SWITCHES.ENVIROMENT.GROUP, largest.IsOutside.GetValue(settings.isOutside) ? SWITCHES.ENVIROMENT.SWITCH.DESERT : SWITCHES.ENVIROMENT.SWITCH.COMPLEX);
@@ -106,7 +98,7 @@ namespace ExtraEnemyCustomization.EnemyCustomizations.Properties.Inject
 
         static IEnumerator Cleanup(CellSoundPlayer csPlayer)
         {
-            yield return new WaitForSeconds(10f);
+            yield return new WaitForSeconds(10.0f);
             csPlayer.Recycle();
         }
     }
