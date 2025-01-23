@@ -11,7 +11,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 
         public float ExitDelay { get; set; } = 0.0f;
         public bool ExitAllInForceExit { get; set; } = true;
-        public bool ExitAllInForceExitOnly { get; set; } = true;
+        public bool ExitAllInForceExitOnly { get; set; } = false;
         public bool ForceExitOnHitreact { get; set; } = false;
         public bool ForceExitOnDead { get; set; } = false;
         public bool ForceExitOnLimbDestroy { get; set; } = false;
