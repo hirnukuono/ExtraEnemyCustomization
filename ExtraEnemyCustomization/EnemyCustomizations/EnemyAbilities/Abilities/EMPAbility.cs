@@ -14,6 +14,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         public EnemyAnimType ActivateAnimation { get; set; } = EnemyAnimType.AbilityUseOut;
         public float ChargeUpDuration { get; set; } = 3;
         public float EffectDuration { get; set; } = 30;
+        public float ActivateDuration { get; set; } = 5;
         public float EffectRange { get; set; } = 20;
         public bool InvincibleWhileCharging { get; set; } = true;
         public Color BuildupColor { get; set; } = new Color(0.525f, 0.956f, 0.886f, 1.0f) * 2.0f;
@@ -61,7 +62,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
                         EMPManager.Activate(Agent.Position, Ability.EffectRange, Ability.EffectDuration);
 
                         _state = EMPState.AbilityUsed;
-                        _stateTimer.Reset(5.0f);
+                        _stateTimer.Reset(Ability.ActivateDuration);
                     }
                     break;
 
