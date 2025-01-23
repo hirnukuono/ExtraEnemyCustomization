@@ -17,6 +17,8 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         public float ShotSpreadXMax { get; set; } = 0.0f;
         public float ShotSpreadYMin { get; set; } = 0.0f;
         public float ShotSpreadYMax { get; set; } = 0.0f;
+        public uint SoundID { get; set; } = 0;
+        public bool FindTargetIfInvalid { get; set; } = false;
     }
 
     public sealed class SpawnProjectileBehaviour : AbilityBehaviour<SpawnProjectileAbility>
@@ -27,8 +29,32 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 
         protected override void OnEnter()
         {
-            var target = Agent.AI.IsTargetValid ? Agent.AI.Target.m_agent : null;
+            Agents.Agent? target = null;
+            if (Agent.AI.IsTargetValid)
+            {
+                target = Agent.AI.Target.m_agent;
+            }
+            else if (Ability.FindTargetIfInvalid)
+            {
+                float sqrDistance = float.MaxValue;
+                foreach (var playerAgent in Player.PlayerManager.PlayerAgentsInLevel)
+                {
+                    var tempDistance = (Agent.EyePosition - playerAgent.EyePosition).sqrMagnitude;
+                    if (sqrDistance >= tempDistance && !UnityEngine.Physics.Linecast(Agent.EyePosition, playerAgent.EyePosition, LayerManager.MASK_WORLD))
+                    {
+                        sqrDistance = tempDistance;
+                        target = playerAgent;
+                    }
+                }
+            }
+
             Ability.DoSpawn(Agent, target, Agent.ModelRef.m_shooterFireAlign, true);
+
+            if (Ability.SoundID != 0u)
+            {
+                Agent.Sound.Post(Ability.SoundID);
+            }
+
             DoExit();
         }
     }
