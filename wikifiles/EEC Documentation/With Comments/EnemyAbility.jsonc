@@ -181,7 +181,8 @@
           }
         ],
         "ExitDelay": 0.0,
-        "ExitAllInForceExit": true,
+        "ExitAllInForceExit": true, // Exits abilities when the chain ends
+        "ExitAllInForceExitOnly": false, // Exits abilities ONLY when the chain forcibly ends
         "ForceExitOnHitreact": false,
         "ForceExitOnDead": false,
         "ForceExitOnLimbDestroy": false,
@@ -271,6 +272,8 @@
         "ShotSpreadXMax": 60.0,
         "ShotSpreadYMin": -60.0,
         "ShotSpreadYMax": 60.0,
+        "SoundID": 0,
+        "FindTargetIfInvalid": false, //Targets the closest visible player if the enemy doesn't have a target
         "Name": "Spawn Projectile"
       }
     ],
@@ -303,6 +306,7 @@
         "ChargeUpAnimation": "AbilityUse",
         "ActivateAnimation": "AbilityUseOut",
         "ChargeUpDuration": 3, //Chargeup Animation Duration
+        "ActivateDuration": 5, //Activate Animation Duration
         "EffectDuration": 30.0, //EMP Effect Duration
         "EffectRange": 20.0, //EMP Effect Range
         "InvincibleWhileCharging": true, //Literally

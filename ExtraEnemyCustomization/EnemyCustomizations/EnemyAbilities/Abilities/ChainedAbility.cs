@@ -11,6 +11,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 
         public float ExitDelay { get; set; } = 0.0f;
         public bool ExitAllInForceExit { get; set; } = true;
+        public bool ExitAllInForceExitOnly { get; set; } = false;
         public bool ForceExitOnHitreact { get; set; } = false;
         public bool ForceExitOnDead { get; set; } = false;
         public bool ForceExitOnLimbDestroy { get; set; } = false;
@@ -38,8 +39,6 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         public class EventBlock : AbilitySettingBase
         {
             public float Delay { get; set; } = 0.0f;
-            public Timer TriggerTimer;
-            public bool Triggered = false;
         }
     }
 
@@ -49,8 +48,10 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         public override bool AllowEABAbilityWhileExecuting => true;
         public override bool IsHostOnlyBehaviour => true;
 
+        private EventBlockBehaviour[] _blockBehaviours = Array.Empty<EventBlockBehaviour>();
         private Timer _endTimer;
         private bool _waitingEndTimer = false;
+        private bool _forceExit = false;
 
         protected override void OnSetup()
         {
@@ -58,31 +59,33 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
             {
                 _ = abSetting.Ability.RegisterBehaviour(Agent);
             }
+            _blockBehaviours = Ability.Abilities.Select(abSetting => new EventBlockBehaviour(abSetting)).ToArray();
         }
 
         protected override void OnEnter()
         {
-            foreach (var abSetting in Ability.Abilities)
+            foreach (var block in _blockBehaviours)
             {
-                abSetting.TriggerTimer.Reset(abSetting.Delay);
-                abSetting.Triggered = false;
+                block.TriggerTimer.Reset(block.AbSetting.Delay);
+                block.Triggered = false;
             }
 
             _waitingEndTimer = false;
+            _forceExit = false;
         }
 
         protected override void OnUpdate()
         {
             var isAllDone = true;
 
-            foreach (var abSetting in Ability.Abilities)
+            foreach (var block in _blockBehaviours)
             {
-                if (!abSetting.Triggered)
+                if (!block.Triggered)
                 {
-                    if (abSetting.TriggerTimer.TickAndCheckDone())
+                    if (block.TriggerTimer.TickAndCheckDone())
                     {
-                        abSetting.Ability.TriggerSync(Agent);
-                        abSetting.Triggered = true;
+                        block.AbSetting.Ability.TriggerSync(Agent);
+                        block.Triggered = true;
                     }
                     else
                     {
@@ -107,7 +110,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 
         protected override void OnExit()
         {
-            if (Ability.ExitAllInForceExit)
+            if ((Ability.ExitAllInForceExit && !Ability.ExitAllInForceExitOnly) || (_forceExit && Ability.ExitAllInForceExitOnly))
             {
                 foreach (var abSetting in Ability.Abilities)
                 {
@@ -120,6 +123,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         {
             if (Ability.ForceExitOnHitreact)
             {
+                _forceExit = true;
                 DoExit();
             }
         }
@@ -128,6 +132,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         {
             if (Ability.ForceExitOnLimbDestroy)
             {
+                _forceExit = true;
                 DoExit();
             }
         }
@@ -136,7 +141,20 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         {
             if (Ability.ForceExitOnDead)
             {
+                _forceExit = true;
                 DoExit();
+            }
+        }
+
+        public class EventBlockBehaviour
+        {
+            public readonly ChainedAbility.EventBlock AbSetting;
+            public Timer TriggerTimer;
+            public bool Triggered = false;
+
+            public EventBlockBehaviour(ChainedAbility.EventBlock ability)
+            {
+                AbSetting = ability;
             }
         }
     }
