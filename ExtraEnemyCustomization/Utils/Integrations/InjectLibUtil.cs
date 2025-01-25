@@ -3,7 +3,7 @@ using EEC;
 using System.Text.Json.Serialization;
 // inas i love you
 
-namespace ExtraEnemyCustomization.Utils.Integrations
+namespace EEC.Utils.Integrations
 {
     public static class InjectLibUtil
     {

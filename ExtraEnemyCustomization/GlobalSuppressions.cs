@@ -6,3 +6,4 @@
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Interoperability", "CA1416:Platform warning", Justification = "GTFO is windows only game")]
+[assembly: SuppressMessage("Style", "IDE0130:Namespace does not match folder structure", Justification = "Acronym is shorter", Scope = "namespaceanddescendants", Target = "~N:EEC")]

@@ -1,6 +1,6 @@
 ﻿using EEC.Utils.Integrations;
 using EEC.Utils.Json.Converters;
-using ExtraEnemyCustomization.Utils.Integrations;
+using EEC.Utils.Integrations;
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;

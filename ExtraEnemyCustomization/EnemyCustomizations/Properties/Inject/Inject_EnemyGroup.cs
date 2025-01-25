@@ -2,7 +2,7 @@
 using Enemies;
 using HarmonyLib;
 
-namespace ExtraEnemyCustomization.EnemyCustomizations.Properties.Inject
+namespace EEC.EnemyCustomizations.Properties.Inject
 {
     [HarmonyPatch]
     internal static class Inject_EnemyGroup
@@ -10,7 +10,7 @@ namespace ExtraEnemyCustomization.EnemyCustomizations.Properties.Inject
         [HarmonyPatch(typeof(EnemyGroup), nameof(EnemyGroup.TryGetAKSwitchIDFromEnemyType))]
         [HarmonyPrefix]
         [HarmonyWrapSafe]
-        public static bool OverrideSwitchID(ref bool __result, EnemyAgent agent, out uint switchID)
+        private static bool OverrideSwitchID(ref bool __result, EnemyAgent agent, out uint switchID)
         {
             switchID = 0u;
 
@@ -27,7 +27,7 @@ namespace ExtraEnemyCustomization.EnemyCustomizations.Properties.Inject
         [HarmonyPatch(typeof(EnemyGroup), nameof(EnemyGroup.GetByteFromEnemyType))]
         [HarmonyPrefix]
         [HarmonyWrapSafe]
-        public static bool AppendAKEnemyTypes(ref byte __result, uint enemyType)
+        private static bool AppendAKEnemyTypes(ref byte __result, uint enemyType)
         {
             if (enemyType == SWITCHES.ENEMY_TYPE.SWITCH.POUNCER)
             {
@@ -44,17 +44,17 @@ namespace ExtraEnemyCustomization.EnemyCustomizations.Properties.Inject
                 __result = 10;
                 return false;
             }
-            if (enemyType == 99900u)
+            if (enemyType == 9900u)
             {
                 __result = 11;
                 return false;
             }
-            if (enemyType == 99901u)
+            if (enemyType == 9901u)
             {
                 __result = 12;
                 return false;
             }
-            if (enemyType == 99902u)
+            if (enemyType == 9902u)
             {
                 __result = 13;
                 return false;

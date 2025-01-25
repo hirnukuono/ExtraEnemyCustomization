@@ -7,10 +7,6 @@ using EEC.Networking;
 using EEC.Utils.Integrations;
 using HarmonyLib;
 using Il2CppInterop.Runtime.Injection;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace EEC
@@ -22,7 +18,7 @@ namespace EEC
     //TODO: - Patrolling Hibernation : Too many works to do with this one, this is one of the long term goal
     //TODO: Refactor the CustomBase to support Phase Setting
 
-    [BepInPlugin("GTFO.EECustomization", "EECustom", "1.8.5")]
+    [BepInPlugin("GTFO.EECustomization", "EECustom", "1.8.6")]
     [BepInProcess("GTFO.exe")]
     [BepInDependency(MTFOUtil.PLUGIN_GUID, BepInDependency.DependencyFlags.HardDependency)]
     [BepInDependency("GTFO.InjectLib", BepInDependency.DependencyFlags.HardDependency)]
@@ -37,9 +33,6 @@ namespace EEC
         {
             Configuration.CreateAndBindAll();
             Logger.Initialize();
-
-            ClassInjector.RegisterTypeInIl2Cpp<EnemyCustomizations.Models.ShadowCustom.FixEnemySER>();
-            ClassInjector.RegisterTypeInIl2Cpp<EnemyCustomizations.Models.ShadowCustom.FixShadows>();
 
             InjectAllIl2CppType();
             CallAllAutoConstructor();
