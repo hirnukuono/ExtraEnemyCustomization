@@ -3,6 +3,7 @@ using EEC.Utils;
 using EEC.Utils.Unity;
 using Timer = EEC.Utils.Unity.Timer;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 {
@@ -25,10 +26,16 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
     {
         private EMPState _state = EMPState.None;
         private Timer _stateTimer;
+        private INavigation _navAgent;
 
         public override bool RunUpdateOnlyWhileExecuting => true;
         public override bool AllowEABAbilityWhileExecuting => false;
         public override bool IsHostOnlyBehaviour => false;
+
+        protected override void OnSetup()
+        {
+            _navAgent = Agent.AI.m_navMeshAgent;
+        }
 
         protected override void OnEnter()
         {
@@ -38,9 +45,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
             _stateTimer.Reset(Ability.ChargeUpDuration);
 
             if (Ability.ChargeUpSoundId != 0u)
-            {
                 Agent.Sound.Post(Ability.ChargeUpSoundId);
-            }
 
             if (Ability.InvincibleWhileCharging)
                 Agent.Damage.IsImortal = true;
@@ -83,6 +88,8 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         protected override void OnExit()
         {
             StandStill = false;
+            if (_navAgent.isOnNavMesh)
+                _navAgent.isStopped = false;
 
             if (Ability.InvincibleWhileCharging)
                 Agent.Damage.IsImortal = false;

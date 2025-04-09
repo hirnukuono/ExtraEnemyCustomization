@@ -94,6 +94,14 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
                     return;
 
                 RevertState:
+                    // If enemy woke up during StandStill, then revert to awake state instead
+                    if (_prevState == ES_StateEnum.Hibernate || _prevState == ES_StateEnum.HibernateWakeUp)
+                    {
+                        // Can't check enum since it doesn't get updated by EB_Hibernate switching to combat
+                        if (Agent.AI.m_behaviour.CurrentState.TryCast<EB_Hibernating>() == null)
+                            _prevState = ES_StateEnum.PathMove;
+                    }
+
                     Agent.Locomotion.ChangeState(_prevState);
                 }
             }
@@ -102,6 +110,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         public abstract bool RunUpdateOnlyWhileExecuting { get; }
         public abstract bool AllowEABAbilityWhileExecuting { get; }
         public abstract bool IsHostOnlyBehaviour { get; }
+        public virtual bool IsHostOnlySetup => IsHostOnlyBehaviour;
 
         private Timer _lazyUpdateTimer = new(LAZYUPDATE_DELAY);
         private bool _executing = false;
@@ -198,7 +207,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 
         private void DoSetup()
         {
-            if (IsMasterOnlyAndClient)
+            if (IsHostOnlySetup && !SNet.IsMaster)
                 return;
 
             OnSetup();

@@ -47,6 +47,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         public override bool RunUpdateOnlyWhileExecuting => true;
         public override bool AllowEABAbilityWhileExecuting => true;
         public override bool IsHostOnlyBehaviour => true;
+        public override bool IsHostOnlySetup => false;
 
         private EventBlockBehaviour[] _blockBehaviours = Array.Empty<EventBlockBehaviour>();
         private Timer _endTimer;
@@ -59,7 +60,9 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
             {
                 _ = abSetting.Ability.RegisterBehaviour(Agent);
             }
-            _blockBehaviours = Ability.Abilities.Select(abSetting => new EventBlockBehaviour(abSetting)).ToArray();
+            // Clients need to register the behaviours, but only host needs to cache them
+            if (SNetwork.SNet.IsMaster)
+                _blockBehaviours = Ability.Abilities.Select(abSetting => new EventBlockBehaviour(abSetting)).ToArray();
         }
 
         protected override void OnEnter()

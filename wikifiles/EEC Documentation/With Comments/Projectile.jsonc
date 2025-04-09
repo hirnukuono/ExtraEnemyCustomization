@@ -133,6 +133,7 @@
       "TrailWidth": "100%", //BasedValue: Trail effect width (how thick?)
       "GlowColor": "cyan", //Color: Glow Color
       "GlowRange": 1.0, //BasedValue Glow Range
+      "CollisionSoundID": 0, //SoundID to play on collision (3D)
       "Damage": "50% of default", //BasedValue: (Based on PlayerDataBlock.health, Has original Value): Damage to deal 
       "Infection": "0%", //BasedValue: (Based on 1.0, Has Original Value): Add Infection On Hit
       //Editing Infection Will enable the Infection Bomb effect (Includes Particle Effect, Sound Effect), If you don't want it, use Ability/InfectionAttackCustom instead

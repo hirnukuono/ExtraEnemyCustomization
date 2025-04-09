@@ -24,13 +24,13 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         public override bool IsHostOnlyBehaviour => false;
 
         private Animator _animator;
-        private NavMeshAgent _navAgent;
+        private INavigation _navAgent;
         private Timer _exitTimer;
 
         protected override void OnSetup()
         {
             _animator = Agent.Locomotion.m_animator;
-            _navAgent = Agent.AI.m_navMeshAgent.Cast<NavMeshAgent>();
+            _navAgent = Agent.AI.m_navMeshAgent;
         }
 
         protected override void OnDead()
