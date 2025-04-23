@@ -25,10 +25,21 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
     {
         public override bool RunUpdateOnlyWhileExecuting => true;
         public override bool AllowEABAbilityWhileExecuting => true;
-        public override bool IsHostOnlyBehaviour => true;
+        public override bool IsHostOnlyBehaviour => false;
 
         protected override void OnEnter()
         {
+            if (Ability.SoundID != 0u)
+            {
+                Agent.Sound.Post(Ability.SoundID);
+            }
+
+            if (!SNetwork.SNet.IsMaster)
+            {
+                DoExit();
+                return;
+            }
+
             Agents.Agent? target = null;
             if (Agent.AI.IsTargetValid)
             {
@@ -49,11 +60,6 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
             }
 
             Ability.DoSpawn(Agent, target, Agent.ModelRef.m_shooterFireAlign, true);
-
-            if (Ability.SoundID != 0u)
-            {
-                Agent.Sound.Post(Ability.SoundID);
-            }
 
             DoExit();
         }

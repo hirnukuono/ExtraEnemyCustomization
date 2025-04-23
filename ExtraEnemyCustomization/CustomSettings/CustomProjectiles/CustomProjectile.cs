@@ -26,6 +26,7 @@ namespace EEC.CustomSettings.CustomProjectiles
         public ValueBase TrailWidth { get; set; } = ValueBase.Unchanged;
         public Color GlowColor { get; set; } = Color.yellow;
         public ValueBase GlowRange { get; set; } = ValueBase.Unchanged;
+        public uint CollisionSoundID { get; set; } = 0u;
         public ValueBase Damage { get; set; } = ValueBase.Unchanged;
         public ValueBase Infection { get; set; } = ValueBase.Unchanged;
         [JsonPropertyName("SpawnProjectileOnCollideWorld")]
