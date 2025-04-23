@@ -142,7 +142,7 @@ namespace EEC.Managers
             _enemyGlowHolder.RegisterCache(enemyID, forceRebuild: false);
         }
 
-        internal static void FirePrefabBuildEventAll(bool rebuildPrefabs)
+        internal static void FirePrefabBuildEventAll(bool rebuildPrefabs, bool firePrefabEvents = true)
         {
             EnemyDataBlock[] allBlocks = GameDataBlockBase<EnemyDataBlock>.GetAllBlocks();
             foreach (var block in allBlocks)
@@ -171,9 +171,12 @@ namespace EEC.Managers
 
                 RegisterTargetEnemyLookup(block);
                 CacheEnemyEventBuffer(block.persistentID);
-                FirePrefabBuiltEvent(enemyAgentComp, block);
 
-                EnemyPrefabBuilt?.Invoke(enemyAgentComp, block);
+                if (firePrefabEvents)
+                {
+                    FirePrefabBuiltEvent(enemyAgentComp, block);
+                    EnemyPrefabBuilt?.Invoke(enemyAgentComp, block);
+                }
             }
 
             TargetEnemyLookupFullyBuilt();
