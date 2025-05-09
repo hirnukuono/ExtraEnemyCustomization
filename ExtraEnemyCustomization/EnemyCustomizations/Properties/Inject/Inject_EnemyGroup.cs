@@ -44,17 +44,17 @@ namespace EEC.EnemyCustomizations.Properties.Inject
                 __result = 10;
                 return false;
             }
-            if (enemyType == 9900u)
+            if (enemyType == 11u)
             {
                 __result = 11;
                 return false;
             }
-            if (enemyType == 9901u)
+            if (enemyType == 12u)
             {
                 __result = 12;
                 return false;
             }
-            if (enemyType == 9902u)
+            if (enemyType == 13u)
             {
                 __result = 13;
                 return false;
