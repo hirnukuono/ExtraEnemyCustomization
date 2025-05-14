@@ -33,18 +33,19 @@
       ],
       "TentacleSettings": [
         {
-          "InEaseType": "EaseOutCirc", //Easing: Type of ease when pulling out the tentalce
+          "InEaseType": "EaseOutCirc", //Easing: Type of ease when pulling out the tentacle
           "OutEaseType": "EaseInExpo", //Easing: Type of ease when pulling in the tentacle
           "InDuration": "50%", //BasedValue: How long it takes to pull out the tentacle?
           "OutDuration": "50%", //BasedValue: How long it takes to pull in the tentacle?
           "HangDuration": "200%", //BasedValue: How long does tentacle stay in air?
-          "SplineWidthSafe": "100%", //BasedValue: Not sure about this lol
-          "SplineWidthPos1": "100%", //BasedValue: How far tentacle be curvy in position 1 (Width)
-          "SplineWidthPos2": "100%", //BasedValue: How far tentacle be curvy in position 2 (Width)
-          "SplineHeightPos1": "100%", //BasedValue: How far tentacle be curvy in position 1 (Height)
-          "SplineHeightPos2": "100%" //BasedValue: How far tentacle be curvy in position 2 (Height)
+          "SplineWidthSafe": "100%", //BasedValue: How far tentacle be curvy if Pos1/2 would go through a wall
+          "SplineWidthPos1": "100%", //BasedValue: How far tentacle be curvy between the head and midpoint (Width)
+          "SplineWidthPos2": "100%", //BasedValue: How far tentacle be curvy between the midpoint and target (Width)
+          "SplineHeightPos1": "100%", //BasedValue: How far tentacle be curvy between the head and midpoint (Height)
+          "SplineHeightPos2": "100%" //BasedValue: How far tentacle be curvy between the midpoint and target (Height)
         }
-      ]
+      ],
+      "MaxRange": 10 //BasedValue: What is the maximum distance the tentacle can hit?
     },
     {
       "Enabled": false,
