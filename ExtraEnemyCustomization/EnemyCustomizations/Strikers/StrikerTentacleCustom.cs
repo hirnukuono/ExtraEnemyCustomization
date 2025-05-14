@@ -8,21 +8,28 @@ namespace EEC.EnemyCustomizations.Strikers
 {
     using EaseFunc = Func<float, float, float, float, float>;
 
-    public sealed class StrikerTentacleCustom : EnemyCustomBase, IEnemyPrefabBuiltEvent
+    public sealed class StrikerTentacleCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
         public GPUCurvyType[] TentacleTypes { get; set; } = Array.Empty<GPUCurvyType>();
         public TentacleSettingData[] TentacleSettings { get; set; } = Array.Empty<TentacleSettingData>();
+        public ValueBase MaxRange { get; set; } = ValueBase.Unchanged;
 
         public override string GetProcessName()
         {
             return "Tentacle";
         }
 
-        public void OnPrefabBuilt(EnemyAgent agent, EnemyDataBlock enemyData)
+        public void OnSpawned(EnemyAgent agent)
         {
             var tentacleComps = agent.GetComponentsInChildren<MovingEnemyTentacleBase>(true);
             var isTypeEnabled = TentacleTypes.Length > 0;
             var isSettingEnabled = TentacleSettings.Length > 0;
+
+            var eabSetting = agent.GetComponentInChildren<EAB_MovingEnemeyTentacle>(true);
+            if (eabSetting != null)
+            {
+                eabSetting.m_absoluteMaxDistanceToHitTarget = MaxRange.GetAbsValue(eabSetting.m_absoluteMaxDistanceToHitTarget);
+            }
 
             for (int i = 0; i < tentacleComps.Length; i++)
             {

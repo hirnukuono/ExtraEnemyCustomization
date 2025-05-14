@@ -27,8 +27,6 @@ namespace EEC.CustomAbilities.EMP.Handlers
                 Logger.Warning("No Light!");
                 return;
             }
-            _originalIntensity = _light.GetIntensity();
-            _originalColor = _light.m_color;
             _state = EMPState.On;
         }
 
@@ -55,6 +53,15 @@ namespace EEC.CustomAbilities.EMP.Handlers
             {
                 _light.ChangeIntensity(0);
                 _light.ChangeColor(Color.black);
+            }
+        }
+
+        protected override void OnEMPStart()
+        {
+            if (_light != null)
+            {
+                _originalIntensity = _light.GetIntensity();
+                _originalColor = _light.m_color;
             }
         }
     }

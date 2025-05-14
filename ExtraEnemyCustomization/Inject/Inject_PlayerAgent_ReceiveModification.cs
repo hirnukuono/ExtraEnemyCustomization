@@ -13,6 +13,7 @@ namespace ExtraEnemyCustomization.Inject
 
         // Health change is not implemented at all in vanilla and prints an error log.
         [HarmonyWrapSafe]
+        [HarmonyPriority(Priority.Low)]
         private static void Prefix(PlayerAgent __instance, ref EV_ModificationData data)
         {
             // If no health modifications, let it proceed as normal
