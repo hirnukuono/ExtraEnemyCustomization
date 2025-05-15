@@ -32,7 +32,7 @@ namespace EEC.CustomAbilities.Explosion
             Sync.Send(data);
         }
 
-        internal static void Internal_TriggerExplosion(Vector3 position, Color lightColor, float damage, float enemyMulti, float minRange, float maxRange)
+        internal static void Internal_TriggerExplosion(Vector3 position, Color lightColor, float damage, float enemyMulti, float minRange, float maxRange, float enemyMinRange, float enemyMaxRange)
         {
             CellSound.Post(EVENTS.STICKYMINEEXPLODE, position);
 
@@ -42,7 +42,7 @@ namespace EEC.CustomAbilities.Explosion
             if (!SNet.IsMaster)
                 return;
 
-            var targets = Physics.OverlapSphere(position, maxRange, LayerManager.MASK_EXPLOSION_TARGETS);
+            var targets = Physics.OverlapSphere(position, Math.Max(maxRange, enemyMaxRange), LayerManager.MASK_EXPLOSION_TARGETS);
             if (targets.Count < 1)
                 return;
 
@@ -94,12 +94,19 @@ namespace EEC.CustomAbilities.Explosion
                         continue;
                 }
 
-                var newDamage = CalcRangeDamage(damage, distance, minRange, maxRange);
+                float newDamage;
                 var enemyBase = targetDamagable.TryCast<Dam_EnemyDamageBase>();
                 if (enemyBase != null)
                 {
-                    newDamage *= enemyMulti;
+                    newDamage = CalcRangeDamage(damage * enemyMulti, distance, enemyMinRange, enemyMaxRange);
                 }
+                else
+                {
+                    newDamage = CalcRangeDamage(damage, distance, minRange, maxRange);
+                }
+
+                if (newDamage == 0) continue;
+
                 Logger.Verbose($"Explosive damage: {newDamage} out of max: {damage}, Dist: {distance}, min: {minRange}, max: {maxRange}");
                 targetDamagable.ExplosionDamage(newDamage, position, Vector3.up * 1000);
             }
@@ -150,6 +157,8 @@ namespace EEC.CustomAbilities.Explosion
         public float enemyMulti;
         public float minRange;
         public float maxRange;
+        public float enemyMinRange;
+        public float enemyMaxRange;
         public Color lightColor;
     }
 }

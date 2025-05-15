@@ -184,6 +184,8 @@
         "EnemyDamageMulti": 1.0, //Multiplier when enemy is receiving explosion damage
         "MinRange": 2.0, //How far it does maximum damage?
         "MaxRange": 5.0, //How far it does damage?
+        "EnemyMinRange": "Unchanged", //BasedValue: How far it does maximum damage to enemies?
+        "EnemyMaxRange": "Unchanged", //BasedValue: How far it does damage to enemies?
         "NoiseMinRange": 5.0, //How far it awake nearby enemies when it explodes
         "NoiseMaxRange": 10.0, //How for it can be hear by nearby enemy when it explodes
         "NoiseType": "Detectable" //InstaDetect, Detectable, PulseOnly

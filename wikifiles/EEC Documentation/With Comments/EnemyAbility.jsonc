@@ -222,6 +222,8 @@
         "EnemyDamageMulti": 1.0,
         "MinRange": 2,
         "MaxRange": 5,
+        "EnemyMinRange": "Unchanged",
+        "EnemyMaxRange": "Unchanged",
         "NoiseMinRange": 5,
         "NoiseMaxRange": 10,
         "NoiseType": "Detectable",

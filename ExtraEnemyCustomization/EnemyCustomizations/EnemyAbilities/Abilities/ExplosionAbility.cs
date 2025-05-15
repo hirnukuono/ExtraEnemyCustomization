@@ -17,6 +17,8 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         public float EnemyDamageMulti { get; set; } = 1.0f;
         public float MinRange { get; set; } = 2.0f;
         public float MaxRange { get; set; } = 5.0f;
+        public ValueBase EnemyMinRange { get; set; } = ValueBase.Unchanged;
+        public ValueBase EnemyMaxRange { get; set; } = ValueBase.Unchanged;
         public float NoiseMinRange { get; set; } = 5.0f;
         public float NoiseMaxRange { get; set; } = 10.0f;
         public NM_NoiseType NoiseType { get; set; } = NM_NoiseType.Detectable;
