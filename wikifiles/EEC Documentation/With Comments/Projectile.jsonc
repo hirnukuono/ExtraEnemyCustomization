@@ -235,7 +235,8 @@
         "DrainAmountInCombat": 0.1,
         "ResetRecoverTimer": false,
         "ResetRecoverTimerInCombat": false
-      }
+      },
+      "HitEnemies": false //Should it be able to hit enemies?
     }
   ]
 }

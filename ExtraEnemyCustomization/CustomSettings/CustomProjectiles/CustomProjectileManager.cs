@@ -234,6 +234,31 @@ namespace EEC.CustomSettings.CustomProjectiles
                         };
                     }
 
+                    if (Settings?.HitEnemies ?? false)
+                    {
+                        Vector3 moveVector = default;
+                        Ray moveRay = default;
+                        update += (_) =>
+                        {
+                            moveVector = projectile.m_myPos - projectile.m_lastPos;
+                            float maxDistance = Mathf.Max(0.5f, ProjectileBase.s_tempMove.magnitude);
+                            moveRay.origin = projectile.m_lastPos;
+                            moveVector.Normalize();
+                            moveRay.direction = moveVector;
+                            if (Physics.Raycast(moveRay, out var rayHit, maxDistance, LayerManager.MASK_ENEMY_DAMAGABLE))
+                            {
+                                // Cancel hit if projectile hit the owner
+                                if (projectile.TryGetOwner(out var owner))
+                                {
+                                    var agent = rayHit.collider.GetComponent<IDamageable>().GetBaseAgent();
+                                    if (agent.Pointer == owner.Pointer)
+                                        return;
+                                }
+                                projectile.Collision(moveRay, rayHit);
+                            }
+                        };
+                    }
+
                     MonoBehaviourEventHandler.AttatchToObject(gameObject, onUpdate: update, onDestroyed: (_) =>
                     {
                         RemoveInstanceLookup(instanceID);

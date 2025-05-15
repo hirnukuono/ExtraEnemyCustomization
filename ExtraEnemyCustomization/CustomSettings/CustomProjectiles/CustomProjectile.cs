@@ -39,6 +39,7 @@ namespace EEC.CustomSettings.CustomProjectiles
         public KnockbackSetting Knockback { get; set; } = new();
         public BleedSetting Bleed { get; set; } = new();
         public DrainStaminaSetting DrainStamina { get; set; } = new();
+        public bool HitEnemies { get; set; } = false;
 
         public void DoCollisionEffect(Vector3 projectilePosition, PlayerAgent player = null)
         {
