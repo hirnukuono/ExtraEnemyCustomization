@@ -60,6 +60,8 @@ namespace EEC.EnemyCustomizations.Shared
                     enemyMulti = setting.EnemyDamageMulti,
                     minRange = setting.MinRange,
                     maxRange = setting.MaxRange,
+                    enemyMinRange = setting.EnemyMinRange.GetAbsValue(setting.MinRange),
+                    enemyMaxRange = setting.EnemyMaxRange.GetAbsValue(setting.MaxRange),
                     lightColor = setting.LightColor
                 });
             }

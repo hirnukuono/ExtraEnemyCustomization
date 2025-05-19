@@ -23,7 +23,10 @@ namespace EEC.Events.Inject
                 return;
 
             if (!baseAgent.TryCastToPlayerAgent(out var playerAgent))
+            {
+                ProjectileEvents.OnCollisionWorld(__instance, hit.collider.gameObject);
                 return;
+            }
 
             ProjectileEvents.OnCollisionPlayer(__instance, playerAgent);
             if (__instance.TryGetOwner(out var owner))

@@ -97,6 +97,7 @@ namespace EEC.CustomAbilities.EMP
             if (_destroyed) return;
             if (isEMPD && _state == EMPState.On)
             {
+                OnEMPStart();
                 float delay = GetRandomDelay(MinDelay, MaxDelay);
                 _state = EMPState.FlickerOff;
                 _delayTimer = Clock.Time + delay;
@@ -171,6 +172,11 @@ namespace EEC.CustomAbilities.EMP
         /// This method should shut the device off
         /// </summary>
         protected abstract void DeviceOff();
+
+        /// <summary>
+        /// This method runs when the device is on and gets EMP'd (non-EMP -> EMP)
+        /// </summary>
+        protected virtual void OnEMPStart() { }
 
         /// <summary>
         /// Returns a random delay between the min and max values

@@ -7,7 +7,7 @@ namespace EEC.Utils
     [Obsolete("Will be moved to ExplosionManager")]
     public static class ExplosionUtil
     {
-        public static void MakeExplosion(Vector3 position, float damage, float enemyMulti, float minRange, float maxRange)
+        public static void MakeExplosion(Vector3 position, float damage, float enemyMulti, float minRange, float maxRange, float enemyMinRange, float enemyMaxRange)
         {
             ExplosionManager.DoExplosion(new ExplosionData()
             {
@@ -16,6 +16,8 @@ namespace EEC.Utils
                 enemyMulti = enemyMulti,
                 minRange = minRange,
                 maxRange = maxRange,
+                enemyMinRange = enemyMinRange,
+                enemyMaxRange = enemyMaxRange,
                 lightColor = ExplosionManager.FlashColor
             });
         }
