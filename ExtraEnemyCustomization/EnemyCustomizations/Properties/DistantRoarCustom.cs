@@ -2,9 +2,9 @@
 using EEC.Managers;
 using EEC.Utils.Json.Elements;
 using Enemies;
-using EEC.EnemyCustomizations.Properties.Inject;
+using System.Text.Json.Serialization;
 using UnityEngine;
-using SwitchID = AK.SWITCHES.ENEMY_TYPE.SWITCH;
+using SWITCH_ID = AK.SWITCHES.ENEMY_TYPE.SWITCH;
 
 namespace EEC.EnemyCustomizations.Properties
 {
@@ -23,8 +23,10 @@ namespace EEC.EnemyCustomizations.Properties
         Shooter_Spread, 
         None,
         OldDistantRoar,
-        Custom
+        Custom,
+        CustomDynamic
     }
+
     public enum RoarSizeOverride : byte
     {
         Unchanged,
@@ -35,12 +37,15 @@ namespace EEC.EnemyCustomizations.Properties
 
     public sealed class DistantRoarCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
+        [JsonIgnore]
+        public static Dictionary<uint, RoarData> SharedRoarData { get; internal set; } = new();
         public uint SoundID { get; set; } = 0u;
         public float Interval { get; set; } = 0.0f;
         public bool OnlyForSurvivalWave { get; set; } = true;
         public bool IsGlobal { get; set; } = true;
         public bool OnlyUseOverrides { get; set; } = false;
         public RoarSoundOverride RoarSound { get; set; } = RoarSoundOverride.Striker;
+        public List<uint> DynamicSoundIDs { get; set; } = new();
         public RoarSizeOverride RoarSize { get; set; } = RoarSizeOverride.Unchanged;
         public BoolBase IsOutside { get; set; } = BoolBase.Unchanged;
 
@@ -48,20 +53,21 @@ namespace EEC.EnemyCustomizations.Properties
         private CellSoundPlayer? _soundPlayer;
         private static readonly Dictionary<string, uint> _waveRoars = new()
         {
-            { "Striker", SwitchID.STRIKER },
-            { "Shooter", SwitchID.SHOOTER },
-            { "Bullrush", SwitchID.BULLRUSHER },
-            { "Shadow", SwitchID.SHADOW },
-            { "Flyer", SwitchID.FLYER },
-            { "Tank", SwitchID.TANK },
-            { "Birther", SwitchID.BIRTHER },
-            { "Pouncer", SwitchID.POUNCER },
-            { "Immortal", SwitchID.IMMORTAL },
-            { "Striker_Berserk", SwitchID.STRIKER_BERSERK },
-            { "Shooter_Spread", SwitchID.SHOOTER_SPREAD },
+            { "Striker", SWITCH_ID.STRIKER },
+            { "Shooter", SWITCH_ID.SHOOTER },
+            { "Bullrush", SWITCH_ID.BULLRUSHER },
+            { "Shadow", SWITCH_ID.SHADOW },
+            { "Flyer", SWITCH_ID.FLYER },
+            { "Tank", SWITCH_ID.TANK },
+            { "Birther", SWITCH_ID.BIRTHER },
+            { "Pouncer", SWITCH_ID.POUNCER },
+            { "Immortal", SWITCH_ID.IMMORTAL },
+            { "Striker_Berserk", SWITCH_ID.STRIKER_BERSERK },
+            { "Shooter_Spread", SWITCH_ID.SHOOTER_SPREAD },
             { "None", 11u },
             { "OldDistantRoar", 12u },
-            { "Custom", 13u }
+            { "Custom", 13u },
+            { "CustomDynamic", 14u }
         };
 
         public override string GetProcessName()
@@ -76,21 +82,24 @@ namespace EEC.EnemyCustomizations.Properties
 
         public override void OnConfigLoaded()
         {
-            SharedRoarData.Dict.Clear();
+            SharedRoarData.Clear();
 
             if (ConfigManager.Global.AddUnusedVanillaRoars)
             {
-                SharedRoarData.Dict = new()
+                SharedRoarData = new()
                 {
-                    { 46u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Pouncer }, SwitchID = SwitchID.POUNCER, EnemyType = 8 } },
-                    { 47u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Immortal }, SwitchID = SwitchID.IMMORTAL, EnemyType = 6 } },
-                    { 55u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Birther }, SwitchID = SwitchID.BIRTHER, EnemyType = 2 } },
-                    { 62u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Striker_Berserk }, SwitchID = SwitchID.STRIKER_BERSERK, EnemyType = 9 } },
-                    { 63u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Striker_Berserk }, SwitchID = SwitchID.STRIKER_BERSERK, EnemyType = 9 } },
-                    { 52u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Shooter_Spread }, SwitchID = SwitchID.SHOOTER_SPREAD, EnemyType = 10 } },
-                    { 56u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Shooter_Spread }, SwitchID = SwitchID.SHOOTER_SPREAD, EnemyType = 10 } }
+                    { 46u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Pouncer, OnlyUseOverrides = true }, SwitchID = SWITCH_ID.POUNCER, EnemyType = 8 } },
+                    { 47u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Immortal, OnlyUseOverrides = true }, SwitchID = SWITCH_ID.IMMORTAL, EnemyType = 6 } },
+                    { 55u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Birther, OnlyUseOverrides = true }, SwitchID = SWITCH_ID.BIRTHER, EnemyType = 2 } },
+                    { 62u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Striker_Berserk, OnlyUseOverrides = true }, SwitchID = SWITCH_ID.STRIKER_BERSERK, EnemyType = 9 } },
+                    { 63u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Striker_Berserk, OnlyUseOverrides = true }, SwitchID = SWITCH_ID.STRIKER_BERSERK, EnemyType = 9 } },
+                    { 52u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Shooter_Spread, OnlyUseOverrides = true }, SwitchID = SWITCH_ID.SHOOTER_SPREAD, EnemyType = 10 } },
+                    { 56u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Shooter_Spread, OnlyUseOverrides = true }, SwitchID = SWITCH_ID.SHOOTER_SPREAD, EnemyType = 10 } },
+                    { 44u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.None, OnlyUseOverrides = true }, SwitchID = 11u, EnemyType = 11 } },
+                    { 61u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.None, OnlyUseOverrides = true }, SwitchID = 11u, EnemyType = 11 } },
+                    { 58u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.None, OnlyUseOverrides = true }, SwitchID = 11u, EnemyType = 11 } }
                 };
-            } 
+            }
         }
 
         public override void OnTargetIDLookupBuilt()
@@ -99,7 +108,7 @@ namespace EEC.EnemyCustomizations.Properties
             {
                 if (_waveRoars.TryGetValue(RoarSound.ToString(), out uint switchID))
                 {
-                    SharedRoarData.Dict[target] = new() { RoarSettings = this, SwitchID = switchID, EnemyType = ((byte)RoarSound) };
+                    SharedRoarData[target] = new() { RoarSettings = this, SwitchID = switchID, EnemyType = (byte)RoarSound };
                 }
             }
 
@@ -119,7 +128,7 @@ namespace EEC.EnemyCustomizations.Properties
             _soundPlayer?.Recycle();
             _soundPlayer = null;
 
-            SharedRoarData.Dict.Clear();
+            SharedRoarData.Clear();
         }
 
         public void OnSpawned(EnemyAgent agent)
@@ -151,6 +160,14 @@ namespace EEC.EnemyCustomizations.Properties
                 }
                 _timer = Clock.Time + Interval;
             }
+        }
+        
+        public class RoarData
+        {
+            public DistantRoarCustom RoarSettings { get; set; } = new();
+            public uint SwitchID { get; set; } = 0u;
+            public byte EnemyType { get; set; } = 0;
+            public bool IsInWave { get; set; } = false;
         }
     }
 }

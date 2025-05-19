@@ -1,6 +1,6 @@
-﻿using AK;
-using Enemies;
+﻿using Enemies;
 using HarmonyLib;
+using SWITCH_ID = AK.SWITCHES.ENEMY_TYPE.SWITCH;
 
 namespace EEC.EnemyCustomizations.Properties.Inject
 {
@@ -14,10 +14,10 @@ namespace EEC.EnemyCustomizations.Properties.Inject
         {
             switchID = 0u;
 
-            if (SharedRoarData.Dict.TryGetValue(agent.EnemyData.persistentID, out var roarData))
+            if (DistantRoarCustom.SharedRoarData.TryGetValue(agent.EnemyData.persistentID, out var roarData))
             {
                 switchID = roarData.SwitchID;
-                SharedRoarData.Dict[agent.EnemyData.persistentID].IsInWave = true;
+                roarData.IsInWave = true;
                 __result = true;
             }
                 
@@ -29,17 +29,17 @@ namespace EEC.EnemyCustomizations.Properties.Inject
         [HarmonyWrapSafe]
         private static bool AppendAKEnemyTypes(ref byte __result, uint enemyType)
         {
-            if (enemyType == SWITCHES.ENEMY_TYPE.SWITCH.POUNCER)
+            if (enemyType == SWITCH_ID.POUNCER)
             {
                 __result = 8;
                 return false;
             }
-            if (enemyType == SWITCHES.ENEMY_TYPE.SWITCH.STRIKER_BERSERK)
+            if (enemyType == SWITCH_ID.STRIKER_BERSERK)
             {
                 __result = 9;
                 return false;
             }
-            if (enemyType == SWITCHES.ENEMY_TYPE.SWITCH.SHOOTER_SPREAD)
+            if (enemyType == SWITCH_ID.SHOOTER_SPREAD)
             {
                 __result = 10;
                 return false;
@@ -57,6 +57,11 @@ namespace EEC.EnemyCustomizations.Properties.Inject
             if (enemyType == 13u)
             {
                 __result = 13;
+                return false;
+            }
+            if (enemyType == 14u)
+            {
+                __result = 14;
                 return false;
             }
 

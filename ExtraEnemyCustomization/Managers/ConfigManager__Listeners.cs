@@ -10,8 +10,6 @@ namespace EEC.Managers
     {
         private static void LiveEdit_FileChanged(LiveEditEventArgs e)
         {
-            
-
             var fileExtension = Path.GetExtension(e.FullPath);
             if (fileExtension.InvariantEquals(".json", ignoreCase: true) ||
                 fileExtension.InvariantEquals(".jsonc", ignoreCase: true))
