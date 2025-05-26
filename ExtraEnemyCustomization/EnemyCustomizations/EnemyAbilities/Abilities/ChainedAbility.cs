@@ -10,6 +10,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         public EventBlock[] Abilities { get; set; } = Array.Empty<EventBlock>();
 
         public float ExitDelay { get; set; } = 0.0f;
+        public bool ExitWhenAllFinished { get; set; } = true;
         public bool ExitAllInForceExit { get; set; } = true;
         public bool ExitAllInForceExitOnly { get; set; } = false;
         public bool ForceExitOnHitreact { get; set; } = false;
@@ -52,6 +53,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         private EventBlockBehaviour[] _blockBehaviours = Array.Empty<EventBlockBehaviour>();
         private Timer _endTimer;
         private bool _waitingEndTimer = false;
+        private bool _allFinished = false;
         private bool _forceExit = false;
 
         protected override void OnSetup()
@@ -74,7 +76,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
             }
 
             _waitingEndTimer = false;
-            _forceExit = false;
+            _forceExit = true;
         }
 
         protected override void OnUpdate()
@@ -99,6 +101,16 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 
             if (isAllDone)
             {
+                if (!_allFinished && Ability.ExitWhenAllFinished)
+                {
+                    foreach (var block in _blockBehaviours)
+                    {
+                        if (block.AbSetting.Ability.TryGetBehaviour(Agent, out var behaviour) && behaviour.Executing)
+                            return;
+                    }
+                    _allFinished = true;
+                }
+
                 if (!_waitingEndTimer)
                 {
                     _endTimer.Reset(Ability.ExitDelay);
@@ -106,6 +118,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
                 }
                 else if (_waitingEndTimer && _endTimer.TickAndCheckDone())
                 {
+                    _forceExit = false;
                     DoExit();
                 }
             }
@@ -126,7 +139,6 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         {
             if (Ability.ForceExitOnHitreact)
             {
-                _forceExit = true;
                 DoExit();
             }
         }
@@ -135,7 +147,6 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         {
             if (Ability.ForceExitOnLimbDestroy)
             {
-                _forceExit = true;
                 DoExit();
             }
         }
@@ -144,7 +155,6 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         {
             if (Ability.ForceExitOnDead)
             {
-                _forceExit = true;
                 DoExit();
             }
         }
