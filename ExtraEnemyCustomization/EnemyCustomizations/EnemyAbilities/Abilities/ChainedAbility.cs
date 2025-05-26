@@ -58,13 +58,23 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 
         protected override void OnSetup()
         {
-            foreach (var abSetting in Ability.Abilities)
-            {
-                _ = abSetting.Ability.RegisterBehaviour(Agent);
-            }
-            // Clients need to register the behaviours, but only host needs to cache them
             if (SNetwork.SNet.IsMaster)
-                _blockBehaviours = Ability.Abilities.Select(abSetting => new EventBlockBehaviour(abSetting)).ToArray();
+            {
+                _blockBehaviours = new EventBlockBehaviour[Ability.Abilities.Length];
+                for (int i = 0; i < Ability.Abilities.Length; i++)
+                {
+                    var ability = Ability.Abilities[i];
+                    _blockBehaviours[i] = new(ability, ability.Ability.RegisterBehaviour(Agent));
+                }
+            }
+            else // Clients need to register the behaviours, but only host needs to cache them
+            {
+                foreach (var abSetting in Ability.Abilities)
+                {
+                    abSetting.Ability.RegisterBehaviour(Agent);
+                }
+            }
+            
         }
 
         protected override void OnEnter()
@@ -105,7 +115,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
                 {
                     foreach (var block in _blockBehaviours)
                     {
-                        if (block.AbSetting.Ability.TryGetBehaviour(Agent, out var behaviour) && behaviour.Executing)
+                        if (block.Behaviour.Executing)
                             return;
                     }
                     _allFinished = true;
@@ -162,12 +172,14 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         public class EventBlockBehaviour
         {
             public readonly ChainedAbility.EventBlock AbSetting;
+            public readonly AbilityBehaviour Behaviour;
             public Timer TriggerTimer;
             public bool Triggered = false;
 
-            public EventBlockBehaviour(ChainedAbility.EventBlock ability)
+            public EventBlockBehaviour(ChainedAbility.EventBlock ability, AbilityBehaviour behaviour)
             {
                 AbSetting = ability;
+                Behaviour = behaviour;
             }
         }
     }
