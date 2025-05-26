@@ -86,6 +86,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
                         case ES_StateEnum.DeadFlyer:
                         case ES_StateEnum.DeadSquidBoss:
                         case ES_StateEnum.ScoutScream:
+                        case ES_StateEnum.HibernateWakeUp:
                             break;
 
                         default:
@@ -94,15 +95,18 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
                     return;
 
                 RevertState:
-                    // If enemy woke up during StandStill, then revert to awake state instead
-                    if (_prevState == ES_StateEnum.Hibernate || _prevState == ES_StateEnum.HibernateWakeUp)
+                    // If enemy was asleep before StandStill, check if they should revert to sleeping
+                    if (_prevState == ES_StateEnum.Hibernate)
                     {
                         // Can't check enum since it doesn't get updated by EB_Hibernate switching to combat
-                        if (Agent.AI.m_behaviour.CurrentState.TryCast<EB_Hibernating>() == null)
-                            _prevState = ES_StateEnum.PathMove;
+                        if (Agent.AI.m_behaviour.CurrentState.TryCast<EB_Hibernating>() != null)
+                        {
+                            Agent.Locomotion.ChangeState(ES_StateEnum.Hibernate);
+                            return;
+                        }
                     }
 
-                    Agent.Locomotion.ChangeState(_prevState);
+                    Agent.Locomotion.ChangeState(Agent.Locomotion.PathMove);
                 }
             }
         }
@@ -268,6 +272,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 
         public void DoEnter()
         {
+            Logger.Log($"Doing enter for ability {BaseAbility.Name}. Need master, is client? {IsMasterOnlyAndClient}, Executing? {Executing}, Destroyed? {AgentDestroyed}");
             if (IsMasterOnlyAndClient)
                 return;
 
@@ -285,6 +290,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 
         public void DoExit()
         {
+            Logger.Log($"Doing exit for ability {BaseAbility.Name}. Need master, is client? {IsMasterOnlyAndClient}, Executing? {Executing}, Destroyed? {AgentDestroyed}");
             if (IsMasterOnlyAndClient)
                 return;
 
