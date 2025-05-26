@@ -272,7 +272,6 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 
         public void DoEnter()
         {
-            Logger.Log($"Doing enter for ability {BaseAbility.Name}. Need master, is client? {IsMasterOnlyAndClient}, Executing? {Executing}, Destroyed? {AgentDestroyed}");
             if (IsMasterOnlyAndClient)
                 return;
 
@@ -290,7 +289,6 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 
         public void DoExit()
         {
-            Logger.Log($"Doing exit for ability {BaseAbility.Name}. Need master, is client? {IsMasterOnlyAndClient}, Executing? {Executing}, Destroyed? {AgentDestroyed}");
             if (IsMasterOnlyAndClient)
                 return;
 
