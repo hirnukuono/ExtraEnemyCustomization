@@ -87,6 +87,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
                         case ES_StateEnum.DeadSquidBoss:
                         case ES_StateEnum.ScoutScream:
                         case ES_StateEnum.HibernateWakeUp:
+                        case ES_StateEnum.StuckInGlue:
                             break;
 
                         default:
