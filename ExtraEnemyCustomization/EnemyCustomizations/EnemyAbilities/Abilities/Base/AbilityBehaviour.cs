@@ -38,6 +38,28 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
             }
         }
 
+        // Although EEC abilities generally are exclusive with EAB (i.e. enemy does not act during them), some
+        // may be interrupted by certain states - this is used to prevent allowing the enemy to act
+        public bool LocomotionAllowsAbilities
+        {
+            get
+            {
+                return Agent.Locomotion.CurrentStateEnum switch
+                {
+                    ES_StateEnum.StuckInGlue
+                    or ES_StateEnum.Hitreact
+                    or ES_StateEnum.HitReactFlyer
+                    or ES_StateEnum.HibernateWakeUp
+                    or ES_StateEnum.Hibernate
+                    or ES_StateEnum.ScoutScream
+                    or ES_StateEnum.Dead
+                    or ES_StateEnum.DeadFlyer
+                    or ES_StateEnum.DeadSquidBoss => false,
+                    _ => true
+                };
+            }
+        }
+
         public bool Executing
         {
             get => _executing;
@@ -48,7 +70,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
                     return;
 
                 _executing = newValue;
-                if (!AllowEABAbilityWhileExecuting && !Agent.Damage.IsStuckInGlue)
+                if (!AllowEABAbilityWhileExecuting && LocomotionAllowsAbilities)
                 {
                     Agent.Abilities.CanTriggerAbilities = !_executing;
                 }
