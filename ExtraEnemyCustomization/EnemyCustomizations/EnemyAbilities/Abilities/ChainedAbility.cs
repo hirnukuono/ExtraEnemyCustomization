@@ -130,6 +130,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
                 {
                     _forceExit = false;
                     DoExit();
+                    _forceExit = true; // In case behaviour force exits after this
                 }
             }
         }
