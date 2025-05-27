@@ -78,10 +78,6 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
                         //When in Specific State it should not change state
                         case ES_StateEnum.Hitreact:
                         case ES_StateEnum.HitReactFlyer:
-                            if (Agent.Locomotion.Hitreact.CurrentReactionType == ES_HitreactType.ToDeath)
-                                break;
-                            goto RevertState;
-
                         case ES_StateEnum.Dead:
                         case ES_StateEnum.DeadFlyer:
                         case ES_StateEnum.DeadSquidBoss:
