@@ -98,6 +98,7 @@ namespace EEC.Utils
 
             if (pauseAI)
             {
+                agent.AI.m_navMeshAgent.velocity = UnityEngine.Vector3.zero;
                 if (agent.AI.m_navMeshAgent.isOnNavMesh)
                 {
                     agent.AI.m_navMeshAgent.isStopped = true;

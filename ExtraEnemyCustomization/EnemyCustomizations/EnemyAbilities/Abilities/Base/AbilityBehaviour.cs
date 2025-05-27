@@ -48,7 +48,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
                     return;
 
                 _executing = newValue;
-                if (!AllowEABAbilityWhileExecuting)
+                if (!AllowEABAbilityWhileExecuting && !Agent.Damage.IsStuckInGlue)
                 {
                     Agent.Abilities.CanTriggerAbilities = !_executing;
                 }
@@ -106,7 +106,6 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
                             return;
                         }
                     }
-
                     Agent.Locomotion.ChangeState(Agent.Locomotion.PathMove);
                 }
             }
