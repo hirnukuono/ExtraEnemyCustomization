@@ -43,7 +43,7 @@ namespace EEC.EnemyCustomizations.Models
 
             foreach (var matRef in charMats)
             {
-                var matName = matRef.m_material.name;
+                var matName = matRef.m_material.name.Replace(" (Instance)", "", StringComparison.InvariantCulture);
                 if (Logger.VerboseLogAllowed)
                     LogVerbose($" - Debug Info, Material Found: {matName}");
 
