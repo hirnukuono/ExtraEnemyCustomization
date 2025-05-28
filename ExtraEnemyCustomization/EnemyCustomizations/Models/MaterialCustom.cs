@@ -36,7 +36,11 @@ namespace EEC.EnemyCustomizations.Models
 
         public void OnPrefabBuilt(EnemyAgent agent, EnemyDataBlock enemyData)
         {
-            var charMats = agent.GetComponentInChildren<CharacterMaterialHandler>().m_materialRefs;
+            var charMatHandler = agent.MaterialHandler;
+            var charMats = charMatHandler.m_materialRefs;
+            if (charMats.Count == 0)
+                PopulateMaterialList(agent, charMatHandler);
+
             foreach (var matRef in charMats)
             {
                 var matName = matRef.m_material.name;
@@ -108,6 +112,30 @@ namespace EEC.EnemyCustomizations.Models
                 if (Logger.VerboseLogAllowed)
                     LogVerbose(" - Replaced!");
             }
+        }
+
+        private void PopulateMaterialList(EnemyAgent enemy, CharacterMaterialHandler materialHandler)
+        {
+            var meshRenderers = enemy.GetComponentsInChildren<MeshRenderer>(true);
+            Dictionary<string, MaterialRef> materialToRef = new();
+            foreach (var renderer in meshRenderers)
+            {
+                var material = renderer.material;
+                if (material == null) continue;
+
+                if (!materialToRef.ContainsKey(material.name))
+                {
+                    materialToRef[material.name] = new MaterialRef()
+                    {
+                        m_material = material
+                    };
+                }
+
+                materialToRef[material.name].m_renderers.Add(renderer);
+            }
+            
+            foreach(var matRef in materialToRef.Values)
+                materialHandler.m_materialRefs.Add(matRef);
         }
 
         public sealed class MaterialSwapSet
