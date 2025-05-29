@@ -88,7 +88,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         protected override void OnExit()
         {
             StandStill = false;
-            if (_navAgent.isOnNavMesh)
+            if (_navAgent.isOnNavMesh && !Agent.Damage.IsStuckInGlue)
                 _navAgent.isStopped = false;
 
             if (Ability.InvincibleWhileCharging)

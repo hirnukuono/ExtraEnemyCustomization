@@ -1,5 +1,6 @@
 ﻿using Agents;
 using EEC.EnemyCustomizations.EnemyAbilities.Abilities;
+using EEC.Utils.Json.Elements;
 using EEC.Utils.Unity;
 using Enemies;
 using Player;
@@ -41,15 +42,23 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Handlers
                 return;
 
             var canUseAbility = true;
-            canUseAbility &= Setting.KeepOnDead || Agent.Alive;
-            canUseAbility &= CheckAllowedModeCondition();
-            canUseAbility &= CheckAllowedStateCondition();
-            canUseAbility &= CheckAttackingCondition();
-            canUseAbility &= CheckDistanceCondition();
+            var shouldExitOnMismatch = false;
+
+            void UpdateUseOrExit(bool checkCondition, ExitConditionType exitType)
+            {
+                canUseAbility &= checkCondition;
+                shouldExitOnMismatch |= !checkCondition && Setting.ForceExitOnConditionMismatch.HasFlag(exitType);
+            }
+
+            UpdateUseOrExit(Setting.KeepOnDead || Agent.Alive, ExitConditionType.Dead);
+            UpdateUseOrExit(CheckAllowedModeCondition(), ExitConditionType.Mode);
+            UpdateUseOrExit(CheckAllowedStateCondition(), ExitConditionType.State);
+            UpdateUseOrExit(CheckAttackingCondition(), ExitConditionType.Attack);
+            UpdateUseOrExit(CheckDistanceCondition(), ExitConditionType.Distance);
 
             if (!canUseAbility)
             {
-                if (Setting.ForceExitOnConditionMismatch && Behaviour.Executing)
+                if (shouldExitOnMismatch && Behaviour.Executing)
                 {
                     Behaviour.DoExitSync();
                 }
@@ -96,7 +105,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Handlers
 
         private bool CheckAttackingCondition()
         {
-            return Setting.AllowWhileAttack || (!Agent.Locomotion.IsAttacking());
+            return Setting.AllowWhileAttack || (Agent.Locomotion.CurrentState.TryCast<ES_EnemyAttackBase>() == null);
         }
 
         private bool CheckDistanceCondition()

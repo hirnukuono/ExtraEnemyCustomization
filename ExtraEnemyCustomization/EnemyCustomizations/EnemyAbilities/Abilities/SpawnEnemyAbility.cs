@@ -121,7 +121,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 
         protected override void OnExit()
         {
-            if (_shouldRevertNavMeshAgent)
+            if (_shouldRevertNavMeshAgent && !Agent.Damage.IsStuckInGlue)
             {
                 Agent.AI.m_navMeshAgent.isStopped = false;
             }

@@ -12,7 +12,18 @@
       "Abilities": [
         {
           "UpdateInterval": 0.15,
-          "ForceExitOnConditionMismatch": false, //Abort Ability when Condition Mismatch
+          "ForceExitOnConditionMismatch": false, //Abort Ability when certain conditions mismatch.
+          /*
+          Allowed Values:
+            false (none),
+            Mode,
+            Dead,
+            Attack,
+            State,
+            Distance,
+            true (any)
+          Specific conditions can be combined with '|' or ',' like "Mode | Dead | Attack | State".
+          */
           "AllowedMode": "Combat", //AgentTarget: Allowed AgentModes
           "AllowedModeTransitionTime": 0.0, //Wait for this time to use ability after their AgentMode has changed
           "KeepOnDead": false,
@@ -181,6 +192,7 @@
           }
         ],
         "ExitDelay": 0.0,
+        "ExitWhenAllFinished": true, // Exit delay begins only after all abilities finish executing
         "ExitAllInForceExit": true, // Exits abilities when the chain ends
         "ExitAllInForceExitOnly": false, // Exits abilities ONLY when the chain forcibly ends
         "ForceExitOnHitreact": false,

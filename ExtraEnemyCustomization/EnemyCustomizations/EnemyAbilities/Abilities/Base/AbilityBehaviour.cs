@@ -38,6 +38,28 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
             }
         }
 
+        // Although EEC abilities generally are exclusive with EAB (i.e. enemy does not act during them), some
+        // may be interrupted by certain states - this is used to prevent allowing the enemy to act
+        public bool LocomotionAllowsAbilities
+        {
+            get
+            {
+                return Agent.Locomotion.CurrentStateEnum switch
+                {
+                    ES_StateEnum.StuckInGlue
+                    or ES_StateEnum.Hitreact
+                    or ES_StateEnum.HitReactFlyer
+                    or ES_StateEnum.HibernateWakeUp
+                    or ES_StateEnum.Hibernate
+                    or ES_StateEnum.ScoutScream
+                    or ES_StateEnum.Dead
+                    or ES_StateEnum.DeadFlyer
+                    or ES_StateEnum.DeadSquidBoss => false,
+                    _ => true
+                };
+            }
+        }
+
         public bool Executing
         {
             get => _executing;
@@ -48,7 +70,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
                     return;
 
                 _executing = newValue;
-                if (!AllowEABAbilityWhileExecuting)
+                if (!AllowEABAbilityWhileExecuting && LocomotionAllowsAbilities)
                 {
                     Agent.Abilities.CanTriggerAbilities = !_executing;
                 }
@@ -78,14 +100,12 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
                         //When in Specific State it should not change state
                         case ES_StateEnum.Hitreact:
                         case ES_StateEnum.HitReactFlyer:
-                            if (Agent.Locomotion.Hitreact.CurrentReactionType == ES_HitreactType.ToDeath)
-                                break;
-                            goto RevertState;
-
                         case ES_StateEnum.Dead:
                         case ES_StateEnum.DeadFlyer:
                         case ES_StateEnum.DeadSquidBoss:
                         case ES_StateEnum.ScoutScream:
+                        case ES_StateEnum.HibernateWakeUp:
+                        case ES_StateEnum.StuckInGlue:
                             break;
 
                         default:
@@ -94,15 +114,17 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
                     return;
 
                 RevertState:
-                    // If enemy woke up during StandStill, then revert to awake state instead
-                    if (_prevState == ES_StateEnum.Hibernate || _prevState == ES_StateEnum.HibernateWakeUp)
+                    // If enemy was asleep before StandStill, check if they should revert to sleeping
+                    if (_prevState == ES_StateEnum.Hibernate)
                     {
                         // Can't check enum since it doesn't get updated by EB_Hibernate switching to combat
-                        if (Agent.AI.m_behaviour.CurrentState.TryCast<EB_Hibernating>() == null)
-                            _prevState = ES_StateEnum.PathMove;
+                        if (Agent.AI.m_behaviour.CurrentState.TryCast<EB_Hibernating>() != null)
+                        {
+                            Agent.Locomotion.ChangeState(ES_StateEnum.Hibernate);
+                            return;
+                        }
                     }
-
-                    Agent.Locomotion.ChangeState(_prevState);
+                    Agent.Locomotion.ChangeState(Agent.Locomotion.PathMove);
                 }
             }
         }

@@ -38,7 +38,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities
     public sealed class BehaviourAbilitySetting : AbilitySettingBase
     {
         public float UpdateInterval { get; set; } = 0.15f;
-        public bool ForceExitOnConditionMismatch { get; set; } = false;
+        public ExitConditionTarget ForceExitOnConditionMismatch { get; set; } = ExitConditionTarget.None;
         public AgentModeTarget AllowedMode { get; set; } = AgentModeTarget.Agressive;
         public float AllowedModeTransitionTime { get; set; } = 0.0f;
         public bool KeepOnDead { get; set; } = false;
