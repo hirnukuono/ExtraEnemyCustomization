@@ -54,6 +54,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Handlers
             UpdateUseOrExit(CheckAllowedModeCondition(), ExitConditionType.Mode);
             UpdateUseOrExit(CheckAllowedStateCondition(), ExitConditionType.State);
             UpdateUseOrExit(CheckAttackingCondition(), ExitConditionType.Attack);
+            UpdateUseOrExit(!Setting.RequireEABAllowed || Agent.Abilities.CanTriggerAbilities, ExitConditionType.EABAllowed);
             UpdateUseOrExit(CheckDistanceCondition(), ExitConditionType.Distance);
 
             if (!canUseAbility)
