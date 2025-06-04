@@ -115,7 +115,8 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 
         protected override void OnExit()
         {
-            StandStill = false;
+            if (Ability.StopAgent)
+                StandStill = false;
         }
 
         public enum State

@@ -73,7 +73,8 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 
         protected override void OnExit()
         {
-            StandStill = false;
+            if (Ability.StandStill)
+                StandStill = false;
 
             if (!Ability.StandStill)
             {
