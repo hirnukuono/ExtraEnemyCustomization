@@ -21,6 +21,7 @@
             Attack,
             State,
             Distance,
+            EABAllowed,
             true (any)
           Specific conditions can be combined with '|' or ',' like "Mode | Dead | Attack | State".
           */
@@ -28,6 +29,7 @@
           "AllowedModeTransitionTime": 0.0, //Wait for this time to use ability after their AgentMode has changed
           "KeepOnDead": false,
           "AllowWhileAttack": false,
+          "RequireEABAllowed": false, //Can the enemy only use this ability when normal abilities are also allowed?
           "State": {
             "Mode": "DisallowStates", //None, AllowStates, DisallowStates
             "States": [
@@ -298,6 +300,9 @@
         "VoiceEvent": 0,
         "Duration": 1.0,
         "CrossFadeTime": 0.15,
+        "AllowUsingEABWhileExecuting": false, //Can the enemy use abilities/attacks while doing the animation?
+        "StandStill": true, //Locks the enemy state to prevent it from acting 
+        "ApplyRootMotion": true, //Can the animation's movement apply to the enemy?
         "Name": "AnimScream"
       }
     ],
