@@ -75,5 +75,65 @@ namespace EEC
 
             return node;
         }
+
+        public static bool CanUseAbilities(this EnemyAgent agent)
+        {
+            return agent.Locomotion.CurrentStateEnum switch
+            {
+                ES_StateEnum.BirtherGiveBirth
+                or ES_StateEnum.Jump
+                or ES_StateEnum.Hitreact
+                or ES_StateEnum.HitReactFlyer
+                or ES_StateEnum.HibernateWakeUp
+                or ES_StateEnum.Hibernate
+                or ES_StateEnum.ScoutDetection
+                or ES_StateEnum.ScoutScream
+                or ES_StateEnum.Scream
+                or ES_StateEnum.ScreamFlyer
+                or ES_StateEnum.StrikerMelee
+                or ES_StateEnum.StuckInGlue
+                or ES_StateEnum.TriggerFogSphere
+                or ES_StateEnum.Dead
+                or ES_StateEnum.DeadFlyer
+                or ES_StateEnum.DeadSquidBoss => false,
+                _ => true
+            };
+        }
+
+        public static bool IsStopped(this EnemyAgent agent)
+        {
+            return agent.Locomotion.CurrentStateEnum switch
+            {
+                ES_StateEnum.BirtherGiveBirth
+                or ES_StateEnum.ShooterAttack
+                or ES_StateEnum.StrikerAttack
+                or ES_StateEnum.ShooterAttackFlyer
+                or ES_StateEnum.TankAttack
+                or ES_StateEnum.StrikerMelee
+                or ES_StateEnum.ScoutScream
+                or ES_StateEnum.Scream
+                or ES_StateEnum.ScreamFlyer
+                or ES_StateEnum.Hitreact
+                or ES_StateEnum.HitReactFlyer
+                or ES_StateEnum.StuckInGlue
+                or ES_StateEnum.ScoutDetection
+                or ES_StateEnum.Dead
+                or ES_StateEnum.DeadFlyer
+                or ES_StateEnum.DeadSquidBoss => true,
+                _ => false
+            };
+        }
+
+        public static bool CanApplyRootMotion(this EnemyAgent agent)
+        {
+            return agent.Locomotion.CurrentStateEnum switch
+            {
+                ES_StateEnum.ClimbLadder
+                or ES_StateEnum.StuckInGlue
+                or ES_StateEnum.PathMove
+                or ES_StateEnum.PathMoveFlyer => false,
+                _ => true
+            };
+        }
     }
 }

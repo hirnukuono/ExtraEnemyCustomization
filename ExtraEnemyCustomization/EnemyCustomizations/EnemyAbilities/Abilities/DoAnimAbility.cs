@@ -15,6 +15,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         public float CrossFadeTime { get; set; } = 0.0f;
         public bool AllowUsingEABWhileExecuting { get; set; } = false;
         public bool StandStill { get; set; } = true;
+        public bool ApplyRootMotion { get; set; } = true;
     }
 
     public sealed class DoAnimBehaviour : AbilityBehaviour<DoAnimAbility>
@@ -46,6 +47,11 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 
             EnemyAnimUtil.DoAnimationLocal(Agent, Ability.Animation, Ability.CrossFadeTime, true);
 
+            if (!Ability.ApplyRootMotion)
+            {
+                _animator.applyRootMotion = false;
+            }
+
             if (Ability.SoundEvent != 0u)
             {
                 Agent.Sound.Post(Ability.SoundEvent);
@@ -69,10 +75,14 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         {
             StandStill = false;
 
-            _animator.applyRootMotion = false;
-            if (_navAgent.isOnNavMesh && !Agent.Damage.IsStuckInGlue)
+            if (!Ability.StandStill)
             {
-                _navAgent.isStopped = false;
+                _navAgent.isStopped = _navAgent.isOnNavMesh && Agent.IsStopped();
+            }
+
+            if (!Ability.ApplyRootMotion)
+            {
+                _animator.applyRootMotion = Agent.CanApplyRootMotion();
             }
         }
     }
