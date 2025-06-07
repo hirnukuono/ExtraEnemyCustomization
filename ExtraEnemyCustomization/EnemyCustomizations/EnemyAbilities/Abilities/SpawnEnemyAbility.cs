@@ -36,7 +36,6 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
     {
         private int _remainingSpawn = 0;
 
-        private bool _shouldRevertNavMeshAgent = false;
         private State _state;
         private Timer _stateTimer;
 
@@ -47,7 +46,6 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         protected override void OnEnter()
         {
             _remainingSpawn = Ability.TotalCount;
-            _shouldRevertNavMeshAgent = false;
 
             if (_remainingSpawn <= 0)
             {
@@ -55,11 +53,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
                 return;
             }
 
-            if (Ability.StopAgent && Agent.AI.m_navMeshAgent.enabled)
-            {
-                Agent.AI.m_navMeshAgent.isStopped = true;
-                _shouldRevertNavMeshAgent = true;
-            }
+            StandStill = Ability.StopAgent;
 
             _state = State.StartDelay;
             _stateTimer.Reset(Ability.Delay);
@@ -121,10 +115,8 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 
         protected override void OnExit()
         {
-            if (_shouldRevertNavMeshAgent && !Agent.Damage.IsStuckInGlue)
-            {
-                Agent.AI.m_navMeshAgent.isStopped = false;
-            }
+            if (Ability.StopAgent)
+                StandStill = false;
         }
 
         public enum State

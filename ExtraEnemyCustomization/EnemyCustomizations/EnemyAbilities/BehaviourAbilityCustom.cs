@@ -43,6 +43,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities
         public float AllowedModeTransitionTime { get; set; } = 0.0f;
         public bool KeepOnDead { get; set; } = false;
         public bool AllowWhileAttack { get; set; } = false;
+        public bool RequireEABAllowed { get; set; } = false;
         public EnemyStateSetting State { get; set; } = new();
         public DistanceSetting DistanceWithLOS { get; set; } = new();
         public DistanceSetting DistanceWithoutLOS { get; set; } = new();

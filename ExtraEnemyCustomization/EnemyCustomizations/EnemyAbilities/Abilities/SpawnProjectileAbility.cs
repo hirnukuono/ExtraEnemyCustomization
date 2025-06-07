@@ -50,6 +50,8 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
                 float sqrDistance = float.MaxValue;
                 foreach (var playerAgent in Player.PlayerManager.PlayerAgentsInLevel)
                 {
+                    if (!playerAgent.Alive) continue;
+
                     var tempDistance = (Agent.EyePosition - playerAgent.EyePosition).sqrMagnitude;
                     if (sqrDistance >= tempDistance && !UnityEngine.Physics.Linecast(Agent.EyePosition, playerAgent.EyePosition, LayerManager.MASK_WORLD))
                     {

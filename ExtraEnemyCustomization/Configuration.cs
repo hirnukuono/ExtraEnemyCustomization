@@ -91,7 +91,7 @@ namespace EEC
             ShowExplosionEffect = _showExplosionEffect.Value;
             ShitpostType = _shitpostType.Value;
 
-            _useLiveEdit = BindRdwDevConfig("Live Edit", "Reload Config when they are edited while in-game", false);
+            _useLiveEdit = BindRdwDevConfig("Live Edit", "Reload Config when they are edited while in-game", true);
             _linkMTFOHotReload = BindRdwDevConfig("Reload on MTFO HotReload", "Reload Configs when MTFO's HotReload button has pressed?", true);
             UseLiveEdit = _useLiveEdit.Value;
             LinkMTFOHotReload = _linkMTFOHotReload.Value;

@@ -26,6 +26,7 @@ namespace EEC.Utils.Json.Elements
         Dead = 1 << 1,
         Attack = 1 << 2,
         State = 1 << 3,
-        Distance = 1 << 4
+        Distance = 1 << 4,
+        EABAllowed = 1 << 5
     }
 }

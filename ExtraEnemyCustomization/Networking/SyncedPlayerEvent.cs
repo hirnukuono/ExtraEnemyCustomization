@@ -161,20 +161,21 @@ namespace EEC.Networking
             }
             else
             {
-                if (player.IsLocal)
+                if (SendToTargetOnly)
                 {
-                    Received_Callback(player.Lookup, payload);
-                }
-                else
-                {
-                    if (SendToTargetOnly)
+                    if (player.IsLocal)
                     {
-                        NetworkAPI.InvokeEvent(EventName, payload, player);
+                        Received_Callback(player.Lookup, payload);
                     }
                     else
                     {
-                        NetworkAPI.InvokeEvent(EventName, payload);
+                        NetworkAPI.InvokeEvent(EventName, payload, player);
                     }
+                }
+                else
+                {
+                    NetworkAPI.InvokeEvent(EventName, payload);
+                    Received_Callback(player.Lookup, payload);
                 }
             }
         }

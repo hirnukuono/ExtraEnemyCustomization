@@ -38,27 +38,6 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
             }
         }
 
-        // Although EEC abilities generally are exclusive with EAB (i.e. enemy does not act during them), some
-        // may be interrupted by certain states - this is used to prevent allowing the enemy to act
-        public bool LocomotionAllowsAbilities
-        {
-            get
-            {
-                return Agent.Locomotion.CurrentStateEnum switch
-                {
-                    ES_StateEnum.StuckInGlue
-                    or ES_StateEnum.Hitreact
-                    or ES_StateEnum.HitReactFlyer
-                    or ES_StateEnum.HibernateWakeUp
-                    or ES_StateEnum.Hibernate
-                    or ES_StateEnum.ScoutScream
-                    or ES_StateEnum.Dead
-                    or ES_StateEnum.DeadFlyer
-                    or ES_StateEnum.DeadSquidBoss => false,
-                    _ => true
-                };
-            }
-        }
 
         public bool Executing
         {
@@ -70,27 +49,28 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
                     return;
 
                 _executing = newValue;
-                if (!AllowEABAbilityWhileExecuting && LocomotionAllowsAbilities)
+                if (!AllowEABAbilityWhileExecuting)
                 {
-                    Agent.Abilities.CanTriggerAbilities = !_executing;
+                    Agent.Abilities.CanTriggerAbilities = !_executing && Agent.CanUseAbilities();
                 }
             }
         }
 
         public bool StandStill
         {
-            get => _standStill;
+            get => _standStillStack > 0;
             set
             {
-                var newValue = value;
-                if (newValue == _standStill)
+                var oldValue = StandStill;
+                _standStillStack = Math.Max(0, _standStillStack + (value ? 1 : -1));
+                if (oldValue == StandStill)
                     return;
 
-                _standStill = newValue;
-
-                if (_standStill)
+                if (StandStill)
                 {
                     _prevState = Agent.Locomotion.CurrentStateEnum;
+                    _navAgent.isStopped = true;
+                    _navAgent.velocity = Vector3.zero;
                     Agent.Locomotion.ChangeState(ES_StateEnum.StandStill);
                 }
                 else if (_prevState != ES_StateEnum.StandStill)
@@ -136,13 +116,15 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 
         private Timer _lazyUpdateTimer = new(LAZYUPDATE_DELAY);
         private bool _executing = false;
-        private bool _standStill = false;
+        private int _standStillStack = 0;
         private ES_StateEnum _prevState;
+        private UnityEngine.AI.INavigation _navAgent;
 
         public void Setup(IAbility baseAbility, EnemyAgent agent)
         {
             BaseAbility = baseAbility;
             Agent = agent;
+            _navAgent = Agent.AI.m_navMeshAgent;
 
             Agent.AI.StartCoroutine(Update());
             Agent.Locomotion.AddState(ES_StateEnum.StandStill, new ES_StandStill());
@@ -313,8 +295,8 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
             if (!Executing || AgentDestroyed)
                 return;
 
-            Executing = false;
             OnExit();
+            Executing = false;
         }
 
         private void DoTakeDamage(float damage)

@@ -88,10 +88,8 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         protected override void OnExit()
         {
             StandStill = false;
-            if (_navAgent.isOnNavMesh && !Agent.Damage.IsStuckInGlue)
-                _navAgent.isStopped = false;
 
-            if (Ability.InvincibleWhileCharging)
+            if (Ability.InvincibleWhileCharging && Agent.Locomotion.CurrentStateEnum != Enemies.ES_StateEnum.ScoutScream)
                 Agent.Damage.IsImortal = false;
             Agent.Appearance.InterpolateGlow(Color.black, 0.5f);
 

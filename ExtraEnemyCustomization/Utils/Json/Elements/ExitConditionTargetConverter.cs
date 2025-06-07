@@ -54,6 +54,12 @@ namespace EEC.Utils.Json.Elements
                             case "distance":
                                 target |= ExitConditionType.Distance;
                                 continue;
+
+                            case "requireeaballowed":
+                            case "requireeab":
+                            case "eaballowed":
+                                target |= ExitConditionType.EABAllowed;
+                                continue;
                         }
                     }
                     return new ExitConditionTarget(target);
