@@ -1,4 +1,5 @@
-﻿using EEC.EnemyCustomizations.Shooters.Handlers;
+﻿using Agents;
+using EEC.EnemyCustomizations.Shooters.Handlers;
 using EEC.Utils.Json.Elements;
 using Enemies;
 using System;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace EEC.EnemyCustomizations.Shooters
 {
-    public sealed class ShooterFireCustom : EnemyCustomBase, IEnemySpawnedEvent
+    public sealed class ShooterFireCustom : EnemyCustomBase, IEnemySpawnedEvent, IEnemyAgentModeEvent
     {
         public FireSetting[] FireSettings { get; set; } = Array.Empty<FireSetting>();
 
@@ -29,9 +30,31 @@ namespace EEC.EnemyCustomizations.Shooters
                 var defaultValue = new ShooterFireOption();
                 defaultValue.CopyFrom(projectileSetting);
 
+                if (FireSettings.Length == 1)
+                {
+                    FireSettings[0].ApplyToEAB(projectileSetting, defaultValue);
+                }
+            }
+        }
+
+        public void OnAgentModeChanged(EnemyAgent agent, AgentMode newMode)
+        {
+            if (FireSettings.Length <= 1 || newMode != AgentMode.Agressive)
+                return;
+
+            var projectileSetting = agent.GetComponentInChildren<EAB_ProjectileShooter>(true);
+            if (projectileSetting != null)
+            {
+                var defaultValue = new ShooterFireOption();
+                defaultValue.CopyFrom(projectileSetting);
+
+                var distance = GetCurrentDistance(agent);
+                var newSetting = FireSettings.First(x => x.FromDistance <= distance);
+                newSetting.ApplyToEAB(projectileSetting, defaultValue);
+
                 if (FireSettings.Length > 1)
                 {
-                    var routine = new ShooterDistSettingRoutine()
+                    var routine = new ShooterDistSettingRoutine(newSetting)
                     {
                         EAB_Shooter = projectileSetting,
                         DefaultValue = defaultValue,
@@ -39,11 +62,27 @@ namespace EEC.EnemyCustomizations.Shooters
                     };
                     agent.AI.StartCoroutine(routine.Routine());
                 }
-                else if (FireSettings.Length == 1)
+            }
+        }
+
+        private float GetCurrentDistance(EnemyAgent agent)
+        {
+            if (agent.AI.IsTargetValid) return agent.AI.Target.m_distance;
+
+            var min = FireSettings.First(setting => setting.FromDistance > 0).FromDistance;
+            float distance = float.MaxValue;
+            foreach (var target in agent.AI.m_behaviourData.Targets)
+            {
+                if (!target.m_agent.Alive) continue;
+
+                if (distance > target.m_distance && !Physics.Linecast(agent.EyePosition, target.m_agent.EyePosition, LayerManager.MASK_WORLD))
                 {
-                    FireSettings[0].ApplyToEAB(projectileSetting, defaultValue);
+                    distance = target.m_distance;
+                    if (distance < min)
+                        return distance;
                 }
             }
+            return distance;
         }
 
         public sealed class FireSetting
