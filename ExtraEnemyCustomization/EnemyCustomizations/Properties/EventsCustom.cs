@@ -11,6 +11,7 @@ namespace EEC.EnemyCustomizations.Properties
         public EventSetting OnSpawnedEvent { get; set; } = new();
         public EventSetting OnWakeupEvent { get; set; } = new();
         public EventSetting OnDeadEvent { get; set; } = new();
+        public List<uint> LevelLayoutIDs { get; set; } = new();
         public bool TriggerOnBossDeathEventOnDead { get; set; } = false;
 
         public override string GetProcessName()
@@ -34,6 +35,9 @@ namespace EEC.EnemyCustomizations.Properties
 
         public void OnSpawned(EnemyAgent agent)
         {
+            if (LevelLayoutIDs.Count > 0 && !LevelLayoutIDs.Contains(RundownManager.ActiveExpedition.LevelLayoutData))
+                return;
+
             if (OnSpawnedEvent?.Enabled ?? false)
             {
                 OnSpawnedEvent.FireEvents();

@@ -14,8 +14,10 @@ namespace EEC.EnemyCustomizations.Shooters.Handlers
         public EAB_ProjectileShooter EAB_Shooter;
         public ShooterFireCustom.FireSetting[] FireSettings;
 
-        private ShooterFireCustom.FireSetting _currentSetting = null;
+        private ShooterFireCustom.FireSetting _currentSetting;
         private static readonly WaitForSeconds _yielder = WaitFor.Seconds[0.125f];
+
+        public ShooterDistSettingRoutine(ShooterFireCustom.FireSetting startSetting = null) => _currentSetting = startSetting;
 
         public IEnumerator Routine()
         {
@@ -23,14 +25,15 @@ namespace EEC.EnemyCustomizations.Shooters.Handlers
             {
                 yield return _yielder;
 
-                if (EAB_Shooter.m_owner.Locomotion.CurrentStateEnum == Enemies.ES_StateEnum.ShooterAttack)
+                var stateEnum = EAB_Shooter.m_owner.Locomotion.CurrentStateEnum;
+                if (stateEnum == Enemies.ES_StateEnum.ShooterAttack || stateEnum == Enemies.ES_StateEnum.ShooterAttackFlyer)
                     continue;
 
                 if (!EAB_Shooter.m_owner.AI.IsTargetValid)
                     continue;
 
                 var distance = EAB_Shooter.m_owner.AI.Target.m_distance;
-                var newSetting = FireSettings.FirstOrDefault(x => x.FromDistance <= distance);
+                var newSetting = FireSettings.First(x => x.FromDistance <= distance);
                 if (newSetting != _currentSetting)
                 {
                     newSetting.ApplyToEAB(EAB_Shooter, DefaultValue);
