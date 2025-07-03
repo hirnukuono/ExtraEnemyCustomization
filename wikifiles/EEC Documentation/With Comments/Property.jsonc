@@ -61,6 +61,7 @@
           }
         ]
       },
+      "LevelLayoutIDs": [], // Which levels to apply to? Empty applies to all levels. Use the main layout ID for the level(s).
       "TriggerOnBossDeathEventOnDead": true //Trigger SpawnedZone's OnBossDeathEvent?
     }
   ],
