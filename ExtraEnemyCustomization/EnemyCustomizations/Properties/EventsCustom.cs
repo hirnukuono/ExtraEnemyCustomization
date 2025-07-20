@@ -72,6 +72,9 @@ namespace EEC.EnemyCustomizations.Properties
             if (newMode != AgentMode.Agressive)
                 return;
 
+            if (LevelLayoutIDs.Count > 0 && !LevelLayoutIDs.Contains(RundownManager.ActiveExpedition.LevelLayoutData))
+                return;
+
             if (OnWakeupEvent?.Enabled ?? false)
             {
                 OnWakeupEvent.FireEvents();
@@ -80,6 +83,9 @@ namespace EEC.EnemyCustomizations.Properties
 
         public void OnDead(EnemyAgent agent)
         {
+            if (LevelLayoutIDs.Count > 0 && !LevelLayoutIDs.Contains(RundownManager.ActiveExpedition.LevelLayoutData))
+                return;
+
             if (OnDeadEvent?.Enabled ?? false)
             {
                 OnDeadEvent.FireEvents();
