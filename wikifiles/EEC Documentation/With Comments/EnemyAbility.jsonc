@@ -253,6 +253,7 @@
         "TotalCount": 0,
         "CountPerSpawn": 0,
         "DelayPerSpawn": 0,
+        "DoGlobalFallback": false, // Uses a global routine to do spawns in case the enemy despawns during the ability.
         "Name": "SpawnEnemy"
       }
     ],

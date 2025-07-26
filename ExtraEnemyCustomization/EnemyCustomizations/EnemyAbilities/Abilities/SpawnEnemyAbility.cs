@@ -3,6 +3,8 @@ using EEC.Utils.Unity;
 using Timer = EEC.Utils.Unity.Timer;
 using Enemies;
 using SNetwork;
+using System.Collections;
+using BepInEx.Unity.IL2CPP.Utils.Collections;
 
 namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 {
@@ -15,6 +17,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         public int TotalCount { get; set; } = 0;
         public int CountPerSpawn { get; set; } = 0;
         public float DelayPerSpawn { get; set; } = 0.0f;
+        public bool DoGlobalFallback { get; set; } = false;
 
         public override void OnAbilityLoaded()
         {
@@ -35,8 +38,11 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
     public sealed class SpawnEnemyBehaviour : AbilityBehaviour<SpawnEnemyAbility>
     {
         private int _remainingSpawn = 0;
+        private AIGraph.AIG_CourseNode _fallbackNode = null!;
+        private UnityEngine.Vector3 _fallbackPos;
+        private UnityEngine.Quaternion _fallbackRot;
 
-        private State _state;
+        private IEnumerator? _updateLoop = null;
         private Timer _stateTimer;
 
         public override bool RunUpdateOnlyWhileExecuting => true;
@@ -54,45 +60,41 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
             }
 
             StandStill = Ability.StopAgent;
+            _fallbackNode = Agent.CourseNode;
+            _fallbackPos = Agent.Position;
+            _fallbackRot = Agent.Rotation;
 
-            _state = State.StartDelay;
+            if (Ability.DoGlobalFallback)
+                CoroutineManager.StartCoroutine(DoSpawnRoutine().WrapToIl2Cpp());
+            else
+                _updateLoop = DoSpawnRoutine();
             _stateTimer.Reset(Ability.Delay);
         }
 
         protected override void OnUpdate()
         {
-            switch (_state)
+            _updateLoop?.MoveNext();
+        }
+
+        private IEnumerator DoSpawnRoutine()
+        {
+            while (!_stateTimer.TickAndCheckDone())
+                yield return null;
+
+            _stateTimer.Reset(0.0f);
+            while (_remainingSpawn > 0)
             {
-                case State.StartDelay:
-                    if (_stateTimer.TickAndCheckDone())
-                    {
-                        _state = State.Spawning;
-                        _stateTimer.Reset(0.0f);
-                    }
-                    break;
+                while (!_stateTimer.TickAndCheckDone())
+                    yield return null;
 
-                case State.Spawning:
-                    if (_stateTimer.TickAndCheckDone())
-                    {
-                        if (_remainingSpawn > 0)
-                        {
-                            if (SNet.IsMaster)
-                                SpawnEnemy(Ability.CountPerSpawn);
+                if (SNet.IsMaster)
+                    SpawnEnemy(Ability.CountPerSpawn);
 
-                            _stateTimer.Reset(Ability.DelayPerSpawn);
-                        }
-                        else
-                        {
-                            _state = State.DoneSpawning;
-                            _stateTimer.Reset(0.0f);
-                        }
-                    }
-                    break;
-
-                case State.DoneSpawning:
-                    DoExit();
-                    break;
+                _stateTimer.Reset(Ability.DelayPerSpawn);
             }
+
+            DoExit();
+            _updateLoop = null;
         }
 
         private void SpawnEnemy(int count)
@@ -101,9 +103,10 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
             {
                 if (_remainingSpawn > 0)
                 {
-                    var position = Agent.Position;
-                    var rotation = Agent.Rotation;
-                    _ = EnemyAllocator.Current.SpawnEnemy(Ability.EnemyID, Agent.CourseNode, Ability.AgentMode, position, rotation, null);
+                    var node = !Ability.DoGlobalFallback || Agent != null ? Agent!.CourseNode : _fallbackNode;
+                    var position = !Ability.DoGlobalFallback || Agent != null ? Agent!.Position : _fallbackPos;
+                    var rotation = !Ability.DoGlobalFallback || Agent != null ? Agent!.Rotation : _fallbackRot;
+                    _ = EnemyAllocator.Current.SpawnEnemy(Ability.EnemyID, node, Ability.AgentMode, position, rotation, null);
                     _remainingSpawn--;
                 }
                 else
@@ -115,15 +118,8 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 
         protected override void OnExit()
         {
-            if (Ability.StopAgent)
+            if (Ability.StopAgent && (!Ability.DoGlobalFallback || Agent != null))
                 StandStill = false;
-        }
-
-        public enum State
-        {
-            StartDelay,
-            Spawning,
-            DoneSpawning
         }
     }
 }
