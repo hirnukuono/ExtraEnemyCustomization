@@ -89,6 +89,8 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 
                 if (SNet.IsMaster)
                     SpawnEnemy(Ability.CountPerSpawn);
+                else
+                    _remainingSpawn -= Ability.CountPerSpawn;
 
                 _stateTimer.Reset(Ability.DelayPerSpawn);
             }
