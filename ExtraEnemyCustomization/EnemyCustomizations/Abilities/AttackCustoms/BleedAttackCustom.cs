@@ -20,7 +20,8 @@ namespace EEC.EnemyCustomizations.Abilities
         {
             base.OnConfigLoaded();
 
-            LocalPlayerAliveEvents.Down += OnDown;
+            if (ConfigManager.Global.CanDownStopBleeding)
+                LocalPlayerAliveEvents.Down += OnDown;
             if (ConfigManager.Global.CanMediStopBleeding)
                 ResourcePackEvents.ReceiveMedi += RecieveMedi;
         }
@@ -29,7 +30,8 @@ namespace EEC.EnemyCustomizations.Abilities
         {
             base.OnConfigLoaded();
 
-            LocalPlayerAliveEvents.Down -= OnDown;
+            if (ConfigManager.Global.CanDownStopBleeding)
+                LocalPlayerAliveEvents.Down -= OnDown;
             if (ConfigManager.Global.CanMediStopBleeding)
                 ResourcePackEvents.ReceiveMedi -= RecieveMedi;
         }
