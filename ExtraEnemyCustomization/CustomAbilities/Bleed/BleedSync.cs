@@ -19,7 +19,7 @@ namespace EEC.CustomAbilities.Bleed
                 if (Logger.VerboseLogAllowed)
                     Logger.Verbose($"Bleed Received: [{agent.PlayerSlotIndex}] {packet.damage} {packet.interval} {packet.duration}");
 
-                if (packet.duration >= 0.0f)
+                if (packet.duration >= 0.0f && agent.Alive)
                 {
                     if (!Rand.CanDoBy(packet.chanceToBleed))
                         return;

@@ -14,7 +14,8 @@ namespace EEC.CustomAbilities.Bleed
 
         public static void DoBleed(PlayerAgent agent, BleedingData data)
         {
-            Sync.SendToPlayer(data, agent);
+            if (agent.Alive || data.duration < 0)
+                Sync.SendToPlayer(data, agent);
         }
 
         public static void StopBleed(PlayerAgent agent)
