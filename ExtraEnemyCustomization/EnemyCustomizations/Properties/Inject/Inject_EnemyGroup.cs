@@ -44,24 +44,9 @@ namespace EEC.EnemyCustomizations.Properties.Inject
                 __result = 10;
                 return false;
             }
-            if (enemyType == 11u)
+            if (enemyType >= 11u && enemyType <= 14u)
             {
-                __result = 11;
-                return false;
-            }
-            if (enemyType == 12u)
-            {
-                __result = 12;
-                return false;
-            }
-            if (enemyType == 13u)
-            {
-                __result = 13;
-                return false;
-            }
-            if (enemyType == 14u)
-            {
-                __result = 14;
+                __result = (byte)enemyType;
                 return false;
             }
 

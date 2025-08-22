@@ -13,10 +13,7 @@ namespace EEC.EnemyCustomizations.Properties.Inject
         [HarmonyWrapSafe]
         private static bool Pre_DoSetWaveRoarSound(LG_LevelInteractionManager.pWaveRoarSettings settings)
         {
-            if (!TryCondense(settings.enemyType, out var largest))
-            {
-                return true;
-            }
+            if (!TryCondense(settings.enemyType, out var largest)) return true; 
 
             CellSoundPlayer waveRoar = new();
             int size = largest.RoarSize == 0 ? settings.roarSize : (int)largest.RoarSize;
@@ -62,7 +59,6 @@ namespace EEC.EnemyCustomizations.Properties.Inject
                     waveRoar.PostWithCleanup(largest.DynamicSoundIDs[Math.Clamp(size - 1, 0, largest.DynamicSoundIDs.Count - 1)], settings.position);
                     return false;
 
-                case 11:
                 default:
                     return settings.enemyType != 11;
             }

@@ -91,6 +91,7 @@ namespace EEC.EnemyCustomizations.Properties
                     { 46u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Pouncer, OnlyUseOverrides = true }, SwitchID = SWITCH_ID.POUNCER, EnemyType = 8 } },
                     { 47u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Immortal, OnlyUseOverrides = true }, SwitchID = SWITCH_ID.IMMORTAL, EnemyType = 6 } },
                     { 55u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Birther, OnlyUseOverrides = true }, SwitchID = SWITCH_ID.BIRTHER, EnemyType = 2 } },
+                    { 53u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Striker_Berserk, OnlyUseOverrides = true }, SwitchID = SWITCH_ID.STRIKER_BERSERK, EnemyType = 9 } },
                     { 62u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Striker_Berserk, OnlyUseOverrides = true }, SwitchID = SWITCH_ID.STRIKER_BERSERK, EnemyType = 9 } },
                     { 63u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Striker_Berserk, OnlyUseOverrides = true }, SwitchID = SWITCH_ID.STRIKER_BERSERK, EnemyType = 9 } },
                     { 52u, new() { RoarSettings = new() { RoarSound = RoarSoundOverride.Shooter_Spread, OnlyUseOverrides = true }, SwitchID = SWITCH_ID.SHOOTER_SPREAD, EnemyType = 10 } },
