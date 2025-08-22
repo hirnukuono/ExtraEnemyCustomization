@@ -6,5 +6,6 @@
   //Better leave it as false unless you know what you doing.
   "Material.CacheAll": false,
   "Bleeding.UseMediToStop": false, //Using Medipack can stop bleeding effects?
+  "Bleeding.StopOnDown": false, //Going down stops bleeding effects?
   "WaveRoarFix.AutoAddUnused": false // If true, vanilla ids for the unused wave roars will be internally added to DistantRoarCustom (can still be overridden)
 }

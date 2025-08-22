@@ -1,4 +1,5 @@
-﻿using Player;
+﻿using EEC.Managers;
+using Player;
 
 namespace EEC.CustomAbilities.Bleed
 {
@@ -14,7 +15,8 @@ namespace EEC.CustomAbilities.Bleed
 
         public static void DoBleed(PlayerAgent agent, BleedingData data)
         {
-            Sync.SendToPlayer(data, agent);
+            if (!ConfigManager.Global.CanDownStopBleeding || data.duration < 0 || agent.Alive)
+                Sync.SendToPlayer(data, agent);
         }
 
         public static void StopBleed(PlayerAgent agent)

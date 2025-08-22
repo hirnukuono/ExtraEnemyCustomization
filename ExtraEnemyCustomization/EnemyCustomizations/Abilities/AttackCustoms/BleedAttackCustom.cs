@@ -20,6 +20,8 @@ namespace EEC.EnemyCustomizations.Abilities
         {
             base.OnConfigLoaded();
 
+            if (ConfigManager.Global.CanDownStopBleeding)
+                LocalPlayerAliveEvents.Down += OnDown;
             if (ConfigManager.Global.CanMediStopBleeding)
                 ResourcePackEvents.ReceiveMedi += RecieveMedi;
         }
@@ -28,6 +30,8 @@ namespace EEC.EnemyCustomizations.Abilities
         {
             base.OnConfigLoaded();
 
+            if (ConfigManager.Global.CanDownStopBleeding)
+                LocalPlayerAliveEvents.Down -= OnDown;
             if (ConfigManager.Global.CanMediStopBleeding)
                 ResourcePackEvents.ReceiveMedi -= RecieveMedi;
         }
@@ -41,6 +45,8 @@ namespace EEC.EnemyCustomizations.Abilities
         {
             OnApplyEffect(setting, player, inflictor);
         }
+
+        private static void OnDown(PlayerAgent player) => BleedSetting.StopBleed(player);
 
         private static void RecieveMedi(iResourcePackReceiver receiver, float _)
         {
