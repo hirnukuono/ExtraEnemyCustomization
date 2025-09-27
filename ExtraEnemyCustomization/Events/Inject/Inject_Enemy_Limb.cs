@@ -11,6 +11,8 @@ namespace EEC.Events.Inject
         [HarmonyPatch(nameof(Dam_EnemyDamageBase.ReceiveDestroyLimb))]
         internal static void Post_DestroyLimb(pDestroyLimbData data, Dam_EnemyDamageBase __instance)
         {
+            if (data.limbID >= __instance.DamageLimbs.Count)
+                return;
             EnemyLimbEvents.OnDestroyed(__instance.DamageLimbs[data.limbID]);
         }
     }
