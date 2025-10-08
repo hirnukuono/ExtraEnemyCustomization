@@ -41,7 +41,7 @@ namespace EEC.CustomSettings.CustomProjectiles
         public DrainStaminaSetting DrainStamina { get; set; } = new();
         public bool HitEnemies { get; set; } = false;
 
-        public void DoCollisionEffect(Vector3 projectilePosition, PlayerAgent player = null)
+        public void DoCollisionEffect(ProjectileBase proj, Vector3 projectilePosition, PlayerAgent player = null)
         {
             if (SNet.IsMaster && (Explosion?.Enabled ?? false))
                 Explosion.DoExplode(projectilePosition);
@@ -57,6 +57,10 @@ namespace EEC.CustomSettings.CustomProjectiles
 
             if (DrainStamina?.Enabled ?? false)
                 DrainStamina.DoDrain(player);
+
+            float infect = Infection.GetAbsValue(Utils.PlayerData.MaxInfection, proj.m_maxInfection);
+            if (infect < 0)
+                DoDisinfectEffect(infect, player);
         }
 
         public void DoDestroyEffect(ProjectileBase projectile, ProjectileDestroyedReason reason)
@@ -78,6 +82,19 @@ namespace EEC.CustomSettings.CustomProjectiles
                         break;
                 }
             }
+        }
+
+        private static void DoDisinfectEffect(float infect, PlayerAgent player)
+        {
+            player.Sound.Post(AK.EVENTS.DISINFECTION_SPRAY_ON_VISOR);
+            ScreenLiquidManager.Apply(ScreenLiquidSettingName.disinfectionStation_Apply, player.Position, new(0.5f, 0.5f));
+
+            player.Damage.ModifyInfection(new pInfection()
+            {
+                amount = infect,
+                effect = pInfectionEffect.None,
+                mode = pInfectionMode.Add
+            }, true, true);
         }
     }
 

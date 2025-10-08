@@ -69,7 +69,10 @@ namespace EEC.CustomAbilities.Bleed.Handlers
 
                 if (Agent.Alive)
                 {
-                    Agent.Damage.FireDamage(bleedData.damage, Agent);
+                    if (bleedData.damage >= 0)
+                        Agent.Damage.FireDamage(bleedData.damage, Agent);
+                    else
+                        Agent.Damage.AddHealth(bleedData.damage, Agent);
                 }
 
                 timer += bleedData.interval;
@@ -117,7 +120,10 @@ namespace EEC.CustomAbilities.Bleed.Handlers
 
                 if (Agent.Alive)
                 {
-                    Agent.Damage.FireDamage(bleedData.damage, Agent);
+                    if (bleedData.damage >= 0)
+                        Agent.Damage.FireDamage(bleedData.damage, Agent);
+                    else
+                        Agent.Damage.AddHealth(-bleedData.damage, Agent);
                 }
 
                 timer += bleedData.interval;

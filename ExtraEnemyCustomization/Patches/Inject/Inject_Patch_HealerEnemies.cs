@@ -32,11 +32,11 @@ namespace EEC.Patches.Inject
             if (dam >= 0.0f)
                 return true; //Run Original Code
 
-            if (SNet.IsMaster)
-            {
-                var healAmount = Math.Abs(dam);
-                damBase.SendSetHealth(Math.Min(damBase.Health + healAmount, damBase.HealthMax));
-            }
+            var ownerType = damBase.DamageBaseOwner;
+            if (ownerType != DamageBaseOwnerType.Player && ownerType != DamageBaseOwnerType.PlayerBot)
+                return true;
+
+            damBase.AddHealth(Math.Abs(dam), null);
 
             return false; //Skip Original Code
         }

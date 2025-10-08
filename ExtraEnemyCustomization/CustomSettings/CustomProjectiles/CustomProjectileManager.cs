@@ -30,7 +30,7 @@ namespace EEC.CustomSettings.CustomProjectiles
                     return;
 
                 var settings = data.Settings;
-                settings.DoCollisionEffect(proj.transform.position);
+                settings.DoCollisionEffect(proj, proj.transform.position);
                 settings.DoDestroyEffect(proj, ProjectileDestroyedReason.CollideWorld);
             };
 
@@ -42,7 +42,7 @@ namespace EEC.CustomSettings.CustomProjectiles
                     return;
 
                 var settings = data.Settings;
-                settings.DoCollisionEffect(proj.transform.position, agent);
+                settings.DoCollisionEffect(proj, proj.transform.position, agent);
                 settings.DoDestroyEffect(proj, ProjectileDestroyedReason.CollidePlayer);
             };
 
