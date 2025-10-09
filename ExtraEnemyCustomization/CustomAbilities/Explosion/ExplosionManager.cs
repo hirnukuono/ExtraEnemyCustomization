@@ -108,8 +108,19 @@ namespace EEC.CustomAbilities.Explosion
                 if (newDamage == 0) continue;
 
                 Logger.Verbose($"Explosive damage: {newDamage} out of max: {damage}, Dist: {distance}, min: {minRange}, max: {maxRange}");
-                targetDamagable.ExplosionDamage(newDamage, position, Vector3.up * 1000);
+                if (newDamage < 0)
+                    ExplosionHeal(targetDamagable, baseAgent, -newDamage);
+                else
+                    targetDamagable.ExplosionDamage(newDamage, position, Vector3.up * 1000);
             }
+        }
+
+        private static void ExplosionHeal(IDamageable damageable, Agents.Agent? agent, float heal)
+        {
+            if (agent == null) return;
+
+            var syncedBase = damageable.Cast<Dam_SyncedDamageBase>();
+            syncedBase.SendSetHealth(syncedBase.Health + heal);
         }
 
         private static float CalcRangeDamage(float damage, float distance, float minRange, float maxRange)

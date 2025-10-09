@@ -83,6 +83,8 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
                     EffectVolumeManager.RegisterVolume(effectHandler.EVSphere);
                 }
             }
+            else
+                GameObject.DestroyImmediate(fogObject);
 
             DoExit();
         }

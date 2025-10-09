@@ -51,7 +51,7 @@ namespace EEC.EnemyCustomizations.Shared
         public static void MakeExplosion(this IExplosionSetting setting, Vector3 position)
         {
             var maxDamage = setting.Damage.GetAbsValue(PlayerData.MaxHealth);
-            if (maxDamage > 0.0f)
+            if (maxDamage != 0.0f)
             {
                 ExplosionManager.DoExplosion(new ExplosionData()
                 {
