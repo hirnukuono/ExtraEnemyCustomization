@@ -58,16 +58,16 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 
         #region ABILITY CALLER
 
-        public void TriggerSync(ushort enemyID)
+        public void TriggerSync(ushort enemyID, bool useClientPos)
         {
-            EnemyAbilityManager.SendEvent(SyncID, enemyID, AbilityPacketType.DoTrigger);
+            EnemyAbilityManager.SendEvent(SyncID, enemyID, AbilityPacketType.DoTrigger, useClientPos);
         }
 
-        public void Trigger(ushort enemyID)
+        public void Trigger(ushort enemyID, bool useClientPos)
         {
             if (TryGetBehaviour(enemyID, out var behaviour))
             {
-                behaviour.DoTrigger();
+                behaviour.DoTrigger(useClientPos);
             }
         }
 
@@ -80,7 +80,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         {
             foreach (var behaviour in _behaviours)
             {
-                behaviour.DoTrigger();
+                behaviour.DoTrigger(useClientPos: false);
             }
         }
 

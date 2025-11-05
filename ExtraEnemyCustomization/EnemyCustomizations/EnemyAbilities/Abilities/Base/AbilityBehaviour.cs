@@ -255,14 +255,14 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
             }
         }
 
-        public void DoTriggerSync()
+        public void DoTriggerSync(bool useClientPos)
         {
-            EnemyAbilityManager.SendEvent(BaseAbility.SyncID, Agent.GlobalID, AbilityPacketType.DoTrigger);
+            EnemyAbilityManager.SendEvent(BaseAbility.SyncID, Agent.GlobalID, AbilityPacketType.DoTrigger, useClientPos);
         }
 
-        public void DoTrigger()
+        public void DoTrigger(bool useClientPos)
         {
-            DoEnter();
+            DoEnter(useClientPos);
         }
 
         public void DoEnterSync()
@@ -270,7 +270,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
             EnemyAbilityManager.SendEvent(BaseAbility.SyncID, Agent.GlobalID, AbilityPacketType.DoTrigger);
         }
 
-        public void DoEnter()
+        public void DoEnter(bool useClientPos)
         {
             if (IsMasterOnlyAndClient)
                 return;
@@ -279,7 +279,10 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
                 return;
 
             Executing = true;
-            OnEnter();
+            if (useClientPos)
+                OnEnterUseClientPos();
+            else
+                OnEnter();
         }
 
         public void DoExitSync()
@@ -333,6 +336,11 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 
         protected virtual void OnEnter()
         {
+        }
+
+        protected virtual void OnEnterUseClientPos()
+        {
+            OnEnter();
         }
 
         protected virtual void OnAbilityLazyUpdate()

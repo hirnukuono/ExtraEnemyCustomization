@@ -52,14 +52,14 @@ namespace EEC.EnemyCustomizations.EnemyAbilities
             OnSpawnedPost(agent);
         }
 
-        public static void DoTriggerDelayed(IAbility ability, EnemyAgent agent, float delay)
+        public static void DoTriggerDelayed(IAbility ability, EnemyAgent agent, float delay, bool useClientPos)
         {
             Task.Factory.StartNew(async () =>
             {
                 await Task.Delay((int)Math.Round(delay * 1000.0f));
                 ThreadDispatcher.Dispatch(() =>
                 {
-                    ability?.TriggerSync(agent);
+                    ability?.TriggerSync(agent, useClientPos);
                 });
             });
         }

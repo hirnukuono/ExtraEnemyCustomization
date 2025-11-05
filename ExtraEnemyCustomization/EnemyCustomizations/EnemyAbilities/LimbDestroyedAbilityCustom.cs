@@ -45,7 +45,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities
                     if (!setting.AllowedMode.IsMatch(agent))
                         return;
 
-                    DoTriggerDelayed(setting.Ability, agent, setting.Delay);
+                    DoTriggerDelayed(setting.Ability, agent, setting.Delay, useClientPos: true);
                 }));
             }
         }

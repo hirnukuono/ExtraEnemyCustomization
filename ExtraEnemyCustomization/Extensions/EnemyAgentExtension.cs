@@ -1,4 +1,5 @@
-﻿using AIGraph;
+﻿using Agents;
+using AIGraph;
 using EEC.Managers.Properties;
 using EEC.Utils;
 using Enemies;
@@ -74,6 +75,24 @@ namespace EEC
                 return null;
 
             return node;
+        }
+
+        public static void GetRagdollPosition(this EnemyAgent agent, ref UnityEngine.Vector3 position)
+        {
+            if (agent.Alive)
+                return;
+
+            if (agent.RagdollInstance is null)
+                return;
+
+            if (agent.EnemyMovementData.LocomotionDead != Enemies.ES_StateEnum.Dead)
+                return;
+
+            var bodyData = agent.RagdollInstance.GetComponentInChildren<EnemyRagdollBodyData>();
+            if (bodyData is null)
+                return;
+
+            position = bodyData.transform.position;
         }
 
         public static bool CanUseAbilities(this EnemyAgent agent)

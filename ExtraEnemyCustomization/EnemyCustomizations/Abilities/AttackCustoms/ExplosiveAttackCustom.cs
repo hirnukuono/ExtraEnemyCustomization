@@ -74,7 +74,7 @@ namespace EEC.EnemyCustomizations.Abilities
                 if (!IsTarget(owner))
                     return;
 
-                ProjectileData.DoExplode(projectile.transform.position);
+                ProjectileData.DoLocalExplode(projectile.transform.position);
                 ProjectileData.TryKillInflictor(owner);
             }
             else if (projectile.TryGetOwnerEnemyDataID(out var ownerID))
@@ -82,7 +82,7 @@ namespace EEC.EnemyCustomizations.Abilities
                 if (!IsTarget(ownerID))
                     return;
 
-                ProjectileData.DoExplode(projectile.transform.position);
+                ProjectileData.DoLocalExplode(projectile.transform.position);
             }
         }
 

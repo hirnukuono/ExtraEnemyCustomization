@@ -12,13 +12,13 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 
         void Unload();
 
-        void TriggerSync(EnemyAgent agent) => TriggerSync(agent.GlobalID);
+        void TriggerSync(EnemyAgent agent, bool clientPos = false) => TriggerSync(agent.GlobalID, clientPos);
 
-        void TriggerSync(ushort enemyID);
+        void TriggerSync(ushort enemyID, bool clientPos = false);
 
-        void Trigger(EnemyAgent agent) => Trigger(agent.GlobalID);
+        void Trigger(EnemyAgent agent, bool clientPos) => Trigger(agent.GlobalID, clientPos);
 
-        void Trigger(ushort enemyID);
+        void Trigger(ushort enemyID, bool clientPos);
 
         void TriggerAllSync();
 
