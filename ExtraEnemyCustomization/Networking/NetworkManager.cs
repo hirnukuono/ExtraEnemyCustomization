@@ -81,6 +81,7 @@ namespace EEC.Networking
         private static void EnemyDespawn(EnemyAgent agent)
         {
             EnemyAgentModeState.Deregister(agent.GlobalID);
+            EnemyHealthState.Deregister(agent.GlobalID);
         }
     }
 }
