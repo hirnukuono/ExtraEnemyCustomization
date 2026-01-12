@@ -20,6 +20,7 @@ namespace EEC.EnemyCustomizations.Models.Handlers
         private bool[] _hasFormat = null;
         private bool _shouldUpdateRainbow = false;
         private Color _rainbow;
+        private IEnumerator _updateLoop;
 
         private static readonly MarkerFormatText[] _valuesOfEnum = null;
         private static readonly string[] _formatString = null;
@@ -92,15 +93,20 @@ namespace EEC.EnemyCustomizations.Models.Handlers
                 Destroy(this);
             }
         }
-
+        
         private void OnEnable()
         {
-            StopAllCoroutines();
+            _updateLoop = UpdateText();
+            InitializeText();
+        }
+
+        private void Update()
+        {
             if (_shouldUpdateRainbow)
             {
-                this.StartCoroutine(GamingMoment());
+                _rainbow = Color.HSVToRGB(Mathf.Repeat(Clock.ExpeditionProgressionTime, 1.0f), 1.0f, 1.0f);
             }
-            this.StartCoroutine(UpdateText());
+            _updateLoop.MoveNext();
         }
 
         [HideFromIl2Cpp]
@@ -108,32 +114,26 @@ namespace EEC.EnemyCustomizations.Models.Handlers
         {
             var oldText = string.Empty;
             var textBuilder = new StringBuilder(_baseText);
+            var lastHealth = 0f;
 
             while (true)
             {
                 NetworkManager.EnemyHealthState.TryGetState(Agent.GlobalID, out var healthState);
                 var maxHealth = healthState.maxHealth;
                 var health = healthState.health;
+                if (lastHealth == health && !_hasFormat[(int)MarkerFormatText.GAMING])
+                {
+                    yield return _updateYielder;
+                    continue;
+                }
+                lastHealth = health;
 
                 for (int i = 1 /*Skips None*/; i < _valuesOfEnum.Length; i++)
                 {
                     if (!_hasFormat[i])
                         continue;
 
-                    string replace = (MarkerFormatText)i switch
-                    {
-                        MarkerFormatText.None => string.Empty,
-                        MarkerFormatText.NAME => string.Empty,
-                        MarkerFormatText.HP => health.ToString("0.00"),
-                        MarkerFormatText.HP_ROUND => Mathf.RoundToInt(health).ToString(),
-                        MarkerFormatText.HP_MAX => maxHealth.ToString("0.00"),
-                        MarkerFormatText.HP_MAX_ROUND => Mathf.RoundToInt(maxHealth).ToString(),
-                        MarkerFormatText.HP_PERCENT => (health / maxHealth * 100.0f).ToString("0.00"),
-                        MarkerFormatText.HP_PERCENT_ROUND => Mathf.RoundToInt(health / maxHealth * 100.0f).ToString(),
-                        MarkerFormatText.HP_BAR => Worker.BuildString(maxHealth, health),
-                        MarkerFormatText.GAMING => ColorUtility.ToHtmlStringRGB(_rainbow),
-                        _ => string.Empty,
-                    };
+                    string replace = GetFormatText((MarkerFormatText)i, health, maxHealth);
 
                     if (!string.IsNullOrEmpty(replace))
                     {
@@ -155,14 +155,45 @@ namespace EEC.EnemyCustomizations.Models.Handlers
             }
         }
 
-        [HideFromIl2Cpp]
-        private IEnumerator GamingMoment()
+        private void InitializeText()
         {
-            while (true)
+            NetworkManager.EnemyHealthState.TryGetState(Agent.GlobalID, out var healthState);
+            var maxHealth = healthState.maxHealth;
+            var health = healthState.health;
+            StringBuilder textBuilder = new(_baseText);
+
+            for (int i = 1 /*Skips None*/; i < _valuesOfEnum.Length; i++)
             {
-                _rainbow = Color.HSVToRGB(Mathf.Repeat(Clock.ExpeditionProgressionTime, 1.0f), 1.0f, 1.0f);
-                yield return null;
+                if (!_hasFormat[i])
+                    continue;
+
+                string replace = GetFormatText((MarkerFormatText)i, health, maxHealth);
+
+                if (!string.IsNullOrEmpty(replace))
+                {
+                    textBuilder.Replace(_formatString[i], replace);
+                }
             }
+
+            Marker.SetTitle(textBuilder.ToString());
+        }
+
+        private string GetFormatText(MarkerFormatText format, float health, float maxHealth)
+        {
+             return format switch
+             {
+                 MarkerFormatText.None => string.Empty,
+                 MarkerFormatText.NAME => string.Empty,
+                 MarkerFormatText.HP => health.ToString("0.00"),
+                 MarkerFormatText.HP_ROUND => Mathf.RoundToInt(health).ToString(),
+                 MarkerFormatText.HP_MAX => maxHealth.ToString("0.00"),
+                 MarkerFormatText.HP_MAX_ROUND => Mathf.RoundToInt(maxHealth).ToString(),
+                 MarkerFormatText.HP_PERCENT => (health / maxHealth * 100.0f).ToString("0.00"),
+                 MarkerFormatText.HP_PERCENT_ROUND => Mathf.RoundToInt(health / maxHealth * 100.0f).ToString(),
+                 MarkerFormatText.HP_BAR => Worker.BuildString(maxHealth, health),
+                 MarkerFormatText.GAMING => ColorUtility.ToHtmlStringRGB(_rainbow),
+                 _ => string.Empty,
+             };
         }
 
         private void OnDestroy()
