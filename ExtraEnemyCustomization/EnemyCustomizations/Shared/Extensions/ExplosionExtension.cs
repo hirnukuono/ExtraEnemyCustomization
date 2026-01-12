@@ -29,23 +29,45 @@ namespace EEC.EnemyCustomizations.Shared
             }
         }
 
-        public static void DoExplode(this IExplosionSetting setting, Agent from)
+        public static void DoExplode(this IExplosionSetting setting, Agent from, bool useRagdoll = false, bool useClientPos = true)
         {
             var position = from.EyePosition;
-            MakeExplosion(setting, position);
+            if (useRagdoll)
+                from.GetRagdollPosition(ref position);
+            if (useClientPos)
+                MakeExplosion(setting, from, useRagdoll);
+            else
+                MakeExplosion(setting, position);
             MakeNoise(setting, from.CourseNode, position);
         }
 
-        public static void DoExplode(this IExplosionSetting setting, Vector3 position)
+        public static void DoLocalExplode(this IExplosionSetting setting, Vector3 position)
         {
-            MakeExplosion(setting, position);
-            TryMakeNoise(setting, position);
+            MakeLocalExplosion(setting, position);
+            if (SNetwork.SNet.IsMaster)
+                TryMakeNoise(setting, position);
         }
 
-        public static void DoExplode(this IExplosionSetting setting, AIG_CourseNode node, Vector3 position)
+        public static void MakeExplosion(this IExplosionSetting setting, Agent agent, bool useRagdoll = false)
         {
-            MakeExplosion(setting, position);
-            MakeNoise(setting, node, position);
+            var maxDamage = setting.Damage.GetAbsValue(PlayerData.MaxHealth);
+            if (maxDamage != 0.0f)
+            {
+                var data = new ExplosionAgentData()
+                {
+                    useRagdoll = useRagdoll,
+                    damage = maxDamage,
+                    enemyMulti = setting.EnemyDamageMulti,
+                    minRange = setting.MinRange,
+                    maxRange = setting.MaxRange,
+                    enemyMinRange = setting.EnemyMinRange.GetAbsValue(setting.MinRange),
+                    enemyMaxRange = setting.EnemyMaxRange.GetAbsValue(setting.MaxRange),
+                    lightColor = setting.LightColor
+                };
+                data.agent.Set(agent);
+
+                ExplosionManager.DoExplosion(data);
+            }
         }
 
         public static void MakeExplosion(this IExplosionSetting setting, Vector3 position)
@@ -54,6 +76,25 @@ namespace EEC.EnemyCustomizations.Shared
             if (maxDamage != 0.0f)
             {
                 ExplosionManager.DoExplosion(new ExplosionData()
+                {
+                    position = position,
+                    damage = maxDamage,
+                    enemyMulti = setting.EnemyDamageMulti,
+                    minRange = setting.MinRange,
+                    maxRange = setting.MaxRange,
+                    enemyMinRange = setting.EnemyMinRange.GetAbsValue(setting.MinRange),
+                    enemyMaxRange = setting.EnemyMaxRange.GetAbsValue(setting.MaxRange),
+                    lightColor = setting.LightColor
+                });
+            }
+        }
+
+        public static void MakeLocalExplosion(this IExplosionSetting setting, Vector3 position)
+        {
+            var maxDamage = setting.Damage.GetAbsValue(PlayerData.MaxHealth);
+            if (maxDamage != 0.0f)
+            {
+                ExplosionManager.DoLocalExplosion(new ExplosionData()
                 {
                     position = position,
                     damage = maxDamage,

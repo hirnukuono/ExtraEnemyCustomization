@@ -43,8 +43,8 @@ namespace EEC.CustomSettings.CustomProjectiles
 
         public void DoCollisionEffect(ProjectileBase proj, Vector3 projectilePosition, PlayerAgent player = null)
         {
-            if (SNet.IsMaster && (Explosion?.Enabled ?? false))
-                Explosion.DoExplode(projectilePosition);
+            if (Explosion?.Enabled ?? false)
+                Explosion.DoLocalExplode(projectilePosition);
 
             if (player == null || !player.IsLocallyOwned)
                 return;

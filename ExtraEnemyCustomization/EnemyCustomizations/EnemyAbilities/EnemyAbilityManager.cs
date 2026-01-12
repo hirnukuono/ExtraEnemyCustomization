@@ -86,7 +86,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities
             _abilityIDLookup.Clear();
         }
 
-        public static void SendEvent(ushort syncID, ushort enemyID, AbilityPacketType type)
+        public static void SendEvent(ushort syncID, ushort enemyID, AbilityPacketType type, bool useClientPos = false)
         {
             if (!SNet.IsMaster)
                 return;
@@ -94,6 +94,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities
             _abilityEvent.Send(new AbilityEvent.Packet()
             {
                 Type = type,
+                UseClientPos = useClientPos,
                 SyncID = syncID,
                 EnemyID = enemyID,
             });
@@ -110,7 +111,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities
                         break;
 
                     case AbilityPacketType.DoTrigger:
-                        ability.Trigger(packet.EnemyID);
+                        ability.Trigger(packet.EnemyID, packet.UseClientPos);
                         break;
 
                     case AbilityPacketType.DoExitAll:
@@ -140,6 +141,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities
         public struct Packet
         {
             public AbilityPacketType Type;
+            public bool UseClientPos;
             public ushort SyncID;
             public ushort EnemyID;
         }

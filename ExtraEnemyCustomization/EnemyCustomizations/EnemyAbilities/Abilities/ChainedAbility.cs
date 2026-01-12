@@ -55,6 +55,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         private bool _waitingEndTimer = false;
         private bool _allFinished = false;
         private bool _forceExit = false;
+        private bool _useClientPos = false;
 
         protected override void OnSetup()
         {
@@ -77,6 +78,12 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
             
         }
 
+        protected override void OnEnterUseClientPos()
+        {
+            OnEnter();
+            _useClientPos = true;
+        }
+
         protected override void OnEnter()
         {
             foreach (var block in _blockBehaviours)
@@ -87,6 +94,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 
             _waitingEndTimer = false;
             _forceExit = true;
+            _useClientPos = false;
         }
 
         protected override void OnUpdate()
@@ -99,7 +107,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
                 {
                     if (block.TriggerTimer.TickAndCheckDone())
                     {
-                        block.AbSetting.Ability.TriggerSync(Agent);
+                        block.AbSetting.Ability.TriggerSync(Agent, _useClientPos);
                         block.Triggered = true;
                     }
                     else

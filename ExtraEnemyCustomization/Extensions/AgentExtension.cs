@@ -38,5 +38,13 @@ namespace EEC
             result = null;
             return false;
         }
+
+        public static void GetRagdollPosition(this Agent agent, ref UnityEngine.Vector3 position)
+        {
+            if (!agent.TryCastToEnemyAgent(out var enemy))
+                return;
+
+            enemy.GetRagdollPosition(ref position);
+        }
     }
 }

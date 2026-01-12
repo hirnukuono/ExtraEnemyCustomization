@@ -30,7 +30,17 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         public override bool AllowEABAbilityWhileExecuting => true;
         public override bool IsHostOnlyBehaviour => true;
 
+        protected override void OnEnterUseClientPos()
+        {
+            DoExplosion(true);
+        }
+
         protected override void OnEnter()
+        {
+            DoExplosion(false);
+        }
+
+        private void DoExplosion(bool useClientPos)
         {
             if (Agent.WasCollected)
             {
@@ -50,32 +60,9 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
                 counter.Count++;
             }
 
-            var position = Agent.EyePosition;
-            if (Ability.UseRagdollPosition)
-            {
-                GetRagdollPosition(ref position);
-            }
-            Ability.DoExplode(Agent.CourseNode, position);
+            Ability.DoExplode(Agent, Ability.UseRagdollPosition, useClientPos);
             Ability.TryKillInflictor(Agent);
             DoExit();
-        }
-
-        private void GetRagdollPosition(ref Vector3 position)
-        {
-            if (Agent.Alive)
-                return;
-
-            if (Agent.RagdollInstance is null)
-                return;
-
-            if (Agent.EnemyMovementData.LocomotionDead != Enemies.ES_StateEnum.Dead)
-                return;
-
-            var bodyData = Agent.RagdollInstance.GetComponentInChildren<EnemyRagdollBodyData>();
-            if (bodyData is null)
-                return;
-
-            position = bodyData.transform.position;
         }
     }
 

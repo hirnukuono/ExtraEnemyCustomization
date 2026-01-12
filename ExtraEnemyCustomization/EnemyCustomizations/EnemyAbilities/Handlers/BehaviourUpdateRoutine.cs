@@ -81,7 +81,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Handlers
                     _cooldownTimer.Reset(Setting.Cooldown.Cooldown);
             }
 
-            Behaviour.DoTriggerSync();
+            Behaviour.DoTriggerSync(useClientPos: false);
         }
 
         private bool CheckAllowedModeCondition()
