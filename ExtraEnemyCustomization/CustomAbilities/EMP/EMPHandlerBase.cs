@@ -95,7 +95,7 @@ namespace EEC.CustomAbilities.EMP
         public void Tick(bool isEMPD)
         {
             if (_destroyed) return;
-            if (isEMPD && _state == EMPState.On)
+            if (isEMPD && _state == EMPState.On && _deviceState == DeviceState.On)
             {
                 OnEMPStart();
                 float delay = GetRandomDelay(MinDelay, MaxDelay);
