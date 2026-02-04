@@ -1,5 +1,8 @@
 ﻿using Agents;
 using AK;
+using EEC.CustomAbilities.Bleed;
+using EEC.CustomAbilities.DrainStamina;
+using EEC.CustomAbilities.Knockback;
 using EEC.Events;
 using Player;
 using SNetwork;
@@ -34,7 +37,7 @@ namespace EEC.CustomAbilities.Explosion
             _hostMask = LayerManager.MASK_EXPLOSION_TARGETS & ~LayerMask.GetMask("PlayerSynced");
         }
 
-        public static void DoExplosion(ExplosionData data)
+        public static void DoExplosion(ExplosionPosData data)
         {
             Sync.Send(data);
         }
@@ -44,68 +47,58 @@ namespace EEC.CustomAbilities.Explosion
             AgentSync.Send(data);
         }
 
-        public static void DoLocalExplosion(ExplosionData data)
+        public static void DoLocalExplosion(ExplosionPosData data)
         {
             Internal_TriggerExplosion(
                 data.position,
-                data.lightColor,
-                data.damage,
-                data.enemyMulti,
-                data.minRange,
-                data.maxRange,
-                data.enemyMinRange,
-                data.enemyMaxRange
+                data.data
                 );
         }
 
-        internal static void Internal_TriggerExplosion(Vector3 position, Color lightColor, float damage, float enemyMulti, float minRange, float maxRange, float enemyMinRange, float enemyMaxRange)
+        internal static void Internal_TriggerExplosion(Vector3 position, ExplosionData data)
         {
             CellSound.Post(EVENTS.STICKYMINEEXPLODE, position);
 
             if (_usingLightFlash)
-                LightFlash(position, maxRange, lightColor);
+                LightFlash(position, data.maxRange, data.lightColor);
 
             if (SNet.IsMaster)
-                TriggerHostExplosion(position, damage, enemyMulti, minRange, maxRange, enemyMinRange, enemyMaxRange, _hostMask);
+                TriggerHostExplosion(position, data, _hostMask);
             else
-                TriggerClientExplosion(position, damage, minRange, maxRange);
+                TriggerClientExplosion(position, data);
         }
 
-        internal static void Internal_TriggerHostOnlyExplosion(Vector3 position, Color lightColor, float damage, float enemyMulti, float minRange, float maxRange, float enemyMinRange, float enemyMaxRange)
+        internal static void Internal_TriggerHostOnlyExplosion(Vector3 position, ExplosionData data)
         {
             CellSound.Post(EVENTS.STICKYMINEEXPLODE, position);
 
             if (_usingLightFlash)
-                LightFlash(position, maxRange, lightColor);
+                LightFlash(position, data.maxRange, data.lightColor);
 
             if (SNet.IsMaster)
-                TriggerHostExplosion(position, damage, enemyMulti, minRange, maxRange, enemyMinRange, enemyMaxRange, _hostOnlyMask);
+                TriggerHostExplosion(position, data, _hostOnlyMask);
         }
 
-        private static void TriggerClientExplosion(Vector3 position, float damage, float minRange, float maxRange)
+        private static void TriggerClientExplosion(Vector3 position, ExplosionData data)
         {
             var target = PlayerManager.GetLocalPlayerAgent();
             if (target == null) return;
 
             Vector3 targetPosition = target.EyePosition;
             var distance = Vector3.Distance(position, targetPosition);
-            if (Physics.Linecast(position, targetPosition, out RaycastHit hit, LayerManager.MASK_EXPLOSION_BLOCKERS))
-                return;
+            if (Physics.Linecast(position, targetPosition, LayerManager.MASK_EXPLOSION_BLOCKERS)) return;
 
-            float newDamage = CalcRangeDamage(damage, distance, minRange, maxRange);
+            float rangeMod = CalcRangeMod(distance, data.minRange, data.maxRange);
+            float newDamage = data.damage * rangeMod;
             if (newDamage == 0) return;
 
-            Logger.Verbose($"Explosive damage: {newDamage} out of max: {damage}, Dist: {distance}, min: {minRange}, max: {maxRange}");
-            var damageable = target.GetComponent<Dam_SyncedDamageBase>();
-            if (newDamage < 0)
-                ExplosionHeal(damageable, target, -newDamage);
-            else
-                damageable.ExplosionDamage(newDamage, position, Vector3.up * 1000);
+            Logger.Verbose($"Explosive damage: {newDamage} out of max: {data.damage}, Dist: {distance}, min: {data.minRange}, max: {data.maxRange}");
+            DoExplosionHit(newDamage, rangeMod, data, target.Damage.Cast<IDamageable>(), position, target);
         }
 
-        private static void TriggerHostExplosion(Vector3 position, float damage, float enemyMulti, float minRange, float maxRange, float enemyMinRange, float enemyMaxRange, int mask)
+        private static void TriggerHostExplosion(Vector3 position, ExplosionData data, int mask)
         {
-            var targets = Physics.OverlapSphere(position, Math.Max(maxRange, enemyMaxRange), mask);
+            var targets = Physics.OverlapSphere(position, Math.Max(data.maxRange, data.enemyMaxRange), mask);
             if (targets.Count < 1)
                 return;
 
@@ -158,50 +151,80 @@ namespace EEC.CustomAbilities.Explosion
                 }
 
                 float newDamage;
-                var enemyBase = targetDamagable.TryCast<Dam_EnemyDamageBase>();
-                if (enemyBase != null)
+                float rangeMod;
+                var agentType = baseAgent?.Type ?? AgentType.Decoy;
+                if (agentType == AgentType.Enemy)
                 {
-                    newDamage = CalcRangeDamage(damage * enemyMulti, distance, enemyMinRange, enemyMaxRange);
+                    rangeMod = CalcRangeMod(distance, data.enemyMinRange, data.enemyMaxRange);
+                    newDamage = data.damage * data.enemyMulti * rangeMod;
                 }
                 else
                 {
-                    newDamage = CalcRangeDamage(damage, distance, minRange, maxRange);
+                    rangeMod = CalcRangeMod(distance, data.minRange, data.maxRange);
+                    newDamage = data.damage * rangeMod;
                 }
 
                 if (newDamage == 0) continue;
 
-                Logger.Verbose($"Explosive damage: {newDamage} out of max: {damage}, Dist: {distance}, min: {minRange}, max: {maxRange}");
-                if (newDamage < 0)
-                    ExplosionHeal(targetDamagable, baseAgent, -newDamage);
-                else
-                    targetDamagable.ExplosionDamage(newDamage, position, Vector3.up * 1000);
+                Logger.Verbose($"Explosive damage: {newDamage} out of max: {data.damage}, Dist: {distance}, min: {data.minRange}, max: {data.maxRange}");
+                DoExplosionHit(newDamage, rangeMod, data, targetDamagable, position, baseAgent);
             }
         }
 
-        private static void ExplosionHeal(IDamageable damageable, Agents.Agent? agent, float heal)
+        private static void DoExplosionHit(float damage, float rangeMod, ExplosionData data, IDamageable damageable, Vector3 position, Agent? agent)
         {
-            if (agent != null)
-                ExplosionHeal(damageable.Cast<Dam_SyncedDamageBase>(), agent, heal);
+            if (damage < 0)
+                ExplosionHeal(damageable, -damage);
+            else
+                damageable.ExplosionDamage(damage, position, Vector3.up * 1000);
+
+            var agentType = agent?.Type ?? AgentType.Decoy;
+            if (agentType == AgentType.Player)
+            {
+                var player = agent!.Cast<PlayerAgent>();
+                if (data.bleeding.enabled)
+                {
+                    var bleeding = data.bleeding.packet;
+                    bleeding.damage *= rangeMod;
+                    BleedManager.DoBleed(player, bleeding);
+                }
+
+                if (data.drainStamina.enabled)
+                {
+                    var drainStamina = data.drainStamina.packet;
+                    drainStamina.amount *= rangeMod;
+                    drainStamina.amountInCombat *= rangeMod;
+                    DrainStaminaManager.DoDrain(player, drainStamina);
+                }
+
+                if (data.knockback.enabled)
+                {
+                    var knockback = data.knockback.packet;
+                    knockback.velocity *= rangeMod;
+                    knockback.velocityZ *= rangeMod;
+                    KnockbackManager.DoKnockback(player, knockback);
+                }
+            }
         }
 
-        private static void ExplosionHeal(Dam_SyncedDamageBase damageable, Agents.Agent agent, float heal)
+        private static void ExplosionHeal(IDamageable damageable, float heal)
         {
             var syncedBase = damageable.Cast<Dam_SyncedDamageBase>();
             syncedBase.SendSetHealth(syncedBase.Health + heal);
         }
 
-        private static float CalcRangeDamage(float damage, float distance, float minRange, float maxRange)
+        private static float CalcRangeMod(float distance, float minRange, float maxRange)
         {
-            var newDamage = 0.0f;
+            var mod = 0.0f;
             if (distance <= minRange)
             {
-                newDamage = damage;
+                mod = 1;
             }
             else if (distance <= maxRange)
             {
-                newDamage = Mathf.Lerp(damage, 0.0f, (distance - minRange) / (maxRange - minRange));
+                mod = 1 - (distance - minRange) / (maxRange - minRange);
             }
-            return newDamage;
+            return mod;
         }
 
         public static void LightFlash(Vector3 pos, float range, Color lightColor)
@@ -228,22 +251,21 @@ namespace EEC.CustomAbilities.Explosion
         }
     }
 
-    public struct ExplosionData
+    public struct ExplosionPosData
     {
         public Vector3 position;
-        public float damage;
-        public float enemyMulti;
-        public float minRange;
-        public float maxRange;
-        public float enemyMinRange;
-        public float enemyMaxRange;
-        public Color lightColor;
+        public ExplosionData data;
     }
 
     public struct ExplosionAgentData
     {
         public pAgent agent;
         public bool useRagdoll;
+        public ExplosionData data;
+    }
+
+    public struct ExplosionData
+    {
         public float damage;
         public float enemyMulti;
         public float minRange;
@@ -251,5 +273,26 @@ namespace EEC.CustomAbilities.Explosion
         public float enemyMinRange;
         public float enemyMaxRange;
         public Color lightColor;
+        public ExpBleedingData bleeding;
+        public ExpDrainStaminaData drainStamina;
+        public ExpKnockbackData knockback;
+    }
+
+    public struct ExpBleedingData
+    {
+        public bool enabled;
+        public BleedingData packet;
+    }
+
+    public struct ExpDrainStaminaData
+    {
+        public bool enabled;
+        public DrainStaminaData packet;
+    }
+
+    public struct ExpKnockbackData
+    {
+        public bool enabled;
+        public KnockbackData packet;
     }
 }

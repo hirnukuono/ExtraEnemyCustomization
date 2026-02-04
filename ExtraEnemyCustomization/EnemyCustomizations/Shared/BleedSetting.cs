@@ -29,9 +29,9 @@ namespace EEC.EnemyCustomizations.Shared
         public ScreenLiquidSettingName LiquidSetting { get; set; } = ScreenLiquidSettingName.enemyBlood_Squirt;
         public uint OverrideBleedingTextID { get; set; } = 0u;
 
-        public void DoBleed(PlayerAgent agent)
+        public BleedingData ToPacket()
         {
-            BleedManager.DoBleed(agent, new BleedingData()
+            return new BleedingData()
             {
                 interval = Interval,
                 duration = Duration,
@@ -40,7 +40,12 @@ namespace EEC.EnemyCustomizations.Shared
                 doStack = CanBeStacked,
                 liquid = HasLiquid ? LiquidSetting : (ScreenLiquidSettingName)(-1),
                 textSpecialOverride = OverrideBleedingTextID
-            });
+            };
+        }
+
+        public void DoBleed(PlayerAgent agent)
+        {
+            BleedManager.DoBleed(agent, ToPacket());
         }
 
         public static void StopBleed(PlayerAgent agent)

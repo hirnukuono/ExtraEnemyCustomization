@@ -19,15 +19,20 @@ namespace EEC.EnemyCustomizations.Shared
         public bool ResetRecoverTimer { get; set; } = false;
         public bool ResetRecoverTimerInCombat { get; set; } = false;
 
-        public void DoDrain(PlayerAgent agent)
+        public DrainStaminaData ToPacket()
         {
-            DrainStaminaManager.DoDrain(agent, new DrainStaminaData()
+            return new DrainStaminaData()
             {
                 amount = DrainAmount,
                 amountInCombat = DrainAmountInCombat,
                 resetRecover = ResetRecoverTimer,
                 resetRecoverInCombat = ResetRecoverTimerInCombat
-            });
+            };
+        }
+
+        public void DoDrain(PlayerAgent agent)
+        {
+            DrainStaminaManager.DoDrain(agent, ToPacket());
         }
     }
 }

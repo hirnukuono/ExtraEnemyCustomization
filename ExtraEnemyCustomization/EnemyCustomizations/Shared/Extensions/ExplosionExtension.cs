@@ -3,9 +3,6 @@ using AIGraph;
 using EEC.CustomAbilities.Explosion;
 using EEC.Utils;
 using LevelGeneration;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
 namespace EEC.EnemyCustomizations.Shared
@@ -56,13 +53,7 @@ namespace EEC.EnemyCustomizations.Shared
                 var data = new ExplosionAgentData()
                 {
                     useRagdoll = useRagdoll,
-                    damage = maxDamage,
-                    enemyMulti = setting.EnemyDamageMulti,
-                    minRange = setting.MinRange,
-                    maxRange = setting.MaxRange,
-                    enemyMinRange = setting.EnemyMinRange.GetAbsValue(setting.MinRange),
-                    enemyMaxRange = setting.EnemyMaxRange.GetAbsValue(setting.MaxRange),
-                    lightColor = setting.LightColor
+                    data = setting.ToPacket(agent.Position)
                 };
                 data.agent.Set(agent);
 
@@ -75,17 +66,12 @@ namespace EEC.EnemyCustomizations.Shared
             var maxDamage = setting.Damage.GetAbsValue(PlayerData.MaxHealth);
             if (maxDamage != 0.0f)
             {
-                ExplosionManager.DoExplosion(new ExplosionData()
+                var data = new ExplosionPosData()
                 {
                     position = position,
-                    damage = maxDamage,
-                    enemyMulti = setting.EnemyDamageMulti,
-                    minRange = setting.MinRange,
-                    maxRange = setting.MaxRange,
-                    enemyMinRange = setting.EnemyMinRange.GetAbsValue(setting.MinRange),
-                    enemyMaxRange = setting.EnemyMaxRange.GetAbsValue(setting.MaxRange),
-                    lightColor = setting.LightColor
-                });
+                    data = setting.ToPacket(position)
+                };
+                ExplosionManager.DoExplosion(data);
             }
         }
 
@@ -94,17 +80,12 @@ namespace EEC.EnemyCustomizations.Shared
             var maxDamage = setting.Damage.GetAbsValue(PlayerData.MaxHealth);
             if (maxDamage != 0.0f)
             {
-                ExplosionManager.DoLocalExplosion(new ExplosionData()
+                var data = new ExplosionPosData()
                 {
                     position = position,
-                    damage = maxDamage,
-                    enemyMulti = setting.EnemyDamageMulti,
-                    minRange = setting.MinRange,
-                    maxRange = setting.MaxRange,
-                    enemyMinRange = setting.EnemyMinRange.GetAbsValue(setting.MinRange),
-                    enemyMaxRange = setting.EnemyMaxRange.GetAbsValue(setting.MaxRange),
-                    lightColor = setting.LightColor
-                });
+                    data = setting.ToPacket(position)
+                };
+                ExplosionManager.DoLocalExplosion(data);
             }
         }
 

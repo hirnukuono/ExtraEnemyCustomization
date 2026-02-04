@@ -1,4 +1,5 @@
 ﻿using Agents;
+using EEC.CustomAbilities.Knockback;
 using Player;
 using UnityEngine;
 
@@ -20,57 +21,33 @@ namespace EEC.EnemyCustomizations.Shared
         public bool DoMultDistance { get; set; } = false;
         public bool DoMultDistanceZ { get; set; } = false;
 
+        public KnockbackData ToPacket(Vector3 inflictorPos)
+        {
+            return new KnockbackData()
+            {
+                inflictorPos = inflictorPos,
+                velocity = Velocity,
+                velocityZ = VelocityZ,
+                doMultDistance = DoMultDistance,
+                doMultDistanceZ = DoMultDistanceZ,
+            };
+        }
+
         public void DoKnockback(Agent inflictor, PlayerAgent player) => DoKnockback(inflictor.Position, player);
 
         public void DoKnockback(Vector3 inflictorPos, PlayerAgent player)
         {
-            var playerPos = player.Position;
-            var powerVec = playerPos - inflictorPos;
-
-            var distance = powerVec.magnitude;
-            var direction = powerVec / distance;
-
-            var velocity = direction * Velocity;
-            var velocityZ = Vector3.up * VelocityZ;
-            if (DoMultDistance)
-            {
-                velocity *= distance;
-            }
-
-            if (DoMultDistanceZ)
-            {
-                velocityZ *= distance;
-            }
-
-            player.Locomotion.AddExternalPushForce(velocity);
-
-            if (VelocityZ != 0.0f && player.Alive)
-            {
-                player.Locomotion.ChangeState(PlayerLocomotion.PLOC_State.Jump, true);
-                player.Locomotion.VerticalVelocity = velocity + velocityZ;
-            }
+            KnockbackManager.DoKnockback(player, ToPacket(inflictorPos));
         }
 
-        public void DoKnockbackIgnoreDistance(Agent inflictor, PlayerAgent player) => DoKnockback(inflictor.Position, player);
+        public void DoKnockbackIgnoreDistance(Agent inflictor, PlayerAgent player) => DoKnockbackIgnoreDistance(inflictor.Position, player);
 
         public void DoKnockbackIgnoreDistance(Vector3 inflictorPos, PlayerAgent player)
         {
-            var playerPos = player.Position;
-            var powerVec = playerPos - inflictorPos;
-
-            var distance = powerVec.magnitude;
-            var direction = powerVec / distance;
-
-            var velocity = direction * Velocity;
-            var velocityZ = Vector3.up * VelocityZ;
-
-            player.Locomotion.AddExternalPushForce(velocity);
-
-            if (VelocityZ != 0.0f && player.Alive)
-            {
-                player.Locomotion.ChangeState(PlayerLocomotion.PLOC_State.Jump, true);
-                player.Locomotion.VerticalVelocity = velocity + velocityZ;
-            }
+            var packet = ToPacket(inflictorPos);
+            packet.doMultDistance = false;
+            packet.doMultDistanceZ = false;
+            KnockbackManager.DoKnockback(player, packet);
         }
     }
 }
