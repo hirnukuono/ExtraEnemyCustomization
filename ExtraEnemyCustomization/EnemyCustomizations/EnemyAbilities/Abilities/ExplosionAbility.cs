@@ -25,6 +25,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         public KnockbackSetting Knockback { get; set; } = new();
         public BleedSetting Bleed { get; set; } = new();
         public DrainStaminaSetting DrainStamina { get; set; } = new();
+        public InfectionSetting Infection { get; set; } = new();
     }
 
     public sealed class ExplosionBehaviour : AbilityBehaviour<ExplosionAbility>

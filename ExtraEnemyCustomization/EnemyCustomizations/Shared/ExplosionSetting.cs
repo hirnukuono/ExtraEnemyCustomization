@@ -21,6 +21,7 @@ namespace EEC.EnemyCustomizations.Shared
         public KnockbackSetting Knockback { get; set; }
         public BleedSetting Bleed { get; set; }
         public DrainStaminaSetting DrainStamina { get; set; }
+        public InfectionSetting Infection { get; set; }
 
         public ExplosionData ToPacket(Vector3 position)
         {
@@ -48,6 +49,11 @@ namespace EEC.EnemyCustomizations.Shared
                     enabled = Knockback.Enabled,
                     packet = Knockback.ToPacket(position)
                 },
+                infection = new()
+                {
+                    enabled = Infection.Enabled,
+                    packet = Infection.ToPacket()
+                }
             };
         }
     }
@@ -69,5 +75,6 @@ namespace EEC.EnemyCustomizations.Shared
         public KnockbackSetting Knockback { get; set; } = new();
         public BleedSetting Bleed { get; set; } = new();
         public DrainStaminaSetting DrainStamina { get; set; } = new();
+        public InfectionSetting Infection { get; set; } = new();
     }
 }

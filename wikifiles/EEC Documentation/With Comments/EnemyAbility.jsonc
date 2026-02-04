@@ -259,11 +259,18 @@
           "OverrideBleedingTextID": 0
         },
         "DrainStamina": { // Same fields as in Ability
-          "Enabled": true,
+          "Enabled": false,
           "DrainAmount": 0.05,
           "DrainAmountInCombat": 0.1,
           "ResetRecoverTimer": false,
           "ResetRecoverTimerInCombat": false
+        },
+        "Infection": { // Same fields as in Ability
+          "Enabled": false,
+          "Infection": "2%",
+          "SoundEventID": 676801566,
+          "UseEffect": true,
+          "ScreenLiquidRange": 3.0
         }
       }
     ],

@@ -2,6 +2,7 @@
 using AK;
 using EEC.CustomAbilities.Bleed;
 using EEC.CustomAbilities.DrainStamina;
+using EEC.CustomAbilities.Infection;
 using EEC.CustomAbilities.Knockback;
 using EEC.Events;
 using Player;
@@ -204,6 +205,13 @@ namespace EEC.CustomAbilities.Explosion
                     knockback.velocityZ *= rangeMod;
                     KnockbackManager.DoKnockback(player, knockback);
                 }
+
+                if (data.infection.enabled)
+                {
+                    var infection = data.infection.packet;
+                    infection.infection *= rangeMod;
+                    InfectionManager.DoInfection(player, infection);
+                }
             }
         }
 
@@ -276,6 +284,7 @@ namespace EEC.CustomAbilities.Explosion
         public ExpBleedingData bleeding;
         public ExpDrainStaminaData drainStamina;
         public ExpKnockbackData knockback;
+        public ExpInfectionData infection;
     }
 
     public struct ExpBleedingData
@@ -294,5 +303,11 @@ namespace EEC.CustomAbilities.Explosion
     {
         public bool enabled;
         public KnockbackData packet;
+    }
+
+    public struct ExpInfectionData
+    {
+        public bool enabled;
+        public InfectionData packet;
     }
 }

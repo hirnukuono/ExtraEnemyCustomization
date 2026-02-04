@@ -1,4 +1,6 @@
-﻿using EEC.Utils;
+﻿using EEC.CustomAbilities.Infection;
+using EEC.EnemyCustomizations.Shared;
+using EEC.Utils;
 using EEC.Utils.Json.Elements;
 using Enemies;
 using Player;
@@ -20,27 +22,7 @@ namespace EEC.EnemyCustomizations.Abilities
             if (infectionAbs == 0.0f)
                 return;
 
-            if (data.SoundEventID != 0u)
-            {
-                player.Sound.Post(data.SoundEventID);
-            }
-
-            if (data.UseEffect)
-            {
-                var liquidSetting = ScreenLiquidSettingName.spitterJizz;
-                if (infectionAbs < 0.0f)
-                {
-                    liquidSetting = ScreenLiquidSettingName.disinfectionStation_Apply;
-                }
-                ScreenLiquidManager.TryApply(liquidSetting, player.Position, data.ScreenLiquidRange, true);
-            }
-
-            player.Damage.ModifyInfection(new pInfection()
-            {
-                amount = infectionAbs,
-                effect = pInfectionEffect.None,
-                mode = pInfectionMode.Add
-            }, true, true);
+            InfectionManager.DoInfection(player, data);
         }
 
         protected override void OnApplyProjectileEffect(AttackData setting, PlayerAgent player, EnemyAgent inflictor, ProjectileBase projectile)
@@ -48,8 +30,9 @@ namespace EEC.EnemyCustomizations.Abilities
             OnApplyEffect(setting, player, inflictor);
         }
 
-        public sealed class AttackData
+        public sealed class AttackData : IInfectionSetting
         {
+            public bool Enabled { get; set; } = true;
             public ValueBase Infection { get; set; } = ValueBase.Zero;
             public uint SoundEventID { get; set; } = 0u;
             public bool UseEffect { get; set; } = false;
