@@ -30,7 +30,5 @@ namespace EEC.EnemyCustomizations.Shared
         public uint SoundEventID { get; set; } = 0u;
         public bool UseEffect { get; set; } = false;
         public float ScreenLiquidRange { get; set; } = 0.0f;
-
-        public InfectionData ToPacket() => ToPacket();
     }
 }

@@ -52,7 +52,7 @@ namespace EEC.EnemyCustomizations.Shared
                 infection = new()
                 {
                     enabled = Infection.Enabled,
-                    packet = Infection.ToPacket()
+                    packet = ((IInfectionSetting)Infection).ToPacket()
                 }
             };
         }
