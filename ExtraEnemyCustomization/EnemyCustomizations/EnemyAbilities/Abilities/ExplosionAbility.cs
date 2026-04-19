@@ -22,6 +22,10 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         public float NoiseMinRange { get; set; } = 5.0f;
         public float NoiseMaxRange { get; set; } = 10.0f;
         public NM_NoiseType NoiseType { get; set; } = NM_NoiseType.Detectable;
+        public KnockbackSetting Knockback { get; set; } = new();
+        public BleedSetting Bleed { get; set; } = new();
+        public DrainStaminaSetting DrainStamina { get; set; } = new();
+        public InfectionSetting Infection { get; set; } = new();
     }
 
     public sealed class ExplosionBehaviour : AbilityBehaviour<ExplosionAbility>

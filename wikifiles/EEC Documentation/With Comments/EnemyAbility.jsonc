@@ -241,7 +241,37 @@
         "NoiseMinRange": 5,
         "NoiseMaxRange": 10,
         "NoiseType": "Detectable",
-        "Name": "Explosion-Small"
+        "Name": "Explosion-Small",
+        "Knockback": { // Same fields as in Ability
+          "Enabled": false,
+          "Velocity": 10.0,
+          "VelocityZ": 6.0
+        },
+        "Bleed": { // Same fields as in Ability
+          "Enabled": false,
+          "Damage": "0.1%",
+          "ChanceToBleed": 0.5,
+          "Interval": 0.15,
+          "Duration": 10.0,
+          "CanBeStacked": false,
+          "HasLiquid": true,
+          "LiquidSetting": "enemyBlood_SmallRandomStreak",
+          "OverrideBleedingTextID": 0
+        },
+        "DrainStamina": { // Same fields as in Ability
+          "Enabled": false,
+          "DrainAmount": 0.05,
+          "DrainAmountInCombat": 0.1,
+          "ResetRecoverTimer": false,
+          "ResetRecoverTimerInCombat": false
+        },
+        "Infection": { // Same fields as in Ability
+          "Enabled": false,
+          "Infection": "2%",
+          "SoundEventID": 676801566,
+          "UseEffect": true,
+          "ScreenLiquidRange": 3.0
+        }
       }
     ],
     "SpawnEnemy": [

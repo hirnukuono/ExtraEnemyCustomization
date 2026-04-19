@@ -9,16 +9,19 @@ namespace EEC.Utils
     {
         public static void MakeExplosion(Vector3 position, float damage, float enemyMulti, float minRange, float maxRange, float enemyMinRange, float enemyMaxRange)
         {
-            ExplosionManager.DoExplosion(new ExplosionData()
+            ExplosionManager.DoExplosion(new ExplosionPosData()
             {
                 position = position,
-                damage = damage,
-                enemyMulti = enemyMulti,
-                minRange = minRange,
-                maxRange = maxRange,
-                enemyMinRange = enemyMinRange,
-                enemyMaxRange = enemyMaxRange,
-                lightColor = ExplosionManager.FlashColor
+                data = new()
+                {
+                    damage = damage,
+                    enemyMulti = enemyMulti,
+                    minRange = minRange,
+                    maxRange = maxRange,
+                    enemyMinRange = enemyMinRange,
+                    enemyMaxRange = enemyMaxRange,
+                    lightColor = ExplosionManager.FlashColor
+                }
             });
         }
     }
