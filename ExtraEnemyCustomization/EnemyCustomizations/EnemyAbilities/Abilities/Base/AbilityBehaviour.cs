@@ -69,6 +69,22 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
                 if (StandStill)
                 {
                     _prevState = Agent.Locomotion.CurrentStateEnum;
+                    switch (_prevState)
+                    {
+                        case ES_StateEnum.Hitreact:
+                        case ES_StateEnum.HitReactFlyer:
+                            if (Agent.Locomotion.Hitreact.CurrentReactionType == ES_HitreactType.ToDeath)
+                                return;
+                            break;
+                        case ES_StateEnum.Dead:
+                        case ES_StateEnum.DeadFlyer:
+                        case ES_StateEnum.DeadSquidBoss:
+                        case ES_StateEnum.ScoutScream:
+                            return;
+                        default:
+                            break;
+                    }
+
                     _navAgent.isStopped = true;
                     _navAgent.velocity = Vector3.zero;
                     Agent.Locomotion.ChangeState(ES_StateEnum.StandStill);
