@@ -2,6 +2,7 @@
 using BepInEx.Configuration;
 using EEC.Managers.Assets;
 using EEC.Patches.Handlers;
+using GTFO.API.Utilities;
 using System;
 using System.IO;
 
@@ -18,10 +19,12 @@ namespace EEC
         //USER CONFIGS
         public static bool ShowMarkerText { get; private set; }
         public static bool ShowMarkerDistance { get; private set; }
+        public static bool PlayDialogueFromBleed { get; private set; }
         public static bool ShowExplosionEffect { get; private set; }
         public static ShitpostType ShitpostType { get; private set; }
         private static ConfigEntry<bool> _showMarkerText;
         private static ConfigEntry<bool> _showMarkerDistance;
+        private static ConfigEntry<bool> _playDialogueFromBleed;
         private static ConfigEntry<bool> _showExplosionEffect;
         private static ConfigEntry<ShitpostType> _shitpostType;
 
@@ -46,6 +49,7 @@ namespace EEC
         private static ConfigEntry<bool> _profiler;
 
         private static ConfigFile _currentContext;
+        public static event Action? OnReload;
 
         public static bool CanShitpostOf(ShitpostType type)
         {
@@ -76,6 +80,9 @@ namespace EEC
                 _ = BindConfigVersion(config);
             }
             BindAll(config);
+
+            var liveEditListener = LiveEdit.CreateListener(Paths.ConfigPath, "EEC.cfg", false);
+            liveEditListener.FileChanged += OnLiveEdit;
         }
 
         public static void BindAll(ConfigFile context)
@@ -84,29 +91,47 @@ namespace EEC
 
             _showMarkerText = BindUserConfig("Marker Text", "Display Enemy Marker Texts? (if set by rundown devs)", true);
             _showMarkerDistance = BindUserConfig("Marker Distance", "Display Enemy Marker Distance? (if set by rundown devs)", true);
+            _playDialogueFromBleed = BindUserConfig("Bleed Dialogue", "Trigger damage taken dialogue when damaged by bleed? (Audible to all players)", false);
             _showExplosionEffect = BindUserConfig("Explosion Flash", "(Accessibility) Display Light flash effect for explosion abilities?", true);
             _shitpostType = BindUserConfig("Shitposting", "Shitpost mode use comma to enable multiple stuffs", ShitpostType.ForceOff);
-            ShowMarkerText = _showMarkerText.Value;
-            ShowMarkerDistance = _showMarkerDistance.Value;
-            ShowExplosionEffect = _showExplosionEffect.Value;
-            ShitpostType = _shitpostType.Value;
 
             _useLiveEdit = BindRdwDevConfig("Live Edit", "Reload Config when they are edited while in-game", true);
             _linkMTFOHotReload = BindRdwDevConfig("Reload on MTFO HotReload", "Reload Configs when MTFO's HotReload button has pressed?", true);
-            UseLiveEdit = _useLiveEdit.Value;
-            LinkMTFOHotReload = _linkMTFOHotReload.Value;
 
             _useDebugLog = BindLoggingConfig("UseDevMessage", "Using Dev Message for Debugging your config?", false);
             _useVerboseLog = BindLoggingConfig("Verbose", "Using Much more detailed Message for Debugging?", false);
             _assetCacheBehaviour = BindLoggingConfig("Cached Asset Result Output", "How does your cached material/texture result be returned?", AssetCacheManager.OutputType.None);
+
+            _dumpConfig = BindDevConfig("DumpConfig", "Dump Empty Config file?", false);
+            _profiler = BindDevConfig("Profiler", "Show Profiler Info for Spawned Event", false);
+
+            CacheConfigValues();
+        }
+
+        private static void CacheConfigValues()
+        {
+            ShowMarkerText = _showMarkerText.Value;
+            ShowMarkerDistance = _showMarkerDistance.Value;
+            PlayDialogueFromBleed = _playDialogueFromBleed.Value;
+            ShowExplosionEffect = _showExplosionEffect.Value;
+            ShitpostType = _shitpostType.Value;
+
+            UseLiveEdit = _useLiveEdit.Value;
+            LinkMTFOHotReload = _linkMTFOHotReload.Value;
+
             UseDebugLog = _useDebugLog.Value;
             UseVerboseLog = _useVerboseLog.Value;
             AssetCacheBehaviour = _assetCacheBehaviour.Value;
 
-            _dumpConfig = BindDevConfig("DumpConfig", "Dump Empty Config file?", false);
-            _profiler = BindDevConfig("Profiler", "Show Profiler Info for Spawned Event", false);
             DumpConfig = _dumpConfig.Value;
             Profiler = _profiler.Value;
+        }
+
+        private static void OnLiveEdit(LiveEditEventArgs _)
+        {
+            _currentContext.Reload();
+            CacheConfigValues();
+            OnReload?.Invoke();
         }
 
         private static ConfigEntry<int> BindConfigVersion(ConfigFile context)

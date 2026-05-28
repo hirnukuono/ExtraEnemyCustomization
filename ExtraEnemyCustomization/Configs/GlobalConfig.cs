@@ -27,9 +27,11 @@ namespace EEC.Configs
         #region Bleeding
 
         [JsonPropertyName("Bleeding.UseMediToStop")]
-        public bool CanMediStopBleeding { get; set; } = false;
+        public bool CanMediStopBleeding { get; set; } = true;
         [JsonPropertyName("Bleeding.StopOnDown")]
-        public bool CanDownStopBleeding { get; set; } = false;
+        public bool CanDownStopBleeding { get; set; } = true;
+        [JsonPropertyName("Bleeding.DoAimPunch")]
+        public bool CanBleedAimPunch { get; set; } = false;
 
         #endregion Bleeding
 
