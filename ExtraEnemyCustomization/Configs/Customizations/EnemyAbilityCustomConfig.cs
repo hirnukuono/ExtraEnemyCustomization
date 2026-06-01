@@ -37,6 +37,7 @@ namespace EEC.Configs.Customizations
         public DoAnimAbility[] DoAnim { get; set; } = Array.Empty<DoAnimAbility>();
         public EMPAbility[] EMP { get; set; } = Array.Empty<EMPAbility>();
         public CloakAbility[] Cloak { get; set; } = Array.Empty<CloakAbility>();
+        public WardenEventAbility[] WardenEvent { get; set; } = Array.Empty<WardenEventAbility>();
         public ChainedAbility[] Chain { get; set; } = Array.Empty<ChainedAbility>();
 
         public void RegisterAll()
@@ -50,6 +51,7 @@ namespace EEC.Configs.Customizations
             list.AddRange(DoAnim);
             list.AddRange(EMP);
             list.AddRange(Cloak);
+            list.AddRange(WardenEvent);
             list.AddRange(Chain);
 
             foreach (var ab in list)

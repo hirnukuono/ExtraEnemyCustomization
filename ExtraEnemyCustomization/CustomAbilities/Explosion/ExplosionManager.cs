@@ -58,7 +58,7 @@ namespace EEC.CustomAbilities.Explosion
 
         internal static void Internal_TriggerExplosion(Vector3 position, ExplosionData data)
         {
-            CellSound.Post(EVENTS.STICKYMINEEXPLODE, position);
+            CellSound.Post(data.soundID, position);
 
             if (_usingLightFlash)
                 LightFlash(position, data.maxRange, data.lightColor);
@@ -71,7 +71,7 @@ namespace EEC.CustomAbilities.Explosion
 
         internal static void Internal_TriggerHostOnlyExplosion(Vector3 position, ExplosionData data)
         {
-            CellSound.Post(EVENTS.STICKYMINEEXPLODE, position);
+            CellSound.Post(data.soundID, position);
 
             if (_usingLightFlash)
                 LightFlash(position, data.maxRange, data.lightColor);
@@ -280,6 +280,7 @@ namespace EEC.CustomAbilities.Explosion
         public float maxRange;
         public float enemyMinRange;
         public float enemyMaxRange;
+        public uint soundID;
         public Color lightColor;
         public ExpBleedingData bleeding;
         public ExpDrainStaminaData drainStamina;

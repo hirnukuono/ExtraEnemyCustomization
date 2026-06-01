@@ -1,4 +1,5 @@
-﻿using EEC.CustomAbilities.Explosion;
+﻿using AK;
+using EEC.CustomAbilities.Explosion;
 using EEC.Utils;
 using EEC.Utils.Json.Elements;
 using UnityEngine;
@@ -18,6 +19,7 @@ namespace EEC.EnemyCustomizations.Shared
         public float NoiseMinRange { get; set; }
         public float NoiseMaxRange { get; set; }
         public NM_NoiseType NoiseType { get; set; }
+        public uint SoundID { get; set; }
         public KnockbackSetting Knockback { get; set; }
         public BleedSetting Bleed { get; set; }
         public DrainStaminaSetting DrainStamina { get; set; }
@@ -34,6 +36,7 @@ namespace EEC.EnemyCustomizations.Shared
                 enemyMinRange = EnemyMinRange.GetAbsValue(MinRange),
                 enemyMaxRange = EnemyMaxRange.GetAbsValue(MaxRange),
                 lightColor = LightColor,
+                soundID = SoundID,
                 bleeding = new()
                 {
                     enabled = Bleed.Enabled,
@@ -72,6 +75,7 @@ namespace EEC.EnemyCustomizations.Shared
         public float NoiseMinRange { get; set; } = 5.0f;
         public float NoiseMaxRange { get; set; } = 10.0f;
         public NM_NoiseType NoiseType { get; set; } = NM_NoiseType.Detectable;
+        public uint SoundID { get; set; } = EVENTS.STICKYMINEEXPLODE;
         public KnockbackSetting Knockback { get; set; } = new();
         public BleedSetting Bleed { get; set; } = new();
         public DrainStaminaSetting DrainStamina { get; set; } = new();

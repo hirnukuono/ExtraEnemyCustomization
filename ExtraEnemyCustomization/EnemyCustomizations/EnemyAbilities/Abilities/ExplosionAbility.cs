@@ -1,4 +1,5 @@
-﻿using EEC.CustomAbilities.Explosion;
+﻿using AK;
+using EEC.CustomAbilities.Explosion;
 using EEC.EnemyCustomizations.Shared;
 using EEC.Utils;
 using EEC.Utils.Json.Elements;
@@ -22,6 +23,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         public float NoiseMinRange { get; set; } = 5.0f;
         public float NoiseMaxRange { get; set; } = 10.0f;
         public NM_NoiseType NoiseType { get; set; } = NM_NoiseType.Detectable;
+        public uint SoundID { get; set; } = EVENTS.STICKYMINEEXPLODE;
         public KnockbackSetting Knockback { get; set; } = new();
         public BleedSetting Bleed { get; set; } = new();
         public DrainStaminaSetting DrainStamina { get; set; } = new();

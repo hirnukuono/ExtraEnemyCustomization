@@ -18,7 +18,7 @@ namespace EEC
     //TODO: - Patrolling Hibernation : Too many works to do with this one, this is one of the long term goal
     //TODO: Refactor the CustomBase to support Phase Setting
 
-    [BepInPlugin("GTFO.EECustomization", "EECustom", "1.8.24")]
+    [BepInPlugin("GTFO.EECustomization", "EECustom", "1.8.27")]
     [BepInProcess("GTFO.exe")]
     [BepInDependency(MTFOUtil.PLUGIN_GUID, BepInDependency.DependencyFlags.HardDependency)]
     [BepInDependency("GTFO.InjectLib", BepInDependency.DependencyFlags.HardDependency)]
@@ -26,19 +26,17 @@ namespace EEC
     [BepInDependency(MTFOPartialDataUtil.PLUGIN_GUID, BepInDependency.DependencyFlags.SoftDependency)]
     internal class EntryPoint : BasePlugin
     {
-        public static Harmony HarmonyInstance { get; private set; }
-        public static string BasePath { get; private set; }
+        public static Harmony HarmonyInstance { get; private set; } = null!;
+        public static string BasePath { get; private set; } = string.Empty;
 
         public override void Load()
         {
             Configuration.CreateAndBindAll();
             Logger.Initialize();
-
             InjectAllIl2CppType();
             CallAllAutoConstructor();
 
             BasePath = Path.Combine(MTFOUtil.CustomPath, "ExtraEnemyCustomization");
-
             HarmonyInstance = new Harmony("EEC.Harmony");
             HarmonyInstance.PatchAll();
 
@@ -57,7 +55,6 @@ namespace EEC
         {
             SpriteManager.Initialize();
             AssetCacheManager.AssetLoaded();
-
             ConfigManager.FireAssetLoaded();
             ConfigManager.FirePrefabBuildEventAll(rebuildPrefabs: false);
         }
@@ -65,7 +62,6 @@ namespace EEC
         public override bool Unload()
         {
             UninjectAllIl2CppType();
-
             HarmonyInstance.UnpatchSelf();
             ConfigManager.UnloadAllConfig(doClear: true);
             return base.Unload();
