@@ -10,11 +10,11 @@ namespace EEC.Networking
 
     public static class SNetEvents
     {
-        public static event SNetPlayerEvent AgentSpawned;
+        public static event SNetPlayerEvent? AgentSpawned;
 
-        public static event SNetRecallEvent PrepareRecall;
+        public static event SNetRecallEvent? PrepareRecall;
 
-        public static event SNetRecallEvent RecallComplete;
+        public static event SNetRecallEvent? RecallComplete;
 
         internal static void OnAgentSpawned(SNet_Player player)
         {

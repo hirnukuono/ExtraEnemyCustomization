@@ -1,7 +1,5 @@
 ﻿using EEC.Managers;
 using GameData;
-using System;
-using System.Linq;
 
 namespace EEC.EnemyCustomizations
 {

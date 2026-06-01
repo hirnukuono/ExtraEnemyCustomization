@@ -3,7 +3,6 @@ using EEC.Utils;
 using EEC.Utils.Unity;
 using Il2CppInterop.Runtime.Attributes;
 using Player;
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -15,7 +14,7 @@ namespace EEC.CustomAbilities.Bleed.Handlers
         public PlayerAgent Agent;
 
         private bool _globalBleedRunning = false;
-        private Coroutine _globalBleedRoutine = null;
+        private Coroutine _globalBleedRoutine = null!;
         private int _bleedRoutineCounter = 0;
         private uint _specialOverrideText = 0u;
 
@@ -55,7 +54,7 @@ namespace EEC.CustomAbilities.Bleed.Handlers
             }
 
             var intervalYielder = WaitFor.Seconds[bleedData.interval];
-            var timer = 0.0f;
+            var timer = 0f;
 
             var liquid = bleedData.liquid;
             var hasLiquid = Enum.IsDefined(typeof(ScreenLiquidSettingName), liquid);
@@ -80,7 +79,7 @@ namespace EEC.CustomAbilities.Bleed.Handlers
             }
 
             _globalBleedRunning = false;
-            _globalBleedRoutine = null;
+            _globalBleedRoutine = null!;
 
             if (shouldRevertText)
             {
@@ -106,7 +105,7 @@ namespace EEC.CustomAbilities.Bleed.Handlers
             }
 
             var intervalYielder = WaitFor.Seconds[bleedData.interval];
-            var timer = 0.0f;
+            var timer = 0f;
 
             var liquid = bleedData.liquid;
             var hasLiquid = Enum.IsDefined(typeof(ScreenLiquidSettingName), liquid);
@@ -148,7 +147,7 @@ namespace EEC.CustomAbilities.Bleed.Handlers
             StopAllCoroutines();
             _bleedRoutineCounter = 0;
             _globalBleedRunning = false;
-            _globalBleedRoutine = null;
+            _globalBleedRoutine = null!;
 
             Inject_PUI_LocalPlayerStatus.IsBleeding = false;
             Inject_PUI_LocalPlayerStatus.SpecialOverrideTextID = 0u;
@@ -158,7 +157,7 @@ namespace EEC.CustomAbilities.Bleed.Handlers
         private void OnDestroy()
         {
             StopBleed();
-            Agent = null;
+            Agent = null!;
         }
     }
 }

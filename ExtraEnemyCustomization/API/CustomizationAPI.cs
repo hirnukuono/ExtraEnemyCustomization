@@ -1,16 +1,13 @@
 ﻿using EEC.EnemyCustomizations;
 using EEC.Managers;
 using Enemies;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 
 namespace EEC.API
 {
     public static class CustomizationAPI
     {
-        public static event Action<EnemyAgent> SpawnCustomizationDone;
+        public static event Action<EnemyAgent>? SpawnCustomizationDone;
 
         internal static void OnSpawnCustomizationDone_Internal(EnemyAgent agent)
         {

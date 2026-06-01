@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 using UnityEngine;
 
 namespace EEC.Utils.Json.Elements
@@ -8,7 +6,7 @@ namespace EEC.Utils.Json.Elements
     public sealed class CurveWrapper : Collection<CurveKeyFrame>
     {
         public const int KEYFRAME_FRAMECOUNT = 20;
-        public const float KEYFRAME_PROGRESS_INV = 1.0f / KEYFRAME_FRAMECOUNT;
+        public const float KEYFRAME_PROGRESS_INV = 1f / KEYFRAME_FRAMECOUNT;
 
         public static readonly CurveWrapper Empty = new();
 
@@ -20,7 +18,7 @@ namespace EEC.Utils.Json.Elements
         {
             if (Count < 2)
             {
-                curve = null;
+                curve = null!;
                 return false;
             }
 
@@ -32,10 +30,10 @@ namespace EEC.Utils.Json.Elements
                 var item = sorted[i];
                 var nextItem = sorted[i + 1];
 
-                if (item.Time > 1.0f || item.Time < 0.0f)
+                if (item.Time > 1f || item.Time < 0f)
                 {
                     Logger.Error($"CurveWrapper Time '{item.Time}' was invalid!, must be range of 0.0 ~ 1.0");
-                    curve = null;
+                    curve = null!;
                     return false;
                 }
 

@@ -9,7 +9,7 @@ using SWITCH_ID = AK.SWITCHES.ENEMY_TYPE.SWITCH;
 namespace EEC.EnemyCustomizations.Properties
 {
     public enum RoarSoundOverride : byte
-    {       
+    {
         Striker,
         Shooter,
         Birther,
@@ -20,7 +20,7 @@ namespace EEC.EnemyCustomizations.Properties
         Bullrush,
         Pouncer,
         Striker_Berserk,
-        Shooter_Spread, 
+        Shooter_Spread,
         None,
         OldDistantRoar,
         Custom,
@@ -40,7 +40,7 @@ namespace EEC.EnemyCustomizations.Properties
         [JsonIgnore]
         public static Dictionary<uint, RoarData> SharedRoarData { get; internal set; } = new();
         public uint SoundID { get; set; } = 0u;
-        public float Interval { get; set; } = 0.0f;
+        public float Interval { get; set; } = 0f;
         public bool OnlyForSurvivalWave { get; set; } = true;
         public bool IsGlobal { get; set; } = true;
         public bool OnlyUseOverrides { get; set; } = false;
@@ -49,7 +49,7 @@ namespace EEC.EnemyCustomizations.Properties
         public RoarSizeOverride RoarSize { get; set; } = RoarSizeOverride.Unchanged;
         public BoolBase IsOutside { get; set; } = BoolBase.Unchanged;
 
-        private float _timer = 0.0f;
+        private float _timer = 0f;
         private CellSoundPlayer? _soundPlayer;
         private static readonly Dictionary<string, uint> _waveRoars = new()
         {
@@ -127,7 +127,7 @@ namespace EEC.EnemyCustomizations.Properties
         public override void OnConfigUnloaded()
         {
             _soundPlayer?.Recycle();
-            _soundPlayer = null;
+            _soundPlayer = null!;
 
             SharedRoarData.Clear();
         }
@@ -144,7 +144,7 @@ namespace EEC.EnemyCustomizations.Properties
                 return;
 
             if (OnlyForSurvivalWave)
-            {                
+            {
                 if (!agent.TryGetEnemyGroup(out var group))
                     return;
 
@@ -162,7 +162,7 @@ namespace EEC.EnemyCustomizations.Properties
                 _timer = Clock.Time + Interval;
             }
         }
-        
+
         public class RoarData
         {
             public DistantRoarCustom RoarSettings { get; set; } = new();

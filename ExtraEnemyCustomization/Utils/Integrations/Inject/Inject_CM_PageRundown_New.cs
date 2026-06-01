@@ -1,6 +1,5 @@
 ﻿using CellMenu;
 using HarmonyLib;
-using System;
 using System.Reflection;
 
 namespace EEC.Utils.Integrations.Inject
@@ -16,7 +15,7 @@ namespace EEC.Utils.Integrations.Inject
             if (_isInjected)
                 return;
 
-            object hotreloader = MTFOUtil.HotReloaderField?.GetValue(null) ?? null;
+            object hotreloader = MTFOUtil.HotReloaderField?.GetValue(null) ?? null!;
             if (hotreloader is null)
                 return;
 

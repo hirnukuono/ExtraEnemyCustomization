@@ -2,7 +2,6 @@
 using EEC.EnemyCustomizations.Models.Handlers;
 using Enemies;
 using GameData;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 

@@ -1,9 +1,8 @@
 ﻿using EEC.CustomAbilities.EMP;
 using EEC.Utils;
-using EEC.Utils.Unity;
-using Timer = EEC.Utils.Unity.Timer;
 using UnityEngine;
 using UnityEngine.AI;
+using Timer = EEC.Utils.Unity.Timer;
 
 namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 {
@@ -18,8 +17,8 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         public float ActivateDuration { get; set; } = 5;
         public float EffectRange { get; set; } = 20;
         public bool InvincibleWhileCharging { get; set; } = true;
-        public Color BuildupColor { get; set; } = new Color(0.525f, 0.956f, 0.886f, 1.0f) * 2.0f;
-        public Color ScreamColor { get; set; } = new Color(0.525f, 0.956f, 0.886f, 1.0f) * 20.0f;
+        public Color BuildupColor { get; set; } = new Color(0.525f, 0.956f, 0.886f, 1f) * 2f;
+        public Color ScreamColor { get; set; } = new Color(0.525f, 0.956f, 0.886f, 1f) * 20f;
     }
 
     public sealed class EMPBehaviour : AbilityBehaviour<EMPAbility>
@@ -75,7 +74,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
                     if (_stateTimer.TickAndCheckDone())
                     {
                         _state = EMPState.Done;
-                        _stateTimer.Reset(0.0f);
+                        _stateTimer.Reset(0f);
                     }
                     break;
 
@@ -94,7 +93,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
             Agent.Appearance.InterpolateGlow(Color.black, 0.5f);
 
             _state = EMPState.None;
-            _stateTimer.Reset(0.0f);
+            _stateTimer.Reset(0f);
         }
 
         protected override void OnDead()

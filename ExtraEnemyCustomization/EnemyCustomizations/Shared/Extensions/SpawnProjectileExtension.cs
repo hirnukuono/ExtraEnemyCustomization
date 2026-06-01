@@ -2,10 +2,7 @@
 using EEC.Utils;
 using EEC.Utils.Unity;
 using Enemies;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
 namespace EEC.EnemyCustomizations.Shared
@@ -33,13 +30,13 @@ namespace EEC.EnemyCustomizations.Shared
             if (data.Align == null)
                 yield break;
 
-            bool shouldWaitDelay = setting.Delay > 0.0f;
+            bool shouldWaitDelay = setting.Delay > 0f;
             bool burstMode = setting.BurstCount > 1;
             for (int i = 0; i < setting.Count; i++)
             {
                 if (burstMode)
                 {
-                    bool shouldWaitBurstDelay = setting.BurstDelay > 0.0f;
+                    bool shouldWaitBurstDelay = setting.BurstDelay > 0f;
                     for (int j = 1; j <= setting.BurstCount; j++)
                     {
                         Spawn(setting, data);

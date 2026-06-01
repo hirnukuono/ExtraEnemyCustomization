@@ -1,6 +1,5 @@
 ﻿using EEC.CustomSettings.CustomProjectiles;
 using EEC.EnemyCustomizations.Shooters;
-using System;
 
 namespace EEC.Configs.Customizations
 {

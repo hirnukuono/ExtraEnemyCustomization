@@ -2,9 +2,7 @@
 using EEC.Utils.Unity;
 using Enemies;
 using Il2CppInterop.Runtime.Attributes;
-using System;
 using System.Collections;
-using System.Linq;
 using System.Text;
 using UnityEngine;
 
@@ -17,13 +15,13 @@ namespace EEC.EnemyCustomizations.Models.Handlers
         public NavMarker Marker;
         public HealthBarFormat.Worker Worker;
         private string _baseText;
-        private bool[] _hasFormat = null;
+        private bool[] _hasFormat = null!;
         private bool _shouldUpdateRainbow = false;
         private Color _rainbow;
         private IEnumerator _updateLoop;
 
-        private static readonly MarkerFormatText[] _valuesOfEnum = null;
-        private static readonly string[] _formatString = null;
+        private static readonly MarkerFormatText[] _valuesOfEnum = null!;
+        private static readonly string[] _formatString = null!;
         private static readonly WaitForSeconds _updateYielder = WaitFor.Seconds[0.15f];
 
         static MarkerTextHandler()
@@ -93,7 +91,7 @@ namespace EEC.EnemyCustomizations.Models.Handlers
                 Destroy(this);
             }
         }
-        
+
         private void OnEnable()
         {
             _updateLoop = UpdateText();
@@ -104,7 +102,7 @@ namespace EEC.EnemyCustomizations.Models.Handlers
         {
             if (_shouldUpdateRainbow)
             {
-                _rainbow = Color.HSVToRGB(Mathf.Repeat(Clock.ExpeditionProgressionTime, 1.0f), 1.0f, 1.0f);
+                _rainbow = Color.HSVToRGB(Mathf.Repeat(Clock.ExpeditionProgressionTime, 1f), 1f, 1f);
             }
             _updateLoop.MoveNext();
         }
@@ -139,7 +137,7 @@ namespace EEC.EnemyCustomizations.Models.Handlers
                     {
                         textBuilder.Replace(_formatString[i], replace);
                     }
-                    yield return null;
+                    yield return null!;
                 }
 
                 var newText = textBuilder.ToString();
@@ -180,29 +178,29 @@ namespace EEC.EnemyCustomizations.Models.Handlers
 
         private string GetFormatText(MarkerFormatText format, float health, float maxHealth)
         {
-             return format switch
-             {
-                 MarkerFormatText.None => string.Empty,
-                 MarkerFormatText.NAME => string.Empty,
-                 MarkerFormatText.HP => health.ToString("0.00"),
-                 MarkerFormatText.HP_ROUND => Mathf.RoundToInt(health).ToString(),
-                 MarkerFormatText.HP_MAX => maxHealth.ToString("0.00"),
-                 MarkerFormatText.HP_MAX_ROUND => Mathf.RoundToInt(maxHealth).ToString(),
-                 MarkerFormatText.HP_PERCENT => (health / maxHealth * 100.0f).ToString("0.00"),
-                 MarkerFormatText.HP_PERCENT_ROUND => Mathf.RoundToInt(health / maxHealth * 100.0f).ToString(),
-                 MarkerFormatText.HP_BAR => Worker.BuildString(maxHealth, health),
-                 MarkerFormatText.GAMING => ColorUtility.ToHtmlStringRGB(_rainbow),
-                 _ => string.Empty,
-             };
+            return format switch
+            {
+                MarkerFormatText.None => string.Empty,
+                MarkerFormatText.NAME => string.Empty,
+                MarkerFormatText.HP => health.ToString("0.00"),
+                MarkerFormatText.HP_ROUND => Mathf.RoundToInt(health).ToString(),
+                MarkerFormatText.HP_MAX => maxHealth.ToString("0.00"),
+                MarkerFormatText.HP_MAX_ROUND => Mathf.RoundToInt(maxHealth).ToString(),
+                MarkerFormatText.HP_PERCENT => (health / maxHealth * 100f).ToString("0.00"),
+                MarkerFormatText.HP_PERCENT_ROUND => Mathf.RoundToInt(health / maxHealth * 100f).ToString(),
+                MarkerFormatText.HP_BAR => Worker.BuildString(maxHealth, health),
+                MarkerFormatText.GAMING => ColorUtility.ToHtmlStringRGB(_rainbow),
+                _ => string.Empty,
+            };
         }
 
         private void OnDestroy()
         {
-            Agent = null;
-            Marker = null;
-            Worker = null;
-            _baseText = null;
-            _hasFormat = null;
+            Agent = null!;
+            Marker = null!;
+            Worker = null!;
+            _baseText = null!;
+            _hasFormat = null!;
         }
     }
 

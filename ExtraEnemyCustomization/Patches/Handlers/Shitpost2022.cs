@@ -2,10 +2,7 @@
 using EEC.Events;
 using EEC.Utils.Unity;
 using Enemies;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
 namespace EEC.Patches.Handlers.Yes.Yes.Yes.Yes
@@ -23,7 +20,7 @@ namespace EEC.Patches.Handlers.Yes.Yes.Yes.Yes
 
         private static void EnemyEvents_Spawned(EnemyAgent agent)
         {
-            var marker = GuiManager.NavMarkerLayer.PlaceCustomMarker(NavMarkerOption.Title, agent.ModelRef.m_markerTagAlign, "<alpha=#44>Dinnerbone", 0.0f, false);
+            var marker = GuiManager.NavMarkerLayer.PlaceCustomMarker(NavMarkerOption.Title, agent.ModelRef.m_markerTagAlign, "<alpha=#44>Dinnerbone", 0f, false);
             marker.SetVisualStates(NavMarkerOption.Empty, NavMarkerOption.Empty, NavMarkerOption.Empty, NavMarkerOption.Empty);
             marker.m_titleSubObj.SetEnabled(false);
             marker.SetPinEnabled(false);
@@ -38,11 +35,11 @@ namespace EEC.Patches.Handlers.Yes.Yes.Yes.Yes
             {
                 var boneOffset = hip.gameObject.AddComponent<BoneOffsetHandler>();
                 boneOffset.Animator = agent.Anim;
-                boneOffset.RotationOffset = new Vector3(0.0f, 180.0f, 0.0f);
+                boneOffset.RotationOffset = new Vector3(0f, 180f, 0f);
             }
             else
             {
-                agent.MainModelTransform.Rotate(Vector3.forward, 180.0f);
+                agent.MainModelTransform.Rotate(Vector3.forward, 180f);
             }
         }
 
@@ -57,12 +54,12 @@ namespace EEC.Patches.Handlers.Yes.Yes.Yes.Yes
                 if (marker.m_currentState == NavMarkerState.InFocus)
                 {
                     var distanceSqr = (agent.Position - CameraManager.GetCurrentCamera().transform.position).sqrMagnitude;
-                    if (!enabled && distanceSqr <= 64.0f)
+                    if (!enabled && distanceSqr <= 64f)
                     {
                         marker.m_titleSubObj.SetEnabled(true);
                         enabled = true;
                     }
-                    else if (enabled && distanceSqr > 64.0f)
+                    else if (enabled && distanceSqr > 64f)
                     {
                         marker.m_titleSubObj.SetEnabled(false);
                         enabled = false;

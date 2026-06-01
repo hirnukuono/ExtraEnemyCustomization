@@ -9,10 +9,10 @@ namespace EEC.EnemyCustomizations.Abilities.Inject
     internal static class Inject_EB_DestroyDoor
     {
         public static bool ShouldOverride = false;
-        public static float GlobalTimer = 0.0f;
+        public static float GlobalTimer = 0f;
 
         public const float MinTime = 0.5f;
-        public const float MaxTime = 1.0f;
+        public const float MaxTime = 1f;
         public const float Range = MaxTime - MinTime;
 
         public static float DefaultRandomDelay => (Rand.NextFloat() * Range) + MinTime;
@@ -42,7 +42,7 @@ namespace EEC.EnemyCustomizations.Abilities.Inject
                 if (GlobalTimer >= Clock.ExpeditionProgressionTime)
                     return;
 
-                if (TryDamageDoor(__instance, 1.0f))
+                if (TryDamageDoor(__instance, 1f))
                     GlobalTimer = Clock.ExpeditionProgressionTime + DefaultRandomDelay;
             }
         }

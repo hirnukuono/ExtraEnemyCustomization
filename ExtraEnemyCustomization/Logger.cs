@@ -1,5 +1,4 @@
 ﻿using BepInEx.Logging;
-using System;
 using System.Diagnostics;
 
 namespace EEC

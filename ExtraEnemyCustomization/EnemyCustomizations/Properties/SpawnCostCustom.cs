@@ -5,7 +5,7 @@ namespace EEC.EnemyCustomizations.Properties
 {
     public sealed class SpawnCostCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
-        public float SpawnCost { get; set; } = 0.0f;
+        public float SpawnCost { get; set; } = 0f;
 
         public override string GetProcessName()
         {

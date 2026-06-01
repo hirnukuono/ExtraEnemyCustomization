@@ -1,6 +1,4 @@
 ﻿using EEC.EnemyCustomizations;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json.Serialization;
 
 namespace EEC.Configs.Customizations
@@ -14,8 +12,8 @@ namespace EEC.Configs.Customizations
         {
             var list = GetType()?.GetProperties()?
                 .Where(x => x.PropertyType != null && typeof(IEnumerable<EnemyCustomBase>).IsAssignableFrom(x.PropertyType))
-                .Select(x => (IEnumerable<EnemyCustomBase>)x.GetValue(this))
-                ?? null;
+                .Select(x => (IEnumerable<EnemyCustomBase>)x.GetValue(this)!)
+                ?? null!;
 
             if (list != null && list.Any())
             {

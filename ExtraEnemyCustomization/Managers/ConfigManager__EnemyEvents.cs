@@ -3,8 +3,6 @@ using EEC.API;
 using EEC.EnemyCustomizations;
 using Enemies;
 using GameData;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace EEC.Managers
@@ -222,7 +220,7 @@ namespace EEC.Managers
                 });
                 CustomizationAPI.OnSpawnCustomizationDone_Internal(agent);
             }
-            
+
             return;
         }
 

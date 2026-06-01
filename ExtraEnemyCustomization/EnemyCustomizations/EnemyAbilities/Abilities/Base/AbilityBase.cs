@@ -1,9 +1,7 @@
 ﻿using BepInEx.Logging;
 using EEC.Events;
 using Enemies;
-using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using UnityEngine;
 
 namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 {
@@ -14,7 +12,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         private bool _isBehavioursDirty = true;
         private readonly Dictionary<ushort, AbilityBehaviour> _behaviourLookup = new();
         private readonly List<AbilityBehaviour> _behaviours = new();
-        private AbilityBehaviour[] _behavioursCache = null;
+        private AbilityBehaviour[] _behavioursCache = null!;
 
         [JsonIgnore]
         public AbilityBehaviour[] Behaviours

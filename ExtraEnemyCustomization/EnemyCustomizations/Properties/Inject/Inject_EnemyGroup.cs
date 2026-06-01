@@ -20,8 +20,8 @@ namespace EEC.EnemyCustomizations.Properties.Inject
                 roarData.IsInWave = true;
                 __result = true;
             }
-                
-            return switchID == 0u;   
+
+            return switchID == 0u;
         }
 
         [HarmonyPatch(typeof(EnemyGroup), nameof(EnemyGroup.GetByteFromEnemyType))]

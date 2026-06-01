@@ -2,8 +2,6 @@
 using EEC.EnemyCustomizations.Shooters.Handlers;
 using EEC.Utils.Json.Elements;
 using Enemies;
-using System;
-using System.Linq;
 using UnityEngine;
 
 namespace EEC.EnemyCustomizations.Shooters
@@ -87,7 +85,7 @@ namespace EEC.EnemyCustomizations.Shooters
 
         public sealed class FireSetting
         {
-            public float FromDistance { get; set; } = -1.0f;
+            public float FromDistance { get; set; } = -1f;
 
             public bool OverrideProjectileType { get; set; } = true;
             public ProjectileType ProjectileType { get; set; } = ProjectileType.TargetingLarge;

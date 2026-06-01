@@ -1,9 +1,6 @@
 ﻿using EEC.Managers.Assets;
 using Enemies;
 using GameData;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace EEC.EnemyCustomizations.Models
@@ -66,12 +63,12 @@ namespace EEC.EnemyCustomizations.Models
                 switch (swapSet.SkinNoise)
                 {
                     case SkinNoiseType.ForceOn:
-                        newMaterial.SetFloat("_Enable_SkinNoise", 1.0f);
+                        newMaterial.SetFloat("_Enable_SkinNoise", 1f);
                         newMaterial.EnableKeyword("ENABLE_SKIN_NOISE");
                         break;
 
                     case SkinNoiseType.ForceOff:
-                        newMaterial.SetFloat("_Enable_SkinNoise", 0.0f);
+                        newMaterial.SetFloat("_Enable_SkinNoise", 0f);
                         newMaterial.DisableKeyword("ENABLE_SKIN_NOISE");
                         break;
                 }
@@ -133,8 +130,8 @@ namespace EEC.EnemyCustomizations.Models
 
                 materialToRef[material.name].m_renderers.Add(renderer);
             }
-            
-            foreach(var matRef in materialToRef.Values)
+
+            foreach (var matRef in materialToRef.Values)
                 materialHandler.m_materialRefs.Add(matRef);
         }
 

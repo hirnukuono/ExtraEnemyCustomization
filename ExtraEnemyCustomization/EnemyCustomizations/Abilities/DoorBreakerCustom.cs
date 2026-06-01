@@ -10,11 +10,11 @@ namespace EEC.EnemyCustomizations.Abilities
     public sealed class DoorBreakerCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
         public bool UseGlobalTimer { get; set; } = false;
-        public float Damage { get; set; } = 1.0f;
+        public float Damage { get; set; } = 1f;
         public float MinDelay { get; set; } = 0.5f;
         public float MaxDelay { get; set; } = 0.75f;
 
-        internal float _globalTimer = 0.0f;
+        internal float _globalTimer = 0f;
 
         public override string GetProcessName()
         {
@@ -32,7 +32,7 @@ namespace EEC.EnemyCustomizations.Abilities
 
         public override void OnConfigUnloaded()
         {
-            EB_InCombat_MoveToNextNode_DestroyDoor.s_globalRetryTimer = 0.0f;
+            EB_InCombat_MoveToNextNode_DestroyDoor.s_globalRetryTimer = 0f;
             Inject_EB_DestroyDoor.ShouldOverride = false;
 
             LevelEvents.LevelCleanup -= LevelCleanup;
@@ -41,8 +41,8 @@ namespace EEC.EnemyCustomizations.Abilities
 
         private void LevelCleanup()
         {
-            _globalTimer = 0.0f;
-            Inject_EB_DestroyDoor.GlobalTimer = 0.0f;
+            _globalTimer = 0f;
+            Inject_EB_DestroyDoor.GlobalTimer = 0f;
         }
 
         private void RecallDone(eBufferType _)
@@ -50,10 +50,10 @@ namespace EEC.EnemyCustomizations.Abilities
             var properties = EnemyProperty<DoorBreakerProperty>.Properties;
             foreach (var property in properties)
             {
-                property.Timer = 0.0f;
+                property.Timer = 0f;
             }
-            _globalTimer = 0.0f;
-            Inject_EB_DestroyDoor.GlobalTimer = 0.0f;
+            _globalTimer = 0f;
+            Inject_EB_DestroyDoor.GlobalTimer = 0f;
         }
 
         public void OnSpawned(EnemyAgent agent)
@@ -71,9 +71,9 @@ namespace EEC.EnemyCustomizations.Abilities
     {
         public DoorBreakerCustom Config;
         public bool UseGlobalTimer = false;
-        public float Damage = 1.0f;
+        public float Damage = 1f;
         public float MinDelay = 0.5f;
         public float MaxDelay = 0.75f;
-        public float Timer = 0.0f;
+        public float Timer = 0f;
     }
 }

@@ -9,13 +9,13 @@ namespace EEC.Events
 
     public static class LocalPlayerDamageEvents
     {
-        public static event PlayerTakeDamageHandler Damage;
+        public static event PlayerTakeDamageHandler? Damage;
 
-        public static event PlayerTakeDamageHandler MeleeDamage;
+        public static event PlayerTakeDamageHandler? MeleeDamage;
 
-        public static event PlayerTakeDamageHandler TentacleDamage;
+        public static event PlayerTakeDamageHandler? TentacleDamage;
 
-        public static event PlayerTakeDamageFromProjectileHandler ProjectileDamage;
+        public static event PlayerTakeDamageFromProjectileHandler? ProjectileDamage;
 
         internal static void OnDamage(PlayerAgent playerAgent, Agent inflictor, float damage)
         {

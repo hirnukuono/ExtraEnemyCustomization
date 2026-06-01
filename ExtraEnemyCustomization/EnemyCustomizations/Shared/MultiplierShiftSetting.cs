@@ -24,11 +24,11 @@ namespace EEC.EnemyCustomizations.Shared
     public sealed class MultiplierShiftSetting : IMultiplierShiftSetting
     {
         public bool Enabled { get; set; } = false;
-        public float MinMulti { get; set; } = 1.0f;
-        public float MaxMulti { get; set; } = 1.0f;
-        public float Duration { get; set; } = 1.0f;
+        public float MinMulti { get; set; } = 1f;
+        public float MaxMulti { get; set; } = 1f;
+        public float Duration { get; set; } = 1f;
         public bool StopAfterDuration { get; set; } = true;
-        public float StopMulti { get; set; } = 1.0f;
+        public float StopMulti { get; set; } = 1f;
         public eEasingType EasingMode { get; set; } = eEasingType.Linear;
         public RepeatMode Mode { get; set; } = RepeatMode.Clamped;
 
@@ -37,8 +37,8 @@ namespace EEC.EnemyCustomizations.Shared
             return Mode switch
             {
                 RepeatMode.Unclamped => Mathf.LerpUnclamped(MinMulti, MaxMulti, Ease(progress)),
-                RepeatMode.PingPong => Mathf.Lerp(MinMulti, MaxMulti, Ease(Mathf.PingPong(progress, 1.0f))),
-                RepeatMode.Repeat => Mathf.Lerp(MinMulti, MaxMulti, Ease(Mathf.Repeat(progress, 1.0f))),
+                RepeatMode.PingPong => Mathf.Lerp(MinMulti, MaxMulti, Ease(Mathf.PingPong(progress, 1f))),
+                RepeatMode.Repeat => Mathf.Lerp(MinMulti, MaxMulti, Ease(Mathf.Repeat(progress, 1f))),
                 _ => Mathf.LerpUnclamped(MinMulti, MaxMulti, Mathf.Clamp01(Ease(progress))) //Clamped, Etc
             };
         }

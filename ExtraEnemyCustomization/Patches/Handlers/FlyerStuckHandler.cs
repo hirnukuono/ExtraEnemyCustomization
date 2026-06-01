@@ -1,11 +1,10 @@
 ﻿using Agents;
 using EEC.Managers;
-using EEC.Utils.Unity;
-using Timer = EEC.Utils.Unity.Timer;
 using Enemies;
 using Il2CppInterop.Runtime.InteropTypes.Fields;
 using SNetwork;
 using UnityEngine;
+using Timer = EEC.Utils.Unity.Timer;
 
 namespace EEC.Patches.Handlers
 {
@@ -108,7 +107,7 @@ namespace EEC.Patches.Handlers
 
         private void OnDestroy()
         {
-            Agent = null;
+            Agent = null!;
         }
     }
 }

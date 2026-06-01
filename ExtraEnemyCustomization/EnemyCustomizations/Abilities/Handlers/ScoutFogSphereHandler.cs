@@ -1,7 +1,6 @@
-﻿using EEC.Utils.Unity;
-using Timer = EEC.Utils.Unity.Timer;
-using Enemies;
+﻿using Enemies;
 using UnityEngine;
+using Timer = EEC.Utils.Unity.Timer;
 
 namespace EEC.EnemyCustomizations.Abilities.Handlers
 {
@@ -11,7 +10,7 @@ namespace EEC.EnemyCustomizations.Abilities.Handlers
         public Color FogColor;
         public float FogIntensity;
         public ES_ScoutScream ScoutScream;
-        public EV_Sphere EVSphere = null;
+        public EV_Sphere EVSphere = null!;
 
         private Timer _updateTimer = new(0.1f);
         private bool _isColorSet = false;
@@ -32,7 +31,7 @@ namespace EEC.EnemyCustomizations.Abilities.Handlers
                 if (ScoutScream.m_fogSphereAdd.IsAllocated)
                 {
                     var sphere = ScoutScream.m_fogSphereAdd.m_sphere;
-                    var range = Mathf.Sqrt(1.0f / sphere.m_data.InvRangeSqr);
+                    var range = Mathf.Sqrt(1f / sphere.m_data.InvRangeSqr);
                     EVSphere.minRadius = range * 0.8f;
                     EVSphere.maxRadius = range;
                     EVSphere.position = ScoutScream.m_fogSphereAdd.m_sphere.m_data.Position;
@@ -40,8 +39,8 @@ namespace EEC.EnemyCustomizations.Abilities.Handlers
                 }
                 else
                 {
-                    EVSphere.minRadius = 0.0f;
-                    EVSphere.maxRadius = 0.0f;
+                    EVSphere.minRadius = 0f;
+                    EVSphere.maxRadius = 0f;
                 }
             }
         }
@@ -51,8 +50,8 @@ namespace EEC.EnemyCustomizations.Abilities.Handlers
             if (EVSphere != null)
                 EffectVolumeManager.UnregisterVolume(EVSphere);
 
-            ScoutScream = null;
-            EVSphere = null;
+            ScoutScream = null!;
+            EVSphere = null!;
         }
     }
 }

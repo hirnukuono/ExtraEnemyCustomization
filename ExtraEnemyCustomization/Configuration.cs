@@ -3,8 +3,6 @@ using BepInEx.Configuration;
 using EEC.Managers.Assets;
 using EEC.Patches.Handlers;
 using GTFO.API.Utilities;
-using System;
-using System.IO;
 
 namespace EEC
 {

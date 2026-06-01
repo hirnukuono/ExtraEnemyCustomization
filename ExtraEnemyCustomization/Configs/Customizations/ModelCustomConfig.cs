@@ -1,5 +1,4 @@
 ﻿using EEC.EnemyCustomizations.Models;
-using System;
 
 namespace EEC.Configs.Customizations
 {

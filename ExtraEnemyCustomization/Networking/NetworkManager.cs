@@ -1,5 +1,4 @@
-﻿using Agents;
-using EEC.Events;
+﻿using EEC.Events;
 using EEC.Managers;
 using EEC.Networking.Events;
 using EEC.Networking.Replicators;

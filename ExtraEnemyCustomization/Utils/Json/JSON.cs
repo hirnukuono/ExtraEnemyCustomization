@@ -1,7 +1,5 @@
 ﻿using EEC.Utils.Integrations;
 using EEC.Utils.Json.Converters;
-using EEC.Utils.Integrations;
-using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -33,19 +31,19 @@ namespace EEC.Utils.Json
             }
             if (InjectLibUtil.IsLoaded)
             {
-                _setting.Converters.Add(InjectLibUtil.InjectLibConnector);
+                _setting.Converters.Add(InjectLibUtil.InjectLibConnector!);
                 Logger.Log("InjectLib found!");
             }
         }
 
         public static T Deserialize<T>(string json)
         {
-            return JsonSerializer.Deserialize<T>(json, _setting);
+            return JsonSerializer.Deserialize<T>(json, _setting)!;
         }
 
         public static object Deserialize(Type type, string json)
         {
-            return JsonSerializer.Deserialize(json, type, _setting);
+            return JsonSerializer.Deserialize(json, type, _setting)!;
         }
 
         public static string Serialize(object value, Type type)

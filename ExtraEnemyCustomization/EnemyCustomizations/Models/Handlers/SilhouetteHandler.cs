@@ -40,7 +40,7 @@ namespace EEC.EnemyCustomizations.Models.Handlers
 
         private void OnDestroy()
         {
-            SilhouetteMaterial = null;
+            SilhouetteMaterial = null!;
         }
     }
 
@@ -55,8 +55,8 @@ namespace EEC.EnemyCustomizations.Models.Handlers
         public float DeadEffectDelay;
 
         private bool _tagUpdateDone = true;
-        private NavMarker _enemyMarker = null;
-        private EnemySilhouette[] _silhouettes = null;
+        private NavMarker _enemyMarker = null!;
+        private EnemySilhouette[] _silhouettes = null!;
         private bool _eventRegistered = false;
 
         private void Start()
@@ -114,7 +114,7 @@ namespace EEC.EnemyCustomizations.Models.Handlers
                     _tagUpdateDone = true;
                 }
 
-                float alpha = 0.0f;
+                float alpha = 0f;
                 Color tagColor = DefaultColor;
                 if (TryGetEnemyMarkerSpriteRenderer(out var renderer))
                 {
@@ -200,25 +200,25 @@ namespace EEC.EnemyCustomizations.Models.Handlers
         {
             if (_enemyMarker == null && _enemyMarker.m_enemySubObj == null)
             {
-                renderer = null;
+                renderer = null!;
                 return false;
             }
 
             var enemySubObj = _enemyMarker.m_enemySubObj;
             if (enemySubObj.m_sprites == null)
             {
-                renderer = null;
+                renderer = null!;
                 return false;
             }
 
             if (enemySubObj.m_sprites.Length < 1)
             {
-                renderer = null;
+                renderer = null!;
                 return false;
             }
 
             renderer = enemySubObj.m_sprites[0];
-            return renderer != null;
+            return renderer != null!;
         }
 
         private void OnDestroy()
@@ -226,9 +226,9 @@ namespace EEC.EnemyCustomizations.Models.Handlers
             if (_eventRegistered)
                 EnemyMarkerEvents.Marked -= OnMarked;
 
-            OwnerAgent = null;
-            _enemyMarker = null;
-            _silhouettes = null;
+            OwnerAgent = null!;
+            _enemyMarker = null!;
+            _silhouettes = null!;
         }
     }
 }

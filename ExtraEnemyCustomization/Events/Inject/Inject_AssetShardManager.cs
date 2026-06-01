@@ -1,6 +1,5 @@
 ﻿using AssetShards;
 using HarmonyLib;
-using System;
 
 namespace EEC.Events.Inject
 {

@@ -4,9 +4,6 @@ using EEC.Utils;
 using Enemies;
 using GameData;
 using LevelGeneration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace EEC.CustomSettings.CustomScoutWaves
 {
@@ -19,7 +16,7 @@ namespace EEC.CustomSettings.CustomScoutWaves
         private static readonly Dictionary<string, ScoutWaveSetting> _waveSettingDict = new();
 
         private static string _previousExpKey = string.Empty;
-        private static ExpeditionData _previousExpData = null;
+        private static ExpeditionData _previousExpData = null!;
         private static uint _defaultWaveSettingID;
         private static uint _defaultWavePopulationID;
         private static eRundownTier _currentExpeditionTier;
@@ -153,7 +150,7 @@ namespace EEC.CustomSettings.CustomScoutWaves
             if (_waveSettingDict.ContainsKey(key))
                 return _waveSettingDict[key];
             else
-                return null;
+                return null!;
         }
 
         public static void AddTargetSetting(params ScoutTargetSetting[] targetSettings)
@@ -177,7 +174,7 @@ namespace EEC.CustomSettings.CustomScoutWaves
             if (_targetSettingDict.ContainsKey(key))
                 return _targetSettingDict[key];
             else
-                return null;
+                return null!;
         }
 
         public static void ClearAll()
@@ -213,7 +210,7 @@ namespace EEC.CustomSettings.CustomScoutWaves
                     {
                         for (int i = 0; i < waveSetting.WeightsOverride.Length; i++)
                         {
-                            weightValues[i] = Math.Min(0.0f, waveSetting.WeightsOverride[i]);
+                            weightValues[i] = Math.Min(0f, waveSetting.WeightsOverride[i]);
                         }
                     }
 
@@ -268,17 +265,17 @@ namespace EEC.CustomSettings.CustomScoutWaves
             weights.CopyTo(weightValues, 0);
 
             var weightsTotal = weightValues.Sum();
-            if (weightsTotal <= 0.0f)
+            if (weightsTotal <= 0f)
             {
                 return Rand.IndexOf(weights);
             }
 
-            var accumulatedWeight = 0.0f;
+            var accumulatedWeight = 0f;
             for (int i = 0; i < weightValues.Length; i++)
             {
-                if (weightValues[i] <= 0.0f)
+                if (weightValues[i] <= 0f)
                 {
-                    weightValues[i] = -1.0f;
+                    weightValues[i] = -1f;
                     continue;
                 }
 
@@ -359,7 +356,7 @@ namespace EEC.CustomSettings.CustomScoutWaves
                     populationDataID: _defaultWavePopulationID,
                     eventID: out _,
                     spawnType: SurvivalWaveSpawnType.InRelationToClosestAlivePlayer,
-                    spawnDelay: 0.0f,
+                    spawnDelay: 0f,
                     playScreamOnSpawn: true
                     );
         }

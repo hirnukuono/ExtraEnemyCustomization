@@ -1,8 +1,6 @@
 ﻿using EEC.Utils.Json.Elements;
 using Enemies;
-using GameData;
 using Il2CppInterop.Runtime;
-using System;
 
 namespace EEC.EnemyCustomizations.Strikers
 {

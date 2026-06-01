@@ -8,9 +8,9 @@ namespace EEC.Events
 
     public static class ScoutAntennaSpawnEvent
     {
-        public static event ScoutDetectionHandler DetectionSpawn;
+        public static event ScoutDetectionHandler? DetectionSpawn;
 
-        public static event ScoutAntennaHandler AntennaSpawn;
+        public static event ScoutAntennaHandler? AntennaSpawn;
 
         internal static void OnDetectionSpawn(EnemyAgent enemyAgent, ScoutAntennaDetection detection)
         {

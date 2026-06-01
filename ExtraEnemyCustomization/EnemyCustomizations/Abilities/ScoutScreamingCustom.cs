@@ -13,7 +13,7 @@ namespace EEC.EnemyCustomizations.Abilities
         public Color ChargeupColor { get; set; } = new Color(0f, 1f, 0.8f, 1f) * 2f;
         public Color ScreamColor { get; set; } = new Color(0f, 1f, 0.8f, 1f) * 20f;
         public Color FogColor { get; set; } = new Color(0f, 1f, 0.8f, 1f) * 20f;
-        public float FogIntensity { get; set; } = 1.0f;
+        public float FogIntensity { get; set; } = 1f;
         public EffectVolumeSetting EffectVolume { get; set; } = new EffectVolumeSetting();
 
         public override string GetProcessName()
@@ -30,7 +30,7 @@ namespace EEC.EnemyCustomizations.Abilities
 
             if (EffectVolume.Enabled)
             {
-                handler.EVSphere = EffectVolume.CreateSphere(agent.transform.position, 0.0f, 0.0f);
+                handler.EVSphere = EffectVolume.CreateSphere(agent.transform.position, 0f, 0f);
                 EffectVolumeManager.RegisterVolume(handler.EVSphere);
             }
         }

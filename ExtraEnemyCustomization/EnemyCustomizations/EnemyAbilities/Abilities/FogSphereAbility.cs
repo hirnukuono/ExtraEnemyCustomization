@@ -1,7 +1,6 @@
 ﻿using AssetShards;
 using EEC.EnemyCustomizations.Shared;
 using EEC.EnemyCustomizations.Shared.Handlers;
-using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -14,15 +13,15 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         public uint SoundEventID { get; set; } = 0u;
         public Color ColorMin { get; set; } = Color.white;
         public Color ColorMax { get; set; } = Color.clear;
-        public float IntensityMin { get; set; } = 1.0f;
-        public float IntensityMax { get; set; } = 5.0f;
-        public float RangeMin { get; set; } = 1.0f;
-        public float RangeMax { get; set; } = 3.0f;
-        public float DensityMin { get; set; } = 1.0f;
-        public float DensityMax { get; set; } = 5.0f;
-        public float DensityAmountMin { get; set; } = 0.0f;
-        public float DensityAmountMax { get; set; } = 5.0f;
-        public float Duration { get; set; } = 30.0f;
+        public float IntensityMin { get; set; } = 1f;
+        public float IntensityMax { get; set; } = 5f;
+        public float RangeMin { get; set; } = 1f;
+        public float RangeMax { get; set; } = 3f;
+        public float DensityMin { get; set; } = 1f;
+        public float DensityMax { get; set; } = 5f;
+        public float DensityAmountMin { get; set; } = 0f;
+        public float DensityAmountMax { get; set; } = 5f;
+        public float Duration { get; set; } = 30f;
         public EffectVolumeSetting EffectVolume { get; set; } = new();
 
         public GameObject FogSpherePrefab;
@@ -79,7 +78,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
                 {
                     var effectHandler = handler.gameObject.AddComponent<EffectFogSphereHandler>();
                     effectHandler.Handler = handler;
-                    effectHandler.EVSphere = Ability.EffectVolume.CreateSphere(handler.transform.position, 0.0f, 0.0f);
+                    effectHandler.EVSphere = Ability.EffectVolume.CreateSphere(handler.transform.position, 0f, 0f);
                     EffectVolumeManager.RegisterVolume(effectHandler.EVSphere);
                 }
             }

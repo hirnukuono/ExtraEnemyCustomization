@@ -6,7 +6,7 @@ namespace EEC.CustomAbilities.EMP
     [InjectToIl2Cpp]
     public sealed class EMPController : MonoBehaviour
     {
-        private IEMPHandler _handler = null;
+        private IEMPHandler _handler = null!;
         private bool _hasHandler = false;
         private float _duration;
         private bool _setup = false;
@@ -52,7 +52,7 @@ namespace EEC.CustomAbilities.EMP
         [HideFromIl2Cpp]
         public void ClearTime()
         {
-            _duration = Clock.Time - 1.0f;
+            _duration = Clock.Time - 1f;
         }
 
         [HideFromIl2Cpp]
@@ -84,7 +84,7 @@ namespace EEC.CustomAbilities.EMP
             EMPManager.RemoveTarget(this);
             _handler.OnDespawn();
 
-            _handler = null;
+            _handler = null!;
         }
     }
 }

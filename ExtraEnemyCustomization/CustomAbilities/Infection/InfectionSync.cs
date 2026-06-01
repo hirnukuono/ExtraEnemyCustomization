@@ -24,7 +24,7 @@ namespace EEC.CustomAbilities.Infection
                 if (packet.useEffect)
                 {
                     var liquidSetting = ScreenLiquidSettingName.spitterJizz;
-                    if (packet.infection < 0.0f)
+                    if (packet.infection < 0f)
                     {
                         liquidSetting = ScreenLiquidSettingName.disinfectionStation_Apply;
                     }

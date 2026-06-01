@@ -7,13 +7,13 @@ namespace EEC.Events
 
     public static class EnemyEvents
     {
-        public static event EnemyAgentHandlerWithSpawnData Spawn;
+        public static event EnemyAgentHandlerWithSpawnData? Spawn;
 
-        public static event EnemyAgentHandler Spawned;
+        public static event EnemyAgentHandler? Spawned;
 
-        public static event EnemyAgentHandler Despawn;
+        public static event EnemyAgentHandler? Despawn;
 
-        public static event EnemyAgentHandler Despawned;
+        public static event EnemyAgentHandler? Despawned;
 
         internal static void OnSpawn(EnemyAgent agent, pEnemySpawnData spawnData)
         {

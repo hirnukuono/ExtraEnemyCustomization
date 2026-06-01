@@ -38,7 +38,7 @@ namespace EEC.Managers
                         // We are using a file handle already, so that errors.
                         try
                         {
-                            Config config = (Config) JSON.Deserialize(type, content);
+                            Config config = (Config)JSON.Deserialize(type, content);
                             _configInstances[filename] = config;
                             config.Loaded();
 

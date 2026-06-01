@@ -1,8 +1,5 @@
 ﻿using EEC.Events;
 using Enemies;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EEC.Managers.Properties
 {

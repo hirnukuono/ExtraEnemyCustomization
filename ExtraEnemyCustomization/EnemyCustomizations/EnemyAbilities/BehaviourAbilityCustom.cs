@@ -2,8 +2,6 @@
 using EEC.EnemyCustomizations.EnemyAbilities.Handlers;
 using EEC.Utils.Json.Elements;
 using Enemies;
-using System;
-using System.Linq;
 
 namespace EEC.EnemyCustomizations.EnemyAbilities
 {
@@ -40,7 +38,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities
         public float UpdateInterval { get; set; } = 0.15f;
         public ExitConditionTarget ForceExitOnConditionMismatch { get; set; } = ExitConditionTarget.None;
         public AgentModeTarget AllowedMode { get; set; } = AgentModeTarget.Agressive;
-        public float AllowedModeTransitionTime { get; set; } = 0.0f;
+        public float AllowedModeTransitionTime { get; set; } = 0f;
         public bool KeepOnDead { get; set; } = false;
         public bool AllowWhileAttack { get; set; } = false;
         public bool RequireEABAllowed { get; set; } = false;
@@ -76,15 +74,15 @@ namespace EEC.EnemyCustomizations.EnemyAbilities
     public sealed class CooldownSetting
     {
         public bool Enabled { get; set; } = false;
-        public float InitCooldown { get; set; } = 0.0f;
-        public float Cooldown { get; set; } = 5.0f;
+        public float InitCooldown { get; set; } = 0f;
+        public float Cooldown { get; set; } = 5f;
     }
 
     public sealed class DistanceSetting
     {
         public DistanceCheckingBehaviour Mode { get; set; } = DistanceCheckingBehaviour.AlwaysAllow;
-        public float Min { get; set; } = 0.0f;
-        public float Max { get; set; } = 1.0f;
+        public float Min { get; set; } = 0f;
+        public float Max { get; set; } = 1f;
 
         public bool ShouldCheckLOS = false;
 

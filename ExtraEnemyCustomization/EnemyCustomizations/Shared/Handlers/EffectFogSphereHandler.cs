@@ -1,6 +1,5 @@
-﻿using EEC.Utils.Unity;
+﻿using UnityEngine;
 using Timer = EEC.Utils.Unity.Timer;
-using UnityEngine;
 
 namespace EEC.EnemyCustomizations.Shared.Handlers
 {
@@ -18,7 +17,7 @@ namespace EEC.EnemyCustomizations.Shared.Handlers
             if (Handler.m_sphere != null && _updateTimer.TickAndCheckDone())
             {
                 var sphere = Handler.m_sphere;
-                var range = Mathf.Sqrt(1.0f / sphere.m_data.InvRangeSqr);
+                var range = Mathf.Sqrt(1f / sphere.m_data.InvRangeSqr);
                 EVSphere.minRadius = range * 0.8f;
                 EVSphere.maxRadius = range;
                 _updateTimer.Reset();
@@ -35,8 +34,8 @@ namespace EEC.EnemyCustomizations.Shared.Handlers
         {
             EffectVolumeManager.UnregisterVolume(EVSphere);
 
-            Handler = null;
-            EVSphere = null;
+            Handler = null!;
+            EVSphere = null!;
         }
     }
 }

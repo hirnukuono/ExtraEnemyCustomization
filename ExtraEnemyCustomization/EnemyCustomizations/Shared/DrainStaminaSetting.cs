@@ -14,8 +14,8 @@ namespace EEC.EnemyCustomizations.Shared
     public sealed class DrainStaminaSetting : IDrainStaminaSetting
     {
         public bool Enabled { get; set; } = false;
-        public float DrainAmount { get; set; } = 0.0f;
-        public float DrainAmountInCombat { get; set; } = 0.0f;
+        public float DrainAmount { get; set; } = 0f;
+        public float DrainAmountInCombat { get; set; } = 0f;
         public bool ResetRecoverTimer { get; set; } = false;
         public bool ResetRecoverTimerInCombat { get; set; } = false;
 

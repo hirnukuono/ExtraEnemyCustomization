@@ -1,7 +1,6 @@
 ﻿using EEC.EnemyCustomizations;
 using EEC.Managers;
 using HarmonyLib;
-using System;
 using UnityEngine;
 
 namespace EEC.Inject

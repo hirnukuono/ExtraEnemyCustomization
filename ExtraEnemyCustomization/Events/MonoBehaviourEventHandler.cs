@@ -56,10 +56,10 @@ namespace EEC.Events
         {
             OnDestroyed?.Invoke(gameObject);
 
-            OnUpdate = null;
-            OnLateUpdate = null;
-            OnFixedUpdate = null;
-            OnDestroyed = null;
+            OnUpdate = null!;
+            OnLateUpdate = null!;
+            OnFixedUpdate = null!;
+            OnDestroyed = null!;
         }
     }
 }

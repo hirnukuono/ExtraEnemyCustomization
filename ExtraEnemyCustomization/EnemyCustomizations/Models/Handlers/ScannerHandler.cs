@@ -1,12 +1,10 @@
-﻿using Agents;
-using EEC.Utils.Unity;
-using Timer = EEC.Utils.Unity.Timer;
+﻿using EEC.Utils.Unity;
 using Enemies;
 using Il2CppInterop.Runtime.Attributes;
 using Il2CppInterop.Runtime.InteropTypes.Fields;
-using System;
 using System.Collections;
 using UnityEngine;
+using Timer = EEC.Utils.Unity.Timer;
 
 namespace EEC.EnemyCustomizations.Models.Handlers
 {
@@ -46,7 +44,7 @@ namespace EEC.EnemyCustomizations.Models.Handlers
         private Color _previousColor = Color.white;
         private Color _doneColor = Color.white;
         private bool _disableScriptAfterDone = false;
-        private Coroutine _updateRoutine = null;
+        private Coroutine _updateRoutine = null!;
 
         private void OnEnable()
         {
@@ -140,13 +138,13 @@ namespace EEC.EnemyCustomizations.Models.Handlers
                 var progress = interpTimer.Progress;
                 var newColor = Color.Lerp(fromColor, toColor, progress);
                 _ownerAgent.ScannerColor = newColor;
-                yield return null;
+                yield return null!;
             }
 
             _ownerAgent.ScannerColor = toColor;
-            _colorInterpolationCoroutine = null;
+            _colorInterpolationCoroutine = null!;
             TryDisable();
-            yield return null;
+            yield return null!;
         }
 
         [HideFromIl2Cpp]
@@ -237,8 +235,8 @@ namespace EEC.EnemyCustomizations.Models.Handlers
 
         private void OnDestroy()
         {
-            _ownerAgent = null;
-            _colorInterpolationCoroutine = null;
+            _ownerAgent = null!;
+            _colorInterpolationCoroutine = null!;
         }
     }
 }

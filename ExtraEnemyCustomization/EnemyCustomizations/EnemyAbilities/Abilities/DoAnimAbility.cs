@@ -1,8 +1,7 @@
 ﻿using EEC.Utils;
-using EEC.Utils.Unity;
-using Timer = EEC.Utils.Unity.Timer;
 using UnityEngine;
 using UnityEngine.AI;
+using Timer = EEC.Utils.Unity.Timer;
 
 namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 {
@@ -11,8 +10,8 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         public EnemyAnimType Animation { get; set; } = EnemyAnimType.Screams;
         public uint SoundEvent { get; set; } = 0u;
         public uint VoiceEvent { get; set; } = 0u;
-        public float Duration { get; set; } = 1.0f;
-        public float CrossFadeTime { get; set; } = 0.0f;
+        public float Duration { get; set; } = 1f;
+        public float CrossFadeTime { get; set; } = 0f;
         public bool AllowUsingEABWhileExecuting { get; set; } = false;
         public bool StandStill { get; set; } = true;
         public bool ApplyRootMotion { get; set; } = true;

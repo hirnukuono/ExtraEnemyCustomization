@@ -1,8 +1,6 @@
-﻿using Agents;
-using EEC.EnemyCustomizations.Models.Handlers;
+﻿using EEC.EnemyCustomizations.Models.Handlers;
 using Enemies;
 using GameData;
-using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using UnityEngine;
 
@@ -14,13 +12,13 @@ namespace EEC.EnemyCustomizations.Models
         public Color Internal_DefaultColor { get; set; } = new(0.7f, 0.7f, 0.7f);
 
         [JsonPropertyName("DefaultSize")]
-        public float Internal_DefaultSize { get; set; } = 1.0f;
+        public float Internal_DefaultSize { get; set; } = 1f;
 
         [JsonPropertyName("WakeupColor")]
         public Color Internal_WakeupColor { get; set; } = new(1f, 0.1f, 0.1f);
 
         [JsonPropertyName("WakeupSize")]
-        public float Internal_WakeupSize { get; set; } = 1.0f;
+        public float Internal_WakeupSize { get; set; } = 1f;
 
         public float LerpingDuration { get; set; } = 0.5f;
         public float UpdateInterval { get; set; } = 0.15f;
@@ -29,16 +27,16 @@ namespace EEC.EnemyCustomizations.Models
         public bool UsingDetectionColor { get; set; } = false;
 
         [JsonPropertyName("DetectionColor")]
-        public Color Internal_DetectionColor { get; set; } = new(0.9882f, 0.4078f, 0.0f);
+        public Color Internal_DetectionColor { get; set; } = new(0.9882f, 0.4078f, 0f);
 
         [JsonPropertyName("DetectionSize")]
-        public float Internal_DetectionSize { get; set; } = 1.0f;
+        public float Internal_DetectionSize { get; set; } = 1f;
 
         [JsonPropertyName("HeartbeatColor")]
-        public Color Internal_HeartbeatColor { get; set; } = new(1.0f, 0.8431f, 0.8431f);
+        public Color Internal_HeartbeatColor { get; set; } = new(1f, 0.8431f, 0.8431f);
 
         [JsonPropertyName("HeartbeatSize")]
-        public float Internal_HeartbeatSize { get; set; } = 1.0f;
+        public float Internal_HeartbeatSize { get; set; } = 1f;
 
         public bool UsingScoutColor { get; set; } = false;
 
@@ -52,7 +50,7 @@ namespace EEC.EnemyCustomizations.Models
         public Color Internal_ScoutFeelerColor { get; set; } = new(1f, 0.1f, 0.1f);
 
         [JsonPropertyName("ScoutFeelerSize")]
-        public float Internal_ScoutFeelerSize { get; set; } = 1.0f;
+        public float Internal_ScoutFeelerSize { get; set; } = 1f;
 
         public ScannerColorData ColorData;
 

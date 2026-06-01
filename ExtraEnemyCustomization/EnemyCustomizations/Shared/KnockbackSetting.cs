@@ -16,8 +16,8 @@ namespace EEC.EnemyCustomizations.Shared
     public sealed class KnockbackSetting : IKnockbackSetting
     {
         public bool Enabled { get; set; } = false;
-        public float Velocity { get; set; } = 0.0f;
-        public float VelocityZ { get; set; } = 0.0f;
+        public float Velocity { get; set; } = 0f;
+        public float VelocityZ { get; set; } = 0f;
         public bool DoMultDistance { get; set; } = false;
         public bool DoMultDistanceZ { get; set; } = false;
 

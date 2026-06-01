@@ -1,13 +1,11 @@
-﻿using BepInEx.Unity.IL2CPP.Utils;
-using BepInEx.Logging;
+﻿using BepInEx.Logging;
 using EEC.EnemyCustomizations.EnemyAbilities.Events;
 using EEC.Events;
-using EEC.Utils.Unity;
-using Timer = EEC.Utils.Unity.Timer;
 using Enemies;
 using SNetwork;
 using System.Collections;
 using UnityEngine;
+using Timer = EEC.Utils.Unity.Timer;
 
 namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 {
@@ -168,7 +166,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
             while (true)
             {
                 DoUpdate();
-                yield return null;
+                yield return null!;
             }
         }
 

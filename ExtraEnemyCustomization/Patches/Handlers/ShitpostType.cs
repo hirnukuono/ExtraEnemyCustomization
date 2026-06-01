@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace EEC.Patches.Handlers
+﻿namespace EEC.Patches.Handlers
 {
     [Flags]
     public enum ShitpostType

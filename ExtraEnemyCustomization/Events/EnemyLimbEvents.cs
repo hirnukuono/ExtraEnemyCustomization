@@ -4,7 +4,7 @@
 
     public static class EnemyLimbEvents
     {
-        public static event EnemyLimbHandler Destroyed;
+        public static event EnemyLimbHandler? Destroyed;
 
         internal static void OnDestroyed(Dam_EnemyDamageLimb limb)
         {

@@ -2,7 +2,6 @@
 using EEC.Utils.Json.Elements;
 using Enemies;
 using GameData;
-using System;
 
 namespace EEC.EnemyCustomizations.Properties
 {
@@ -56,7 +55,7 @@ namespace EEC.EnemyCustomizations.Properties
                     return;
 
                 var zoneSetting = spawnedNode.m_zone.m_settings;
-                var events = zoneSetting?.m_zoneData.EventsOnBossDeath ?? null;
+                var events = zoneSetting?.m_zoneData.EventsOnBossDeath ?? null!;
                 if (events != null)
                 {
                     agent.AddOnDeadOnce(() =>
@@ -129,7 +128,7 @@ namespace EEC.EnemyCustomizations.Properties
                     e.Dispose();
                 }
 
-                Events = null;
+                Events = null!;
             }
         }
     }

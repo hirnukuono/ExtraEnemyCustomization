@@ -1,6 +1,5 @@
 ﻿using EEC.Managers;
 using HarmonyLib;
-using System;
 using UnityEngine;
 
 namespace EEC.CustomSettings.CustomProjectiles.Inject

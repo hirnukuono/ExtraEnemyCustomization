@@ -1,6 +1,4 @@
 ﻿using HarmonyLib;
-using SNetwork;
-using System;
 
 namespace EEC.Patches.Inject
 {
@@ -29,7 +27,7 @@ namespace EEC.Patches.Inject
 
         private static bool DoHealer(float dam, Dam_SyncedDamageBase damBase)
         {
-            if (dam >= 0.0f)
+            if (dam >= 0f)
                 return true; //Run Original Code
 
             var ownerType = damBase.DamageBaseOwner;

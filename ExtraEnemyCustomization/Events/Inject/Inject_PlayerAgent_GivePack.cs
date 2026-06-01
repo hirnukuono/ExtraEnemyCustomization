@@ -20,9 +20,9 @@ namespace EEC.Events.Inject
         [HarmonyPatch(nameof(PlayerAgent.GiveAmmoRel))]
         internal static void Post_Ammo(float ammoStandardRel, float ammoSpecialRel, float ammoClassRel, PlayerAgent __instance)
         {
-            if (ammoStandardRel > 0.0f || ammoSpecialRel > 0.0f)
+            if (ammoStandardRel > 0f || ammoSpecialRel > 0f)
                 ResourcePackEvents.OnReceiveAmmo(__instance.Cast<iResourcePackReceiver>(), ammoStandardRel, ammoSpecialRel);
-            if (ammoClassRel > 0.0f)
+            if (ammoClassRel > 0f)
                 ResourcePackEvents.OnReceiveTool(__instance.Cast<iResourcePackReceiver>(), ammoClassRel);
         }
 

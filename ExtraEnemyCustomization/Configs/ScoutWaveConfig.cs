@@ -1,5 +1,4 @@
 ﻿using EEC.CustomSettings.CustomScoutWaves;
-using System;
 
 namespace EEC.Configs
 {

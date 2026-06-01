@@ -12,18 +12,18 @@ namespace EEC.EnemyCustomizations.Abilities
         public Color ColorMin { get; set; } = Color.white;
         public Color ColorMax { get; set; } = Color.clear;
         public CurveWrapper IntensityCurve { get; set; } = CurveWrapper.Empty;
-        public float IntensityMin { get; set; } = 1.0f;
-        public float IntensityMax { get; set; } = 5.0f;
+        public float IntensityMin { get; set; } = 1f;
+        public float IntensityMax { get; set; } = 5f;
         public CurveWrapper RangeCurve { get; set; } = CurveWrapper.Empty;
-        public float RangeMin { get; set; } = 1.0f;
-        public float RangeMax { get; set; } = 3.0f;
+        public float RangeMin { get; set; } = 1f;
+        public float RangeMax { get; set; } = 3f;
         public CurveWrapper DensityCurve { get; set; } = CurveWrapper.Empty;
-        public float DensityMin { get; set; } = 1.0f;
-        public float DensityMax { get; set; } = 5.0f;
+        public float DensityMin { get; set; } = 1f;
+        public float DensityMax { get; set; } = 5f;
         public CurveWrapper DensityAmountCurve { get; set; } = CurveWrapper.Empty;
-        public float DensityAmountMin { get; set; } = 0.0f;
-        public float DensityAmountMax { get; set; } = 5.0f;
-        public float Duration { get; set; } = 30.0f;
+        public float DensityAmountMin { get; set; } = 0f;
+        public float DensityAmountMax { get; set; } = 5f;
+        public float Duration { get; set; } = 30f;
         public EffectVolumeSetting EffectVolume { get; set; } = new();
 
         public override string GetProcessName()

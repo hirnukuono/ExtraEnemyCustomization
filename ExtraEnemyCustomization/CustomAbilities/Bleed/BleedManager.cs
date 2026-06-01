@@ -23,8 +23,8 @@ namespace EEC.CustomAbilities.Bleed
         {
             DoBleed(agent, new BleedingData()
             {
-                interval = 0.0f,
-                duration = -1.0f,
+                interval = 0f,
+                duration = -1f,
                 damage = 0
             });
         }

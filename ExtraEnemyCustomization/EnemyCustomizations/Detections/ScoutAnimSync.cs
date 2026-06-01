@@ -18,11 +18,11 @@ namespace EEC.EnemyCustomizations.Detections
                 return;
 
             ScoutAnimType nextAnim;
-            if (data.ChanceToBend >= 1.0f)
+            if (data.ChanceToBend >= 1f)
             {
                 nextAnim = ScoutAnimType.Bending;
             }
-            else if (data.ChanceToBend <= 0.0f)
+            else if (data.ChanceToBend <= 0f)
             {
                 nextAnim = ScoutAnimType.Standing;
             }
@@ -73,7 +73,7 @@ namespace EEC.EnemyCustomizations.Detections
     internal sealed class ScoutAnimOverrideProperty
     {
         public EnemyAgent Agent;
-        public float ChanceToBend = 0.0f;
+        public float ChanceToBend = 0f;
         public bool AnimDetermined = false;
         public bool EnterWasCalled = false;
         public ScoutAnimType NextAnim = ScoutAnimType.Unknown;

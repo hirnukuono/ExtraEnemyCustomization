@@ -1,11 +1,10 @@
 ﻿using Agents;
 using EEC.Events;
-using EEC.Utils.Unity;
-using Timer = EEC.Utils.Unity.Timer;
 using Enemies;
 using Il2CppInterop.Runtime.Attributes;
 using SNetwork;
 using UnityEngine;
+using Timer = EEC.Utils.Unity.Timer;
 
 namespace EEC.EnemyCustomizations.Abilities.Handlers
 {
@@ -21,8 +20,8 @@ namespace EEC.EnemyCustomizations.Abilities.Handlers
         private bool _isInitialTimerDone = false;
         private bool _alwaysRegen = false;
         private bool _isRegenMode = false;
-        private float _regenCapAbsValue = 0.0f;
-        private float _regenAmountAbsValue = 0.0f;
+        private float _regenCapAbsValue = 0f;
+        private float _regenAmountAbsValue = 0f;
 
         private void Start()
         {
@@ -41,7 +40,7 @@ namespace EEC.EnemyCustomizations.Abilities.Handlers
             _regenCapAbsValue = RegenData.RegenCap.GetAbsValue(DamageBase.HealthMax);
             _regenAmountAbsValue = RegenData.RegenAmount.GetAbsValue(DamageBase.HealthMax);
 
-            if (_regenAmountAbsValue >= 0.0f)
+            if (_regenAmountAbsValue >= 0f)
                 _isRegenMode = true;
 
             if (_alwaysRegen || !_isRegenMode)
@@ -133,7 +132,7 @@ namespace EEC.EnemyCustomizations.Abilities.Handlers
 
             DamageBase.SendSetHealth(newHealth);
 
-            if (newHealth <= 0.0f)
+            if (newHealth <= 0f)
             {
                 DamageBase.MeleeDamage(DamageBase.HealthMax, null, base.transform.position, Vector3.up, 0);
             }
@@ -150,8 +149,8 @@ namespace EEC.EnemyCustomizations.Abilities.Handlers
 
         private void OnDestroy()
         {
-            DamageBase = null;
-            RegenData = null;
+            DamageBase = null!;
+            RegenData = null!;
         }
     }
 }

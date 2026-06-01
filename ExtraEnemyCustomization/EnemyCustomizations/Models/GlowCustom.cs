@@ -2,8 +2,6 @@
 using EEC.Utils;
 using EEC.Utils.Json.Elements;
 using Enemies;
-using System;
-using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using UnityEngine;
 
@@ -69,7 +67,7 @@ namespace EEC.EnemyCustomizations.Models
 
                 if (pulse.RandomizeTime)
                 {
-                    var interval = Math.Max(0.0f, pulse.Duration);
+                    var interval = Math.Max(0f, pulse.Duration);
                     var rand = Rand.NextFloat() * interval;
                     routine.StartDelay = rand;
                 }
@@ -124,7 +122,7 @@ namespace EEC.EnemyCustomizations.Models
             KeepOnDead = false;
             AlwaysPulse = false;
 
-            PatternData = null;
+            PatternData = null!;
         }
 
         public PatternDataCache[] CachePattern()
@@ -136,7 +134,7 @@ namespace EEC.EnemyCustomizations.Models
             {
                 var progressionValue = c switch
                 {
-                    '0' => 0.0f,
+                    '0' => 0f,
                     '1' => 0.1f,
                     '2' => 0.2f,
                     '3' => 0.3f,
@@ -146,36 +144,36 @@ namespace EEC.EnemyCustomizations.Models
                     '7' => 0.7f,
                     '8' => 0.8f,
                     '9' => 0.9f,
-                    'f' => 1.0f,
-                    '-' => -2.0f,
-                    '+' => -3.0f,
-                    _ => -1.0f
+                    'f' => 1f,
+                    '-' => -2f,
+                    '+' => -3f,
+                    _ => -1f
                 };
 
                 switch (progressionValue)
                 {
-                    case -1.0f: //Other weird Char
+                    case -1f: //Other weird Char
                         continue;
 
-                    case -2.0f: //Delay
-                        if (currentCache.StepDuration > 0 && currentCache.Progression >= 0.0f)
+                    case -2f: //Delay
+                        if (currentCache.StepDuration > 0 && currentCache.Progression >= 0f)
                         {
                             cacheList.Add(currentCache);
                             currentCache = default;
                         }
 
-                        if (currentCache.Progression < 0.0f)
+                        if (currentCache.Progression < 0f)
                         {
                             currentCache.StepDuration++;
                         }
                         else
                         {
                             currentCache.StepDuration = 1;
-                            currentCache.Progression = -1.0f;
+                            currentCache.Progression = -1f;
                         }
                         break;
 
-                    case -3.0f: //Continue
+                    case -3f: //Continue
                         if (currentCache.StepDuration == 0)
                         {
                             throw new ArgumentException("Pattern '+' has came out first before other value appear!");

@@ -3,7 +3,6 @@ using EEC.Events;
 using EEC.Managers.Assets;
 using EEC.Utils;
 using Enemies;
-using System;
 using System.Text;
 using UnityEngine;
 
@@ -11,26 +10,26 @@ namespace EEC.EnemyCustomizations.Models
 {
     public sealed class MarkerCustom : EnemyCustomBase, IEnemySpawnedEvent
     {
-        public static readonly Vector3 EnemyTextScale = new(1.0f, 1.0f, 1.0f);
+        public static readonly Vector3 EnemyTextScale = new(1f, 1f, 1f);
         public static readonly Vector3 EnemyDistanceTextScale = new(0.6f, 0.6f, 0.6f);
-        public static readonly Vector3 EnemySpriteScale = new(54.0f, 54.0f, 54.0f);
+        public static readonly Vector3 EnemySpriteScale = new(54f, 54f, 54f);
 
         public string SpriteName { get; set; } = string.Empty;
         public Color MarkerColor { get; set; } = new Color(0.8235f, 0.1843f, 0.1176f);
         public string MarkerText { get; set; } = string.Empty;
         public HealthBarFormat MarkerTextHealthBarFormat { get; set; } = new();
-        public float SpriteScale { get; set; } = 1.0f;
-        public float TextScale { get; set; } = 1.0f;
-        public float DistanceTextScale { get; set; } = 1.0f;
+        public float SpriteScale { get; set; } = 1f;
+        public float TextScale { get; set; } = 1f;
+        public float DistanceTextScale { get; set; } = 1f;
         public bool ShowDistance { get; set; } = false;
         public bool BlinkIn { get; set; } = false;
         public bool Blink { get; set; } = false;
-        public float BlinkDuration { get; set; } = 30.0f;
-        public float BlinkMinDelay { get; set; } = 1.0f;
-        public float BlinkMaxDelay { get; set; } = 5.0f;
+        public float BlinkDuration { get; set; } = 30f;
+        public float BlinkMinDelay { get; set; } = 1f;
+        public float BlinkMaxDelay { get; set; } = 5f;
         public bool AllowMarkingOnHibernate { get; set; } = false;
 
-        private Sprite _sprite = null;
+        private Sprite _sprite = null!;
         private bool _hasText = false;
         private bool _textRequiresAutoUpdate = false;
 
@@ -44,7 +43,7 @@ namespace EEC.EnemyCustomizations.Models
             if (string.IsNullOrEmpty(SpriteName))
                 return;
 
-            if (!SpriteManager.TryGetSpriteCache(SpriteName, 64.0f, out _sprite))
+            if (!SpriteManager.TryGetSpriteCache(SpriteName, 64f, out _sprite))
                 _sprite = SpriteManager.GenerateSprite(SpriteName);
         }
 
@@ -129,13 +128,13 @@ namespace EEC.EnemyCustomizations.Models
 
             if (BlinkIn)
             {
-                CoroutineManager.BlinkIn(marker.m_enemySubObj.gameObject, 0.0f);
+                CoroutineManager.BlinkIn(marker.m_enemySubObj.gameObject, 0f);
                 CoroutineManager.BlinkIn(marker.m_enemySubObj.gameObject, 0.2f);
             }
 
             if (Blink)
             {
-                if (BlinkMinDelay >= 0.0f && BlinkMinDelay < BlinkMaxDelay)
+                if (BlinkMinDelay >= 0f && BlinkMinDelay < BlinkMaxDelay)
                 {
                     float duration = Math.Min(BlinkDuration, agent.EnemyBalancingData.TagTime);
                     float time = 0.4f + Rand.Range(BlinkMinDelay, BlinkMaxDelay);

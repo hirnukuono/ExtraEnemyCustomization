@@ -1,8 +1,6 @@
 ﻿using EEC.Events;
 using EEC.Utils;
 using Player;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace EEC.CustomSettings.CustomProjectiles
@@ -147,7 +145,7 @@ namespace EEC.CustomSettings.CustomProjectiles
             {
                 return data;
             }
-            return null;
+            return null!;
         }
 
         public static ProjectileData GetInstanceData(int id)
@@ -156,7 +154,7 @@ namespace EEC.CustomSettings.CustomProjectiles
             {
                 return data;
             }
-            return null;
+            return null!;
         }
 
         public static void RemoveInstanceLookup(int id)
@@ -177,12 +175,12 @@ namespace EEC.CustomSettings.CustomProjectiles
 
                     _instanceProjLookup[instanceID] = this;
 
-                    UnityEventHandler update = null;
+                    UnityEventHandler update = null!;
                     if (Settings?.SpeedChange?.Enabled ?? false)
                     {
                         var speedChange = Settings.SpeedChange;
-                        var inv = 1.0f / speedChange.Duration;
-                        var progress = 0.0f;
+                        var inv = 1f / speedChange.Duration;
+                        var progress = 0f;
                         var originalSpeed = projectile.Speed;
                         var enabled = true;
                         update += (_) =>
@@ -209,8 +207,8 @@ namespace EEC.CustomSettings.CustomProjectiles
                     if (Settings?.HomingStrengthChange?.Enabled ?? false)
                     {
                         var homingChange = Settings.HomingStrengthChange;
-                        var inv = 1.0f / homingChange.Duration;
-                        var progress = 0.0f;
+                        var inv = 1f / homingChange.Duration;
+                        var progress = 0f;
                         var originalHoming = projectile.TargetStrength;
                         var enabled = true;
                         update += (_) =>

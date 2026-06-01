@@ -1,10 +1,8 @@
-﻿using Agents;
-using AIGraph;
+﻿using AIGraph;
 using EEC.Managers.Properties;
 using EEC.Utils;
 using Enemies;
 using SNetwork;
-using System;
 
 namespace EEC
 {
@@ -42,37 +40,37 @@ namespace EEC
         {
             if (!agent.TryGetSpawnData(out var spawnData))
             {
-                group = null;
+                group = null!;
                 return false;
             }
 
             if (spawnData.groupReplicatorKey == 0)
             {
-                group = null;
+                group = null!;
                 return false;
             }
 
             if (!SNet_Replication.TryGetReplicator(spawnData.groupReplicatorKey, out var replicator))
             {
-                group = null;
+                group = null!;
                 return false;
             }
 
             if (replicator.ReplicatorSupplier == null)
             {
-                group = null;
+                group = null!;
                 return false;
             }
 
             group = replicator.ReplicatorSupplier.TryCast<EnemyGroup>();
-            return group != null;
+            return group != null!;
         }
 
         public static AIG_CourseNode GetSpawnedNode(this EnemyAgent agent)
         {
             var spawnData = agent.Sync.Replicator.Cast<EnemyReplicator>().GetSpawnData();
             if (!spawnData.courseNode.TryGet(out var node))
-                return null;
+                return null!;
 
             return node;
         }

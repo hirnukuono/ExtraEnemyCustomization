@@ -35,7 +35,7 @@ namespace EEC
             return true;
 
         ReturnNULL:
-            result = null;
+            result = null!;
             return false;
         }
 

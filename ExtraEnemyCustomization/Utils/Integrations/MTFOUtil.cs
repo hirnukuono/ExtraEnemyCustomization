@@ -1,7 +1,5 @@
 ﻿using BepInEx;
 using BepInEx.Unity.IL2CPP;
-using System;
-using System.Linq;
 using System.Reflection;
 
 namespace EEC.Utils.Integrations
@@ -18,7 +16,7 @@ namespace EEC.Utils.Integrations
         public static bool HasCustomContent { get; private set; } = false;
         public static bool IsLoaded { get; private set; } = false;
         public static bool HasHotReload { get; private set; } = false;
-        public static FieldInfo HotReloaderField { get; private set; } = null;
+        public static FieldInfo HotReloaderField { get; private set; } = null!;
 
         public static event Action HotReloaded;
 
@@ -47,7 +45,7 @@ namespace EEC.Utils.Integrations
         {
             try
             {
-                var ddAsm = info?.Instance?.GetType()?.Assembly ?? null;
+                var ddAsm = info?.Instance?.GetType()?.Assembly ?? null!;
 
                 if (ddAsm is null)
                     throw new Exception("Assembly is Missing!");
@@ -86,7 +84,7 @@ namespace EEC.Utils.Integrations
         {
             try
             {
-                var ddAsm = info?.Instance?.GetType()?.Assembly ?? null;
+                var ddAsm = info?.Instance?.GetType()?.Assembly ?? null!;
 
                 if (ddAsm is null)
                     throw new Exception("Assembly is Missing!");

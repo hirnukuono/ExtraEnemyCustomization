@@ -1,5 +1,4 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace EEC.Utils
@@ -29,7 +28,7 @@ namespace EEC.Utils
             }
             catch
             {
-                vectorArray = null;
+                vectorArray = null!;
                 return false;
             }
         }

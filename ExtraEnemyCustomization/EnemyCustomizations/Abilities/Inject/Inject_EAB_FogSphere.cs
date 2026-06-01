@@ -30,7 +30,7 @@ namespace EEC.EnemyCustomizations.Abilities.Inject
 
             var effectHandler = handler.gameObject.AddComponent<EffectFogSphereHandler>();
             effectHandler.Handler = handler;
-            effectHandler.EVSphere = effectSetting.Setting.CreateSphere(handler.transform.position, 0.0f, 0.0f);
+            effectHandler.EVSphere = effectSetting.Setting.CreateSphere(handler.transform.position, 0f, 0f);
             EffectVolumeManager.RegisterVolume(effectHandler.EVSphere);
         }
     }

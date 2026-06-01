@@ -31,7 +31,7 @@ namespace EEC
         {
             if (projectile == null)
             {
-                agent = null;
+                agent = null!;
                 return false;
             }
 
@@ -42,7 +42,7 @@ namespace EEC
         {
             if (projectile == null)
             {
-                agent = null;
+                agent = null!;
                 return false;
             }
 

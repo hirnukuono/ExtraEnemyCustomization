@@ -1,6 +1,5 @@
 ﻿using Enemies;
 using GameData;
-using System;
 using UnityEngine;
 
 namespace EEC.EnemyCustomizations.Models
@@ -22,7 +21,7 @@ namespace EEC.EnemyCustomizations.Models
 
             foreach (var mRef in ModelRefs)
             {
-                Transform baseTransform = null;
+                Transform baseTransform = null!;
                 switch (mRef.CopyFrom)
                 {
                     case BaseModelRefType.Tentacle:

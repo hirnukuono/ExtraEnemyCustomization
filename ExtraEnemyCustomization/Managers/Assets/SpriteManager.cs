@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace EEC.Managers.Assets
 {
@@ -48,12 +46,12 @@ namespace EEC.Managers.Assets
             }
         }
 
-        public static Sprite GenerateSprite(string fileName, float pixelsPerUnit = 64.0f)
+        public static Sprite GenerateSprite(string fileName, float pixelsPerUnit = 64f)
         {
             SetFilenameFormat(ref fileName);
 
             if (!_textureCache.TryGetValue(fileName, out var texture2D))
-                return null;
+                return null!;
 
             var spriteKey = GetSpriteKey(fileName, pixelsPerUnit);
             if (_spriteCache.TryGetValue(spriteKey, out var sprite))

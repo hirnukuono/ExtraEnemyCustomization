@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace EEC.Utils.Unity
 {
@@ -38,13 +36,13 @@ namespace EEC.Utils.Unity
             get
             {
                 int ms;
-                if (time <= 0.0f)
+                if (time <= 0f)
                 {
-                    ms = 0; 
+                    ms = 0;
                 }
                 else
                 {
-                    ms = Mathf.RoundToInt(time * 1000.0f);
+                    ms = Mathf.RoundToInt(time * 1000f);
                 }
 
                 if (_lookup.TryGetValue(ms, out _temp))

@@ -1,7 +1,6 @@
 ﻿using EEC.EnemyCustomizations.Shared;
 using EEC.Utils.Json.Elements;
 using Player;
-using SNetwork;
 using System.Text.Json.Serialization;
 using UnityEngine;
 

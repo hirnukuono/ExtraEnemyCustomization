@@ -1,5 +1,4 @@
 ﻿using EEC.EnemyCustomizations.Abilities;
-using System;
 
 namespace EEC.Configs.Customizations
 {

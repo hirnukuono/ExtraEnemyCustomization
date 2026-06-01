@@ -5,7 +5,7 @@
         public uint WaveSettingID { get; set; } = 0u;
         public uint WavePopulationID { get; set; } = 0u;
         public SurvivalWaveSpawnType SpawnType { get; set; } = SurvivalWaveSpawnType.InRelationToClosestAlivePlayer;
-        public float SpawnDelay { get; set; } = 0.0f;
+        public float SpawnDelay { get; set; } = 0f;
         public bool PlayDistantRoar { get; set; } = true;
     }
 

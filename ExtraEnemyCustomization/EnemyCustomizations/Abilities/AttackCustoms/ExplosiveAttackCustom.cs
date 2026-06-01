@@ -2,7 +2,6 @@
 using EEC.Events;
 using Enemies;
 using Player;
-using System;
 using UnityEngine;
 
 namespace EEC.EnemyCustomizations.Abilities

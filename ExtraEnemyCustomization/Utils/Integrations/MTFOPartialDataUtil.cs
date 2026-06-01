@@ -1,6 +1,4 @@
 ﻿using BepInEx.Unity.IL2CPP;
-using System;
-using System.Linq;
 using System.Reflection;
 using System.Text.Json.Serialization;
 
@@ -12,8 +10,8 @@ namespace EEC.Utils.Integrations
 
         public delegate bool TryGetDelegate(string guid, out uint id);
 
-        public static JsonConverter PersistentIDConverter { get; private set; } = null;
-        public static JsonConverter LocalizedTextConverter { get; private set; } = null;
+        public static JsonConverter PersistentIDConverter { get; private set; } = null!;
+        public static JsonConverter LocalizedTextConverter { get; private set; } = null!;
         public static bool IsLoaded { get; private set; } = false;
         public static bool Initialized { get; private set; } = false;
         public static string PartialDataPath { get; private set; } = string.Empty;
@@ -27,7 +25,7 @@ namespace EEC.Utils.Integrations
             {
                 try
                 {
-                    var ddAsm = info?.Instance?.GetType()?.Assembly ?? null;
+                    var ddAsm = info?.Instance?.GetType()?.Assembly ?? null!;
 
                     if (ddAsm is null)
                         throw new Exception("Assembly is Missing!");

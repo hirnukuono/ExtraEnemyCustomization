@@ -8,24 +8,24 @@ namespace EEC
         {
             if (data == null)
             {
-                behaviour = null;
+                behaviour = null!;
                 return false;
             }
 
             behaviour = EnemyBehaviorDataBlock.GetBlock(data.BehaviorDataId);
-            return behaviour != null;
+            return behaviour != null!;
         }
 
         public static bool TryGetBalancingBlock(this EnemyDataBlock data, out EnemyBalancingDataBlock balancing)
         {
             if (data == null)
             {
-                balancing = null;
+                balancing = null!;
                 return false;
             }
 
             balancing = EnemyBalancingDataBlock.GetBlock(data.BalancingDataId);
-            return balancing != null;
+            return balancing != null!;
         }
     }
 }

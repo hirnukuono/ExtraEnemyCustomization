@@ -9,7 +9,7 @@ namespace EEC.Utils.Json.Elements
     public sealed class EventWrapper : IDisposable
     {
         private string _json;
-        private WardenObjectiveEventData _cached = null;
+        private WardenObjectiveEventData _cached = null!;
 
         public EventWrapper(string json)
         {
@@ -34,8 +34,8 @@ namespace EEC.Utils.Json.Elements
 
         public void Dispose()
         {
-            _json = null;
-            _cached = null;
+            _json = null!;
+            _cached = null!;
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using GTFO.API;
 using Player;
 using SNetwork;
-using System;
 using System.Runtime.InteropServices;
 
 namespace EEC.Networking
@@ -53,7 +52,7 @@ namespace EEC.Networking
         {
             if (lookup == 0UL)
             {
-                player = null;
+                player = null!;
                 return false;
             }
             if (lookup < NetworkManager.LOWEST_STEAMID64)
@@ -90,12 +89,12 @@ namespace EEC.Networking
         {
             if (!player.HasPlayerAgent)
             {
-                agent = null;
+                agent = null!;
                 return false;
             }
 
             agent = player.m_playerAgent.TryCast<PlayerAgent>();
-            return agent != null;
+            return agent != null!;
         }
 
         public void SendToPlayers(T packetData, params PlayerAgent[] agents)

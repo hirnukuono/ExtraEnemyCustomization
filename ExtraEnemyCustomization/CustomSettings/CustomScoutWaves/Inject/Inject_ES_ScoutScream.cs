@@ -12,9 +12,9 @@ namespace EEC.CustomSettings.CustomScoutWaves.Inject
         {
             if (__instance.m_state == ES_ScoutScream.ScoutScreamState.Done)
             {
-                if (__instance.m_stateDoneTimer >= 0.0f)
+                if (__instance.m_stateDoneTimer >= 0f)
                 {
-                    __instance.m_stateDoneTimer = -1.0f;
+                    __instance.m_stateDoneTimer = -1f;
                     if (SNet.IsMaster)
                     {
                         CustomScoutWaveManager.TriggerScoutWave(__instance.m_enemyAgent);

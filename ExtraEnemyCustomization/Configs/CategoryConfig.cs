@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace EEC.Configs
+﻿namespace EEC.Configs
 {
     public sealed class CategoryConfig : Config
     {
@@ -127,7 +123,7 @@ namespace EEC.Configs
 
     public class CategoryDefinition
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         public uint[] PersistentIDs { get; private set; } = Array.Empty<uint>();
 
         public readonly List<uint> _PersistentIDs = new();

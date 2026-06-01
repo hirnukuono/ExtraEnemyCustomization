@@ -1,6 +1,5 @@
 ﻿using EEC.CustomSettings.CustomTentacles;
 using EEC.EnemyCustomizations.Strikers;
-using System;
 
 namespace EEC.Configs.Customizations
 {

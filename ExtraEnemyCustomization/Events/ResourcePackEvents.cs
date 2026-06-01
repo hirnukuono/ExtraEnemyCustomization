@@ -14,13 +14,13 @@ namespace EEC.Events
 
     public static class ResourcePackEvents
     {
-        public static event ReceiveMediHandler ReceiveMedi;
+        public static event ReceiveMediHandler? ReceiveMedi;
 
-        public static event ReceiveAmmoHandler ReceiveAmmo;
+        public static event ReceiveAmmoHandler? ReceiveAmmo;
 
-        public static event ReceiveToolHandler ReceiveTool;
+        public static event ReceiveToolHandler? ReceiveTool;
 
-        public static event ReceiveDisinfectHandler ReceiveDisinfect;
+        public static event ReceiveDisinfectHandler? ReceiveDisinfect;
 
         internal static void OnReceiveMedi(iResourcePackReceiver receiver, float health)
         {

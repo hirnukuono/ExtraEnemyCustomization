@@ -1,8 +1,6 @@
 ﻿using EEC.Events;
 using GTFO.API;
 using SNetwork;
-using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace EEC.Networking
@@ -10,7 +8,7 @@ namespace EEC.Networking
     internal struct ReplicatorPayload
     {
         public ushort key;
-        
+
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 30)]
         public byte[] stateBytes;
 
@@ -54,7 +52,7 @@ namespace EEC.Networking
     public sealed class StateContext<S> where S : struct
     {
         public bool Registered = false;
-        public Action<S> OnStateChanged = null;
+        public Action<S> OnStateChanged = null!;
         public S State;
     }
 

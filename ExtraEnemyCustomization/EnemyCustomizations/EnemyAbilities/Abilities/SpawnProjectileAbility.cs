@@ -1,7 +1,4 @@
 ﻿using EEC.EnemyCustomizations.Shared;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 {
@@ -13,10 +10,10 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         public int BurstCount { get; set; } = 1;
         public float Delay { get; set; } = 0.1f;
         public float BurstDelay { get; set; } = 0.05f;
-        public float ShotSpreadXMin { get; set; } = 0.0f;
-        public float ShotSpreadXMax { get; set; } = 0.0f;
-        public float ShotSpreadYMin { get; set; } = 0.0f;
-        public float ShotSpreadYMax { get; set; } = 0.0f;
+        public float ShotSpreadXMin { get; set; } = 0f;
+        public float ShotSpreadXMax { get; set; } = 0f;
+        public float ShotSpreadYMin { get; set; } = 0f;
+        public float ShotSpreadYMax { get; set; } = 0f;
         public uint SoundID { get; set; } = 0;
         public bool FindTargetIfInvalid { get; set; } = false;
     }
@@ -40,7 +37,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
                 return;
             }
 
-            Agents.Agent? target = null;
+            Agents.Agent? target = null!;
             if (Agent.AI.IsTargetValid)
             {
                 target = Agent.AI.Target.m_agent;

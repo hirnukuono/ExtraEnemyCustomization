@@ -1,9 +1,6 @@
 ﻿using EEC.EnemyCustomizations.EnemyAbilities.Abilities;
 using Enemies;
 using GTFO.API.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace EEC.EnemyCustomizations.EnemyAbilities
 {
@@ -56,7 +53,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities
         {
             Task.Factory.StartNew(async () =>
             {
-                await Task.Delay((int)Math.Round(delay * 1000.0f));
+                await Task.Delay((int)Math.Round(delay * 1000f));
                 ThreadDispatcher.Dispatch(() =>
                 {
                     ability?.TriggerSync(agent, useClientPos);

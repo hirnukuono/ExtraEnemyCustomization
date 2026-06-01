@@ -1,10 +1,7 @@
 ﻿using EEC.EnemyCustomizations.EnemyAbilities.Abilities;
-using EEC.Events;
 using EEC.Utils.Json.Elements;
 using Enemies;
 using SNetwork;
-using System;
-using System.Linq;
 
 namespace EEC.EnemyCustomizations.EnemyAbilities
 {
@@ -55,6 +52,6 @@ namespace EEC.EnemyCustomizations.EnemyAbilities
     {
         public string[] Limbs { get; set; } = Array.Empty<string>();
         public AgentModeTarget AllowedMode { get; set; } = AgentModeTarget.Agressive;
-        public float Delay { get; set; } = 0.0f;
+        public float Delay { get; set; } = 0f;
     }
 }

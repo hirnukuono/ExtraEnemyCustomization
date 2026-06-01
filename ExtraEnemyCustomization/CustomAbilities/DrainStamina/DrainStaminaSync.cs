@@ -28,7 +28,7 @@ namespace EEC.CustomAbilities.DrainStamina
                 if (cost.baseStaminaCostInCombat < 0 && cost.baseStaminaCostOutOfCombat < 0)
                     AddStamina(agent, cost);
                 else
-                    agent.Stamina.UseStamina(cost, 1.0f);
+                    agent.Stamina.UseStamina(cost, 1f);
             }
         }
 

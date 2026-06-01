@@ -1,6 +1,5 @@
 ﻿using Agents;
 using Enemies;
-using System;
 
 namespace EEC.Events
 {

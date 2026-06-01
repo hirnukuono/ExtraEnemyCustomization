@@ -1,7 +1,5 @@
 ﻿using AK;
-using EEC.CustomAbilities.Explosion;
 using EEC.EnemyCustomizations.Shared;
-using EEC.Utils;
 using EEC.Utils.Json.Elements;
 using UnityEngine;
 
@@ -15,13 +13,13 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         public bool UseRagdollPosition { get; set; } = true;
         public bool UseExplosionCounter { get; set; } = false;
         public int AllowedExplosionCount { get; set; } = 1;
-        public float EnemyDamageMulti { get; set; } = 1.0f;
-        public float MinRange { get; set; } = 2.0f;
-        public float MaxRange { get; set; } = 5.0f;
+        public float EnemyDamageMulti { get; set; } = 1f;
+        public float MinRange { get; set; } = 2f;
+        public float MaxRange { get; set; } = 5f;
         public ValueBase EnemyMinRange { get; set; } = ValueBase.Unchanged;
         public ValueBase EnemyMaxRange { get; set; } = ValueBase.Unchanged;
-        public float NoiseMinRange { get; set; } = 5.0f;
-        public float NoiseMaxRange { get; set; } = 10.0f;
+        public float NoiseMinRange { get; set; } = 5f;
+        public float NoiseMaxRange { get; set; } = 10f;
         public NM_NoiseType NoiseType { get; set; } = NM_NoiseType.Detectable;
         public uint SoundID { get; set; } = EVENTS.STICKYMINEEXPLODE;
         public KnockbackSetting Knockback { get; set; } = new();

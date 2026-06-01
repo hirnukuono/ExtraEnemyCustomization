@@ -2,10 +2,7 @@
 using EEC.Events;
 using EEC.Networking;
 using SNetwork;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
 namespace EEC.Utils.Unity
@@ -40,7 +37,7 @@ namespace EEC.Utils.Unity
             {
                 return _handler.StartCoroutine(coroutine.WrapToIl2Cpp());
             }
-            return null;
+            return null!;
         }
 
         public static void Stop(Coroutine coroutine)

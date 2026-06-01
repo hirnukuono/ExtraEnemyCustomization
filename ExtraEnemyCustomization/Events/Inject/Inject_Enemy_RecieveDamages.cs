@@ -1,7 +1,5 @@
 ﻿using Agents;
 using HarmonyLib;
-using Il2CppInterop.Runtime;
-using UnityEngine;
 
 namespace EEC.Events.Inject
 {

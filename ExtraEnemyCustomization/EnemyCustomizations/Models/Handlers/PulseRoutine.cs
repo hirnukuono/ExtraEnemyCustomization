@@ -1,7 +1,6 @@
 ﻿using Agents;
 using EEC.Utils.Unity;
 using Enemies;
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -11,9 +10,9 @@ namespace EEC.EnemyCustomizations.Models.Handlers
     {
         public EnemyAgent Agent;
         public PulseEffectData PulseData;
-        public float StartDelay = 0.0f;
+        public float StartDelay = 0f;
 
-        private float _updateDelay = 0.0f;
+        private float _updateDelay = 0f;
         private Color _defaultColor;
         private int _currentPatternIndex = 0;
         private int _patternLength = 0;
@@ -33,7 +32,7 @@ namespace EEC.EnemyCustomizations.Models.Handlers
 
             _defaultColor = Agent.MaterialHandler.m_defaultGlowColor;
 
-            var interval = Math.Max(0.0f, PulseData.Duration);
+            var interval = Math.Max(0f, PulseData.Duration);
             _updateDelay = interval / _patternLength;
 
             yield return WaitFor.Seconds[StartDelay];
@@ -96,7 +95,7 @@ namespace EEC.EnemyCustomizations.Models.Handlers
             var patternData = PulseData.PatternData[_currentPatternIndex++];
             var duration = patternData.StepDuration * _updateDelay;
 
-            if (patternData.Progression >= 0.0f)
+            if (patternData.Progression >= 0f)
             {
                 var newColor = Color.Lerp(_defaultColor, PulseData.GlowColor, patternData.Progression);
                 Agent.Appearance.InterpolateGlow(newColor, duration);

@@ -1,6 +1,4 @@
 ﻿using Il2CppInterop.Runtime;
-using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 namespace EEC.Managers.Assets
@@ -56,7 +54,7 @@ namespace EEC.Managers.Assets
         {
             public string Name => typeof(T).Name;
 
-            private StreamWriter _streamWriter = null;
+            private StreamWriter _streamWriter = null!;
             private readonly Dictionary<string, T> _lookup = new();
 
             public virtual string DoResolveNameConflict(T obj, string currentName)
@@ -160,7 +158,7 @@ namespace EEC.Managers.Assets
         {
             public string Name => typeof(T).Name;
 
-            private StreamWriter _streamWriter = null;
+            private StreamWriter _streamWriter = null!;
             private readonly Dictionary<string, T> _lookup = new();
 
             public virtual string DoResolveNameConflict(T obj, string currentName)

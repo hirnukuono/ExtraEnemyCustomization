@@ -1,7 +1,5 @@
 ﻿using EEC.EnemyCustomizations.EnemyAbilities;
 using EEC.EnemyCustomizations.EnemyAbilities.Abilities;
-using System;
-using System.Collections.Generic;
 
 namespace EEC.Configs.Customizations
 {

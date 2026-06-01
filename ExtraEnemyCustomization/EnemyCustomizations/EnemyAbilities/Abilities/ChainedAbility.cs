@@ -1,7 +1,4 @@
-﻿using EEC.Utils.Unity;
-using Timer = EEC.Utils.Unity.Timer;
-using System;
-using System.Collections.Generic;
+﻿using Timer = EEC.Utils.Unity.Timer;
 
 namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 {
@@ -9,7 +6,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
     {
         public EventBlock[] Abilities { get; set; } = Array.Empty<EventBlock>();
 
-        public float ExitDelay { get; set; } = 0.0f;
+        public float ExitDelay { get; set; } = 0f;
         public bool ExitWhenAllFinished { get; set; } = true;
         public bool ExitAllInForceExit { get; set; } = true;
         public bool ExitAllInForceExitOnly { get; set; } = false;
@@ -39,7 +36,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 
         public class EventBlock : AbilitySettingBase
         {
-            public float Delay { get; set; } = 0.0f;
+            public float Delay { get; set; } = 0f;
         }
     }
 
@@ -75,7 +72,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
                     abSetting.Ability.RegisterBehaviour(Agent);
                 }
             }
-            
+
         }
 
         protected override void OnEnterUseClientPos()

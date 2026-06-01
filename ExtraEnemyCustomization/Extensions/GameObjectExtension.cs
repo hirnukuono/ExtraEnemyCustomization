@@ -11,7 +11,7 @@ namespace EEC
         {
             //MINOR: Unhollower missing method moment
             component = obj.GetComponent<T>();
-            return component != null;
+            return component != null!;
         }
 
         public static T AddOrGetComponent<T>(this GameObject obj) where T : Component
@@ -31,7 +31,7 @@ namespace EEC
                 if (comp.gameObject.name != name) continue;
                 return comp.gameObject;
             }
-            return null;
+            return null!;
         }
 
         public static GameObject RegexFindChild(this GameObject obj, Regex rx, bool includeInactive = false)
@@ -42,7 +42,7 @@ namespace EEC
                 if (!rx.IsMatch(comp.name)) continue;
                 return comp.gameObject;
             }
-            return null;
+            return null!;
         }
 
         public static GameObject Instantiate(this GameObject obj, Transform toParent, string name)

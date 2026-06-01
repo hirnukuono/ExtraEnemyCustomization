@@ -19,7 +19,7 @@ namespace EEC.EnemyCustomizations.Abilities
         protected override void OnApplyEffect(AttackData data, PlayerAgent player, EnemyAgent inflicator)
         {
             var infectionAbs = data.Infection.GetAbsValue(PlayerData.MaxInfection);
-            if (infectionAbs == 0.0f)
+            if (infectionAbs == 0f)
                 return;
 
             InfectionManager.DoInfection(player, data);
@@ -36,7 +36,7 @@ namespace EEC.EnemyCustomizations.Abilities
             public ValueBase Infection { get; set; } = ValueBase.Zero;
             public uint SoundEventID { get; set; } = 0u;
             public bool UseEffect { get; set; } = false;
-            public float ScreenLiquidRange { get; set; } = 0.0f;
+            public float ScreenLiquidRange { get; set; } = 0f;
         }
     }
 }

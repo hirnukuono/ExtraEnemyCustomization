@@ -1,8 +1,6 @@
 ﻿using EEC.Events;
 using EEC.Utils.Json.Elements;
-using EEC.Utils.Unity;
 using Enemies;
-using System.Collections;
 using UnityEngine;
 
 namespace EEC.EnemyCustomizations.Detections
@@ -10,7 +8,7 @@ namespace EEC.EnemyCustomizations.Detections
     public sealed class FeelerCustom : EnemyCustomBase
     {
         public ValueBase TendrilCount { get; set; } = ValueBase.Unchanged;
-        public float TendrilAngleOffset { get; set; } = 0.0f;
+        public float TendrilAngleOffset { get; set; } = 0f;
         public ValueBase TendrilStepAngle { get; set; } = ValueBase.Unchanged;
         public ValueBase TendrilMinYSpread { get; set; } = ValueBase.Unchanged;
         public ValueBase TendrilMaxYSpread { get; set; } = ValueBase.Unchanged;
@@ -67,7 +65,7 @@ namespace EEC.EnemyCustomizations.Detections
 
             var meshFilter = ant.GetComponent<MeshFilter>();
             var bound = meshFilter.mesh.bounds;
-            bound.Expand(5000.0f); //¯\_(ツ)_/¯ Scout antenna mesh isn't that expensive, who cares if it's always been rendered or not?
+            bound.Expand(5000f); //¯\_(ツ)_/¯ Scout antenna mesh isn't that expensive, who cares if it's always been rendered or not?
             meshFilter.mesh.bounds = bound;
         }
     }

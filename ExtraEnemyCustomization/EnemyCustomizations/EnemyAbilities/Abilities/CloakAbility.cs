@@ -1,25 +1,23 @@
-﻿using EEC.Utils.Unity;
-using Timer = EEC.Utils.Unity.Timer;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Rendering;
+using Timer = EEC.Utils.Unity.Timer;
 
 namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 {
     public sealed class CloakAbility : AbilityBase<CloakBehaviour>
     {
-        public float CloakOpacity { get; set; } = 0.0f;
-        public float CloakDuration { get; set; } = 1.0f;
-        public float DecloakDuration { get; set; } = 1.0f;
-        public float DecloakAfterDelay { get; set; } = -1.0f;
+        public float CloakOpacity { get; set; } = 0f;
+        public float CloakDuration { get; set; } = 1f;
+        public float DecloakDuration { get; set; } = 1f;
+        public float DecloakAfterDelay { get; set; } = -1f;
         public bool HideShadow { get; set; } = false;
         public bool RequireTagForDetectionWhileCloaking { get; set; } = true;
         public bool AllowEABAbilityWhileCloaking { get; set; } = true;
 
         public override void OnAbilityLoaded()
         {
-            CloakDuration = Mathf.Max(CloakDuration, 0.0f);
-            DecloakDuration = Mathf.Max(DecloakDuration, 0.0f);
+            CloakDuration = Mathf.Max(CloakDuration, 0f);
+            DecloakDuration = Mathf.Max(DecloakDuration, 0f);
         }
     }
 
@@ -74,7 +72,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
             _cloakState = State.Cloaking;
             _timer.Reset(Ability.CloakDuration);
 
-            if (Ability.DecloakAfterDelay >= 0.0f)
+            if (Ability.DecloakAfterDelay >= 0f)
             {
                 _hasDecloakTimer = true;
                 _decloakTimer.Reset(Ability.DecloakAfterDelay);
@@ -105,9 +103,9 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
             {
                 case State.Cloaking:
                     progress = GetProgress();
-                    _handlers.ForEach(h => h.SetProgress(1.0f - progress));
+                    _handlers.ForEach(h => h.SetProgress(1f - progress));
 
-                    if (progress >= 1.0f)
+                    if (progress >= 1f)
                     {
                         _cloakState = State.None;
                         Agent.MovingCuller.m_disableAnimatorCullingWhenRenderingShadow = true;
@@ -119,7 +117,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
                     progress = GetProgress();
                     _handlers.ForEach(h => h.SetProgress(progress));
 
-                    if (progress >= 1.0f)
+                    if (progress >= 1f)
                     {
                         _cloakState = State.None;
                         Agent.MovingCuller.m_disableAnimatorCullingWhenRenderingShadow = false;
@@ -163,14 +161,14 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
             {
                 if (originalRenderer == null || transitionRenderer == null)
                 {
-                    Logger.Error($"Cloak Renderer is missing! : orig {originalRenderer == null}, trs { transitionRenderer == null}");
+                    Logger.Error($"Cloak Renderer is missing! : orig {originalRenderer == null}, trs {transitionRenderer == null}");
                     return;
                 }
 
-                if (p <= 0.0f)
+                if (p <= 0f)
                 {
                     DisableOriginalRenderer();
-                    if (minOpacity <= 0.0f)
+                    if (minOpacity <= 0f)
                     {
                         transitionRenderer.forceRenderingOff = true;
                     }
@@ -180,7 +178,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
                         transitionRenderer.material.color = Color.white.AlphaMultiplied(minOpacity);
                     }
                 }
-                else if (p >= 1.0f)
+                else if (p >= 1f)
                 {
                     EnableOriginalRenderer();
                     transitionRenderer.forceRenderingOff = true;
@@ -190,7 +188,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
                 {
                     DisableOriginalRenderer();
                     transitionRenderer.forceRenderingOff = false;
-                    transitionRenderer.material.color = Color.white.AlphaMultiplied(Mathf.Lerp(minOpacity, 1.0f, p));
+                    transitionRenderer.material.color = Color.white.AlphaMultiplied(Mathf.Lerp(minOpacity, 1f, p));
                 }
             }
 

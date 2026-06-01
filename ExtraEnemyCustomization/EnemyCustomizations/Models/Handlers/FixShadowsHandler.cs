@@ -1,7 +1,7 @@
 ﻿using Enemies;
 using Player;
-using UnityEngine.Rendering;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace EEC.EnemyCustomizations.Models.Handlers
 {
@@ -11,7 +11,7 @@ namespace EEC.EnemyCustomizations.Models.Handlers
         EnemyAgent enemy;
         List<MeshRenderer> sammuta = new();
         List<SkinnedMeshRenderer> sammuta2 = new();
-        ShadowEnemyRenderer ser = null;
+        ShadowEnemyRenderer ser = null!;
         List<ShadowEnemyRenderer> sers = new();
         bool initialized;
 
@@ -120,7 +120,8 @@ namespace EEC.EnemyCustomizations.Models.Handlers
             mr2.castShadows = false;
             mr2.receiveShadows = false;
             enemy.MovingCuller.CullBucket.ShadowRenderers.Remove(mr2);
-            foreach (var asd in enemy.MaterialHandler.m_materialRefs) try { asd.m_renderers.Remove(mr2); } catch (Exception e) { };
+            foreach (var asd in enemy.MaterialHandler.m_materialRefs) try { asd.m_renderers.Remove(mr2); } catch (Exception e) { }
+            ;
             enemy.MovingCuller.CullBucket.ComputeTotalBounds();
             enemy.MovingCuller.CullBucket.NeedsShadowRefresh = true;
             destroyed = true;

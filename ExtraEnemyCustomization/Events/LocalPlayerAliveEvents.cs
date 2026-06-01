@@ -6,9 +6,9 @@ namespace EEC.Events
 
     public static class LocalPlayerAliveEvents
     {
-        public static event PlayerAliveHandler Down;
+        public static event PlayerAliveHandler? Down;
 
-        public static event PlayerAliveHandler Revive;
+        public static event PlayerAliveHandler? Revive;
 
         internal static void OnDown(PlayerAgent playerAgent)
         {

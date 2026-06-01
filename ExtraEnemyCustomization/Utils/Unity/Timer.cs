@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace EEC.Utils.Unity
 {
@@ -9,18 +8,18 @@ namespace EEC.Utils.Unity
         public float Duration { get; private set; }
         private float _lastTickTime;
 
-        public bool Done => Progress >= 1.0f;
+        public bool Done => Progress >= 1f;
         public float Progress => Mathf.Clamp01(ProgressUnclamped);
 
         public float ProgressUnclamped
         {
             get
             {
-                if (Duration != 0.0f)
+                if (Duration != 0f)
                 {
                     return PassedTime * _durationInv;
                 }
-                return 1.0f;
+                return 1f;
             }
         }
 
@@ -28,20 +27,20 @@ namespace EEC.Utils.Unity
 
         public LazyTimer(float duration)
         {
-            PassedTime = 0.0f;
+            PassedTime = 0f;
             Duration = duration;
-            _durationInv = 1.0f / duration;
+            _durationInv = 1f / duration;
 
             _lastTickTime = GetTime();
         }
 
-        public void Reset(float newDuration = -1.0f)
+        public void Reset(float newDuration = -1f)
         {
-            PassedTime = 0.0f;
-            if (newDuration >= 0.0f)
+            PassedTime = 0f;
+            if (newDuration >= 0f)
             {
                 Duration = newDuration;
-                _durationInv = 1.0f / newDuration;
+                _durationInv = 1f / newDuration;
             }
 
             _lastTickTime = GetTime();
@@ -77,18 +76,18 @@ namespace EEC.Utils.Unity
         public float PassedTime { get; private set; }
         public float Duration { get; private set; }
 
-        public bool Done => Progress >= 1.0f;
+        public bool Done => Progress >= 1f;
         public float Progress => Mathf.Clamp01(ProgressUnclamped);
 
         public float ProgressUnclamped
         {
             get
             {
-                if (Duration != 0.0f)
+                if (Duration != 0f)
                 {
                     return PassedTime * _durationInv;
                 }
-                return 1.0f;
+                return 1f;
             }
         }
 
@@ -96,18 +95,18 @@ namespace EEC.Utils.Unity
 
         public Timer(float duration)
         {
-            PassedTime = 0.0f;
+            PassedTime = 0f;
             Duration = duration;
-            _durationInv = 1.0f / duration;
+            _durationInv = 1f / duration;
         }
 
-        public void Reset(float newDuration = -1.0f)
+        public void Reset(float newDuration = -1f)
         {
-            PassedTime = 0.0f;
-            if (newDuration >= 0.0f)
+            PassedTime = 0f;
+            if (newDuration >= 0f)
             {
                 Duration = newDuration;
-                _durationInv = 1.0f / newDuration;
+                _durationInv = 1f / newDuration;
             }
         }
 

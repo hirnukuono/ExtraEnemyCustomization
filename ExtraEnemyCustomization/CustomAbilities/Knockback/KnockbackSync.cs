@@ -40,7 +40,7 @@ namespace EEC.CustomAbilities.Knockback
 
             player.Locomotion.AddExternalPushForce(velocity);
 
-            if (data.velocityZ != 0.0f && player.Alive)
+            if (data.velocityZ != 0f && player.Alive)
             {
                 player.Locomotion.ChangeState(PlayerLocomotion.PLOC_State.Jump, true);
                 player.Locomotion.VerticalVelocity = velocity + velocityZ;

@@ -1,8 +1,5 @@
-﻿using EEC.Utils.Unity;
+﻿using UnityEngine;
 using Timer = EEC.Utils.Unity.Timer;
-using FX_EffectSystem;
-using System;
-using UnityEngine;
 
 namespace EEC.CustomAbilities.Explosion.Handlers
 {
@@ -50,8 +47,8 @@ namespace EEC.CustomAbilities.Explosion.Handlers
             }
 
             EffectDoneOnce?.Invoke();
-            EffectDoneOnce = null;
-            _light = null;
+            EffectDoneOnce = null!;
+            _light = null!;
             _effectOnGoing = false;
         }
     }

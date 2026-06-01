@@ -1,9 +1,4 @@
 ﻿using Enemies;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace EEC.Networking.Replicators
@@ -19,7 +14,7 @@ namespace EEC.Networking.Replicators
             SetState(agent.GlobalID, new State()
             {
                 maxHealth = agent.Damage.HealthMax,
-                health = Mathf.Max(0.0f, agent.Damage.Health)
+                health = Mathf.Max(0f, agent.Damage.Health)
             });
         }
 

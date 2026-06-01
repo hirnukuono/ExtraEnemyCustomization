@@ -2,7 +2,6 @@
 using Enemies;
 using GameData;
 using GTFO.API;
-using System;
 using UnityEngine;
 
 namespace EEC.EnemyCustomizations.Models

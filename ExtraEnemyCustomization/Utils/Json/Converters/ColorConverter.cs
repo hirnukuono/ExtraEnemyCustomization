@@ -1,5 +1,4 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using UnityEngine;
@@ -18,7 +17,7 @@ namespace EEC.Utils.Json.Converters
         public override Color Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             var color = new Color();
-            float multiplier = 1.0f;
+            float multiplier = 1f;
 
             switch (reader.TokenType)
             {
@@ -68,7 +67,7 @@ namespace EEC.Utils.Json.Converters
                     switch (strValues.Length)
                     {
                         case 1:
-                            multiplier = 1.0f;
+                            multiplier = 1f;
                             formatString = strValues[0].Trim();
                             break;
 
@@ -111,7 +110,7 @@ namespace EEC.Utils.Json.Converters
                 return false;
             }
 
-            float alpha = 1.0f;
+            float alpha = 1f;
             if (array.Length > 3)
             {
                 alpha = array[3];

@@ -1,7 +1,6 @@
 ﻿using EEC.CustomAbilities.EMP.Inject;
 using EEC.Events;
 using EEC.Networking;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace EEC.CustomAbilities.EMP

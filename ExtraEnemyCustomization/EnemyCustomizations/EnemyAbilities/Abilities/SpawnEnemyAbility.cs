@@ -1,22 +1,21 @@
 ﻿using Agents;
-using EEC.Utils.Unity;
-using Timer = EEC.Utils.Unity.Timer;
+using BepInEx.Unity.IL2CPP.Utils.Collections;
 using Enemies;
 using SNetwork;
 using System.Collections;
-using BepInEx.Unity.IL2CPP.Utils.Collections;
+using Timer = EEC.Utils.Unity.Timer;
 
 namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 {
     public sealed class SpawnEnemyAbility : AbilityBase<SpawnEnemyBehaviour>
     {
         public bool StopAgent { get; set; } = false;
-        public float Delay { get; set; } = 0.0f;
+        public float Delay { get; set; } = 0f;
         public uint EnemyID { get; set; } = 0u;
         public AgentMode AgentMode { get; set; } = AgentMode.Agressive;
         public int TotalCount { get; set; } = 0;
         public int CountPerSpawn { get; set; } = 0;
-        public float DelayPerSpawn { get; set; } = 0.0f;
+        public float DelayPerSpawn { get; set; } = 0f;
         public bool DoGlobalFallback { get; set; } = false;
 
         public override void OnAbilityLoaded()
@@ -42,7 +41,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         private UnityEngine.Vector3 _fallbackPos;
         private UnityEngine.Quaternion _fallbackRot;
 
-        private IEnumerator? _updateLoop = null;
+        private IEnumerator? _updateLoop = null!;
         private Timer _stateTimer;
 
         public override bool RunUpdateOnlyWhileExecuting => true;
@@ -79,13 +78,13 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
         private IEnumerator DoSpawnRoutine()
         {
             while (!_stateTimer.TickAndCheckDone())
-                yield return null;
+                yield return null!;
 
-            _stateTimer.Reset(0.0f);
+            _stateTimer.Reset(0f);
             while (_remainingSpawn > 0)
             {
                 while (!_stateTimer.TickAndCheckDone())
-                    yield return null;
+                    yield return null!;
 
                 if (SNet.IsMaster)
                     SpawnEnemy(Ability.CountPerSpawn);
@@ -96,7 +95,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
             }
 
             DoExit();
-            _updateLoop = null;
+            _updateLoop = null!;
         }
 
         private void SpawnEnemy(int count)

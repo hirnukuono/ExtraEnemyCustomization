@@ -1,5 +1,4 @@
 ﻿using Agents;
-using AK;
 using EEC.CustomAbilities.Bleed;
 using EEC.CustomAbilities.DrainStamina;
 using EEC.CustomAbilities.Infection;
@@ -223,7 +222,7 @@ namespace EEC.CustomAbilities.Explosion
 
         private static float CalcRangeMod(float distance, float minRange, float maxRange)
         {
-            var mod = 0.0f;
+            var mod = 0f;
             if (distance <= minRange)
             {
                 mod = 1;
@@ -241,7 +240,7 @@ namespace EEC.CustomAbilities.Explosion
             {
                 position = pos,
                 flashColor = lightColor,
-                intensity = 5.0f,
+                intensity = 5f,
                 range = range,
                 duration = 0.05f
             });
@@ -250,7 +249,7 @@ namespace EEC.CustomAbilities.Explosion
             {
                 var localAgent = PlayerManager.GetLocalPlayerAgent();
                 var dist = (localAgent.Position - pos).magnitude;
-                var amp = 6.0f * Mathf.Max(0.0f, Mathf.InverseLerp(range, 0, dist));
+                var amp = 6f * Mathf.Max(0f, Mathf.InverseLerp(range, 0, dist));
                 if (amp > 0.01f)
                 {
                     PlayerManager.GetLocalPlayerAgent().FPSCamera.Shake(1.5f, amp, 0.09f);

@@ -6,7 +6,7 @@ namespace EEC.Events
 
     public static class EnemyMarkerEvents
     {
-        public static event EnemyMarkerHandler Marked;
+        public static event EnemyMarkerHandler? Marked;
 
         internal static void OnMarked(EnemyAgent agent, NavMarker marker)
         {

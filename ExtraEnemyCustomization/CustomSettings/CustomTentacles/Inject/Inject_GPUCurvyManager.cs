@@ -1,6 +1,5 @@
 ﻿using EEC.Managers;
 using HarmonyLib;
-using System;
 
 namespace EEC.CustomSettings.CustomTentacles.Inject
 {

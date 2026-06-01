@@ -1,5 +1,4 @@
 ﻿using EEC.EnemyCustomizations.Detections;
-using System;
 
 namespace EEC.Configs.Customizations
 {

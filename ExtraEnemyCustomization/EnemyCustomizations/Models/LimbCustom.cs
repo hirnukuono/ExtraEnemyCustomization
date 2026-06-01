@@ -2,8 +2,6 @@
 using EEC.Utils.Json.Elements;
 using Enemies;
 using GameData;
-using System;
-using System.Linq;
 
 namespace EEC.EnemyCustomizations.Models
 {
@@ -56,19 +54,19 @@ namespace EEC.EnemyCustomizations.Models
                 switch (limbCustomData.LimbType)
                 {
                     case LimbDamageType.Normal:
-                        modifier.SetMulti(eLimbDamageType.Normal, armor: 1.0f, weakspot: 1.0f);
+                        modifier.SetMulti(eLimbDamageType.Normal, armor: 1f, weakspot: 1f);
                         break;
 
                     case LimbDamageType.Armor:
                     case LimbDamageType.ArmorCustom:
                         multi = isCustom ? limbCustomData.CustomMulti : healthData.ArmorDamageMulti;
-                        modifier.SetMulti(eLimbDamageType.Armor, armor: multi, weakspot: 1.0f);
+                        modifier.SetMulti(eLimbDamageType.Armor, armor: multi, weakspot: 1f);
                         break;
 
                     case LimbDamageType.Weakspot:
                     case LimbDamageType.WeakspotCustom:
                         multi = isCustom ? limbCustomData.CustomMulti : healthData.WeakspotDamageMulti;
-                        modifier.SetMulti(eLimbDamageType.Weakspot, armor: 1.0f, weakspot: multi);
+                        modifier.SetMulti(eLimbDamageType.Weakspot, armor: 1f, weakspot: multi);
                         break;
                 }
             }
@@ -78,7 +76,7 @@ namespace EEC.EnemyCustomizations.Models
         {
             public string LimbName { get; set; } = "Head";
             public LimbDamageType LimbType { get; set; } = LimbDamageType.Weakspot;
-            public float CustomMulti { get; set; } = 1.0f;
+            public float CustomMulti { get; set; } = 1f;
             public ValueBase Health { get; set; } = ValueBase.Unchanged;
         }
 

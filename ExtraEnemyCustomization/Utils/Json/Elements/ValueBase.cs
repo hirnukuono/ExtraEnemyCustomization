@@ -1,19 +1,18 @@
-﻿using System;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace EEC.Utils.Json.Elements
 {
     [JsonConverter(typeof(ValueBaseConverter))]
     public struct ValueBase
     {
-        public static readonly ValueBase Unchanged = new(1.0f, ValueMode.Rel, true);
-        public static readonly ValueBase Zero = new(0.0f, ValueMode.Abs, false);
+        public static readonly ValueBase Unchanged = new(1f, ValueMode.Rel, true);
+        public static readonly ValueBase Zero = new(0f, ValueMode.Abs, false);
 
         public float Value;
         public ValueMode Mode;
         public bool FromDefault;
 
-        public ValueBase(float value = 1.0f, ValueMode mode = ValueMode.Rel, bool fromDefault = true)
+        public ValueBase(float value = 1f, ValueMode mode = ValueMode.Rel, bool fromDefault = true)
         {
             Value = value;
             Mode = mode;

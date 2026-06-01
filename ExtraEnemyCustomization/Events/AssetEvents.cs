@@ -11,13 +11,13 @@ namespace EEC.Events
         public static bool IsShardAssetLoaded { get; private set; } = false;
         public static bool IsAllAssetLoaded { get; private set; } = false;
 
-        public static event AssetLoadedHandler StartupAssetLoaded;
+        public static event AssetLoadedHandler? StartupAssetLoaded;
 
-        public static event AssetLoadedHandler EnemyAssetLoaded;
+        public static event AssetLoadedHandler? EnemyAssetLoaded;
 
-        public static event AssetLoadedHandler ShardAssetLoaded;
+        public static event AssetLoadedHandler? ShardAssetLoaded;
 
-        public static event AssetLoadedHandler AllAssetLoaded;
+        public static event AssetLoadedHandler? AllAssetLoaded;
 
         static AssetEvents()
         {

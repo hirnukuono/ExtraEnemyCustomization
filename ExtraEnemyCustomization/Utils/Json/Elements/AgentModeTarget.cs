@@ -1,6 +1,5 @@
 ﻿using Agents;
 using Enemies;
-using System;
 using System.Text.Json.Serialization;
 
 namespace EEC.Utils.Json.Elements

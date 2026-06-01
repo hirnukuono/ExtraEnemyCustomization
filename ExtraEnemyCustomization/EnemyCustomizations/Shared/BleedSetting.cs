@@ -21,9 +21,9 @@ namespace EEC.EnemyCustomizations.Shared
     {
         public bool Enabled { get; set; } = false;
         public ValueBase Damage { get; set; } = ValueBase.Zero;
-        public float ChanceToBleed { get; set; } = 0.0f;
-        public float Interval { get; set; } = 0.0f;
-        public float Duration { get; set; } = 0.0f;
+        public float ChanceToBleed { get; set; } = 0f;
+        public float Interval { get; set; } = 0f;
+        public float Duration { get; set; } = 0f;
         public bool HasLiquid { get; set; } = true;
         public bool CanBeStacked { get; set; } = false;
         public ScreenLiquidSettingName LiquidSetting { get; set; } = ScreenLiquidSettingName.enemyBlood_Squirt;

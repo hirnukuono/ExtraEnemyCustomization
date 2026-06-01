@@ -6,7 +6,7 @@ namespace EEC.Events
 
     public static class InventoryEvents
     {
-        public static event InventoryEventHandler ItemWielded;
+        public static event InventoryEventHandler? ItemWielded;
 
         internal static void OnWieldItem(GearPartFlashlight flashlight)
         {

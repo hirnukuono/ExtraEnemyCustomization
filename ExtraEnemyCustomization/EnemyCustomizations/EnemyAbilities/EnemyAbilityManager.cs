@@ -2,7 +2,6 @@
 using EEC.Events;
 using EEC.Networking;
 using SNetwork;
-using System.Collections.Generic;
 
 namespace EEC.EnemyCustomizations.EnemyAbilities
 {

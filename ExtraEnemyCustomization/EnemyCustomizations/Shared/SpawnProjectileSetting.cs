@@ -1,12 +1,6 @@
 ﻿using Agents;
-using EEC.Utils;
-using EEC.Utils.Unity;
 using Enemies;
 using SNetwork;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
 namespace EEC.EnemyCustomizations.Shared
@@ -34,18 +28,18 @@ namespace EEC.EnemyCustomizations.Shared
         public int BurstCount { get; set; } = 1;
         public float Delay { get; set; } = 0.1f;
         public float BurstDelay { get; set; } = 0.05f;
-        public float ShotSpreadXMin { get; set; } = 0.0f;
-        public float ShotSpreadXMax { get; set; } = 0.0f;
-        public float ShotSpreadYMin { get; set; } = 0.0f;
-        public float ShotSpreadYMax { get; set; } = 0.0f;
+        public float ShotSpreadXMin { get; set; } = 0f;
+        public float ShotSpreadXMax { get; set; } = 0f;
+        public float ShotSpreadYMin { get; set; } = 0f;
+        public float ShotSpreadYMax { get; set; } = 0f;
 
         public Coroutine DoSpawn(EnemyAgent owner, Agent target, Transform fireAlign, bool keepTrack)
         {
             if (!Enabled)
-                return null;
+                return null!;
 
             if (!SNet.IsMaster)
-                return null;
+                return null!;
 
             return SpawnProjectileExtension.DoSpawn(this, owner, target, fireAlign, keepTrack);
         }

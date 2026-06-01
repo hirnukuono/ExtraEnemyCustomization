@@ -1,5 +1,4 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using UnityEngine;
@@ -70,12 +69,12 @@ namespace EEC.Utils.Json.Elements
                     {
                         if (float.TryParse(strValue[0..^1].TrimEnd(), NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var parsedPercent))
                         {
-                            return new ValueBase(parsedPercent / 100.0f, ValueMode.Rel, fromDefaultFlag);
+                            return new ValueBase(parsedPercent / 100f, ValueMode.Rel, fromDefaultFlag);
                         }
                     }
                     else if (strValue.EqualsAnyIgnoreCase("Unchanged", "Ignore", "Keep", "Original", "KeepOriginal"))
                     {
-                        return new ValueBase(1.0f, ValueMode.Rel, false);
+                        return new ValueBase(1f, ValueMode.Rel, false);
                     }
                     else if (float.TryParse(strValue, NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var parsedValue))
                     {
@@ -93,14 +92,14 @@ namespace EEC.Utils.Json.Elements
             switch (value.Mode)
             {
                 case ValueMode.Rel:
-                    if (Mathf.Approximately(value.Value, 1.0f))
+                    if (Mathf.Approximately(value.Value, 1f))
                     {
                         writer.WriteStringValue("Unchanged");
                     }
                     else
                     {
                         string format = value.FromDefault ? "{0}% of default" : "{0}%";
-                        writer.WriteStringValue(string.Format(format, value.Value * 100.0f));
+                        writer.WriteStringValue(string.Format(format, value.Value * 100f));
                     }
                     break;
 

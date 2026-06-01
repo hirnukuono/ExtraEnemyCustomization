@@ -1,7 +1,6 @@
 ﻿using EEC.EnemyCustomizations.Abilities.Handlers;
 using EEC.Utils.Json.Elements;
 using Enemies;
-using System;
 
 namespace EEC.EnemyCustomizations.Abilities
 {
@@ -29,8 +28,8 @@ namespace EEC.EnemyCustomizations.Abilities
 
         public sealed class HealthRegenData
         {
-            public float RegenInterval { get; set; } = 1.0f;
-            public float DelayUntilRegenStart { get; set; } = 5.0f;
+            public float RegenInterval { get; set; } = 1f;
+            public float DelayUntilRegenStart { get; set; } = 5f;
             public bool CanDamageInterruptRegen { get; set; } = true;
             public ValueBase RegenAmount { get; set; } = ValueBase.Zero;
             public ValueBase RegenCap { get; set; } = ValueBase.Zero;

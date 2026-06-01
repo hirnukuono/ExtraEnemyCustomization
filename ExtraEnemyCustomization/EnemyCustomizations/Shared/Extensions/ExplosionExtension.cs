@@ -48,7 +48,7 @@ namespace EEC.EnemyCustomizations.Shared
         public static void MakeExplosion(this IExplosionSetting setting, Agent agent, bool useRagdoll = false)
         {
             var maxDamage = setting.Damage.GetAbsValue(PlayerData.MaxHealth);
-            if (maxDamage != 0.0f)
+            if (maxDamage != 0f)
             {
                 var data = new ExplosionAgentData()
                 {
@@ -64,7 +64,7 @@ namespace EEC.EnemyCustomizations.Shared
         public static void MakeExplosion(this IExplosionSetting setting, Vector3 position)
         {
             var maxDamage = setting.Damage.GetAbsValue(PlayerData.MaxHealth);
-            if (maxDamage != 0.0f)
+            if (maxDamage != 0f)
             {
                 var data = new ExplosionPosData()
                 {
@@ -78,7 +78,7 @@ namespace EEC.EnemyCustomizations.Shared
         public static void MakeLocalExplosion(this IExplosionSetting setting, Vector3 position)
         {
             var maxDamage = setting.Damage.GetAbsValue(PlayerData.MaxHealth);
-            if (maxDamage != 0.0f)
+            if (maxDamage != 0f)
             {
                 var data = new ExplosionPosData()
                 {
@@ -92,7 +92,7 @@ namespace EEC.EnemyCustomizations.Shared
         public static void TryMakeNoise(this IExplosionSetting setting, Vector3 position)
         {
             var newPos = position;
-            if (!PhysicsUtil.SlamPos(ref newPos, Vector3.down, 64.0f, LayerManager.MASK_LEVELGEN, false, 0.0f, 0.0f))
+            if (!PhysicsUtil.SlamPos(ref newPos, Vector3.down, 64f, LayerManager.MASK_LEVELGEN, false, 0f, 0f))
             {
                 return;
             }

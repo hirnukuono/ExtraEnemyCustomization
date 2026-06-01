@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace EEC.CustomSettings.CustomTentacles
 {
@@ -79,7 +77,7 @@ namespace EEC.CustomSettings.CustomTentacles
             {
                 return setup;
             }
-            return null;
+            return null!;
         }
     }
 }

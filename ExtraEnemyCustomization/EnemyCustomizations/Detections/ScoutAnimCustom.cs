@@ -10,7 +10,7 @@ namespace EEC.EnemyCustomizations.Detections
         public AnimationRandomType RandomType { get; set; } = AnimationRandomType.PerDetection;
         public EnemyAnimType BendAnimation { get; set; } = EnemyAnimType.AbilityUseOut;
         public EnemyAnimType StandAnimation { get; set; } = EnemyAnimType.AbilityUse;
-        public float ChanceToBend { get; set; } = 1.0f;
+        public float ChanceToBend { get; set; } = 1f;
 
         public bool OverridePullingAnimation { get; set; } = false;
         public EnemyAnimType PullingAnimation { get; set; } = EnemyAnimType.AbilityUseOut;
@@ -32,7 +32,7 @@ namespace EEC.EnemyCustomizations.Detections
             switch (RandomType)
             {
                 case AnimationRandomType.PerEnemy:
-                    data.ChanceToBend = Rand.CanDoBy(ChanceToBend) ? 1.0f : 0.0f;
+                    data.ChanceToBend = Rand.CanDoBy(ChanceToBend) ? 1f : 0f;
                     break;
 
                 case AnimationRandomType.PerDetection:

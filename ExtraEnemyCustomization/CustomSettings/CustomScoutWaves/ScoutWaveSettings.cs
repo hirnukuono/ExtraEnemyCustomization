@@ -1,7 +1,6 @@
 ﻿using EEC.EnemyCustomizations;
 using GameData;
 using LevelGeneration;
-using System;
 
 namespace EEC.CustomSettings.CustomScoutWaves
 {
@@ -91,7 +90,7 @@ namespace EEC.CustomSettings.CustomScoutWaves
     {
         public uint WaveSettingID { get; set; } = 0u;
         public uint WavePopulationID { get; set; } = 0u;
-        public float Delay { get; set; } = 0.0f;
+        public float Delay { get; set; } = 0f;
         public bool StopWaveOnDeath { get; set; } = false;
 
         public SpawnNodeSetting SpawnSetting = new()

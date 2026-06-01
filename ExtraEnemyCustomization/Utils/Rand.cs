@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EEC.Utils
+﻿namespace EEC.Utils
 {
     public static class Rand
     {
@@ -58,7 +56,7 @@ namespace EEC.Utils
 
         public static float NextFloatInclusive()
         {
-            return Math.Clamp((float)NextDoubleInclusive(), 0.0f, 1.0f);
+            return Math.Clamp((float)NextDoubleInclusive(), 0f, 1f);
         }
 
         public static double NextDoubleInclusive()

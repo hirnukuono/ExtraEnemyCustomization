@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EEC
+﻿namespace EEC
 {
     using EaseFunc = Func<float, float, float, float, float>;
 
