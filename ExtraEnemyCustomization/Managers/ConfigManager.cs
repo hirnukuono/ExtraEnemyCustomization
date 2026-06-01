@@ -49,6 +49,7 @@ namespace EEC.Managers
         private static readonly Dictionary<string, Type> _configFileNameToType = new();
         private static readonly Dictionary<string, Config> _configInstances = new();
         private static readonly IEnumerable<PropertyInfo> _cacheProperties;
+        private static LiveEditListener _liveEdit;
 
         static ConfigManager()
         {
@@ -82,9 +83,30 @@ namespace EEC.Managers
 
             if (UseLiveEdit)
             {
-                var liveEdit = LiveEdit.CreateListener(BasePath, "*.*", true);
-                liveEdit.FileChanged += LiveEdit_FileChanged;
-                liveEdit.StartListen();
+                SetupLiveEdit();
+            }
+
+            Configuration.OnReload += OnConfigReloaded;
+        }
+
+        internal static void OnConfigReloaded()
+        {
+            if (LinkMTFOHotReload != Configuration.LinkMTFOHotReload)
+            {
+                if (LinkMTFOHotReload)
+                    MTFOUtil.HotReloaded -= ReloadConfig;
+                else
+                    MTFOUtil.HotReloaded += ReloadConfig;
+                LinkMTFOHotReload = !LinkMTFOHotReload;
+            }
+
+            if (UseLiveEdit != Configuration.UseLiveEdit)
+            {
+                if (UseLiveEdit)
+                    _liveEdit?.Dispose();
+                else
+                    SetupLiveEdit();
+                UseLiveEdit = !UseLiveEdit;
             }
         }
 
@@ -93,6 +115,16 @@ namespace EEC.Managers
             foreach (var config in _customizationBuffer)
             {
                 config.OnAssetLoaded();
+            }
+        }
+
+        private static void SetupLiveEdit()
+        {
+            if (Directory.Exists(BasePath))
+            {
+                _liveEdit = LiveEdit.CreateListener(BasePath, "*.*", true);
+                _liveEdit.FileChanged += LiveEdit_FileChanged;
+                _liveEdit.StartListen();
             }
         }
     }
