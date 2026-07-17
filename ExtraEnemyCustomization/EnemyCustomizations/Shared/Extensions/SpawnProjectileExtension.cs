@@ -62,10 +62,7 @@ namespace EEC.EnemyCustomizations.Shared
         {
             var yaw = Rand.Range(setting.ShotSpreadXMin, setting.ShotSpreadXMax);
             var pitch = Rand.Range(setting.ShotSpreadYMin, setting.ShotSpreadYMax);
-            var dirRot = Quaternion.LookRotation(data.BaseDirection);
-            dirRot *= Quaternion.AngleAxis(pitch, data.UpVector);
-            dirRot *= Quaternion.AngleAxis(yaw, data.RightVector);
-            var newDir = dirRot * Vector3.forward;
+            var newDir = Quaternion.LookRotation(data.BaseDirection) * Quaternion.Euler(pitch, yaw, 0) * Vector3.forward;
             ProjectileManager.WantToFireTargeting(setting.ProjectileType, data.Target, data.Position, newDir, data.OwnerID, 0f);
         }
 
