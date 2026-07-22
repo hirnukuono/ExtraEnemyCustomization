@@ -220,7 +220,7 @@ namespace EEC.CustomSettings.CustomProjectiles
                             {
                                 if (progress >= homingChange.Duration)
                                 {
-                                    projectile.Speed = originalHoming * homingChange.StopMulti;
+                                    projectile.TargetStrength = originalHoming * homingChange.StopMulti;
                                     enabled = false;
                                     return;
                                 }
