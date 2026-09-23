@@ -61,6 +61,7 @@ namespace EEC.CustomAbilities.EMP
         private bool _destroyed = false;
 
         public abstract void Setup(GameObject gameObject, EMPController controller);
+        protected virtual void OnDestroy() { }
 
         public static void Cleanup()
         {
@@ -156,6 +157,7 @@ namespace EEC.CustomAbilities.EMP
         public void OnDespawn()
         {
             _destroyed = true;
+            OnDestroy();
         }
 
         /// <summary>

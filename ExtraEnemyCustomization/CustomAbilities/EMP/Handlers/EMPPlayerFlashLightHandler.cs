@@ -52,5 +52,11 @@ namespace EEC.CustomAbilities.EMP.Handlers
             if (!FlashlightEnabled) return;
             _inventory.m_flashlight.intensity = GetRandom01() * _originalIntensity;
         }
+
+        protected override void OnDestroy()
+        {
+            if (_inventory == null) return;
+            InventoryEvents.ItemWielded -= InventoryEvents_ItemWielded;
+        }
     }
 }

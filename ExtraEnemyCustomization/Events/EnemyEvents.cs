@@ -11,6 +11,8 @@ namespace EEC.Events
 
         public static event EnemyAgentHandler? Spawned;
 
+        public static event EnemyAgentHandler? Killed;
+
         public static event EnemyAgentHandler? Despawn;
 
         public static event EnemyAgentHandler? Despawned;
@@ -23,6 +25,11 @@ namespace EEC.Events
         internal static void OnSpawned(EnemyAgent agent)
         {
             Spawned?.Invoke(agent);
+        }
+
+        internal static void OnKilled(EnemyAgent agent)
+        {
+            Killed?.Invoke(agent);
         }
 
         internal static void OnDespawn(EnemyAgent agent)

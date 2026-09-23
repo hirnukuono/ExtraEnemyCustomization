@@ -1,4 +1,5 @@
-﻿using EEC.Utils.Json.Elements;
+﻿using EEC.Managers.Properties;
+using EEC.Utils.Json.Elements;
 using Enemies;
 using SNetwork;
 
@@ -13,13 +14,14 @@ namespace EEC.EnemyCustomizations.EnemyAbilities
 
         public void OnDead(EnemyAgent agent)
         {
+            if (!SNet.IsMaster)
+                return;
+
+            bool wasKilled = EnemyDeathManager.WasKilled(agent);
             foreach (var ab in Abilities)
             {
-                if (!SNet.IsMaster)
-                    return;
-
-                if (!ab.AllowedMode.IsMatch(agent))
-                    return;
+                if ((!wasKilled && ab.IgnoreDespawn) || !ab.AllowedMode.IsMatch(agent))
+                    continue;
 
                 DoTriggerDelayed(ab.Ability, agent, ab.Delay, useClientPos: true);
             }
@@ -30,5 +32,6 @@ namespace EEC.EnemyCustomizations.EnemyAbilities
     {
         public AgentModeTarget AllowedMode { get; set; } = AgentModeTarget.Agressive;
         public float Delay { get; set; } = 0f;
+        public bool IgnoreDespawn { get; set; } = true;
     }
 }

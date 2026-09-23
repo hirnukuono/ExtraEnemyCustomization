@@ -14,6 +14,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities
         private static readonly Dictionary<string, IAbility> _abilities = new();
         private static readonly Dictionary<ushort, IAbility> _abilityIDLookup = new();
         private static bool _allAssetLoaded = false;
+        private static bool _setup = false;
 
         static EnemyAbilityManager()
         {
@@ -62,9 +63,10 @@ namespace EEC.EnemyCustomizations.EnemyAbilities
 
         public static void Setup()
         {
-            if (!_allAssetLoaded)
+            if (!_allAssetLoaded || _setup)
                 return;
 
+            _setup = true;
             foreach (var ab in _abilities.Values)
             {
                 var id = _syncIDBuffer;
@@ -80,6 +82,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities
             foreach (var ab in _abilities.Values)
                 ab.Unload();
 
+            _setup = false;
             _abilities.Clear();
             _syncIDBuffer = 1;
             _abilityIDLookup.Clear();
