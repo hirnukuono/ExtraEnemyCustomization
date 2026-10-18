@@ -9,19 +9,19 @@ namespace EEC.Networking
     {
         public ulong lookup;
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 30)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
         public byte[] packetBytes;
 
         public void Serialize<T>(T packet) where T : struct
         {
             int size = Marshal.SizeOf(packet);
 
-            if (size >= 30)
+            if (size > 32)
             {
-                throw new ArgumentException("PacketData Exceed size of 30 : Unable to Serialize", nameof(T));
+                throw new ArgumentException("PacketData Exceed size of 32 : Unable to Serialize", nameof(T));
             }
 
-            byte[] bytes = new byte[30];
+            byte[] bytes = new byte[32];
 
             IntPtr ptr = Marshal.AllocHGlobal(size);
 
@@ -38,7 +38,7 @@ namespace EEC.Networking
 
             if (size > packetBytes.Length)
             {
-                throw new ArgumentException("Packet Exceed size of 30 : Unable to Deserialize", nameof(T));
+                throw new ArgumentException("Packet Exceed size of 32 : Unable to Deserialize", nameof(T));
             }
 
             IntPtr ptr = Marshal.AllocHGlobal(size);
