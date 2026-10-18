@@ -9,9 +9,14 @@ namespace EEC.EnemyCustomizations.Shared
 {
     public static class SpawnProjectileExtension
     {
-        public static Coroutine DoSpawn(this ISpawnProjectileSetting setting, EnemyAgent owner, Agent target, Transform fireAlign, bool keepTrack)
+        public static Coroutine DoSpawn(this ISpawnProjectileSetting setting, EnemyAgent owner, Agent? target, Transform fireAlign, bool keepTrack)
         {
-            var direction = setting.UseTargetDirection ? (target.AimTarget.position - fireAlign.position).normalized : fireAlign.forward;
+            Vector3 direction;
+            if (setting.UseTargetDirection && target != null)
+                direction = (target.AimTarget.position - fireAlign.position).normalized;
+            else
+                direction = fireAlign.forward;
+
             if (setting.BackwardDirection)
                 direction = -direction;
 
