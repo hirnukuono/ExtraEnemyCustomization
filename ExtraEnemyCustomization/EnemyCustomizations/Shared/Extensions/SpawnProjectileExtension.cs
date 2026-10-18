@@ -11,7 +11,7 @@ namespace EEC.EnemyCustomizations.Shared
     {
         public static Coroutine DoSpawn(this ISpawnProjectileSetting setting, EnemyAgent owner, Agent target, Transform fireAlign, bool keepTrack)
         {
-            var direction = setting.UseTargetDirection ? (target.m_position - fireAlign.position).normalized : fireAlign.forward;
+            var direction = setting.UseTargetDirection ? (target.AimTarget.position - fireAlign.position).normalized : fireAlign.forward;
             if (setting.BackwardDirection)
                 direction = -direction;
 
