@@ -9,6 +9,7 @@ namespace EEC.EnemyCustomizations.Shared
     {
         public ProjectileType ProjectileType { get; set; }
         public bool BackwardDirection { get; set; }
+        public bool UseTargetDirection { get; set; }
         public int Count { get; set; }
         public int BurstCount { get; set; }
         public float Delay { get; set; }
@@ -24,6 +25,7 @@ namespace EEC.EnemyCustomizations.Shared
         public bool Enabled { get; set; } = false;
         public ProjectileType ProjectileType { get; set; } = ProjectileType.TargetingSmall;
         public bool BackwardDirection { get; set; } = false;
+        public bool UseTargetDirection { get; set; } = false;
         public int Count { get; set; } = 1;
         public int BurstCount { get; set; } = 1;
         public float Delay { get; set; } = 0.1f;

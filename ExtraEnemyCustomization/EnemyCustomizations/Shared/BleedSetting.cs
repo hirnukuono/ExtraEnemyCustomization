@@ -11,6 +11,7 @@ namespace EEC.EnemyCustomizations.Shared
         public float ChanceToBleed { get; set; }
         public float Interval { get; set; }
         public float Duration { get; set; }
+        public float Delay { get; set; }
         public bool HasLiquid { get; set; }
         public bool CanBeStacked { get; set; }
         public ScreenLiquidSettingName LiquidSetting { get; set; }
@@ -24,6 +25,7 @@ namespace EEC.EnemyCustomizations.Shared
         public float ChanceToBleed { get; set; } = 0f;
         public float Interval { get; set; } = 0f;
         public float Duration { get; set; } = 0f;
+        public float Delay { get; set; } = 0f;
         public bool HasLiquid { get; set; } = true;
         public bool CanBeStacked { get; set; } = false;
         public ScreenLiquidSettingName LiquidSetting { get; set; } = ScreenLiquidSettingName.enemyBlood_Squirt;
@@ -35,6 +37,7 @@ namespace EEC.EnemyCustomizations.Shared
             {
                 interval = Interval,
                 duration = Duration,
+                delay = Delay,
                 damage = Damage.GetAbsValue(PlayerData.MaxHealth),
                 chanceToBleed = ChanceToBleed,
                 doStack = CanBeStacked,

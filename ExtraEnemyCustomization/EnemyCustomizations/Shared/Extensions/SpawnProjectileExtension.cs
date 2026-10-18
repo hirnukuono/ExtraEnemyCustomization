@@ -11,7 +11,10 @@ namespace EEC.EnemyCustomizations.Shared
     {
         public static Coroutine DoSpawn(this ISpawnProjectileSetting setting, EnemyAgent owner, Agent target, Transform fireAlign, bool keepTrack)
         {
-            var direction = setting.BackwardDirection ? -fireAlign.forward : fireAlign.forward;
+            var direction = setting.UseTargetDirection ? (target.m_position - fireAlign.position).normalized : fireAlign.forward;
+            if (setting.BackwardDirection)
+                direction = -direction;
+
             return InLevelCoroutine.Start(SpawnProjectiles(setting, new SpawnProjectileData()
             {
                 Target = target,
@@ -19,9 +22,7 @@ namespace EEC.EnemyCustomizations.Shared
                 LastSavedPosition = fireAlign.position,
                 KeepTrackAlign = keepTrack,
                 BaseDirection = direction,
-                OwnerID = owner.GlobalID,
-                UpVector = fireAlign.up,
-                RightVector = fireAlign.right
+                OwnerID = owner.GlobalID
             }));
         }
 
@@ -74,8 +75,6 @@ namespace EEC.EnemyCustomizations.Shared
             public bool KeepTrackAlign;
             public Vector3 BaseDirection;
             public ushort OwnerID;
-            public Vector3 UpVector;
-            public Vector3 RightVector;
 
             public Vector3 Position
             {
