@@ -27,6 +27,7 @@
           */
           "AllowedMode": "Combat", //AgentTarget: Allowed AgentModes
           "AllowedModeTransitionTime": 0.0, //Wait for this time to use ability after their AgentMode has changed
+          "InitDelay": 0.0, //Wait for this time to use ability after they spawn
           "KeepOnDead": false,
           "AllowWhileAttack": false,
           "RequireEABAllowed": false, //Can the enemy only use this ability when normal abilities are also allowed?
@@ -253,6 +254,7 @@
           "ChanceToBleed": 0.5,
           "Interval": 0.15,
           "Duration": 10.0,
+          "Delay": 0,
           "CanBeStacked": false,
           "HasLiquid": true,
           "LiquidSetting": "enemyBlood_SmallRandomStreak",
@@ -310,6 +312,7 @@
     "SpawnProjectile": [
       {
         "ProjectileType": 3, //Projectile to spawn
+        "UseTargetDirection": true, //Fire toward the target, or fire where the shooter align is facing?
         "BackwardDirection": false, //Projectile spawned from backward direction of projectile
         "Count": 8, //How many times should burst be fired? (total projectile = count * burst count)
         "BurstCount": 2, //Burst fire count

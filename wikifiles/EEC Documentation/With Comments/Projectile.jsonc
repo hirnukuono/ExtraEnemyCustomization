@@ -32,6 +32,7 @@
           //GlueFlying - 4 //DONT
           //GlueLanded - 5 //DONT
           //Or other custom IDs! (check ProjectileDefinitions Section)
+          "UseTargetDirection": false, //Fire toward the target, or fire where the shooter align is facing?
           "BurstCount": 2, //##BasedValue (based on default value): How many Projectile should be fired for single attack?
           "BurstDelay": 0.8, //##BasedValue (based on default value): Interval Between firing
           "ShotDelayMin": 0.005, //##BasedValue (based on default value): Min Shot delay for each projectile
@@ -46,6 +47,7 @@
           "FromDistance": 9.0, //Swap to this FireSetting when target distance over this value
           "OverrideProjectileType": true,
           "ProjectileType": 51,
+          "UseTargetDirection": false,
           "BurstCount": 15,
           "BurstDelay": 3.0,
           "ShotDelayMin": 0.005,
@@ -203,6 +205,7 @@
         "ChanceToBleed": 0.5, //Chance to be bleed (0.0 = zero, 1.0 = always)
         "Interval": 0.15, //Interval for each damage
         "Duration": 10.0, //Duration for bleeding effect
+        "Delay": 0.0, //Delay before damage starts
         "CanBeStacked": false, //Can Bleeding effect be stacked?
         "HasLiquid": true, //Using Liquid Effect?
         "LiquidSetting": "enemyBlood_SmallRandomStreak", //Name of Liquid effect you want to use (It will be sprayed for each damage)

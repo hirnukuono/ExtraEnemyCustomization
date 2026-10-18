@@ -219,6 +219,7 @@
           "ChanceToBleed": 0.5,
           "Interval": 0.15,
           "Duration": 10.0,
+          "Delay": 0,
           "CanBeStacked": false,
           "HasLiquid": true,
           "LiquidSetting": "enemyBlood_SmallRandomStreak",
@@ -321,6 +322,7 @@
         "ChanceToBleed": 0.5, //Chance to be bleed (0.0 = zero, 1.0 = always)
         "Interval": 0.15, //Interval for each damage
         "Duration": 10.0, //Duration for bleeding effect
+        "Delay": 0, //Delay before damage starts
         "CanBeStacked": false, //Can Bleeding effect be stacked?
         "HasLiquid": true, //Using Liquid Effect?
         "LiquidSetting": "enemyBlood_SmallRandomStreak", //Name of Liquid effect you want to use (It will be sprayed for each damage)
@@ -351,6 +353,7 @@
         "ChanceToBleed": 0.5,
         "Interval": 0.15,
         "Duration": 10.0,
+        "Delay": 0,
         "CanBeStacked": false,
         "HasLiquid": true,
         "LiquidSetting": "enemyBlood_SmallRandomStreak",
@@ -361,6 +364,7 @@
         "ChanceToBleed": 0.5,
         "Interval": 0.15,
         "Duration": 10.0,
+        "Delay": 0,
         "CanBeStacked": false,
         "HasLiquid": true,
         "LiquidSetting": "enemyBlood_SmallRandomStreak",
