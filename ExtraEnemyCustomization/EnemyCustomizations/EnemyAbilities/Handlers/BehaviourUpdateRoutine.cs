@@ -19,11 +19,13 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Handlers
         private AgentMode _latestMode;
         private LazyTimer _modeTransitionTimer;
         private LazyTimer _cooldownTimer;
+        private LazyTimer _initTimer;
         private bool _hasInitialTimerDone = false;
 
         public IEnumerator Routine()
         {
             _latestMode = Agent.AI.Mode;
+            _initTimer.Reset(Setting.InitDelay);
 
             var yielder = WaitFor.Seconds[Setting.UpdateInterval];
             while (true)
@@ -37,6 +39,13 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Handlers
         {
             if (!SNet.IsMaster)
                 return;
+
+            if (!_initTimer.TickAndCheckDone())
+            {
+                // Keep tracked mode and transition timer updated
+                CheckAllowedModeCondition();
+                return;
+            }
 
             var canUseAbility = true;
             var shouldExitOnMismatch = false;

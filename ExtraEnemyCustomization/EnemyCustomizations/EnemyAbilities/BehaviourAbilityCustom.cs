@@ -39,6 +39,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities
         public ExitConditionTarget ForceExitOnConditionMismatch { get; set; } = ExitConditionTarget.None;
         public AgentModeTarget AllowedMode { get; set; } = AgentModeTarget.Agressive;
         public float AllowedModeTransitionTime { get; set; } = 0f;
+        public float InitDelay { get; set; } = 0f;
         public bool KeepOnDead { get; set; } = false;
         public bool AllowWhileAttack { get; set; } = false;
         public bool RequireEABAllowed { get; set; } = false;

@@ -53,9 +53,11 @@ namespace EEC.CustomAbilities.Bleed.Handlers
                 shouldRevertText = true;
             }
 
-            var intervalYielder = WaitFor.Seconds[bleedData.interval];
             var timer = 0f;
+            if (bleedData.delay > 0)
+                yield return WaitFor.Seconds[bleedData.delay];
 
+            var intervalYielder = WaitFor.Seconds[bleedData.interval];
             var liquid = bleedData.liquid;
             var hasLiquid = Enum.IsDefined(typeof(ScreenLiquidSettingName), liquid);
 
@@ -104,9 +106,11 @@ namespace EEC.CustomAbilities.Bleed.Handlers
                 shouldRevertText = true;
             }
 
-            var intervalYielder = WaitFor.Seconds[bleedData.interval];
             var timer = 0f;
+            if (bleedData.delay > 0)
+                yield return WaitFor.Seconds[bleedData.delay];
 
+            var intervalYielder = WaitFor.Seconds[bleedData.interval];
             var liquid = bleedData.liquid;
             var hasLiquid = Enum.IsDefined(typeof(ScreenLiquidSettingName), liquid);
 

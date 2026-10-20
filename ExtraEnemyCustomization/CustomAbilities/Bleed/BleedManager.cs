@@ -34,6 +34,7 @@ namespace EEC.CustomAbilities.Bleed
     {
         public float interval;
         public float duration;
+        public float delay;
         public float damage;
         public float chanceToBleed;
         public bool doStack;

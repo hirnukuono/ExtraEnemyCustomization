@@ -9,9 +9,17 @@ namespace EEC.EnemyCustomizations.Shared
 {
     public static class SpawnProjectileExtension
     {
-        public static Coroutine DoSpawn(this ISpawnProjectileSetting setting, EnemyAgent owner, Agent target, Transform fireAlign, bool keepTrack)
+        public static Coroutine DoSpawn(this ISpawnProjectileSetting setting, EnemyAgent owner, Agent? target, Transform fireAlign, bool keepTrack)
         {
-            var direction = setting.BackwardDirection ? -fireAlign.forward : fireAlign.forward;
+            Vector3 direction;
+            if (setting.UseTargetDirection && target != null)
+                direction = (target.AimTarget.position - fireAlign.position).normalized;
+            else
+                direction = fireAlign.forward;
+
+            if (setting.BackwardDirection)
+                direction = -direction;
+
             return InLevelCoroutine.Start(SpawnProjectiles(setting, new SpawnProjectileData()
             {
                 Target = target,
@@ -19,9 +27,7 @@ namespace EEC.EnemyCustomizations.Shared
                 LastSavedPosition = fireAlign.position,
                 KeepTrackAlign = keepTrack,
                 BaseDirection = direction,
-                OwnerID = owner.GlobalID,
-                UpVector = fireAlign.up,
-                RightVector = fireAlign.right
+                OwnerID = owner.GlobalID
             }));
         }
 
@@ -74,8 +80,6 @@ namespace EEC.EnemyCustomizations.Shared
             public bool KeepTrackAlign;
             public Vector3 BaseDirection;
             public ushort OwnerID;
-            public Vector3 UpVector;
-            public Vector3 RightVector;
 
             public Vector3 Position
             {

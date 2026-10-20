@@ -6,6 +6,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
     {
         public ProjectileType ProjectileType { get; set; } = ProjectileType.TargetingSmall;
         public bool BackwardDirection { get; set; } = false;
+        public bool UseTargetDirection { get; set; } = false;
         public int Count { get; set; } = 1;
         public int BurstCount { get; set; } = 1;
         public float Delay { get; set; } = 0.1f;
