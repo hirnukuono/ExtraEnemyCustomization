@@ -1,7 +1,7 @@
-﻿using AssetShards;
-using EEC.EnemyCustomizations.Models.Handlers;
+﻿using EEC.EnemyCustomizations.Models.Handlers;
 using Enemies;
 using GameData;
+using GTFO.API;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -31,7 +31,7 @@ namespace EEC.EnemyCustomizations.Models
         {
             if (!_materialCached)
             {
-                var playerPrefab = AssetShardManager.s_loadedAssetsLookup[PlayerPrefabPath.ToUpper()].Cast<GameObject>();
+                GameObject playerPrefab = AssetAPI.GetLoadedAsset<GameObject>(PlayerPrefabPath);
                 var playerGhost = playerPrefab.FindChild(PlayerGhostName);
                 var playerGhostRenderer = playerGhost.GetComponent<SkinnedMeshRenderer>();
                 _silhouetteMaterial = playerGhostRenderer.material;

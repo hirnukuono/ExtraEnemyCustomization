@@ -13,7 +13,7 @@ namespace EEC
             var called = false;
             agent.add_OnDeadCallback(new Action(() =>
             {
-                if (called || CheckpointManager.IsReloadingCheckpoint)
+                if (called || CheckpointManager.IsReloadingCheckpoint || GameStateManager.CurrentStateName != eGameStateName.InLevel)
                     return;
 
                 onDead?.Invoke();

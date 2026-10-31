@@ -1,6 +1,6 @@
-﻿using AssetShards;
-using EEC.EnemyCustomizations.Shared;
+﻿using EEC.EnemyCustomizations.Shared;
 using EEC.EnemyCustomizations.Shared.Handlers;
+using GTFO.API;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -28,7 +28,7 @@ namespace EEC.EnemyCustomizations.EnemyAbilities.Abilities
 
         public override void OnAbilityLoaded()
         {
-            var eabFogPrefab = AssetShardManager.GetLoadedAsset(EAB_FOG_PREFAB, false);
+            var eabFogPrefab = AssetAPI.GetLoadedAsset(EAB_FOG_PREFAB);
             var eabFog = eabFogPrefab.Cast<GameObject>().GetComponent<EAB_FogSphere>();
             FogSpherePrefab = GameObject.Instantiate(eabFog.m_fogSpherePrefab).Cast<GameObject>();
 
