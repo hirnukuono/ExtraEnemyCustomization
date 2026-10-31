@@ -1,4 +1,5 @@
-﻿using Il2CppInterop.Runtime;
+﻿using GTFO.API;
+using Il2CppInterop.Runtime;
 using UnityEngine;
 
 namespace EEC.Managers.Assets
@@ -71,11 +72,13 @@ namespace EEC.Managers.Assets
             {
                 StartLog();
                 var objects = Resources.FindObjectsOfTypeAll(Il2CppType.Of<T>());
+                var moddedObjects = AssetAPI.AllCustomAssets.FindByType(typeof(T).Name).Select(asset => asset.GetAsset());
+                var allObjects = objects.Concat(moddedObjects);
 
-                foreach (var obj in objects)
+                foreach (var obj in allObjects)
                 {
                     var castedObj = obj.Cast<T>();
-                    var objName = castedObj?.name ?? string.Empty;
+                    var objName = castedObj.name;
 
                     if (_lookup.ContainsKey(objName))
                     {
@@ -175,11 +178,13 @@ namespace EEC.Managers.Assets
             {
                 StartLog();
                 var objects = Resources.FindObjectsOfTypeAll(Il2CppType.Of<T>());
+                var moddedObjects = AssetAPI.AllCustomAssets.FindByType(typeof(T).Name).Select(asset => asset.GetAsset());
+                var allObjects = objects.Concat(moddedObjects);
 
-                foreach (var obj in objects)
+                foreach (var obj in allObjects)
                 {
                     var castedObj = obj.Cast<T>();
-                    var objName = castedObj?.name ?? string.Empty;
+                    var objName = castedObj.name;
 
                     if (_lookup.ContainsKey(objName))
                     {
