@@ -31,10 +31,6 @@ namespace EEC.EnemyCustomizations.Abilities.Handlers
             if (!_alwaysRegen)
             {
                 EnemyDamageEvents.Damage += OnTakeDamage;
-                DamageBase.Owner.AddOnDeadOnce(() =>
-                {
-                    EnemyDamageEvents.Damage -= OnTakeDamage;
-                });
             }
 
             _regenCapAbsValue = RegenData.RegenCap.GetAbsValue(DamageBase.HealthMax);
@@ -149,6 +145,7 @@ namespace EEC.EnemyCustomizations.Abilities.Handlers
 
         private void OnDestroy()
         {
+            EnemyDamageEvents.Damage -= OnTakeDamage;
             DamageBase = null!;
             RegenData = null!;
         }
