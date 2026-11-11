@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using EEC.Utils.Integrations;
+using UnityEngine;
 
 namespace EEC.CustomAbilities.EMP.Handlers
 {
@@ -21,6 +22,7 @@ namespace EEC.CustomAbilities.EMP.Handlers
 
         protected override void DeviceOff()
         {
+            EOSUtil.EnableHUDEMP();
             foreach (var target in _targets)
             {
                 target.gameObject.SetActive(false);
@@ -31,6 +33,7 @@ namespace EEC.CustomAbilities.EMP.Handlers
 
         protected override void DeviceOn()
         {
+            EOSUtil.DisableHUDEMP();
             foreach (var target in _targets)
             {
                 target.gameObject.SetActive(true);
