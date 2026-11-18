@@ -13,8 +13,12 @@ namespace EEC.CustomAbilities.EMP.Handlers
         public override void Setup(GameObject gameObject, EMPController controller)
         {
             _sentry = gameObject.GetComponent<SentryGunInstance>();
-            _detection = _sentry.m_detection.Cast<SentryGunInstance_Detection>();
-            _visuals = _sentry.m_visuals.Cast<SentryGunInstance_ScannerVisuals_Plane>();
+            _detection = _sentry.GetComponent<SentryGunInstance_Detection>();
+            _visuals = _sentry.GetComponent<SentryGunInstance_ScannerVisuals_Plane>();
+            if (_sentry == null || _detection == null || _visuals == null)
+            {
+                Logger.Error("Missing components on Sentry! Has Sentry?: {0}, Has Detection?: {1}, Has Visuals?: {2}", _sentry != null, _detection != null, _visuals != null);
+            }
         }
 
         protected override void DeviceOff()
