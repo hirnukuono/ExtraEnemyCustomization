@@ -7,16 +7,14 @@ namespace EEC.CustomAbilities.EMP.Handlers
     {
         private static Color _offColor = new() { r = 0, g = 0, b = 0, a = 0 };
         private SentryGunInstance _sentry;
+        private SentryGunInstance_Detection _detection;
         private SentryGunInstance_ScannerVisuals_Plane _visuals;
 
         public override void Setup(GameObject gameObject, EMPController controller)
         {
             _sentry = gameObject.GetComponent<SentryGunInstance>();
-            _visuals = gameObject.GetComponent<SentryGunInstance_ScannerVisuals_Plane>();
-            if (_sentry == null || _visuals == null)
-            {
-                Logger.Error("Missing components on Sentry! Has Sentry?: {0}, Has Visuals?: {1}", _sentry == null, _visuals == null);
-            }
+            _detection = _sentry.m_detection.Cast<SentryGunInstance_Detection>();
+            _visuals = _sentry.m_visuals.Cast<SentryGunInstance_ScannerVisuals_Plane>();
         }
 
         protected override void DeviceOff()
@@ -26,6 +24,10 @@ namespace EEC.CustomAbilities.EMP.Handlers
             _sentry.m_isSetup = false;
             _sentry.m_isScanning = false;
             _sentry.m_isFiring = false;
+            _detection.Target = null;
+            _detection.TargetAimTrans = null;
+            _detection.HasTarget = false;
+            _detection.TargetIsTagged = false;
             _sentry.Sound.Post(EVENTS.SENTRYGUN_STOP_ALL_LOOPS);
         }
 
